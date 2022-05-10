@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.Member">
+
+	<select id="selectContents" parameterType="memberVO" resultType="memberVO">
+		/* Member.selectContents */
+		<![CDATA[
+			 SELECT  
+			  
+				  ME_SEQ															 meSeq
+				, DATE_FORMAT(ME_DT,'%Y.%m.%d') 									 meDt
+				, ME_ID																 meId
+				, ME_NAME															 meName
+				, ME_PW															     mePw
+				, ME_HP 															 meHp
+				, ME_MAIL 															 meMail
+				
+		     FROM  T_MEMBER
+			 WHERE  ME_USE_YN='Y'	
+				 AND ME_ID = #{meId}
+				 AND ME_PW = #{mePw}
+		]]>
+	</select>
+	
+	
+	<select id= "findIdSelectContents" parameterType="memberVO" resultType="memberVO">
+		/* Member.findIdSelectContents */
+		<![CDATA[
+			 SELECT  
+			  
+				  ME_SEQ															 meSeq
+				, DATE_FORMAT(ME_DT,'%Y.%m.%d') 									 meDt
+				, ME_ID																 meId
+				, ME_NAME															 meName
+				, ME_PW															     mePw
+				, ME_HP 															 meHp
+				, ME_MAIL 															 meMail
+				
+		     FROM  T_MEMBER
+			 WHERE  ME_USE_YN='Y'	
+				 AND ME_NAME = #{meName}
+				 AND ME_HP = #{meHp}
+		]]>
+	</select>
+	
+	
+	
+	<select id= "findPwSelectContents" parameterType="memberVO" resultType="memberVO">
+		/* Member.findPwSelectContents */
+		<![CDATA[
+			 SELECT  
+			  
+				  ME_SEQ															 meSeq
+				, DATE_FORMAT(ME_DT,'%Y.%m.%d') 									 meDt
+				, ME_ID																 meId
+				, ME_NAME															 meName
+				, ME_PW															     mePw
+				, ME_HP 															 meHp
+				, ME_MAIL 															 meMail
+				
+		     FROM  T_MEMBER
+			 WHERE  ME_USE_YN='Y'	
+				 AND ME_NAME = #{meName}
+				 AND ME_HP = #{meHp}   
+				 AND ME_ID = #{meId}
+				  
+		]]>
+	</select>
+	
+	<select id= "checkPwSelectContents" parameterType="memberVO" resultType="memberVO">
+		/* Member.checkPwSelectContents */
+		<![CDATA[
+			 SELECT  
+			  
+				  ME_SEQ															 meSeq
+				, DATE_FORMAT(ME_DT,'%Y.%m.%d') 									 meDt
+				, ME_ID																 meId
+				, ME_NAME															 meName
+				, ME_PW															     mePw
+				, ME_HP 															 meHp
+				, ME_MAIL 															 meMail
+				
+		     FROM  T_MEMBER
+			 WHERE  ME_USE_YN='Y'	
+				 AND ME_ID = #{meId}
+				 
+		]]>
+	</select>
+	
+	   
+	
+	<select id="duplicateId" parameterType="memberVO" resultType="int">
+		/* Member.duplicateId */
+		<![CDATA[
+			 SELECT  
+			  
+				COUNT(ME_ID)
+				   
+		     FROM  T_MEMBER
+			 WHERE  ME_USE_YN='Y'	
+				 AND ME_ID = #{meId}
+		]]>
+	</select>
+	
+	
+	
+	<insert id="insertContents" parameterType="memberVO">
+		/* Member.insertContents */
+		<![CDATA[
+			INSERT INTO T_MEMBER(
+           	  	  ME_SEQ															 
+				, ME_ID																 
+				, ME_NAME															 
+				, ME_PW															     
+				, ME_HP 															 
+				, ME_MAIL 															 										
+			)   
+			VALUES (
+				 (SELECT IFNULL(MAX(TS.ME_SEQ)+1,1) FROM T_MEMBER TS)
+				,#{meId     }          
+				,#{meName 	}   
+				,#{mePw     }
+				,#{meHp     }
+				,#{meMail   }
+			)
+		]]>
+	</insert>
+	
+		<update id="updateContents" parameterType="memberVO">
+		/* Member.updateContents */
+		<![CDATA[
+			UPDATE T_MEMBER         
+			 SET   
+			      
+				 ME_ID																=#{meId		}
+				, ME_NAME															=#{meName   }
+				, ME_HP 															=#{meHp     }
+				, ME_MAIL 															=#{meMail   }
+				
+		]]>		 
+			<if test="mePw !=null and mePw !=''">
+				,ME_PW															    =#{mePw     }
+			</if>
+		<![CDATA[ 
+				
+			WHERE  ME_ID = #{meId}    
+		]]>
+	</update> 
+	
+		<update id="updateNewPw" parameterType="memberVO">
+		/* Member.updateNewPw */
+		<![CDATA[
+			UPDATE T_MEMBER         
+			 SET   
+			      	    
+						ME_PW															    =#{mePw     }
+				
+			WHERE  ME_ID = #{meId}    
+		]]>
+	</update> 
+	
+	
+
+
+	
+	
+	
+	
+</mapper>

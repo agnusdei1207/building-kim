@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.Free">
+
+	<sql id="Where"> 
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (FR_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR FR_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND FR_TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND FR_CONT LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+	 	</if>
+	 		<if test='schEtc01 !=null and schEtc01 !="" and schEtc01 != "0" '>
+				AND IF(FR_ATCH_FILE_ID = '' , 'N' , 'Y') = #{schEtc01}  
+			</if>      
+	</sql>       
+	    
+	 
+	 <select id="preSelectContents" parameterType="freeVO" resultType="freeVO">
+		/* Free.preSelectContents */
+		<![CDATA[
+			 SELECT  
+			 
+				  FR_SEQ															 frSeq
+				, DATE_FORMAT(FR_RGST_DT,'%Y.%m.%d') 								 frRgstDt
+				, F_USER_NM(FR_RGST_ID) 											 frRgstId
+				, FR_ATCH_FILE_ID 													 frAtchFileId
+				, FR_TITLE														     frTitle
+				, FR_CONT 															 frCont
+				, FR_ID 															 frId
+				, DATE_FORMAT(FR_DT,'%Y.%m.%d')										 frDt
+				
+		     FROM  T_FREE
+			 WHERE  FR_USE_YN='Y'	
+		]]>
+			<include refid="Where"/>  
+		<![CDATA[	 
+				 AND FR_SEQ < #{frSeq}
+				 ORDER BY FR_SEQ DESC
+				 LIMIT 1
+				 
+		]]>
+	</select>
+	  
+	 
+	 <select id="nextSelectContents" parameterType="freeVO" resultType="freeVO">
+		/* Free.nextSelectContents */
+		<![CDATA[
+			 SELECT  
+			 
+				  FR_SEQ															 frSeq
+				, DATE_FORMAT(FR_RGST_DT,'%Y.%m.%d') 								 frRgstDt
+				, F_USER_NM(FR_RGST_ID) 											 frRgstId
+				, FR_ATCH_FILE_ID 													 frAtchFileId
+				, FR_TITLE														     frTitle
+				, FR_CONT 															 frCont
+				, FR_ID 															 frId
+				, DATE_FORMAT(FR_DT,'%Y.%m.%d')										 frDt
+				
+		     FROM  T_FREE
+			 WHERE  FR_USE_YN='Y'	
+		]]>   
+			<include refid="Where"/>  
+		<![CDATA[	         
+				 AND FR_SEQ > #{frSeq}
+				 ORDER BY FR_SEQ
+				 LIMIT 1
+		]]>
+	</select>
+	    
+	   
+	<select id="selectContents" parameterType="freeVO" resultType="freeVO">
+		/* Free.selectContents */
+		<![CDATA[
+			 SELECT  
+			 
+				  FR_SEQ															 frSeq
+				, DATE_FORMAT(FR_RGST_DT,'%Y.%m.%d') 								 frRgstDt
+				, F_USER_NM(FR_RGST_ID) 											 frRgstId
+				, FR_ATCH_FILE_ID 													 frAtchFileId
+				, FR_TITLE														     frTitle
+				, FR_CONT 															 frCont
+				, FR_ID 															 frId
+				, DATE_FORMAT(FR_DT,'%Y.%m.%d')										 frDt
+				
+		     FROM  T_FREE
+			 WHERE  FR_USE_YN='Y'	
+				 AND FR_SEQ = #{frSeq}
+		]]>
+	</select>
+	
+	
+	<select id="selectList" parameterType="cmmnDefaultVO" resultType="freeVO">
+		/* Free.selectList */
+		<![CDATA[  
+      	     SELECT       
+      	       
+				  FR_SEQ															 frSeq
+				, DATE_FORMAT(FR_RGST_DT,'%Y.%m.%d') 								 frRgstDt
+				, F_USER_NM(FR_RGST_ID) 											 frRgstId
+				, FR_ATCH_FILE_ID 													 frAtchFileId
+				, FR_TITLE														     frTitle
+				, FR_CONT 															 frCont
+				, FR_ID 															 frId
+				, DATE_FORMAT(FR_DT,'%Y.%m.%d')										 frDt
+				
+		     FROM T_FREE
+			 WHERE FR_USE_YN='Y'	
+	      ]]>   
+		     <include refid="Where"/>	 
+	     <![CDATA[    
+	    		ORDER BY FR_SEQ DESC
+				LIMIT  #{firstIndex} , #{recordCountPerPage}
+		]]>
+	</select>	
+
+
+	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* Free.selectCount */
+		<![CDATA[ 
+			SELECT 
+				COUNT(FR_SEQ) frCnt 
+			FROM T_FREE
+			WHERE FR_USE_YN='Y'  
+		]]>
+			 <include refid="Where"/>
+	</select>
+	
+	<insert id="insertContents" parameterType="freeVO">
+		/* Free.insertContents */
+		<![CDATA[
+			INSERT INTO T_FREE(
+           	  	 FR_SEQ															
+				, FR_RGST_ID
+				, FR_ATCH_FILE_ID 		  							
+				, FR_TITLE													
+				, FR_CONT 													
+				, FR_ID 					  						
+			)   
+			VALUES (
+				 (SELECT IFNULL(MAX(TF.FR_SEQ)+1,1) FROM T_FREE TF)
+				,#{loginSeq     }          
+				,#{frAtchFileId }  
+				,#{frTitle      }
+				,#{frCont       }
+				,#{frId         }
+			)
+		]]>
+	</insert>
+	
+	<update id="updateContents" parameterType="freeVO">
+		/* Free.updateContents */
+		<![CDATA[
+			UPDATE T_FREE        
+			 SET   
+			      
+				FR_RGST_DT								 							 = NOW()
+				, FR_RVSE_ID														 =#{loginSeq	}	
+				, FR_ATCH_FILE_ID 													 =#{frAtchFileId}
+				, FR_TITLE														     =#{frTitle     }
+				, FR_CONT 															 =#{frCont      }
+				, FR_ID 															 =#{frId        }
+				, FR_DT																 = NOW()
+				
+			WHERE  FR_SEQ = #{frSeq}    
+		]]>
+	</update> 
+	
+	<update id="deleteContents" parameterType="freeVO">
+		/* Free.deleteContents */
+		<![CDATA[   
+			UPDATE T_FREE
+		       SET
+	          	 FR_USE_YN='N'
+			WHERE FR_SEQ=#{frSeq}
+		]]>
+	</update>
+
+
+	
+	
+	
+	
+</mapper>

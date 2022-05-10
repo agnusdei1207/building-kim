@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.Ceo">
+	 
+	<select id="selectContents" parameterType="ceoVO" resultType="ceoVO">
+		/* Ceo.selectContents */
+		<![CDATA[
+			 SELECT  
+			 
+				  CE_SEQ															 ceSeq
+				, CE_ATCH_FILE_ID 													 ceAtchFileId
+				, CE_NAME														     ceName
+				, DATE_FORMAT(CE_DT,'%Y.%m.%d') 									 ceDt
+				, CE_NUM 															 ceNum
+				, CE_HP 															 ceHp
+				, CE_ADD															 ceAdd
+
+		     FROM  T_CEO
+			 WHERE  CE_USE_YN='Y'	
+		]]>
+	</select>
+	   
+	<insert id="insertContents" parameterType="ceoVO">
+		/* Ceo.insertContents */
+		<![CDATA[
+			INSERT INTO T_CEO(
+           	  	  CE_SEQ															
+				, CE_ATCH_FILE_ID 													
+				, CE_NAME														    
+				, CE_NUM 															
+				, CE_HP 														
+				, CE_ADD																							
+			)      
+			VALUES (
+				 (SELECT IFNULL(MAX(TC.CE_SEQ)+1,1) FROM T_CEO TC)
+				,#{ceAtchFileId }          
+				,#{loginSeq		}  
+				,#{ceNum        }
+				,#{ceHp         }
+				,#{ceAdd        }
+				  
+			)
+		]]>
+	</insert> 
+	       
+	<update id="updateContents" parameterType="ceoVO">
+		/* Ceo.updateContents */
+		<![CDATA[
+			UPDATE T_CEO           
+			 SET   
+			        
+				 CE_ATCH_FILE_ID 													 =#{ceAtchFileId}
+				, CE_NAME														     =#{ceName      }
+				, CE_DT 															 = NOW()        
+				, CE_NUM 															 =#{ceNum       }
+				, CE_HP 															 =#{ceHp        }  
+				, CE_ADD															 =#{ceAdd       }
+				
+		]]>
+	</update> 
+	 
+</mapper>

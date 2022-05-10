@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.Banner">
+
+	<sql id="Where">
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (BA_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR BA_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND BA_TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND BA_CONT LIKE CONCAT('%',#{searchKeyword},'%')
+			</if> 
+	 	</if>           
+	 		<if test='schEtc01 != null and schEtc01 !="" and schEtc01 != "0"'>
+				AND IF(BA_ATCH_FILE_ID = '', 'N' , 'Y') = #{schEtc01}
+			</if>         
+	</sql>    
+	 
+	<select id="selectMainList" parameterType="cmmnDefaultVO" resultType="bannerVO">
+		/* Banner.selectMainList */
+		<![CDATA[  
+      	     SELECT  
+      	       
+				  BA_SEQ															 baSeq
+				, DATE_FORMAT(BA_RGST_DT,'%Y.%m.%d') 								 baRgstDt
+				, F_USER_NM(BA_RGST_ID) 											 baRgstId
+				, BA_ATCH_FILE_ID 													 baAtchFileId
+				, BA_TITLE														     baTitle
+				, BA_CONT 															 baCont
+				, BA_URL 															 baUrl
+				, BA_WINDOW															 baWindow
+				
+		     FROM T_BANNER 
+			 WHERE BA_USE_YN='Y'	
+	      ]]>   
+		     <include refid="Where"/>	 
+	     <![CDATA[     
+	    		ORDER BY BA_SEQ DESC
+		]]>
+	</select>	 
+	 
+	 
+	 
+	<select id="selectContents" parameterType="bannerVO" resultType="bannerVO">
+		/* Banner.selectContents */
+		<![CDATA[
+			 SELECT  
+			 
+				  BA_SEQ															 baSeq
+				, DATE_FORMAT(BA_RGST_DT,'%Y.%m.%d') 								 baRgstDt
+				, F_USER_NM(BA_RGST_ID) 											 baRgstId
+				, BA_ATCH_FILE_ID 													 baAtchFileId
+				, BA_TITLE														     baTitle
+				, BA_CONT 															 baCont
+				, BA_URL 															 baUrl
+				, BA_WINDOW															 baWindow
+				
+		     FROM  T_BANNER
+			 WHERE  BA_USE_YN='Y'	
+				 AND BA_SEQ = #{baSeq}
+		]]>
+	</select>
+	
+	
+	<select id="selectList" parameterType="cmmnDefaultVO" resultType="bannerVO">
+		/* Banner.selectList */
+		<![CDATA[  
+      	     SELECT  
+      	       
+				  BA_SEQ															 baSeq
+				, DATE_FORMAT(BA_RGST_DT,'%Y.%m.%d') 								 baRgstDt
+				, F_USER_NM(BA_RGST_ID) 											 baRgstId
+				, BA_ATCH_FILE_ID 													 baAtchFileId
+				, BA_TITLE														     baTitle
+				, BA_CONT 															 baCont
+				, BA_URL 															 baUrl
+				, BA_WINDOW															 baWindow
+				
+		     FROM T_BANNER
+			 WHERE BA_USE_YN='Y'	
+	      ]]>   
+		     <include refid="Where"/>	 
+	     <![CDATA[    
+	    		ORDER BY BA_SEQ DESC
+				LIMIT  #{firstIndex} , #{recordCountPerPage}
+		]]>
+	</select>	
+
+
+	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* Banner.selectCount */
+		<![CDATA[ 
+			SELECT 
+				COUNT(BA_SEQ) baCnt 
+			FROM T_BANNER
+			WHERE BA_USE_YN='Y'  
+		]]>
+			 <include refid="Where"/>
+	</select>
+	
+	<insert id="insertContents" parameterType="bannerVO">
+		/* Banner.insertContents */
+		<![CDATA[
+			INSERT INTO T_BANNER(
+           	  	 BA_SEQ															
+				, BA_RGST_ID
+				, BA_ATCH_FILE_ID 									
+				, BA_TITLE													
+				, BA_CONT 													
+				, BA_URL 														
+				, BA_WINDOW																										
+			)   
+			VALUES (
+				 (SELECT IFNULL(MAX(TS.BA_SEQ)+1,1) FROM T_BANNER TS)
+				,#{loginSeq     }          
+				,#{baAtchFileId }  
+				,#{baTitle      }
+				,#{baCont       }
+				,#{baUrl        }
+				,#{baWindow     }
+				 
+			)
+		]]>
+	</insert>
+	
+	<update id="updateContents" parameterType="bannerVO">
+		/* Banner.updateContents */
+		<![CDATA[
+			UPDATE T_BANNER        
+			 SET   
+			      
+				BA_RGST_DT								 							 = NOW()
+				, BA_RVSE_ID														 =#{loginSeq	}	
+				, BA_ATCH_FILE_ID 													 =#{baAtchFileId}
+				, BA_TITLE														     =#{baTitle     }
+				, BA_CONT 															 =#{baCont      }
+				, BA_URL 															 =#{baUrl        }
+				, BA_WINDOW 														 =#{baWindow        }
+				
+			WHERE  BA_SEQ = #{baSeq}    
+		]]>
+	</update> 
+	
+	<update id="deleteContents" parameterType="bannerVO">
+		/* Banner.deleteContents */
+		<![CDATA[   
+			UPDATE T_BANNER
+		       SET  
+	          	 BA_USE_YN='N'
+			WHERE BA_SEQ=#{baSeq}
+		]]>
+	</update>
+
+ 
+	
+	
+	
+	
+</mapper>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.Port">
+
+	<sql id="Where">
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (PO_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR PO_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND PO_TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND PO_CONT LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>   
+	 	</if>  
+			<if test='schEtc02 !=null and schEtc02 !="" and schEtc02 != "0"'>
+				AND PO_KIND = #{schEtc02}
+			</if>        
+	</sql>        
+	 
+	 <select id="selectKindContents" parameterType="portVO" resultType="portVO">
+		/* Port.selectKindContents */
+		<![CDATA[
+			 SELECT  
+			 
+				  PO_SEQ															 poSeq
+				, DATE_FORMAT(PO_RGST_DT,'%Y.%m.%d') 								 poRgstDt
+				, F_USER_NM(PO_RGST_ID) 											 poRgstId
+				, PO_ATCH_FILE_ID 													 poAtchFileId
+				, PO_TITLE														     poTitle
+				, PO_CONT 															 poCont
+				, PO_KIND 															 poKind
+				
+		     FROM  T_PORT
+			 WHERE  PO_USE_YN='Y'	
+				 AND PO_SEQ = #{poSeq}
+		]]>
+	</select>
+	 
+	<select id="selectContents" parameterType="portVO" resultType="portVO">
+		/* Port.selectContents */
+		<![CDATA[
+			 SELECT  
+			 
+				  PO_SEQ															 poSeq
+				, DATE_FORMAT(PO_RGST_DT,'%Y.%m.%d') 								 poRgstDt
+				, F_USER_NM(PO_RGST_ID) 											 poRgstId
+				, PO_ATCH_FILE_ID 													 poAtchFileId
+				, PO_TITLE														     poTitle
+				, PO_CONT 															 poCont
+				, PO_KIND 															 poKind
+				
+		     FROM  T_PORT
+			 WHERE  PO_USE_YN='Y'	
+				 AND PO_SEQ = #{poSeq}
+		]]>
+	</select>
+	
+	<select id="selectKindList" parameterType="cmmnDefaultVO" resultType="portVO">
+		/* Port.selectKindList */
+		<![CDATA[   
+      	     SELECT  
+      	       
+				  PO_SEQ															 poSeq
+				, DATE_FORMAT(PO_RGST_DT,'%Y.%m.%d') 								 poRgstDt
+				, F_USER_NM(PO_RGST_ID) 											 poRgstId
+				, PO_ATCH_FILE_ID 													 poAtchFileId
+				, PO_TITLE														     poTitle
+				, PO_CONT 															 poCont
+				, PO_KIND 															 poKind
+				   
+		     FROM T_PORT
+			 WHERE PO_USE_YN='Y'	
+			 	AND PO_KIND = #{schEtc05}
+	      ]]>
+		     <include refid="Where"/>	 
+	     <![CDATA[    
+	    		ORDER BY PO_SEQ DESC
+				LIMIT  #{firstIndex} , #{recordCountPerPage}
+		]]>
+	</select>	 
+	
+	
+	<select id="selectMainList" parameterType="cmmnDefaultVO" resultType="portVO">
+		/* Port.selectMainList */
+		<![CDATA[   
+      	     SELECT  
+      	       
+				  PO_SEQ															 poSeq
+				, DATE_FORMAT(PO_RGST_DT,'%Y.%m.%d') 								 poRgstDt
+				, F_USER_NM(PO_RGST_ID) 											 poRgstId
+				, PO_ATCH_FILE_ID 													 poAtchFileId
+				, PO_TITLE														     poTitle
+				, PO_CONT 															 poCont
+				, PO_KIND 															 poKind
+				   
+		     FROM T_PORT
+			 WHERE PO_USE_YN='Y'	
+			 	AND PO_KIND = #{schEtc05}
+    		ORDER BY PO_SEQ DESC
+			LIMIT  3
+		]]>
+	</select>	
+	
+	<select id="selectKindCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* Port.selectKindCount */
+		<![CDATA[ 
+			SELECT 
+				COUNT(PO_SEQ) poCnt   
+			FROM T_PORT
+			WHERE PO_USE_YN='Y'  
+				AND PO_KIND = #{schEtc05}
+		]]>
+			 <include refid="Where"/>
+	</select>
+	
+	<select id="selectList" parameterType="cmmnDefaultVO" resultType="portVO">
+		/* Port.selectList */
+		<![CDATA[  
+      	     SELECT  
+      	       
+				  PO_SEQ															 poSeq
+				, DATE_FORMAT(PO_RGST_DT,'%Y.%m.%d') 								 poRgstDt
+				, F_USER_NM(PO_RGST_ID) 											 poRgstId
+				, PO_ATCH_FILE_ID 													 poAtchFileId
+				, PO_TITLE														     poTitle
+				, PO_CONT 															 poCont
+				, PO_KIND 															 poKind
+				   
+		     FROM T_PORT
+			 WHERE PO_USE_YN='Y'	
+	      ]]>
+		     <include refid="Where"/>	 
+	     <![CDATA[    
+	    		ORDER BY PO_SEQ DESC
+				LIMIT  #{firstIndex} , #{recordCountPerPage}
+		]]>
+	</select>	
+
+	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* Port.selectCount */
+		<![CDATA[ 
+			SELECT 
+				COUNT(PO_SEQ) poCnt 
+			FROM T_PORT
+			WHERE PO_USE_YN='Y'  
+		]]>
+			 <include refid="Where"/>
+	</select>
+	
+	<insert id="insertContents" parameterType="portVO">
+		/* Port.insertContents */
+		<![CDATA[
+			INSERT INTO T_PORT(
+           	  	 PO_SEQ															
+				, PO_RGST_ID
+				, PO_ATCH_FILE_ID 									
+				, PO_TITLE													
+				, PO_CONT 													
+				, PO_KIND 								  			
+			)   
+			VALUES (
+				 (SELECT IFNULL(MAX(TS.PO_SEQ)+1,1) FROM T_PORT TS)
+				,#{loginSeq     }          
+				,#{poAtchFileId }  
+				,#{poTitle      }
+				,#{poCont       }
+				,#{poKind       }
+				 
+			)
+		]]>
+	</insert>
+	
+	<update id="updateContents" parameterType="portVO">
+		/* Port.updateContents */
+		<![CDATA[
+			UPDATE T_PORT        
+			 SET   
+			      
+				PO_RGST_DT								 							 = NOW()
+				, PO_RVSE_ID														 =#{loginSeq	}	
+				, PO_ATCH_FILE_ID 													 =#{poAtchFileId}
+				, PO_TITLE														     =#{poTitle     }
+				, PO_CONT 															 =#{poCont      }
+				, PO_KIND 															 =#{poKind      }
+				
+			WHERE  PO_SEQ = #{poSeq}    
+		]]>
+	</update> 
+	
+	<update id="deleteContents" parameterType="portVO">
+		/* Port.deleteContents */
+		<![CDATA[   
+			UPDATE T_PORT
+		       SET
+	          	 PO_USE_YN='N'
+			WHERE PO_SEQ=#{poSeq}
+		]]>
+	</update>
+
+</mapper>

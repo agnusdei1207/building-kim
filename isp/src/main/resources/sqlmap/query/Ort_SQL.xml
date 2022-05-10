@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.Ort">
+	 
+	<select id="selectContents" parameterType="ortVO" resultType="ortVO">
+		/* Ort.selectContents */
+		<![CDATA[
+		 
+			 SELECT  
+			           
+				  OR_SEQ															 orSeq
+				, OR_ATCH_FILE_ID 													 orAtchFileId
+				, OR_PJ_NAME														 orPjName
+				, OR_PJ_CONT														 orPjCont
+				, F_USER_NM(OR_ID)													 orId
+				, OR_DT																 orDt
+				, OR_PW																 orPw
+				, OR_CATEGORY														 orCategory
+				, OR_STA_DATE														 orStaDate
+				, OR_END_DATE														 orEndDate
+				, OR_NAME															 orName
+				, OR_BS_NUM															 orBsNum
+				, OR_HP																 orHp
+				, OR_ADDRESS														 orAddress
+				, OR_MAIL															 orMail
+				, OR_MBTI															 orMbti
+				, OR_BLOOD															 orBlood
+
+		     FROM  T_ORT
+			 WHERE  OR_USE_YN='Y'	
+			   
+		]]>   
+	</select>
+	   
+	<insert id="insertContents" parameterType="ortVO">
+		/* Ort.insertContents */
+		<![CDATA[
+			INSERT INTO T_ORT(
+           	  		  OR_SEQ						
+					, OR_ATCH_FILE_ID 				
+					, OR_PJ_NAME					
+					, OR_PJ_CONT					
+					, OR_ID							
+					, OR_PW							
+					, OR_CATEGORY					
+					, OR_STA_DATE					
+					, OR_END_DATE					
+					, OR_NAME						
+					, OR_BS_NUM						
+					, OR_HP							
+					, OR_ADDRESS					
+					, OR_MAIL						
+					, OR_MBTI	
+					, OR_BLOOD															 					
+			)       
+			VALUES (
+				 (SELECT IFNULL(MAX(TR.OR_SEQ)+1,1) FROM T_ORT TR)
+				 ,#{orAtchFileId}  
+				 ,#{orPjName    }  
+				 ,#{orPjCont    }  
+				 ,#{loginSeq    }      
+				 ,#{orPw        }  
+				 ,#{orCategory  }  
+				 ,#{orStaDate   }  
+				 ,#{orEndDate   }  
+				 ,#{orName      }  
+				 ,#{orBsNum     }  
+				 ,#{orHp        }  
+				 ,#{orAddress   }  
+				 ,#{orMail      }  
+				 ,#{orMbti      }  
+				 ,#{orBlood     }  
+			)
+		]]>
+	</insert> 
+	       
+	<update id="updateContents" parameterType="ortVO">
+		/* Ort.updateContents */
+		<![CDATA[
+			UPDATE T_ORT            
+			 SET      
+			          
+				  OR_ATCH_FILE_ID 													=#{orAtchFileId}
+				, OR_PJ_NAME														=#{orPjName    }
+				, OR_PJ_CONT														=#{orPjCont    }
+				, OR_ID																=#{orId        }
+				, OR_DT																= NOW()        
+				, OR_PW																=#{orPw        }
+				, OR_CATEGORY														=#{orCategory  }
+				, OR_STA_DATE														=#{orStaDate   }
+				, OR_END_DATE														=#{orEndDate   }
+				, OR_NAME															=#{orName      }
+				, OR_BS_NUM															=#{orBsNum     }
+				, OR_HP																=#{orHp        }
+				, OR_ADDRESS														=#{orAddress   }
+				, OR_MAIL															=#{orMail      }
+				, OR_MBTI															=#{orMbti      }
+				, OR_BLOOD															=#{orBlood     }
+				
+		]]>
+	</update> 
+	 
+</mapper>

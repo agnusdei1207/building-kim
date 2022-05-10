@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.EstQst">
+
+	<sql id="Where">
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (EQ_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR EQ_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND EQ_TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND EQ_CONT LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>   
+	 	</if>   
+	 		<if test='schEtc03 !=null and schEtc03 !="" and schEtc03 != "0"'>
+				AND EQ_STATE = #{schEtc03}
+			</if>   
+	</sql>         
+	  
+	<select id="selectContents" parameterType="estQstVO" resultType="estQstVO">
+		/* EstQst.selectContents */
+		<![CDATA[ 
+			 SELECT  
+			 
+				  EQ_SEQ															 eqSeq
+				, DATE_FORMAT(EQ_RGST_DT,'%Y.%m.%d') 								 eqRgstDt
+				, F_USER_NM(EQ_RGST_ID) 											 eqRgstId
+				, EQ_ATCH_FILE_ID 													 eqAtchFileId
+				, EQ_TITLE														     eqTitle
+				, EQ_CONT 															 eqCont
+				, EQ_ID 															 eqId
+				, EQ_PW 															 eqPw
+				, DATE_FORMAT(EQ_DT,'%Y.%m.%d')										 eqDt
+				, EQ_STATE 															 eqState
+				, EQ_CMT 															 eqCmt
+				
+		     FROM  T_ESTQST
+			 WHERE  EQ_USE_YN='Y'	
+				 AND EQ_SEQ = #{eqSeq}
+		]]>
+	</select>
+	
+	
+	<select id="selectList" parameterType="cmmnDefaultVO" resultType="estQstVO">
+		/* EstQst.selectList */
+		<![CDATA[  
+      	     SELECT        
+      	       
+				 EQ_SEQ																 eqSeq
+				, DATE_FORMAT(EQ_RGST_DT,'%Y.%m.%d') 								 eqRgstDt
+				, F_USER_NM(EQ_RGST_ID) 											 eqRgstId
+				, EQ_ATCH_FILE_ID 													 eqAtchFileId
+				, EQ_TITLE														     eqTitle
+				, EQ_CONT 															 eqCont
+				, EQ_ID 															 eqId
+				, EQ_PW 															 eqPw
+				, DATE_FORMAT(EQ_DT,'%Y.%m.%d')										 eqDt
+				, EQ_STATE 															 eqState
+				, EQ_CMT 															 eqCmt
+				   
+		     FROM T_ESTQST
+			 WHERE EQ_USE_YN='Y'	
+	      ]]>   
+		     <include refid="Where"/>	 
+	     <![CDATA[    
+	    		ORDER BY EQ_SEQ DESC
+				LIMIT  #{firstIndex} , #{recordCountPerPage}
+		]]>
+	</select>	
+
+
+	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* EstQst.selectCount */
+		<![CDATA[ 
+			SELECT 
+				COUNT(EQ_SEQ) eqCnt 
+			FROM T_ESTQST
+			WHERE EQ_USE_YN='Y'  
+		]]>
+			 <include refid="Where"/>
+	</select>
+	
+	<insert id="insertContents" parameterType="estQstVO">
+		/* EstQst.insertContents */
+		<![CDATA[ 
+			INSERT INTO T_ESTQST(
+           	  	 EQ_SEQ															
+				, EQ_RGST_ID
+				, EQ_ATCH_FILE_ID 									
+				, EQ_TITLE													
+				, EQ_CONT 													
+				, EQ_ID 	
+				, EQ_PW 														
+				, EQ_STATE 															
+				, EQ_CMT 												  													
+			)   
+			VALUES (
+				 (SELECT IFNULL(MAX(TS.EQ_SEQ)+1,1) FROM T_ESTQST TS)
+				,#{loginSeq     }          
+				,#{eqAtchFileId }  
+				,#{eqTitle      }
+				,#{eqCont       }
+				,#{eqId         }
+				,#{eqPw         }
+				,'A'
+				,#{eqCmt        }
+				 
+			) 
+		]]>
+	</insert>
+	
+	
+	<update id="updateCmtContents" parameterType="estQstVO">
+		/* EstQst.updateCmtContents */
+		<![CDATA[ 
+			UPDATE T_ESTQST        
+			 SET    
+			               
+				EQ_STATE 															 =#{eqState     }
+				, EQ_CMT 															 =#{eqCmt       }
+				                                                                                     
+			WHERE  EQ_SEQ = #{eqSeq}    
+		]]>
+	</update> 
+	
+	
+	<update id="updateContents" parameterType="estQstVO">
+		/* EstQst.updateContents */
+		<![CDATA[ 
+			UPDATE T_ESTQST        
+			 SET    
+			      
+				EQ_RGST_DT								 							 = NOW()
+				, EQ_RVSE_ID														 =#{loginSeq	}	
+				, EQ_ATCH_FILE_ID 													 =#{eqAtchFileId}
+				, EQ_TITLE														     =#{eqTitle     }
+				, EQ_CONT 															 =#{eqCont      }
+				, EQ_ID 															 =#{eqId        }
+				, EQ_PW 															 =#{eqPw		}		
+				, EQ_DT																 = NOW()           
+				, EQ_STATE 															 =#{eqState     }
+				                                                                                         
+			WHERE  EQ_SEQ = #{eqSeq}    
+		]]>
+	</update> 
+	
+	<update id="deleteContents" parameterType="estQstVO">
+		/* EstQst.deleteContents */
+		<![CDATA[   
+			UPDATE T_ESTQST 
+		       SET
+	          	 EQ_USE_YN='N'
+			WHERE EQ_SEQ=#{eqSeq}
+		]]>
+	</update>
+
+
+	
+	
+	
+	
+</mapper>
