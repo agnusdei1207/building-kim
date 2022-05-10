@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.Pop">
+
+	<sql id="Where"> 
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (PO_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR PO_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND PO_TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND PO_CONT LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+	 	</if>
+	 		<if test='schEtc01 !=null and schEtc01 !="" and schEtc01 != "0" '>
+				AND IF(PO_ATCH_FILE_ID = '' , 'N' , 'Y') = #{schEtc01}  
+			</if>      
+	</sql>       
+	    
+	<select id="selectContents" parameterType="popVO" resultType="popVO">
+		/* Pop.selectContents */
+		<![CDATA[
+			 SELECT  
+			 
+				  PO_SEQ															 poSeq
+				, PO_ATCH_FILE_ID 													 poAtchFileId
+				, PO_TITLE														     poTitle
+				, PO_CONT 															 poCont
+				, PO_WIDTH 															 poWidth
+				, PO_HEIGHT 														 poHeight
+				, PO_LEFT 															 poLeft
+				
+		     FROM  T_POP
+			 WHERE  PO_USE_YN='Y'	
+				 AND PO_SEQ = #{poSeq}
+		]]>
+	</select>
+	
+	
+	<select id="selectList" parameterType="cmmnDefaultVO" resultType="popVO">
+		/* Pop.selectList */
+		<![CDATA[  
+      	     SELECT       
+      	       
+				  PO_SEQ															 poSeq
+				, PO_ATCH_FILE_ID 													 poAtchFileId
+				, PO_TITLE														     poTitle
+				, PO_CONT 															 poCont
+				, PO_WIDTH 															 poWidth
+				, PO_HEIGHT 														 poHeight
+				, PO_LEFT 															 poLeft
+				
+		     FROM T_POP
+			 WHERE PO_USE_YN='Y'	
+	      ]]>   
+		     <include refid="Where"/>	 
+	     <![CDATA[    
+	    		ORDER BY PO_SEQ DESC
+				LIMIT  #{firstIndex} , #{recordCountPerPage}
+		]]>
+	</select>	
+
+
+	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* Pop.selectCount */
+		<![CDATA[ 
+			SELECT 
+				COUNT(PO_SEQ) poCnt 
+			FROM T_POP
+			WHERE PO_USE_YN='Y'  
+		]]>
+			 <include refid="Where"/>
+	</select>
+	
+	<insert id="insertContents" parameterType="popVO">
+		/* Pop.insertContents */
+		<![CDATA[
+			INSERT INTO T_POP(
+           	 	  PO_SEQ															 
+				, PO_ATCH_FILE_ID 													 
+				, PO_TITLE														     
+				, PO_CONT 															 
+				, PO_WIDTH 															 
+				, PO_HEIGHT 														 
+				, PO_LEFT 															 				  						
+			)   
+			VALUES (
+				 (SELECT IFNULL(MAX(TF.PO_SEQ)+1,1) FROM T_POP TF)
+				,#{ poAtchFileId   }  
+				,#{ poTitle        }
+				,#{ poCont         }
+				,#{ poWidth        }
+				,#{ poHeight       }
+				,#{ poLeft		   }
+			)
+		]]>
+	</insert>
+	
+	<update id="updateContents" parameterType="popVO">
+		/* Pop.updateContents */
+		<![CDATA[
+			UPDATE T_POP        
+			 SET   
+			      
+				 PO_ATCH_FILE_ID 													=#{poAtchFileId}
+				, PO_TITLE														    =#{poTitle     }
+				, PO_CONT 															=#{poCont      }
+				, PO_WIDTH 															=#{poWidth     }
+				, PO_HEIGHT 														=#{poHeight    }
+				, PO_LEFT 															=#{poLeft      }
+				
+			WHERE  PO_SEQ = #{poSeq}    
+		]]>
+	</update> 
+	
+	<update id="deleteContents" parameterType="popVO">
+		/* Pop.deleteContents */
+		<![CDATA[   
+			UPDATE T_POP
+		       SET
+	          	 PO_USE_YN='N'
+			WHERE PO_SEQ=#{poSeq}
+		]]>
+	</update>
+
+
+	
+	
+	
+	
+</mapper>

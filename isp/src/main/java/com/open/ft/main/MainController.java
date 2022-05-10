@@ -1,8 +1,6 @@
 package com.open.ft.main;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -14,19 +12,18 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.open.cmmn.model.CmmnDefaultVO;
 import com.open.cmmn.model.FileVO;
 import com.open.cmmn.service.CmmnService;
 import com.open.cmmn.service.FileMngService;
+import com.open.ma.develop.ort.service.OrtVO;
 import com.open.ma.kim.banner.service.BannerVO;
 import com.open.ma.kim.ceo.service.CeoVO;
 import com.open.ma.kim.ntc.service.NtcVO;
 import com.open.ma.kim.port.service.PortVO;
 
-/** 공지사항 게시판을 관리하는 컨트롤러 클래스를 정의한다.
- */
+
 @Controller
 public class MainController {
 
@@ -47,7 +44,7 @@ public class MainController {
 		    
     	HttpSession session = request.getSession();
     	CeoVO ceoVO = (CeoVO)session.getAttribute("ceoVO");
-    	
+    	 
     	FileVO fileVO = new FileVO();         
 		fileVO.setAtchFileId(ceoVO.getCeAtchFileId());
 		List<FileVO> ceoFileSnList = fileMngService.selectFileInfs(fileVO);
@@ -58,7 +55,11 @@ public class MainController {
 		 
 		List<BannerVO> bannerList = (List<BannerVO>) cmmnService.selectList(searchVO, "Banner.selectMainList" );
 		model.addAttribute("bannerList", bannerList);
-		  
+		    
+		OrtVO ortVO = (OrtVO) cmmnService.selectContents(searchVO, "Ort" );
+		model.addAttribute("ortVO", ortVO);
+		    
+		
 		return folderPath + "main";
 	}
                 
@@ -87,7 +88,7 @@ public class MainController {
     			category = "buildEx";
     			break;
     		}	
-    	}
+    	}         
     	 
     	List<PortVO> resultList = (List<PortVO>) cmmnService.selectList(searchVO, "Port.selectMainList" );
     	

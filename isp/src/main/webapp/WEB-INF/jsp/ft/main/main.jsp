@@ -98,7 +98,7 @@
 				</nav>  
 			</div>
 			<!-- //GNB --> 
-		</header>     
+		</header>      
 		<!-- // header   --> 
 		<!-- container -->   
 		<div id="container">      
@@ -161,7 +161,7 @@
 									</div>   
 								</c:otherwise>  
 							</c:choose>          
-						</c:forEach>  
+						</c:forEach>   
 					</c:if>
 				</div> 
 				<div class="main_tabarea clear"> 
@@ -230,9 +230,11 @@
 				<p class="copy">2022 Copyright by ${ceoVO.ceName } 사무소 &copy; all right reserved.</p>
 			</div>
 		</div>
-	</footer>
-	<!-- //footer -->
-	</div>  </body>
+		</footer>
+		<!-- //footer -->
+		
+		</div> 
+	</body>
 </html>
 
 
