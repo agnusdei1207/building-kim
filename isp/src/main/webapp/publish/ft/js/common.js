@@ -79,19 +79,17 @@ $(document).ready(function(){
 });
 
 //팝업
-function view_show(num) {
+function view_show(num) {   
 	var left = ( $(window).scrollLeft() + ( $(window).width() - $('.popup').width()) / 2 );
 	var top = ( $(window).scrollTop() + ( $(window).height() - $('.popup').height()) / 2 );
 	$('.popup').css({'left':left,'top':top, 'position':'absolute'});
 	document.getElementById("dispay_view"+num).style.display = "block";
-	//document.getElementById("layer_bg").style.display = "block";
+	document.getElementById("layer_bg").style.display = "block";
  }
  function view_hide(num) {
     document.getElementById("dispay_view"+num).style.display = "none";
-    //document.getElementById("layer_bg").style.display = "none";
+    document.getElementById("layer_bg").style.display = "none";
  }
- 
- 
 
   
  function checkMsg(id ,msg){

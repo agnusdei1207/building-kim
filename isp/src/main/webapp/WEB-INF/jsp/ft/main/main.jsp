@@ -3,7 +3,7 @@
 
 <!doctype html>
 <html lang="ko">
-<head>
+<head> 
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 	<title>김건축사무소</title>
@@ -13,13 +13,11 @@
 	<link rel="stylesheet" type="text/css" href="/publish/ft/css/swiper.min.css">
 	<script type="text/javascript" src="/publish/ft/js/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="/publish/ft/js/swiper.min.js"></script>
-	<script type="text/javascript" src="/publish/ft/js/slick.min.js"></script>
-	<script type="text/javascript" src="/publish/ft/js/common.js"></script>
-		<script type="text/javascript" src="/publish/ma/js/board.js"></script>
+	<script type="text/javascript" src="/publish/ft/js/slick.min.js"></script> 
+	<script type="text/javascript" src="/publish/ft/js/common.js"></script> 
+	<script type="text/javascript" src="/publish/ma/js/board.js"></script>
 	<script type="text/javascript" src="/publish/ft/js/jquery.bxslider.js"></script>
-	
 	<script type="text/javascript" src="/publish/ft/js/jquery-ui-1.12.1.custom.js"></script>
-	
 	<script src="/publish/ft/js/jquery.cookie.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-JQDGRELBD4"></script>
 	<script type="text/javascript">
@@ -44,11 +42,11 @@
 				url : "/ft/main/addList.do",
 			    dataType: "html",
 				success : function(data){
-					console.log(data);    
 					$("#main_tab01").html(data);
 				}
-			})
-		}); 
+			})   
+		});  
+		
 	function port(category){
 		$.ajax({   
 			method : "POST",
@@ -56,7 +54,6 @@
 			data : {"category" : category},
 		    dataType: "html", 
 			success : function(data){  
-				console.log(data);  
 				$("#main_tab01").html(data);
 			}
 		})
@@ -91,7 +88,7 @@
 						</c:choose>
 					</ul>
 				</div>         
-			</div>     
+			</div>      
 			<!-- GNB --> 
 			<h2 class="hidden">주메뉴</h2>
 			<div id="gnb_area">
@@ -113,12 +110,12 @@
 				</nav>  
 			</div>
 			<!-- //GNB --> 
-		</header>      
-		<!-- // header   --> 
-		<!-- container -->   
-		<div id="container">      
+		</header>        
+		<!-- // header   -->   
+		<!-- container -->        
+		<div id="container">           
 			<div class="main_slider">     
-				<ul class="slider">        
+				<ul class="slider">          
 					<c:choose> 
 						<c:when test="${fn:length(ceoFileSnList) gt 0 }">
 							<c:forEach var="ceo" items="${ceoFileSnList }">
@@ -126,7 +123,7 @@
 									<img src="/atch/getImage.do?atchFileId=${ceoVO.ceAtchFileId }&fileSn=${ceo.fileSn}" style="width:1900px; height:460px;" alt="" >
 								</li>      
 							</c:forEach>     
-						</c:when>
+						</c:when> 
 						<c:otherwise>   
 							<li>        
 								<img src="/publish/ft/images/sample.png" style="width:1900px; height:460px;">
@@ -245,21 +242,62 @@
 				<p class="copy">2022 Copyright by ${ceoVO.ceName } 사무소 &copy; all right reserved.</p>
 			</div>
 		</div>
-		</footer>
-		<!-- //footer -->
-		<!-- pc 팝업 -->
-		<div id="pcPop">  
-		</div>
-		<!-- //팝업 -->
-		
-		
+		</footer>  
+		<!-- //footer -->   
+		<!-- pc 팝업 -->                
+		<div id="pcPop">  	   
+			<c:if test="${fn:length(popList) gt 0 and cookie.p_popUpYn.value eq null}">  
+				<c:forEach var="list" items="${popList }">
+					<div id="p_display_view_${list.poSeq}"class="mainPop js-mainPop id_popup1 p_main_pop" style="width:${list.poWidth}px; top:${list.poHeight}px; left:${list.poLeft}px;">
+					<h1 class="mainPop_tag">공지<br>사항</h1>    
+						<h2 class="mainPop_tit">${util:unEscape(list.poTitle)}</h2>
+						<div class="mainPop_cont">   
+							<p>${util:unEscape(list.poCont)}</p>
+							<img src="/atch/getImage.do?atchFileId=${list.poAtchFileId}&fileSn=0" alt="팝업" style="width:70%;">	
+						</div>
+						<div class="mainPop_foot"> 
+							<label class="no_today cursor"><input type="checkbox" class="checkbox check cursor" name="p_popUpChk" onclick="closePopup(this,'p',${list.poSeq})">오늘 하루 동안 열지 않음</label>
+							<a href="javaScript:void(0)" class="btn_close od_popup" onclick="view_hide('p',${list.poSeq});">닫기</a>
+						</div>      
+					</div>        
+				</c:forEach>   
+			</c:if> 
+		</div> 
+		<!-- //팝업 --> 
+		<!--  모바일 팝업 -->	  
+		<c:if test="${fn:length(popList) gt 0 and cookie.m_popUpYn.value eq null}">
+			<div id="m_display_view" class="mainPop js-mainPop id_popup1 m_main_pop" style="display:none;">
+				<h1 class="mainPop_tag">공지<br>사항</h1>
+				<div class="m_main_popslide swiper-container">
+					<div class="swiper-wrapper">				    	
+						<c:forEach var="list" items="${popList }" varStatus="status">
+							<div class="swiper-slide">
+								<h2 class="mainPop_tit">${util:unEscape(list.poTitle)}</h2>
+								<div class="mainPop_cont">
+									<p>${util:unEscape(list.poCont)}</p>
+									<span>
+										<c:if test="${list.poAtchFileId !=null && list.poAtchFileId !='' }">
+											<img src="/atch/getImage.do?atchFileId=${list.poAtchFileId}&fileSn=0" alt="배너">
+										</c:if>
+									</span>
+								</div>
+							</div> 
+						</c:forEach>
+					</div>
+				</div>	            
+				<div class="mainPop_foot">
+					<label class="no_today"><input type="checkbox" class="checkbox check" name="m_popUpChk" onclick="closePopup(this,'m')">오늘 하루 동안 열지 않음</label>
+					<a href="javaScript:void(0)" class="btn_close" class="od_popup" onclick="view_hide('m'); return false;">닫기</a>
+				</div>
+			</div>
+			<div class="popup_bg" id="js-popup-bg" style="display: none;"></div>
+		</c:if>	
+		<!-- //모바일팝업 -->	
 		</div> 
 	</body>
 	
-	
 <script type="text/javascript">
 $(document).ready(function(){
-	
 	/* 모바일 팝업 슬라이드*/
 	var mainPopSlide = $('.m_main_popslide .swiper-slide').length;
 	if(mainPopSlide>1){
@@ -282,50 +320,49 @@ $(document).ready(function(){
 function isMobile(){
 	return /(iphone|ipod|ipad|android|blackberry|windows ce|palm|symbian)/i.test(navigator.userAgent);
 }
-
-
-<%-- PC 팝업 --%>
-function fncP_PopUp(){
-	$("#pcPop").html(""); 
-	<c:forEach var="list" items="${popList}" varStatus="status">
-		if($.cookie("p_popUpYn_${list.poSeq}") == null){
-			if(hideChk.indexOf("/[${list.poSeq}]") == -1){
-				var html="";
-				html = '<div id="p_display_view_${list.poSeq}"class="mainPop js-mainPop id_popup1 p_main_pop">';
-				html += '<h1 class="mainPop_tag">공지<br>사항</h1>';
-				html += '<h2 class="mainPop_tit">${util:unEscape(list.poTitle)}</h2>';
-				html += '<div class="mainPop_cont">';
-				html += '<p>${util:unEscape(list.poCont)}</p>';
-				if('${list.poAtchFileId}' != null && '${list.poAtchFileId}' != ''){
-					html += '<img src="/atch/getImage.do?atchFileId=${list.poAtchFileId}&fileSn=0" alt="팝업" style="width:70%;">';
-				}
-				html += '</div>';
-				html += '<div class="mainPop_foot">';
-				html += '<label class="no_today cursor"><input type="checkbox" class="checkbox check cursor" name="p_popUpChk" onclick="closePopup(this,\'p\',${list.poSeq})">오늘 하루 동안 열지 않음</label>';
-				html += '<a href="javaScript:void(0)" class="btn_close od_popup" onclick="view_hide(\'p\',${list.poSeq}); return false;">닫기</a>';
-				html += '</div>';
-				html += '</div>';
-				$("#pcPop").append(html);	
-				$("#p_display_view_${list.poSeq}").css({"left":"${list.poLeft}px", "top":"${list.poHeight}px", "width":"${list.poWidth}px"});
-				$("#p_display_view_${list.poSeq}").draggable();
-			} 
-		}	    		
-	</c:forEach>
-}
+ 
+  
+<%-- PC 팝업 --%> 
+/*  function fncP_PopUp(){
+	 
+ 	$("#pcPop").html("");  
+ 	<c:forEach var="list" items="${popList}" varStatus="status">
+ 		if($.cookie("p_popUpYn_${list.poSeq}") == null){
+ 			if(hideChk.indexOf("/[${list.poSeq}]") == -1){
+ 				var html="";
+ 				html = '<div id="p_display_view_${list.poSeq}"class="mainPop js-mainPop id_popup1 p_main_pop">';
+ 				html += '<h1 class="mainPop_tag">공지<br>사항</h1>';
+ 				html += '<h2 class="mainPop_tit">${util:unEscape(list.poTitle)}</h2>';
+ 				html += '<div class="mainPop_cont">';
+ 				html += '<p>${util:unEscape(list.poCont)}</p>';
+ 				if('${list.poAtchFileId}' != null && '${list.poAtchFileId}' != ''){
+ 					html += '<img src="/atch/getImage.do?atchFileId=${list.poAtchFileId}&fileSn=0" alt="팝업" style="width:70%;">';
+ 				}
+ 				html += '</div>';
+ 				html += '<div class="mainPop_foot">';
+ 				html += '<label class="no_today cursor"><input type="checkbox" class="checkbox check cursor" name="p_popUpChk" onclick="closePopup(this,\'p\',${list.poSeq})">오늘 하루 동안 열지 않음</label>';
+ 				html += '<a href="javaScript:void(0)" class="btn_close od_popup" onclick="view_hide(\'p\',${list.poSeq}); return false;">닫기</a>';
+ 				html += '</div>';
+ 				html += '</div>';
+ 				$("#pcPop").append(html);	
+ 				$("#p_display_view_${list.poSeq}").css({"left":"${list.poLeft}px", "top":"${list.poHeight}px", "width":"${list.poWidth}px"});
+ 				$("#p_display_view_${list.poSeq}").draggable();
+ 			} 
+ 		}	    		 
+ 	</c:forEach>
+ }  */
 
 <%-- 모바일 팝업 --%>
-function fncM_PopUp(){	  
-	
-	if($.cookie("m_popUpYn") == null){
+function fncM_PopUp(){	    
+	if($.cookie("m_popUpYn") == null){   
 		if(hideChk.indexOf("/[m_display_view]") == -1){
-			var mTop = (($(window).height() - $('.m_main_pop').height())/2);
-			var mLeft = (($(window).width() - $('.m_main_pop').width())/2);
+			var mTop = (($(window).height() - $('.m_main_pop').height())/2 + 220);
+			var mLeft = (($(window).width() - $('.m_main_pop').width())/2 + 100);
 			$("#m_display_view").css({"left":mLeft, "top":mTop});
 			$('.m_main_pop').show();
-			$('#js-popup-bg').show();
-			
+			$('#js-popup-bg').show();  
 			$('#js-popup-bg').click(function(){
-				view_hide('m');
+				view_hide('m'); 
 			});
 		}
 	}
@@ -343,40 +380,47 @@ function view_hide(divn,seq) {
 		$('.m_main_pop').hide();
 		$("#js-popup-bg").hide();
 	}
- }
-
+ } 
+  
 <%-- 하루 닫기 --%>
 function closePopup(obj,divn,seq) {
-	if ($(obj).prop("checked")) {
+	if ($(obj).prop("checked")) {    
 		if(divn == "p"){
+			alert(seq);    
+			alert
 			$.cookie(divn+"_popUpYn_"+seq, "N", 1);
 			view_hide(divn,seq);
-		}
-		if(divn  == "m"){
-			$.cookie(divn+"_popUpYn", "N", 1);
+		} 
+		if(divn  == "m"){  
+			$.cookie(divn+"_popUpYn", "N",  1);
 			view_hide(divn);
 		}
 		
 	}
 }
+
 function mainResponse(){
  
 	if(isMobile() || $(window).width() < 1200) {
 		$('.p_main_pop').remove();
-		fncM_PopUp();
-	}else{
+		fncM_PopUp(); 
+	}else{   
 		$('.m_main_pop').hide();
 		$("#js-popup-bg").hide();
-		fncP_PopUp();
+		$("#p_display_view_${list.poSeq}").draggable(); 
+// 		fncP_PopUp();
 	}
-}
+};
+   
 $(window).resize(function(){
 	mainResponse();
 });
-window.onload  = function(){
+
+window.onload = function(){ 
 	mainResponse();
 }
-</script>
+</script>	
+
 	
 </html>
 

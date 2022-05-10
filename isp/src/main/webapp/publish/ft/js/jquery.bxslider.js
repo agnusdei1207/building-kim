@@ -8,7 +8,7 @@
 ;(function($) {
 
   var defaults = {
-
+		  
     // GENERAL
     mode: 'horizontal',
     slideSelector: '',
@@ -21,7 +21,7 @@
     randomStart: false,
     captions: false,
     ticker: false,
-    tickerHover: false,
+    tickerHover: false, 
     adaptiveHeight: false,
     adaptiveHeightSpeed: 500,
     video: false,
@@ -659,10 +659,10 @@
       slider.pagerEl.on('click touchend', 'a', clickPagerBind);
     };
 
-    /**
+    /** 
      * Appends prev / next controls to the controls element
      */
-    var appendControls = function() {
+    var appendControls = function() {   
       slider.controls.next = $('<a class="bx-next" href="">' + slider.settings.nextText + '</a>');
       slider.controls.prev = $('<a class="bx-prev" href="">' + slider.settings.prevText + '</a>');
       // bind click actions to the controls
