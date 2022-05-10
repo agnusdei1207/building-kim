@@ -29,7 +29,7 @@
 				, PO_HEIGHT 														 poHeight
 				, PO_LEFT 															 poLeft
 				, F_USER_NM(PO_RGST_ID) 											 poRgstId
-				, PO_RGST_DT 													 	 poRgstDt
+				, DATE_FORMAT(PO_RGST_DT,'%Y.%m.%d')							 	 poRgstDt
 				
 		     FROM  T_POP
 			 WHERE  PO_USE_YN='Y'	
@@ -42,7 +42,7 @@
 		/* Pop.selectList */
 		<![CDATA[  
       	     SELECT       
-      	       
+      	        
 				  PO_SEQ															 poSeq
 				, PO_ATCH_FILE_ID 													 poAtchFileId
 				, PO_TITLE														     poTitle
@@ -51,15 +51,14 @@
 				, PO_HEIGHT 														 poHeight
 				, PO_LEFT 															 poLeft
 				, F_USER_NM(PO_RGST_ID) 											 poRgstId
-				, PO_RGST_DT 													 	 poRgstDt
+				, DATE_FORMAT(PO_RGST_DT,'%Y.%m.%d')							 	 poRgstDt
 				
 		     FROM T_POP
 			 WHERE PO_USE_YN='Y'	
-	      ]]>   
+	      ]]>      
 		     <include refid="Where"/>	 
 	     <![CDATA[    
 	    		ORDER BY PO_SEQ DESC
-				LIMIT  #{firstIndex} , #{recordCountPerPage}
 		]]>
 	</select>	
 

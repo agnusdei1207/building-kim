@@ -8,15 +8,30 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 	<title>김건축사무소</title>
 	<link rel="stylesheet" type="text/css" href="/publish/ft/css/font-awesome.css">
-	<link rel="stylesheet" type="text/css" href="/publish/ft/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/publish/ft/css/style.css"> 
+	<link rel="stylesheet" type="text/css" href="/publish/ft/css/slick.css">
+	<link rel="stylesheet" type="text/css" href="/publish/ft/css/swiper.min.css">
 	<script type="text/javascript" src="/publish/ft/js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="/publish/ft/js/swiper.min.js"></script>
+	<script type="text/javascript" src="/publish/ft/js/slick.min.js"></script>
 	<script type="text/javascript" src="/publish/ft/js/common.js"></script>
 		<script type="text/javascript" src="/publish/ma/js/board.js"></script>
 	<script type="text/javascript" src="/publish/ft/js/jquery.bxslider.js"></script>
+	
+	<script type="text/javascript" src="/publish/ft/js/jquery-ui-1.12.1.custom.js"></script>
+	
+	<script src="/publish/ft/js/jquery.cookie.js"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-JQDGRELBD4"></script>
+	<script type="text/javascript">
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		
+		gtag('config', 'G-JQDGRELBD4');
+	</script>
 	<script type="text/javascript"> 
-		$(document).ready(function() {
+		$(document).ready(function() { 
 			$('.slider').bxSlider({
-				controls:false,  
 				auto: true,        
 				autoControls: true,
 				autoControlsCombine:true,
@@ -232,9 +247,137 @@
 		</div>
 		</footer>
 		<!-- //footer -->
+		<!-- pc 팝업 -->
+		<div id="pcPop">  
+		</div>
+		<!-- //팝업 -->
+		
 		
 		</div> 
 	</body>
+	
+	
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	/* 모바일 팝업 슬라이드*/
+	var mainPopSlide = $('.m_main_popslide .swiper-slide').length;
+	if(mainPopSlide>1){
+		var moblieSwiper = new Swiper('.m_main_popslide.swiper-container',{
+			slidesPerView: 1, 
+			spaceBetween: 10,
+			pagination: {
+				el: '.banner-pagination',
+				type: 'fraction',
+			},
+			navigation: {
+				nextEl: '.banner-next',
+				prevEl: '.banner-prev',
+			},
+			loop:true
+		});
+	}
+});
+
+function isMobile(){
+	return /(iphone|ipod|ipad|android|blackberry|windows ce|palm|symbian)/i.test(navigator.userAgent);
+}
+
+
+<%-- PC 팝업 --%>
+function fncP_PopUp(){
+	$("#pcPop").html(""); 
+	<c:forEach var="list" items="${popList}" varStatus="status">
+		if($.cookie("p_popUpYn_${list.poSeq}") == null){
+			if(hideChk.indexOf("/[${list.poSeq}]") == -1){
+				var html="";
+				html = '<div id="p_display_view_${list.poSeq}"class="mainPop js-mainPop id_popup1 p_main_pop">';
+				html += '<h1 class="mainPop_tag">공지<br>사항</h1>';
+				html += '<h2 class="mainPop_tit">${util:unEscape(list.poTitle)}</h2>';
+				html += '<div class="mainPop_cont">';
+				html += '<p>${util:unEscape(list.poCont)}</p>';
+				if('${list.poAtchFileId}' != null && '${list.poAtchFileId}' != ''){
+					html += '<img src="/atch/getImage.do?atchFileId=${list.poAtchFileId}&fileSn=0" alt="팝업" style="width:70%;">';
+				}
+				html += '</div>';
+				html += '<div class="mainPop_foot">';
+				html += '<label class="no_today cursor"><input type="checkbox" class="checkbox check cursor" name="p_popUpChk" onclick="closePopup(this,\'p\',${list.poSeq})">오늘 하루 동안 열지 않음</label>';
+				html += '<a href="javaScript:void(0)" class="btn_close od_popup" onclick="view_hide(\'p\',${list.poSeq}); return false;">닫기</a>';
+				html += '</div>';
+				html += '</div>';
+				$("#pcPop").append(html);	
+				$("#p_display_view_${list.poSeq}").css({"left":"${list.poLeft}px", "top":"${list.poHeight}px", "width":"${list.poWidth}px"});
+				$("#p_display_view_${list.poSeq}").draggable();
+			} 
+		}	    		
+	</c:forEach>
+}
+
+<%-- 모바일 팝업 --%>
+function fncM_PopUp(){	  
+	
+	if($.cookie("m_popUpYn") == null){
+		if(hideChk.indexOf("/[m_display_view]") == -1){
+			var mTop = (($(window).height() - $('.m_main_pop').height())/2);
+			var mLeft = (($(window).width() - $('.m_main_pop').width())/2);
+			$("#m_display_view").css({"left":mLeft, "top":mTop});
+			$('.m_main_pop').show();
+			$('#js-popup-bg').show();
+			
+			$('#js-popup-bg').click(function(){
+				view_hide('m');
+			});
+		}
+	}
+}
+
+<%-- 팝업 닫기 --%>
+var hideChk = "";
+function view_hide(divn,seq) {
+	if(divn == "p"){
+		$("#"+divn+"_display_view_"+seq).remove();
+		hideChk +="/["+seq+"]";
+	}
+	if(divn == "m"){
+		hideChk +="/[m_display_view]";
+		$('.m_main_pop').hide();
+		$("#js-popup-bg").hide();
+	}
+ }
+
+<%-- 하루 닫기 --%>
+function closePopup(obj,divn,seq) {
+	if ($(obj).prop("checked")) {
+		if(divn == "p"){
+			$.cookie(divn+"_popUpYn_"+seq, "N", 1);
+			view_hide(divn,seq);
+		}
+		if(divn  == "m"){
+			$.cookie(divn+"_popUpYn", "N", 1);
+			view_hide(divn);
+		}
+		
+	}
+}
+function mainResponse(){
+ 
+	if(isMobile() || $(window).width() < 1200) {
+		$('.p_main_pop').remove();
+		fncM_PopUp();
+	}else{
+		$('.m_main_pop').hide();
+		$("#js-popup-bg").hide();
+		fncP_PopUp();
+	}
+}
+$(window).resize(function(){
+	mainResponse();
+});
+window.onload  = function(){
+	mainResponse();
+}
+</script>
+	
 </html>
 
 

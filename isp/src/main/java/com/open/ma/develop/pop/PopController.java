@@ -71,7 +71,7 @@ public class PopController {
 	@RequestMapping(folderPath + "list.do")
 	public String list(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
 
-		return ".fLayout:"+ folderPath + "list";
+		return ".mLayout:"+ folderPath + "list";
 	}
 	
 	@RequestMapping(folderPath + "addList.do")
@@ -112,16 +112,7 @@ public class PopController {
 		popVO = (PopVO) cmmnService.selectContents(searchVO, PROGRAM_ID );
 		model.addAttribute("popVO", popVO);
 		
-		PopVO pre = new PopVO();
-		pre = (PopVO) cmmnService.selectContents(searchVO, PROGRAM_ID +".preSelectContents" );
-		model.addAttribute("pre", pre);
-		
-		PopVO next = new PopVO();  
-		next = (PopVO) cmmnService.selectContents(searchVO, PROGRAM_ID +".nextSelectContents" );
-		model.addAttribute("next", next);
-		
-		
-		return ".fLayout:"+ folderPath + "view";
+		return ".mLayout:"+ folderPath + "view";
 	}
 
 	@RequestMapping(folderPath + "{procType}Form.do")
@@ -133,8 +124,8 @@ public class PopController {
 		}
 		model.addAttribute("popVO", popVO);
 
-		return ".fLayout:"+ folderPath + "form";
-	}  
+		return ".mLayout:"+ folderPath + "form";
+	}   
 
 	@RequestMapping(value = folderPath + "{procType}Proc.do", method = RequestMethod.POST)
 	public String proc(@ModelAttribute("searchVO") PopVO searchVO, Model model, SessionStatus status,@PathVariable String procType, HttpServletRequest request) throws Exception {

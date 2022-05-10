@@ -21,10 +21,28 @@
 					<tr>
 						<th scope="row"><strong class="th_tit">제목</strong></th>
 						<td colspan="3">
-							<input type="text" name="poTitle" id="poTitle" class="text w100p"  required="required"  maxlength="50" value="${popVO.poTitle }" />
+							<input type="text" name="poTitle" id="poTitle" class="text w100p"  maxlength="40" value="${popVO.poTitle }" />
 						</td>
 					</tr>
-					<tr>
+					<tr> 
+						<th scope="row"><strong>가로</strong></th>
+						<td colspan="3">
+							<input type="text" name="poWidth" id="poWidth" class="text w100p numOnly" maxlength="15" value="${popVO.poWidth }" />
+						</td>
+					</tr>
+					<tr>    
+						<th scope="row"><strong>세로</strong></th>
+						<td colspan="3">
+							<input type="text" name="poHeight" id="poHeight" class="text w100p numOnly" maxlength="15" value="${popVO.poHeight }" />
+						</td>
+					</tr>
+					<tr> 
+						<th scope="row"><strong>왼쪽 공백</strong></th>   
+						<td colspan="3">
+							<input type="text" name="poLeft" id="poLeft" class="text w100p numOnly" maxlength="15" value="${popVO.poLeft }" />
+						</td>
+					</tr>
+					<tr> 
 						<th scope="row"><strong>내용</strong></th>  
 						<td colspan="3">
 							<textarea name="poCont" id="poCont" class="txt_area w_100p" >${util:unEscape(popVO.poCont)}</textarea>

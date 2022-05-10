@@ -15,9 +15,11 @@
 			<col style="width:10%">
 		</colgroup>
 		<thead>
-			<tr>
+			<tr>    
 				<th scope="col">번호</th>
 				<th scope="col" class="subject">제목</th>
+				<th scope="col">작성자</th>
+				<th scope="col">작성일</th>
 			</tr>
 		</thead>
 		<tbody>

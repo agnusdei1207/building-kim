@@ -17,7 +17,7 @@ import com.open.cmmn.model.CmmnDefaultVO;
 import com.open.cmmn.model.FileVO;
 import com.open.cmmn.service.CmmnService;
 import com.open.cmmn.service.FileMngService;
-import com.open.ma.develop.ort.service.OrtVO;
+import com.open.ma.develop.pop.service.PopVO;
 import com.open.ma.kim.banner.service.BannerVO;
 import com.open.ma.kim.ceo.service.CeoVO;
 import com.open.ma.kim.ntc.service.NtcVO;
@@ -56,10 +56,13 @@ public class MainController {
 		List<BannerVO> bannerList = (List<BannerVO>) cmmnService.selectList(searchVO, "Banner.selectMainList" );
 		model.addAttribute("bannerList", bannerList);
 		    
-		OrtVO ortVO = (OrtVO) cmmnService.selectContents(searchVO, "Ort" );
-		model.addAttribute("ortVO", ortVO);
-		    
-		
+		List<PopVO> popList = (List<PopVO>) cmmnService.selectList(searchVO, "Pop" );
+		System.out.println("탐?>>>>>>>>>>>>>>>>>>>>>>>");
+		for (PopVO popVO : popList) {
+			System.out.println(">>>>>>>>>>>>>>>>>>"+popVO.getPoTitle());
+		}
+		model.addAttribute("popList", popList);
+		 
 		return folderPath + "main";
 	}
                 

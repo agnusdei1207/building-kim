@@ -26,7 +26,25 @@
 						<td>${popVO.poRgstDt }</td>
 					</tr> 
 					<tr>
-						<th scope="row"><strong>내용</strong></th>
+						<th scope="row"><strong>가로</strong></th>
+						<td colspan="3">
+							${popVO.poWidth }       
+						</td>  
+					</tr>
+					<tr>
+						<th scope="row"><strong>세로</strong></th>
+						<td colspan="3">
+							${popVO.poHeight }       
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><strong>왼쪽 공백</strong></th>
+						<td colspan="3">
+							${popVO.poLeft }       
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><strong>제목</strong></th>
 						<td colspan="3">
 							${popVO.poTitle }       
 						</td>
