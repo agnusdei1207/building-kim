@@ -1,13 +1,12 @@
 package com.open.ma.develop.pop.service;
 
 import java.io.Serializable;
-import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
 import com.open.cmmn.model.CmmnDefaultVO;
 
-
+  
 
 
 @Alias("popVO")
@@ -16,6 +15,8 @@ public class PopVO extends CmmnDefaultVO implements Serializable {
 	private static final long serialVersionUID = 2172623835339565860L;
 	
 	private String poSeq;
+	private String poRgstId;
+	private String poRgstDt;
 	private String poAtchFileId;
 	private String poTitle;
 	private String poCont;
@@ -25,6 +26,18 @@ public class PopVO extends CmmnDefaultVO implements Serializable {
 	private String poCnt;
 	   
 	
+	public String getPoRgstId() {
+		return poRgstId;
+	}
+	public void setPoRgstId(String poRgstId) {
+		this.poRgstId = poRgstId;
+	}
+	public String getPoRgstDt() {
+		return poRgstDt;
+	}
+	public void setPoRgstDt(String poRgstDt) {
+		this.poRgstDt = poRgstDt;
+	}
 	public String getPoSeq() {
 		return poSeq;
 	}

@@ -14,15 +14,12 @@
 				AND PO_CONT LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
 	 	</if>
-	 		<if test='schEtc01 !=null and schEtc01 !="" and schEtc01 != "0" '>
-				AND IF(PO_ATCH_FILE_ID = '' , 'N' , 'Y') = #{schEtc01}  
-			</if>      
 	</sql>       
 	    
 	<select id="selectContents" parameterType="popVO" resultType="popVO">
 		/* Pop.selectContents */
 		<![CDATA[
-			 SELECT  
+			 SELECT           
 			 
 				  PO_SEQ															 poSeq
 				, PO_ATCH_FILE_ID 													 poAtchFileId
@@ -31,6 +28,8 @@
 				, PO_WIDTH 															 poWidth
 				, PO_HEIGHT 														 poHeight
 				, PO_LEFT 															 poLeft
+				, F_USER_NM(PO_RGST_ID) 											 poRgstId
+				, PO_RGST_DT 													 	 poRgstDt
 				
 		     FROM  T_POP
 			 WHERE  PO_USE_YN='Y'	
@@ -51,6 +50,8 @@
 				, PO_WIDTH 															 poWidth
 				, PO_HEIGHT 														 poHeight
 				, PO_LEFT 															 poLeft
+				, F_USER_NM(PO_RGST_ID) 											 poRgstId
+				, PO_RGST_DT 													 	 poRgstDt
 				
 		     FROM T_POP
 			 WHERE PO_USE_YN='Y'	
@@ -84,7 +85,8 @@
 				, PO_CONT 															 
 				, PO_WIDTH 															 
 				, PO_HEIGHT 														 
-				, PO_LEFT 															 				  						
+				, PO_LEFT 		
+				, PO_RGST_ID										 
 			)   
 			VALUES (
 				 (SELECT IFNULL(MAX(TF.PO_SEQ)+1,1) FROM T_POP TF)
@@ -94,6 +96,7 @@
 				,#{ poWidth        }
 				,#{ poHeight       }
 				,#{ poLeft		   }
+				,#{ loginSeq	   }
 			)
 		]]>
 	</insert>

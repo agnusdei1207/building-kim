@@ -29,9 +29,9 @@
 								${paginationInfo.totalRecordCount+1 - ((searchVO.pageIndex-1) * searchVO.pageUnit + status.count)}
 							</td>
 							<td class="subject text_over l" >${result.poTitle}</td>
-							<td>사용자</td>
-							<td>2022.05.10</td>
-						</tr>  
+							<td>${result.poRgstId }</td>
+							<td>${result.poRgstDt }</td>
+						</tr>   
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
