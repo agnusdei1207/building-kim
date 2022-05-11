@@ -243,14 +243,14 @@
 			</div>
 		</div>
 		</footer>   
-		<!-- //footer -->         
+		<!-- //footer -->          
 		  
 		<!-- pc 팝업 -->                                           
 		<div id="pcPop">       	                    
 		</div>    
 		<!-- //팝업 -->      
-		<!--  모바일 팝업 -->	  
-		<c:if test="${fn:length(popList) gt 0 and cookie.m_popUpYn.value ne null }">
+		<!--  모바일 팝업 -->	            
+		<c:if test="${fn:length(popList) gt 0 and cookie.m_popUpYn.value eq null }">
 			<div id="m_display_view" class="mainPop js-mainPop id_popup1 m_main_pop" style="display:none;">
 				<h1 class="mainPop_tag">공지<br>사항</h1>
 				<div class="m_main_popslide swiper-container"> 
@@ -333,14 +333,14 @@ function fncP_PopUp(){
 		}	    		
 	</c:forEach>
 }   
-      
-<%-- 모바일 팝업 --%>
-function fncM_PopUp(){	  
-	
+        
+<%-- 모바일 팝업 --%> 
+function fncM_PopUp(){	     
+	      
 	if($.cookie("m_popUpYn") == null){
 		if(hideChk.indexOf("/[m_display_view]") == -1){
-			var mTop = (($(window).height() - $('.m_main_pop').height())/2);
-			var mLeft = (($(window).width() - $('.m_main_pop').width())/2);
+			var mTop = (($(window).height() - $('.m_main_pop').height())/2 + 80);
+			var mLeft = (($(window).width() - $('.m_main_pop').width())/2 + 80);   
 			$("#m_display_view").css({"left":mLeft, "top":mTop});
 			$('.m_main_pop').show();
 			$('#js-popup-bg').show();
@@ -349,7 +349,7 @@ function fncM_PopUp(){
 			});
 		}
 	}
-} 
+}       
 
 <%-- 팝업 닫기 --%> 
 var hideChk = "";
@@ -380,7 +380,7 @@ function closePopup(obj,divn,seq) {
 	}
 }
 function mainResponse(){
-
+ 
 	if(isMobile() || $(window).width() < 1200) {
 		$('.p_main_pop').remove();
 		fncM_PopUp();

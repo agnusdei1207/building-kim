@@ -64,7 +64,6 @@ public class MyHomeController {
 	public String checkPw(@ModelAttribute("searchVO") MemberVO searchVO, Model model, String pass, HttpServletRequest request) throws Exception {
 		
 		if(!"".equals(StringUtil.isNullToString(searchVO.getMePw()))){
-			 
 			String pw = ((String)EncryptUtil.getString(EncryptUtil.Sha256EncryptB(searchVO.getMePw().getBytes("UTF-8"))));
 			MemberVO userLoginVO  = (MemberVO)cmmnService.selectContents(searchVO, PROGRAM_ID + ".checkPwSelectContents");
 			 
@@ -80,14 +79,14 @@ public class MyHomeController {
 		model.addAttribute("message", message);
 		model.addAttribute("cmmnScript", cmmnScript );
 		return "cmmn/execute"; 
-	}        
+	}         
 	     
 	@RequestMapping(folderPath + "updateMyHomeProess.do")
 	public String updateMyHomeProess(@ModelAttribute("searchVO") MemberVO searchVO, Model model, String pass, HttpServletRequest request) throws Exception {
 		       
- 		if(searchVO.getMePw() != null || searchVO.getMePw() != ""){ 
+		if(!"".equals(StringUtil.isNullToString(searchVO.getMePw()))){
 			searchVO.setMePw(((String)EncryptUtil.getString(EncryptUtil.Sha256EncryptB(searchVO.getMePw().getBytes("UTF-8")))));
-		}
+		}       
  		
  		message = "마이홈 수정이 완료되었습니다.";
  		cmmnScript = "/ft/main/main.do";

@@ -57,10 +57,6 @@ public class MainController {
 		model.addAttribute("bannerList", bannerList);
 		    
 		List<PopVO> popList = (List<PopVO>) cmmnService.selectList(searchVO, "Pop" );
-		System.out.println("탐?>>>>>>>>>>>>>>>>>>>>>>>");
-		for (PopVO popVO : popList) {
-			System.out.println(">>>>>>>>>>>>>>>>>>"+popVO.getPoTitle());
-		}
 		model.addAttribute("popList", popList);
 		 
 		return folderPath + "main";
