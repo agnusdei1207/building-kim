@@ -247,7 +247,7 @@
 		  
 		<!-- pc 팝업 -->                                           
 		<div id="pcPop">       	                    
-		</div>    
+		</div>      
 		<!-- //팝업 -->      
 		<!--  모바일 팝업 -->	            
 		<c:if test="${fn:length(popList) gt 0 and cookie.m_popUpYn.value eq null }">
@@ -277,11 +277,12 @@
 			</div>
 			<div class="popup_bg" id="js-popup-bg" style="display: none;"></div>
 		</c:if>	
-		<!-- //모바일팝업 -->	 
+		<!-- //모바일팝업 -->	   
 		</div> 
 	</body>          
 	                
-<script type="text/javascript">       
+<script type="text/javascript"> 
+
 $(document).ready(function(){      
 	var mainPopSlide = $('.m_main_popslide .swiper-slide').length;
 	if(mainPopSlide>1){
@@ -304,7 +305,7 @@ $(document).ready(function(){
 function isMobile(){
 	return /(iphone|ipod|ipad|android|blackberry|windows ce|palm|symbian)/i.test(navigator.userAgent);
 }
-  
+   
 <%-- PC 팝업 --%>   
 function fncP_PopUp(){              
 	$("#pcPop").html("");                   
@@ -351,7 +352,7 @@ function fncM_PopUp(){
 	}
 }       
 
-<%-- 팝업 닫기 --%> 
+<%-- 팝업 닫기 --%>  
 var hideChk = "";
 function view_hide(divn,seq) {
 	if(divn == "p"){
@@ -364,7 +365,7 @@ function view_hide(divn,seq) {
 		$("#js-popup-bg").hide();
 	}
  } 
-
+ 
 <%-- 하루 닫기 --%>
 function closePopup(obj,divn,seq) {
 	if ($(obj).prop("checked")) {
@@ -372,13 +373,14 @@ function closePopup(obj,divn,seq) {
 			$.cookie(divn+"_popUpYn_"+seq, "N", 1);
 			view_hide(divn,seq);
 		}
-		if(divn  == "m"){
+		if(divn  == "m"){  
 			$.cookie(divn+"_popUpYn", "N", 1);
 			view_hide(divn);
 		}
 		
 	}
 }
+ 
 function mainResponse(){
  
 	if(isMobile() || $(window).width() < 1200) {
@@ -396,6 +398,7 @@ $(window).resize(function(){
 window.onload  = function(){
 	mainResponse();
 }
+
 </script>	
 
 	
