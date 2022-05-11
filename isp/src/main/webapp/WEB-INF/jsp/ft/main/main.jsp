@@ -134,9 +134,9 @@
 			</div>       
 			<div id="main_content">      
 				<div class="main_conts clear"> 
-					<div class="notice_box" style="width:399.35px"> 
+					<div class="notice_box" style="width:399px"> 
 						<div >   
-							<h3>공지사항</h3>       
+							<h3>공지사항</h3>         
 							<ul class="notice_list"> 
 								<c:if test="${fn:length(ntcList) gt 0}">
 									<c:forEach var="ntcVO" items="${ntcList }">
@@ -150,10 +150,10 @@
 						</div>   
 					</div>          
 					<c:if test="${fn:length(bannerList) gt 0 }">      
-						<c:forEach var="bannerVO" items="${bannerList }">      
+						<c:forEach var="bannerVO" items="${bannerList }">       
 							<c:choose>
 								<c:when test="${not empty bannerVO.baAtchFileId }">
-									<div class="quotation" style="background:url(/atch/getImage.do?atchFileId=${bannerVO.baAtchFileId }&fileSn=0) no-repeat 0 100%; background-size:cover; width:399.34px;" >
+									<div class="quotation" style="background:url(/atch/getImage.do?atchFileId=${bannerVO.baAtchFileId }&fileSn=0) no-repeat 0 100%; background-size:cover; width:398px;" >
 									<h3 class="tit_quotation"></h3> 
 										<div>            
 											<p>${bannerVO.baTitle }</p>
@@ -242,34 +242,19 @@
 				<p class="copy">2022 Copyright by ${ceoVO.ceName } 사무소 &copy; all right reserved.</p>
 			</div>
 		</div>
-		</footer>  
-		<!-- //footer -->   
-		<!-- pc 팝업 -->                
-		<div id="pcPop">  	   
-			<c:if test="${fn:length(popList) gt 0 and cookie.p_popUpYn.value eq null}">  
-				<c:forEach var="list" items="${popList }">
-					<div id="p_display_view_${list.poSeq}"class="mainPop js-mainPop id_popup1 p_main_pop" style="width:${list.poWidth}px; top:${list.poHeight}px; left:${list.poLeft}px;">
-					<h1 class="mainPop_tag">공지<br>사항</h1>    
-						<h2 class="mainPop_tit">${util:unEscape(list.poTitle)}</h2>
-						<div class="mainPop_cont">   
-							<p>${util:unEscape(list.poCont)}</p>
-							<img src="/atch/getImage.do?atchFileId=${list.poAtchFileId}&fileSn=0" alt="팝업" style="width:70%;">	
-						</div>
-						<div class="mainPop_foot"> 
-							<label class="no_today cursor"><input type="checkbox" class="checkbox check cursor" name="p_popUpChk" onclick="closePopup(this,'p',${list.poSeq})">오늘 하루 동안 열지 않음</label>
-							<a href="javaScript:void(0)" class="btn_close od_popup" onclick="view_hide('p',${list.poSeq});">닫기</a>
-						</div>      
-					</div>        
-				</c:forEach>   
-			</c:if> 
-		</div> 
-		<!-- //팝업 --> 
+		</footer>   
+		<!-- //footer -->         
+		  
+		<!-- pc 팝업 -->                                           
+		<div id="pcPop">       	                    
+		</div>    
+		<!-- //팝업 -->      
 		<!--  모바일 팝업 -->	  
-		<c:if test="${fn:length(popList) gt 0 and cookie.m_popUpYn.value eq null}">
+		<c:if test="${fn:length(popList) gt 0 and cookie.m_popUpYn.value ne null }">
 			<div id="m_display_view" class="mainPop js-mainPop id_popup1 m_main_pop" style="display:none;">
 				<h1 class="mainPop_tag">공지<br>사항</h1>
-				<div class="m_main_popslide swiper-container">
-					<div class="swiper-wrapper">				    	
+				<div class="m_main_popslide swiper-container"> 
+					<div class="swiper-wrapper">			 	    	
 						<c:forEach var="list" items="${popList }" varStatus="status">
 							<div class="swiper-slide">
 								<h2 class="mainPop_tit">${util:unEscape(list.poTitle)}</h2>
@@ -280,7 +265,7 @@
 											<img src="/atch/getImage.do?atchFileId=${list.poAtchFileId}&fileSn=0" alt="배너">
 										</c:if>
 									</span>
-								</div>
+								</div>  
 							</div> 
 						</c:forEach>
 					</div>
@@ -292,13 +277,12 @@
 			</div>
 			<div class="popup_bg" id="js-popup-bg" style="display: none;"></div>
 		</c:if>	
-		<!-- //모바일팝업 -->	
+		<!-- //모바일팝업 -->	 
 		</div> 
-	</body>
-	
-<script type="text/javascript">
-$(document).ready(function(){
-	/* 모바일 팝업 슬라이드*/
+	</body>          
+	                
+<script type="text/javascript">       
+$(document).ready(function(){      
 	var mainPopSlide = $('.m_main_popslide .swiper-slide').length;
 	if(mainPopSlide>1){
 		var moblieSwiper = new Swiper('.m_main_popslide.swiper-container',{
@@ -309,9 +293,9 @@ $(document).ready(function(){
 				type: 'fraction',
 			},
 			navigation: {
-				nextEl: '.banner-next',
+				nextEl: '.banner-next', 
 				prevEl: '.banner-prev',
-			},
+			},  
 			loop:true
 		});
 	}
@@ -320,55 +304,54 @@ $(document).ready(function(){
 function isMobile(){
 	return /(iphone|ipod|ipad|android|blackberry|windows ce|palm|symbian)/i.test(navigator.userAgent);
 }
- 
   
-<%-- PC 팝업 --%> 
-/*  function fncP_PopUp(){
-	 
- 	$("#pcPop").html("");  
- 	<c:forEach var="list" items="${popList}" varStatus="status">
- 		if($.cookie("p_popUpYn_${list.poSeq}") == null){
- 			if(hideChk.indexOf("/[${list.poSeq}]") == -1){
- 				var html="";
- 				html = '<div id="p_display_view_${list.poSeq}"class="mainPop js-mainPop id_popup1 p_main_pop">';
- 				html += '<h1 class="mainPop_tag">공지<br>사항</h1>';
- 				html += '<h2 class="mainPop_tit">${util:unEscape(list.poTitle)}</h2>';
- 				html += '<div class="mainPop_cont">';
- 				html += '<p>${util:unEscape(list.poCont)}</p>';
- 				if('${list.poAtchFileId}' != null && '${list.poAtchFileId}' != ''){
- 					html += '<img src="/atch/getImage.do?atchFileId=${list.poAtchFileId}&fileSn=0" alt="팝업" style="width:70%;">';
- 				}
- 				html += '</div>';
- 				html += '<div class="mainPop_foot">';
- 				html += '<label class="no_today cursor"><input type="checkbox" class="checkbox check cursor" name="p_popUpChk" onclick="closePopup(this,\'p\',${list.poSeq})">오늘 하루 동안 열지 않음</label>';
- 				html += '<a href="javaScript:void(0)" class="btn_close od_popup" onclick="view_hide(\'p\',${list.poSeq}); return false;">닫기</a>';
- 				html += '</div>';
- 				html += '</div>';
- 				$("#pcPop").append(html);	
- 				$("#p_display_view_${list.poSeq}").css({"left":"${list.poLeft}px", "top":"${list.poHeight}px", "width":"${list.poWidth}px"});
- 				$("#p_display_view_${list.poSeq}").draggable();
- 			} 
- 		}	    		 
- 	</c:forEach>
- }  */
-
+<%-- PC 팝업 --%>   
+function fncP_PopUp(){              
+	$("#pcPop").html("");                   
+	<c:forEach var="list" items="${popList}">           
+		if($.cookie("p_popUpYn_${list.poSeq}") == null){
+			if(hideChk.indexOf("/[${list.poSeq}]") == -1){
+				var html=""; 
+				html = '<div id="p_display_view_${list.poSeq}"class="mainPop js-mainPop id_popup1 p_main_pop">';
+				html += '<h1 class="mainPop_tag">공지<br>사항</h1>';
+				html += '<h2 class="mainPop_tit">${util:unEscape(list.poTitle)}</h2>';
+				html += '<div class="mainPop_cont">';
+				html += '<p>${util:unEscape(list.poCont)}</p>';
+				if('${list.poAtchFileId}' != null && '${list.poAtchFileId}' != ''){
+					html += '<img src="/atch/getImage.do?atchFileId=${list.poAtchFileId}&fileSn=0" alt="팝업" style="width:70%;">';
+				}
+				html += '</div>';
+				html += '<div class="mainPop_foot">';
+				html += '<label class="no_today cursor"><input type="checkbox" class="checkbox check cursor" name="p_popUpChk" onclick="closePopup(this,\'p\',${list.poSeq})">오늘 하루 동안 열지 않음</label>';
+				html += '<a href="javaScript:void(0)" class="btn_close od_popup" onclick="view_hide(\'p\',${list.poSeq}); return false;">닫기</a>';
+				html += '</div>';
+				html += '</div>';
+				$("#pcPop").append(html);	  
+				$("#p_display_view_${list.poSeq}").css({"left":"${list.poLeft}px", "top":"${list.poHeight}px", "width":"${list.poWidth}px"});
+				$("#p_display_view_${list.poSeq}").draggable();
+			}
+		}	    		
+	</c:forEach>
+}   
+      
 <%-- 모바일 팝업 --%>
-function fncM_PopUp(){	    
-	if($.cookie("m_popUpYn") == null){   
+function fncM_PopUp(){	  
+	
+	if($.cookie("m_popUpYn") == null){
 		if(hideChk.indexOf("/[m_display_view]") == -1){
-			var mTop = (($(window).height() - $('.m_main_pop').height())/2 + 220);
-			var mLeft = (($(window).width() - $('.m_main_pop').width())/2 + 100);
+			var mTop = (($(window).height() - $('.m_main_pop').height())/2);
+			var mLeft = (($(window).width() - $('.m_main_pop').width())/2);
 			$("#m_display_view").css({"left":mLeft, "top":mTop});
 			$('.m_main_pop').show();
-			$('#js-popup-bg').show();  
+			$('#js-popup-bg').show();
 			$('#js-popup-bg').click(function(){
-				view_hide('m'); 
+				view_hide('m');
 			});
 		}
 	}
-}
+} 
 
-<%-- 팝업 닫기 --%>
+<%-- 팝업 닫기 --%> 
 var hideChk = "";
 function view_hide(divn,seq) {
 	if(divn == "p"){
@@ -381,42 +364,36 @@ function view_hide(divn,seq) {
 		$("#js-popup-bg").hide();
 	}
  } 
-  
+
 <%-- 하루 닫기 --%>
 function closePopup(obj,divn,seq) {
-	if ($(obj).prop("checked")) {    
+	if ($(obj).prop("checked")) {
 		if(divn == "p"){
-			alert(seq);    
-			alert
 			$.cookie(divn+"_popUpYn_"+seq, "N", 1);
 			view_hide(divn,seq);
-		} 
-		if(divn  == "m"){  
-			$.cookie(divn+"_popUpYn", "N",  1);
+		}
+		if(divn  == "m"){
+			$.cookie(divn+"_popUpYn", "N", 1);
 			view_hide(divn);
 		}
 		
 	}
 }
-
 function mainResponse(){
- 
+
 	if(isMobile() || $(window).width() < 1200) {
 		$('.p_main_pop').remove();
-		fncM_PopUp(); 
-	}else{   
+		fncM_PopUp();
+	}else{
 		$('.m_main_pop').hide();
 		$("#js-popup-bg").hide();
-		$("#p_display_view_${list.poSeq}").draggable(); 
-// 		fncP_PopUp();
+		fncP_PopUp();
 	}
-};
-   
+}
 $(window).resize(function(){
 	mainResponse();
 });
-
-window.onload = function(){ 
+window.onload  = function(){
 	mainResponse();
 }
 </script>	
