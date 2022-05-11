@@ -24,7 +24,7 @@
 			AND USE_YN='Y'
 		]]>
 	</select>
-	
+	 
 	<select id="selectLoginDate" parameterType="loginVO" resultType="String">
 		/* Login.selectContents */
 		<![CDATA[
