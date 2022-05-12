@@ -12,28 +12,39 @@
 			</if>
 			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
 				AND LOG_CONT LIKE CONCAT('%',#{searchKeyword},'%')
-			</if>
+			</if> 
 	 	</if> 
-	 	<if test='schEtc02 != null and schEtc02 != "" '>
-			WHERE LOG_DIVN = #{schEtc02}
-		</if> 
+	 	<if test="searchStartDate !=null and searchStartDate !='' ">
+	 			<![CDATA[ 
+					AND #{searchStartDate} <= DATE_FORMAT(LOG_DT, '%Y.%m.%d') AND #{searchEndDate} >= DATE_FORMAT(LOG_DT, '%Y.%m.%d')
+				]]> 
+		 	<if test="schEtc02 != null and schEtc02 !='' ">
+				AND LOG_DIVN = #{schEtc02}
+				<if test='schEtc03 == 1'> 
+					<![CDATA[
+					 AND (DATE_FORMAT(LOG_DT, '%T') > '18:00:00' OR DATE_FORMAT(LOG_DT, '%T') < '09:00:00') 
+					]]> 
+				</if> 
+			</if>  
+		</if>
 	</sql>         
  	      
 	<select id="selectList" parameterType="cmmnDefaultVO" resultType="logLogVO">
 		/* LogLog.selectList */
 		<![CDATA[  
-      	    SELECT       
-      	            
-				  LOG_SEQ																												 logSeq
-				, LOG_CLIENT_IP 								 																		 logClientIp
-				, F_USER_NM(LOG_ID)																										 logId
-				, LOG_URL														  														 logUrl
-				, (SELECT MENU_NM FROM t_menu_info WHERE t_menu_info.MENU_CD = a.LOG_MENU_CD AND t_menu_info.MENU_CL = a.LOG_DIVN )		 logMenuCd
-				, DATE_FORMAT(LOG_DT,'%Y.%m.%d')																						 logDt
-				, LOG_DIVN 																												 logDivn
-				, LOG_IP_ERR_YN 																										 logIpErrYn
+      	    SELECT         
+      	             
+				  LOG_SEQ																									 logSeq
+				, LOG_CLIENT_IP 								 															 logClientIp
+				, F_USER_NM(LOG_ID)																							 logId
+				, LOG_URL														  											 logUrl
+				, (SELECT MENU_NM FROM t_menu_info TMI WHERE TMI.MENU_CD = TL.LOG_MENU_CD AND TMI.MENU_CL = TL.LOG_DIVN )    logMenuCd
+				, LOG_DT																									 logDt
+				, LOG_DIVN 																									 logDivn
+				, LOG_IP_ERR_YN 																							 logIpErrYn
 				   
-		     FROM t_log_log a
+		     FROM t_log_log TL
+		     WHERE 1 = 1
 	      ]]>    
 		     <include refid="Where"/>	  
 	     <![CDATA[    
@@ -49,6 +60,7 @@
 			SELECT 
 				COUNT(LOG_SEQ) logCnt  
 			FROM T_LOG_LOG
+			WHERE 1 = 1
 		]]>
 			 <include refid="Where"/>
 	</select> 

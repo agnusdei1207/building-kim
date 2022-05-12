@@ -43,6 +43,10 @@ public class LogLogController {
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
 
+		System.out.println("값 확인 : "+ searchVO.getSchEtc02());
+		System.out.println("값 확인 : "+ searchVO.getSchEtc02());
+		
+		
 		searchVO.setPageUnit(10);
 		searchVO.setPageSize(11); 
 

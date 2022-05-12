@@ -49,7 +49,7 @@
 							<c:if test="${searchVO.schEtc03 ne '3' }">
 								<td>${result.logDivn eq 'ft' ? '사용자' : '관리자' }</td>
 								<td>${result.logId }</td> 
-								<td>${result.logMenuCd }</td> 
+								<td>${result.logMenuCd }</td>  
 								<td class="l">${result.logUrl }</td> 
 							</c:if> 
 								<td>${result.logDt }</td>
@@ -58,11 +58,11 @@
 									<td><fmt:formatNumber value="${result.logCnt }" pattern="#,###"/></td>
 								</c:if>
 							</tr>
-						</c:forEach>
+						</c:forEach>   
 					</c:when>  
-					<c:otherwise>
+					<c:otherwise>  
 						<tr>
-							<td colspan="${searchVO.schEtc03 eq '2' ? '7': searchVO.schEtc03 eq '3' ? '3':'6'}" class="no_data">데이터가 없습니다.</td>
+							<td colspan="${searchVO.schEtc03 eq '2' ? '8': searchVO.schEtc03 eq '3' ? '3': '7'}" class="no_data">데이터가 없습니다.</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>
