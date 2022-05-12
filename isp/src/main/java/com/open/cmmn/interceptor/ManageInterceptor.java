@@ -19,6 +19,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.open.cmmn.service.CmmnService;
 import com.open.cmmn.util.SessionUtil;
 import com.open.cmmn.util.StringUtil;
+import com.open.ma.develop.logLog.service.LogLogVO;
 import com.open.ma.login.service.LoginVO;
 
 /**
@@ -68,7 +69,7 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 		String clientIp = StringUtil.getClientIp(request);
 		String menuCd = "";
 		HttpSession session = request.getSession();
-
+		
 		menuCd = StringUtil.getMenuCd(request.getRequestURI()).get("depth3");
 		
 		LOGGER.debug("pre request URI ====================================>" + request.getRequestURI());
@@ -78,14 +79,20 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 		LOGGER.info("=================================== manageInterceptor Start");
 
 		String currentUrl = request.getRequestURI();
-
 		LOGGER.info("=================================== frontInterceptor currentUrl ::: " + currentUrl);
-
+		 
+		// 로그 기록 
+		LogLogVO logLogVO = new LogLogVO();
+		logLogVO.setLogClientIp(clientIp);
+		logLogVO.setLogUrl(currentUrl);
+		
+		
 		@SuppressWarnings("rawtypes")
 		Enumeration paramNames = request.getParameterNames();
 		StringBuffer refererParam = new StringBuffer();
 		Map requestMap = new HashMap(request.getParameterMap());
 		int intCount = 0;
+		 
 		while (paramNames.hasMoreElements()) {
 			intCount = intCount + 1;
 			String paramName = (String) paramNames.nextElement();
@@ -101,8 +108,8 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 				value = value.replaceAll("\\)", "&#41;");
 				value = value.replaceAll("#", "&#35;");
 			}
-			
-			
+			  
+			 
 			if (intCount == 1) { // parameta 가 1개일 경우
 				refererParam.append("?").append(paramName).append("=").append(value);
 			} else {
@@ -113,6 +120,7 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 
 			LOGGER.debug(paramName + " :: " + value);
 		}
+		
 		String requestFullUrl = URLEncoder.encode(request.getRequestURL() + refererParam.toString(), "UTF-8");
 		request.setAttribute("requestFullUrl", requestFullUrl);
 		request.setAttribute("refererUrl", request.getHeader("referer"));
@@ -138,7 +146,12 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 					if(!manuList.contains(menuCd) && !request.getRequestURI().equals("/ma/main.do") && request.getRequestURI().indexOf("/sb") < 0 && request.getRequestURI().indexOf("/mc01") < 0){
 						response.sendRedirect("/cmmn/fail.do");
 					}
-    			}else{
+					
+					// 로그 기록 
+					logLogVO.setLogId(loginVO.getId()); 
+					
+					
+    			}else{ 
     				/* 메뉴 권한 확인*/
 					List<String> manuList = (List<String>) SessionUtil.getAuthList2();
 					
@@ -153,7 +166,7 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
     			}
 				
 				session.setAttribute("menuCd", menuCd);
-
+ 
 			} else {
 				if (request.getRequestURI().indexOf("addList") < 0 && request.getRequestURI().indexOf("popList") < 0 && request.getRequestURI().indexOf("formList") < 0) {
 					response.sendRedirect("/login.do?returnUrl=" + URLEncoder.encode(requestFullUrl, "UTF-8"));
@@ -162,11 +175,17 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 			}
 			
 			
+		
+			 
 		long endTime = System.currentTimeMillis();
 		LOGGER.debug("=================================== Loading Report preHandle ::: " + (endTime - loadingTime));
 		
+		// 로그 찍기
+		cmmnService.insertContents(logLogVO, "LogLog");
+		
+		
 		return true;
-	}
+	} 
 
 	@Override
 	public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response, final Object handler, final Exception ex) throws Exception {

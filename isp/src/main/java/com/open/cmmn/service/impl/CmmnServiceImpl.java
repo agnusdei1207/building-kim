@@ -35,7 +35,7 @@ public class CmmnServiceImpl extends EgovAbstractServiceImpl implements CmmnServ
 
 	/** CmmnDAO . */
 	@Autowired
-	private CmmnDAO cmmnDAO;
+	private CmmnDAO cmmnDAO; 
 
 	@Override
 	public List<?> selectList(final Object paramVO, final String queryId) throws Exception {

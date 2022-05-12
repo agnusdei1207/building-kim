@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.open.ma.develop.logLog.service.LogLogVO;
 import com.open.cmmn.model.CmmnDefaultVO;
@@ -24,29 +23,20 @@ import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 @Controller 
 public class LogLogController {
 
-	@Resource(name = "cmmnService")     
+	@Resource(name = "cmmnService")      
     protected CmmnService cmmnService;
 	
     private final static String PROGRAM_ID = "LogLog"; 
 
     private final static String folderPath = "/ma/develop/logLog/";
         
-    
-    private String message = ""; 
-    
-    private String cmmnScript = "";
-      
-    private String pName = "";
-     
-    private String pValue = "";
-    
 	Logger log = Logger.getLogger(this.getClass());  
 
-	@RequestMapping(folderPath + "list.do")
+	@RequestMapping(folderPath + "list.do") 
 	public String list(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
-
+         
 		return ".mLayout:"+ folderPath + "list";
-	} 
+	}    
 	
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {

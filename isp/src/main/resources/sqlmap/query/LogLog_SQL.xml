@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.open.LogLog">
-
+	
 	<sql id="Where"> 
 		<if test="searchKeyword !=null and searchKeyword !=''">
 			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
@@ -14,24 +14,22 @@
 				AND LOG_CONT LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
 	 	</if> 
-	</sql>        
-	      
+	</sql>         
+       
 	<select id="selectContents" parameterType="logLogVO" resultType="logLogVO">
 		/* LogLog.selectContents */
 		<![CDATA[
 			 SELECT  
-			 
+			          
 				  LOG_SEQ															 logSeq
-				, DATE_FORMAT(LOG_RGST_DT,'%Y.%m.%d') 								 logRgstDt
-				, F_USER_NM(LOG_RGST_ID) 											 logRgstId
-				, LOG_ATCH_FILE_ID 													 logAtchFileId
-				, LOG_TITLE														     logTitle
-				, LOG_CONT 															 logCont
-				, LOG_ID 															 logId
-				, DATE_FORMAT(LOG_DT,'%Y.%m.%d')										 logDt
+				, LOG_CLIENT_IP 								 					 logClientIp
+				, F_USER_NM(LOG_ID)													 logId
+				, LOG_URL														     logUrl
+				, DATE_FORMAT(LOG_DT,'%Y.%m.%d')									 logDt
+				, LOG_DIVN 															 logDivn
+				, LOG_IP_ERR_YN 													 logIpErrYn
 				
 		     FROM  T_LOG_LOG
-			 WHERE  LOG_USE_YN='Y'	
 				 AND LOG_SEQ = #{logSeq}
 		]]>
 	</select>
@@ -40,18 +38,16 @@
 		/* LogLog.selectList */
 		<![CDATA[  
       	     SELECT       
-      	       
+      	        
 				  LOG_SEQ															 logSeq
-				, DATE_FORMAT(LOG_RGST_DT,'%Y.%m.%d') 								 logRgstDt
-				, F_USER_NM(LOG_RGST_ID) 											 logRgstId
-				, LOG_ATCH_FILE_ID 													 logAtchFileId
-				, LOG_TITLE														     logTitle
-				, LOG_CONT 															 logCont
-				, LOG_ID 															 logId
-				, DATE_FORMAT(LOG_DT,'%Y.%m.%d')										 logDt
+				, LOG_CLIENT_IP 								 					 logClientIp
+				, F_USER_NM(LOG_ID)													 logId
+				, LOG_URL														     logUrl
+				, DATE_FORMAT(LOG_DT,'%Y.%m.%d')									 logDt
+				, LOG_DIVN 															 logDivn
+				, LOG_IP_ERR_YN 													 logIpErrYn
 				
 		     FROM T_LOG_LOG
-			 WHERE LOG_USE_YN='Y'	
 	      ]]>   
 		     <include refid="Where"/>	 
 	     <![CDATA[    
@@ -65,31 +61,30 @@
 		/* LogLog.selectCount */
 		<![CDATA[ 
 			SELECT 
-				COUNT(LOG_SEQ) logCnt 
+				COUNT(LOG_SEQ) logCnt  
 			FROM T_LOG_LOG
-			WHERE LOG_USE_YN='Y'  
 		]]>
 			 <include refid="Where"/>
-	</select>
+	</select> 
 	
 	<insert id="insertContents" parameterType="logLogVO">
 		/* LogLog.insertContents */
 		<![CDATA[
 			INSERT INTO T_LOG_LOG(
-           	  	 LOG_SEQ															
-				, LOG_RGST_ID
-				, LOG_ATCH_FILE_ID 		  							
-				, LOG_TITLE													
-				, LOG_CONT 													
-				, LOG_ID 					  						
-			)   
+           	  	  LOG_SEQ												
+				, LOG_CLIENT_IP 								 				
+				, LOG_ID														
+				, LOG_URL													
+				, LOG_DIVN 														
+				, LOG_IP_ERR_YN 																		  						
+			)        
 			VALUES (
-				 (SELECT IFNULL(MAX(TF.LOG_SEQ)+1,1) FROM T_LOG_LOG TF)
-				,#{loginSeq     }          
-				,#{logAtchFileId }  
-				,#{logTitle      }
-				,#{logCont       }
-				,#{logId         }
+				 (SELECT IFNULL(MAX(TL.LOG_SEQ)+1,1) FROM T_LOG_LOG TL)
+				,#{logClientIp      }          
+				,#{loginSeq 		}  
+				,#{logUrl   	    }
+				,#{logDivn          }
+				,#{logIpErrYn       }
 			)
 		]]>
 	</insert>
@@ -109,17 +104,16 @@
 				, LOG_DT															 = NOW()
 				
 			WHERE  LOG_SEQ = #{logSeq}    
-		]]>
+		]]>    
 	</update> 
-	   
+	    
 	<update id="deleteContents" parameterType="logLogVO">
 		/* LogLog.deleteContents */
 		<![CDATA[    
 			UPDATE T_LOG_LOG
 		       SET
-	          	 LOG_USE_YN='N'
 			WHERE LOG_SEQ=#{logSeq}
 		]]>
 	</update>
-
+    
 </mapper>

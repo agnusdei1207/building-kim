@@ -14,14 +14,14 @@ public class LogLogVO extends CmmnDefaultVO implements Serializable {
 	private String logSeq;
 	private String logClientIp;
 	private String logId;
-	private String logName;
+	private String logUrl;
 	private String logDt;
 	private String logDivn;
 	private String logIpErrYn; 
 	private String logCnt;
-	
+    
 	public String getLogSeq() {
-		return logSeq;
+		return logSeq;         
 	}
 	public void setLogSeq(String logSeq) {
 		this.logSeq = logSeq;
@@ -38,11 +38,12 @@ public class LogLogVO extends CmmnDefaultVO implements Serializable {
 	public void setLogId(String logId) {
 		this.logId = logId;
 	}
-	public String getLogName() {
-		return logName;
+	
+	public String getLogUrl() {
+		return logUrl;
 	}
-	public void setLogName(String logName) {
-		this.logName = logName;
+	public void setLogUrl(String logUrl) {
+		this.logUrl = logUrl;
 	}
 	public String getLogDt() {
 		return logDt;
@@ -66,7 +67,7 @@ public class LogLogVO extends CmmnDefaultVO implements Serializable {
 		return logCnt;
 	}
 	public void setLogCnt(String logCnt) {
-		this.logCnt = logCnt;
+		this.logCnt = logCnt;  
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
