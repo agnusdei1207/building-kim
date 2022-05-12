@@ -61,7 +61,7 @@ var fncPageBoard = function(){
 	  case 'write'  :  $("#defaultFrm").attr({"action" : url, "method" : "post", "target" : "_self" , "onsubmit" : ""}).submit(); //등록폼
 					   break;
 	  case 'addList':  $("#pageIndex").val(idx);
-	  				   fncLodingStart();
+	  				   fncLodingStart(); 
 	  				   /*if($("#defaultFrm").attr("action") != "" && $("#defaultFrm").attr("action") != undefined ){
 	  					   if($("#defaultFrm").attr("action").indexOf("excelDown.do") > -1){ $("#defaultFrm").attr("action","list.do")}
 	  				   }*/

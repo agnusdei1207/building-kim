@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.LogLog">
+
+	<sql id="Where"> 
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (LOG_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR LOG_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND LOG_TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND LOG_CONT LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+	 	</if> 
+	</sql>        
+	      
+	<select id="selectContents" parameterType="logLogVO" resultType="logLogVO">
+		/* LogLog.selectContents */
+		<![CDATA[
+			 SELECT  
+			 
+				  LOG_SEQ															 logSeq
+				, DATE_FORMAT(LOG_RGST_DT,'%Y.%m.%d') 								 logRgstDt
+				, F_USER_NM(LOG_RGST_ID) 											 logRgstId
+				, LOG_ATCH_FILE_ID 													 logAtchFileId
+				, LOG_TITLE														     logTitle
+				, LOG_CONT 															 logCont
+				, LOG_ID 															 logId
+				, DATE_FORMAT(LOG_DT,'%Y.%m.%d')										 logDt
+				
+		     FROM  T_LOG_LOG
+			 WHERE  LOG_USE_YN='Y'	
+				 AND LOG_SEQ = #{logSeq}
+		]]>
+	</select>
+	 
+	<select id="selectList" parameterType="cmmnDefaultVO" resultType="logLogVO">
+		/* LogLog.selectList */
+		<![CDATA[  
+      	     SELECT       
+      	       
+				  LOG_SEQ															 logSeq
+				, DATE_FORMAT(LOG_RGST_DT,'%Y.%m.%d') 								 logRgstDt
+				, F_USER_NM(LOG_RGST_ID) 											 logRgstId
+				, LOG_ATCH_FILE_ID 													 logAtchFileId
+				, LOG_TITLE														     logTitle
+				, LOG_CONT 															 logCont
+				, LOG_ID 															 logId
+				, DATE_FORMAT(LOG_DT,'%Y.%m.%d')										 logDt
+				
+		     FROM T_LOG_LOG
+			 WHERE LOG_USE_YN='Y'	
+	      ]]>   
+		     <include refid="Where"/>	 
+	     <![CDATA[    
+	    		ORDER BY LOG_SEQ DESC
+				LIMIT  #{firstIndex} , #{recordCountPerPage}
+		]]>
+	</select>	
+
+
+	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* LogLog.selectCount */
+		<![CDATA[ 
+			SELECT 
+				COUNT(LOG_SEQ) logCnt 
+			FROM T_LOG_LOG
+			WHERE LOG_USE_YN='Y'  
+		]]>
+			 <include refid="Where"/>
+	</select>
+	
+	<insert id="insertContents" parameterType="logLogVO">
+		/* LogLog.insertContents */
+		<![CDATA[
+			INSERT INTO T_LOG_LOG(
+           	  	 LOG_SEQ															
+				, LOG_RGST_ID
+				, LOG_ATCH_FILE_ID 		  							
+				, LOG_TITLE													
+				, LOG_CONT 													
+				, LOG_ID 					  						
+			)   
+			VALUES (
+				 (SELECT IFNULL(MAX(TF.LOG_SEQ)+1,1) FROM T_LOG_LOG TF)
+				,#{loginSeq     }          
+				,#{logAtchFileId }  
+				,#{logTitle      }
+				,#{logCont       }
+				,#{logId         }
+			)
+		]]>
+	</insert>
+	
+	<update id="updateContents" parameterType="logLogVO">
+		/* LogLog.updateContents */
+		<![CDATA[
+			UPDATE T_LOG_LOG        
+			 SET    
+			      
+				LOG_RGST_DT								 							 = NOW()
+				, LOG_RVSE_ID														 =#{loginSeq	 }	
+				, LOG_ATCH_FILE_ID 													 =#{logAtchFileId}
+				, LOG_TITLE														     =#{logTitle     }
+				, LOG_CONT 															 =#{logCont      }
+				, LOG_ID 															 =#{logId        }
+				, LOG_DT															 = NOW()
+				
+			WHERE  LOG_SEQ = #{logSeq}    
+		]]>
+	</update> 
+	   
+	<update id="deleteContents" parameterType="logLogVO">
+		/* LogLog.deleteContents */
+		<![CDATA[    
+			UPDATE T_LOG_LOG
+		       SET
+	          	 LOG_USE_YN='N'
+			WHERE LOG_SEQ=#{logSeq}
+		]]>
+	</update>
+
+</mapper>

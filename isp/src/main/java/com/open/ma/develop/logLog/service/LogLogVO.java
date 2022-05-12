@@ -1,4 +1,4 @@
-package com.open.cmmn.log.service;
+package com.open.ma.develop.logLog.service;
 
 import java.io.Serializable;
 
@@ -6,9 +6,8 @@ import org.apache.ibatis.type.Alias;
 
 import com.open.cmmn.model.CmmnDefaultVO;
 
-
-@Alias("testLogVO")
-public class TestLogVO extends CmmnDefaultVO implements Serializable {
+@Alias("logLogVO") 
+public class LogLogVO extends CmmnDefaultVO implements Serializable {
    
 	private static final long serialVersionUID = 2172623835339565860L;
 	

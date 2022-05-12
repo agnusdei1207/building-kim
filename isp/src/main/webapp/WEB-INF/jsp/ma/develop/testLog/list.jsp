@@ -5,11 +5,11 @@
 <%-- search --%>
 <div class="content_box">
 	<ul class="tab js-tab tab_menu">
-	    <li class="current"><a href="javascript:void(0)" onclick="searchLog(0)">전체</a></li>
-	    <li><a href="javascript:void(0)" onclick="searchLog(1)">업무시간 외 접속</a></li>
-	    <li><a href="javascript:void(0)" onclick="searchLog(2)">과다 접속자관리</a></li>
-	    <li><a href="javascript:void(0)" onclick="searchLog(3)">접속 지점이상</a></li>
-	    <li><a href="javascript:void(0)" onclick="searchLog(4)">로그인 이상관리</a></li>
+	    <li class="current"><a href="javascript:void(0);" onclick="searchLog(0);">전체</a></li>
+	    <li><a href="javascript:void(0);" onclick="searchLog(1);">업무시간 외 접속</a></li>
+	    <li><a href="javascript:void(0);" onclick="searchLog(2);">과다 접속자관리</a></li>
+	    <li><a href="javascript:void(0);" onclick="searchLog(3);">접속 지점이상</a></li>
+	    <li><a href="javascript:void(0);" onclick="searchLog(4);">로그인 이상관리</a></li>
 	</ul>
 	<div class="search_box">
 		<form:form commandName="searchVO" name="defaultFrm" id="defaultFrm" method="post">
@@ -70,6 +70,7 @@ $(document).ready(function(){
 	fncDate('searchStartDate','searchEndDate');
 	$(".hideBtn3").hide();
 });
+
 function searchLog(val){
 	$(".hideBtn2").show();
 	$(".hideBtn3").hide();	

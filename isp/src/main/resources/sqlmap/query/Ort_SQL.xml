@@ -85,7 +85,6 @@
 				, OR_PJ_CONT														=#{orPjCont    }
 				, OR_ID																=#{orId        }
 				, OR_DT																= NOW()        
-				, OR_PW																=#{orPw        }
 				, OR_CATEGORY														=#{orCategory  }
 				, OR_STA_DATE														=#{orStaDate   }
 				, OR_END_DATE														=#{orEndDate   }
@@ -96,6 +95,13 @@
 				, OR_MAIL															=#{orMail      }
 				, OR_MBTI															=#{orMbti      }
 				, OR_BLOOD															=#{orBlood     }
+				
+		]]>   
+		<if test='orPw != null and orPw != ""'>
+				,OR_PW																=#{orPw        }
+		</if>
+		<![CDATA[		
+				
 				
 		]]>
 	</update> 

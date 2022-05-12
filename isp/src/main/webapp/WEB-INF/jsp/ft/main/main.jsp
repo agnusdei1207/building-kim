@@ -3,7 +3,7 @@
 
 <!doctype html>
 <html lang="ko">
-<head> 
+<head>  
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 	<title>김건축사무소</title>
@@ -20,14 +20,14 @@
 	<script type="text/javascript" src="/publish/ft/js/jquery-ui-1.12.1.custom.js"></script>
 	<script src="/publish/ft/js/jquery.cookie.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-JQDGRELBD4"></script>
+	 
 	<script type="text/javascript">
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
 		
 		gtag('config', 'G-JQDGRELBD4');
-	</script>
-	<script type="text/javascript"> 
+		
 		$(document).ready(function() { 
 			$('.slider').bxSlider({
 				auto: true,        
@@ -36,7 +36,7 @@
 				pager:true, 
 				pause: 4000  
 			}); 
-			
+			 
 			$.ajax({
 				method : "POST",
 				url : "/ft/main/addList.do",
@@ -87,7 +87,7 @@
 							</c:otherwise>
 						</c:choose>
 					</ul>
-				</div>         
+				</div>          
 			</div>      
 			<!-- GNB --> 
 			<h2 class="hidden">주메뉴</h2>
@@ -247,7 +247,7 @@
 		  
 		<!-- pc 팝업 -->                                           
 		<div id="pcPop">       	                    
-		</div>      
+		</div>       
 		<!-- //팝업 -->      
 		<!--  모바일 팝업 -->	            
 		<c:if test="${fn:length(popList) gt 0 and cookie.m_popUpYn.value eq null }">
@@ -301,7 +301,7 @@ $(document).ready(function(){
 		});
 	}
 });
-
+ 
 function isMobile(){
 	return /(iphone|ipod|ipad|android|blackberry|windows ce|palm|symbian)/i.test(navigator.userAgent);
 }
@@ -309,7 +309,7 @@ function isMobile(){
 <%-- PC 팝업 --%>   
 function fncP_PopUp(){              
 	$("#pcPop").html("");                   
-	<c:forEach var="list" items="${popList}">           
+	<c:forEach var="list" items="${popList}">            
 		if($.cookie("p_popUpYn_${list.poSeq}") == null){
 			if(hideChk.indexOf("/[${list.poSeq}]") == -1){
 				var html=""; 
@@ -336,11 +336,11 @@ function fncP_PopUp(){
 }   
         
 <%-- 모바일 팝업 --%> 
-function fncM_PopUp(){	     
+function fncM_PopUp(){	      
 	      
 	if($.cookie("m_popUpYn") == null){
 		if(hideChk.indexOf("/[m_display_view]") == -1){
-			var mTop = (($(window).height() - $('.m_main_pop').height())/2 + 80);
+			var mTop = (($(window).height() - $('.m_main_pop').height())/2 + 80); 
 			var mLeft = (($(window).width() - $('.m_main_pop').width())/2 + 80);   
 			$("#m_display_view").css({"left":mLeft, "top":mTop});
 			$('.m_main_pop').show();

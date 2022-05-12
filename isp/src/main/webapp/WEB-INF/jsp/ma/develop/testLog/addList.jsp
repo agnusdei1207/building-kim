@@ -6,13 +6,14 @@
 	<div class="tbl_left"><i class="i_all"></i> <span> 전체 : <strong>${paginationInfo.totalRecordCount}</strong> 건(${searchVO.pageIndex}/${paginationInfo.totalPageCount} Page) </span></div>
 	<div class="tbl_right"><a href="#" class="btn_excel" id="btn_excel" ><span>엑셀다운로드</span></a></div>
 </div>
+ 
 <c:if test="${searchVO.schEtc03 ne '4' }">
 	<div class="tbl_wrap">
 		<table class="tbl_col_type01 no_hover" id="fixTable">
 			<caption>목록(번호,제목,첨부,작성자,작성일,조회 로 구성)</caption>
 			<colgroup>
 				<col style="width:5%;">
-			<c:if test="${searchVO.schEtc03 ne '3' }">
+			<c:if test="${searchVO.schEtc03 ne '3' }"> 
 				<col style="width:10%;">
 				<col style="width:10%;">
 	            <col style="width:10%;">
@@ -46,7 +47,7 @@
 								<td>${paginationInfo.totalRecordCount+1 - ((searchVO.pageIndex-1) * searchVO.pageUnit + status.count)}</td>
 							<c:if test="${searchVO.schEtc03 ne '3' }">
 								<td>${result.logDivn eq 'ft' ? '사용자' : '관리자' }</td>
-								<td>${result.rgstId }</td>
+								<td>${result.rgstId }</td> 
 								<td>${result.name }</td>
 							</c:if>
 								<td>${result.rgstDt }</td>
@@ -56,7 +57,7 @@
 								</c:if>
 							</tr>
 						</c:forEach>
-					</c:when>
+					</c:when>  
 					<c:otherwise>
 						<tr>
 							<td colspan="${searchVO.schEtc03 eq '2' ? '7': searchVO.schEtc03 eq '3' ? '3':'6'}" class="no_data">데이터가 없습니다.</td>
