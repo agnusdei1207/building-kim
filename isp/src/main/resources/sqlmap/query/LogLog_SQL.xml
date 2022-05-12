@@ -19,48 +19,29 @@
 		</if> 
 	</sql>         
  	      
-	<select id="selectContents" parameterType="logLogVO" resultType="logLogVO">
-		/* LogLog.selectContents */
-		<![CDATA[
-			 SELECT  
-			          
-				  LOG_SEQ															 logSeq
-				, LOG_CLIENT_IP 								 					 logClientIp
-				, F_USER_NM(LOG_ID)													 logId
-				, LOG_URL														     logUrl
-				, (SELECT MENU_NM FROM t_menu_info WHERE MENU_CD = LOG_MENU_CD)		 logMenuCd
-				, DATE_FORMAT(LOG_DT,'%Y.%m.%d')									 logDt
-				, LOG_DIVN 															 logDivn
-				, LOG_IP_ERR_YN 													 logIpErrYn
-				  
-		     FROM  T_LOG_LOG
-				 AND LOG_SEQ = #{logSeq}
-		]]>
-	</select>
-	
 	<select id="selectList" parameterType="cmmnDefaultVO" resultType="logLogVO">
 		/* LogLog.selectList */
 		<![CDATA[  
-      	     SELECT       
-      	           
-				  LOG_SEQ															 logSeq
-				, LOG_CLIENT_IP 								 					 logClientIp
-				, F_USER_NM(LOG_ID)													 logId
-				, LOG_URL														     logUrl
-				, (SELECT MENU_NM FROM t_menu_info WHERE MENU_CD = LOG_MENU_CD)		 logMenuCd
-				, DATE_FORMAT(LOG_DT,'%Y.%m.%d')									 logDt
-				, LOG_DIVN 															 logDivn
-				, LOG_IP_ERR_YN 													 logIpErrYn
-				 
-		     FROM T_LOG_LOG
+      	    SELECT       
+      	            
+				  LOG_SEQ																												 logSeq
+				, LOG_CLIENT_IP 								 																		 logClientIp
+				, F_USER_NM(LOG_ID)																										 logId
+				, LOG_URL														  														 logUrl
+				, (SELECT MENU_NM FROM t_menu_info WHERE t_menu_info.MENU_CD = a.LOG_MENU_CD AND t_menu_info.MENU_CL = a.LOG_DIVN )		 logMenuCd
+				, DATE_FORMAT(LOG_DT,'%Y.%m.%d')																						 logDt
+				, LOG_DIVN 																												 logDivn
+				, LOG_IP_ERR_YN 																										 logIpErrYn
+				   
+		     FROM t_log_log a
 	      ]]>    
-		     <include refid="Where"/>	 
+		     <include refid="Where"/>	  
 	     <![CDATA[    
 	    		ORDER BY LOG_SEQ DESC
 				LIMIT  #{firstIndex} , #{recordCountPerPage}
 		]]>
 	</select>	 
-
+ 
     
 	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
 		/* LogLog.selectCount */

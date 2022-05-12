@@ -63,9 +63,9 @@ public class FrontInterceptor extends HandlerInterceptorAdapter implements Handl
 			MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
 			logLogVO.setLogId(memberVO.getMeId());
 		} 
-		  
-		String menuCd = "";
-		menuCd = StringUtil.getMenuCd(request.getRequestURI()).get("depth2");
+		     
+		String menuCd = ""; 
+		menuCd = currentUrl.split("/")[3];
 		logLogVO.setLogMenuCd(menuCd);
 		   
 		// 로그 찍기
