@@ -120,7 +120,7 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 
 			LOGGER.debug(paramName + " :: " + value);
 		}
-		
+		 
 		String requestFullUrl = URLEncoder.encode(request.getRequestURL() + refererParam.toString(), "UTF-8");
 		request.setAttribute("requestFullUrl", requestFullUrl);
 		request.setAttribute("refererUrl", request.getHeader("referer"));
@@ -139,8 +139,9 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 					List<String> manuList = (List<String>) SessionUtil.getAuthList();
 					if(manuList == null){
 						response.sendRedirect("/cmmn/fail.do");
-					}
+					} 
 					
+					System.out.println("manuList : "+ manuList );
 					menuCd = StringUtil.getMenuCd(request.getRequestURI()).get("depth2");
 					/*권한 없는 경우 */
 					if(!manuList.contains(menuCd) && !request.getRequestURI().equals("/ma/main.do") && request.getRequestURI().indexOf("/sb") < 0 && request.getRequestURI().indexOf("/mc01") < 0){

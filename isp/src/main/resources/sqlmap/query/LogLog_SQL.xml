@@ -93,15 +93,13 @@
 		/* LogLog.updateContents */
 		<![CDATA[
 			UPDATE T_LOG_LOG        
-			 SET    
-			      
-				LOG_RGST_DT								 							 = NOW()
-				, LOG_RVSE_ID														 =#{loginSeq	 }	
-				, LOG_ATCH_FILE_ID 													 =#{logAtchFileId}
-				, LOG_TITLE														     =#{logTitle     }
-				, LOG_CONT 															 =#{logCont      }
-				, LOG_ID 															 =#{logId        }
-				, LOG_DT															 = NOW()
+			 SET     
+			        
+				LOG_CLIENT_IP 								 						 =#{logClientIp}
+				, LOG_URL														     =#{logUrl     }
+				, LOG_DT															 =#{logDt      }
+				, LOG_DIVN 															 =#{logDivn    }
+				, LOG_IP_ERR_YN 													 =#{logIpErrYn }
 				
 			WHERE  LOG_SEQ = #{logSeq}    
 		]]>    
@@ -113,7 +111,7 @@
 			UPDATE T_LOG_LOG
 		       SET
 			WHERE LOG_SEQ=#{logSeq}
-		]]>
+		]]>  
 	</update>
     
 </mapper>

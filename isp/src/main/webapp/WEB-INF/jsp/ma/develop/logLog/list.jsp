@@ -2,7 +2,7 @@
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
 <script type="text/javascript" src="/publish/ma/js/board.js"></script>
 
-<%-- search --%>
+<%-- search --%> 
 <div class="content_box">
 	<ul class="tab js-tab tab_menu">
 	    <li class="current"><a href="javascript:void(0);" onclick="searchLog(0);">전체</a></li>
@@ -22,10 +22,10 @@
 					<table class="type03">
 						<colgroup>
 							<col style="width:550px">
-							<col>
-						</colgroup>
+							<col> 
+						</colgroup> 
 						<tbody>
-							<tr>
+							<tr>   
 								<td>
 									<strong class="tit hideBtn1">구분</strong>
 									<form:select path="schEtc02" id="schEtc02" class="text w150 hideBtn1">
@@ -71,17 +71,20 @@ $(document).ready(function(){
 	$(".hideBtn3").hide();
 });
 
+// 검색 구분 값 숨김 및 보여주기 
 function searchLog(val){
 	$(".hideBtn2").show();
 	$(".hideBtn3").hide();	
 	if(val == 0){
-		<%-- 전체탭 클릭시 --%>
+		 
+		<%-- 전체탭 클릭시 --%> 
 		$("#schEtc03").val("");
 		$("#schEtc02").val("");
 		$(".hideBtn1").show();
 		fncPageBoard('addList','addList.do',1);
 		return false;
 	}else {
+		
 		<%-- 전체탭 이외 클릭시 --%>
 		$("#schEtc03").val(val);
 		$("#schEtc02").val("ma");		

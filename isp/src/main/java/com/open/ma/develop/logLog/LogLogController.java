@@ -41,8 +41,8 @@ public class LogLogController {
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
 
-		searchVO.setPageUnit(6);
-		searchVO.setPageSize(7); 
+		searchVO.setPageUnit(10);
+		searchVO.setPageSize(11); 
 
 		PaginationInfo paginationInfo = new PaginationInfo();  
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
