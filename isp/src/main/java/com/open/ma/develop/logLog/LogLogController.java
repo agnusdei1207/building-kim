@@ -7,16 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.open.ma.develop.logLog.service.LogLogVO;
 import com.open.cmmn.model.CmmnDefaultVO;
 import com.open.cmmn.service.CmmnService;
+import com.open.cmmn.util.DateUtils;
+import com.open.ma.develop.logLog.service.LogLogVO;
 
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -35,6 +33,10 @@ public class LogLogController {
 	@RequestMapping(folderPath + "list.do") 
 	public String list(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
          
+		String time = DateUtils.getCurrentDate("yyyy.MM.dd");
+		searchVO.setSearchStartDate(time);
+		searchVO.setSearchEndDate(time);
+		
 		return ".mLayout:"+ folderPath + "list";
 	}    
 	

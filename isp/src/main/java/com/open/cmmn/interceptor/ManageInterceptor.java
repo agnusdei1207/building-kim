@@ -71,10 +71,10 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 		HttpSession session = request.getSession();
 		
 		menuCd = StringUtil.getMenuCd(request.getRequestURI()).get("depth3");
-		
+		 
 		LOGGER.debug("pre request URI ====================================>" + request.getRequestURI());
 		LOGGER.debug("Manage Access Ip ====================================>" + clientIp);
-
+ 
 		loadingTime = System.currentTimeMillis();
 		LOGGER.info("=================================== manageInterceptor Start");
 
@@ -85,8 +85,8 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 		LogLogVO logLogVO = new LogLogVO();
 		logLogVO.setLogClientIp(clientIp);
 		logLogVO.setLogUrl(currentUrl);
-		
-		
+		logLogVO.setLogDivn("ma");
+		 
 		@SuppressWarnings("rawtypes")
 		Enumeration paramNames = request.getParameterNames();
 		StringBuffer refererParam = new StringBuffer();
@@ -108,8 +108,8 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 				value = value.replaceAll("\\)", "&#41;");
 				value = value.replaceAll("#", "&#35;");
 			}
+			   
 			  
-			 
 			if (intCount == 1) { // parameta 가 1개일 경우
 				refererParam.append("?").append(paramName).append("=").append(value);
 			} else {
@@ -140,9 +140,12 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 					if(manuList == null){
 						response.sendRedirect("/cmmn/fail.do");
 					} 
-					
+					 
 					System.out.println("manuList : "+ manuList );
 					menuCd = StringUtil.getMenuCd(request.getRequestURI()).get("depth2");
+					// 로그 기록
+					logLogVO.setLogMenuCd(menuCd);
+					
 					/*권한 없는 경우 */
 					if(!manuList.contains(menuCd) && !request.getRequestURI().equals("/ma/main.do") && request.getRequestURI().indexOf("/sb") < 0 && request.getRequestURI().indexOf("/mc01") < 0){
 						response.sendRedirect("/cmmn/fail.do");

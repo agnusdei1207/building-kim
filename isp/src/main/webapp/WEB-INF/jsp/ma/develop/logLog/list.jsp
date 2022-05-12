@@ -11,64 +11,69 @@
 	    <li><a href="javascript:void(0);" onclick="searchLog(3);">접속 지점이상</a></li>
 	    <li><a href="javascript:void(0);" onclick="searchLog(4);">로그인 이상관리</a></li>
 	</ul>
-	<div class="search_box">
-		<form:form commandName="searchVO" name="defaultFrm" id="defaultFrm" method="post">
-			<form:hidden path="pageIndex" id="pageIndex" />
+	<div class="search_box">   
+		<form name="defaultFrm" id="defaultFrm" method="post">
+			<input type="hidden" name="pageIndex" id="pageIndex" value="${searchVO.pageIndex }" />
 			<input type="hidden" id="logSeq" name="logSeq" />
 			<input type="hidden" name="schEtc03" id="schEtc03" value="${searchVO.schEtc03 }"/>
-			<fieldset>
-				<legend>검색</legend>
+			<fieldset>        
+				<legend>검색</legend> 
 				<div class="search_basic">
 					<table class="type03">
 						<colgroup>
 							<col style="width:550px">
-							<col> 
+							<col>  
 						</colgroup> 
 						<tbody>
-							<tr>   
+							<tr>      
 								<td>
 									<strong class="tit hideBtn1">구분</strong>
-									<form:select path="schEtc02" id="schEtc02" class="text w150 hideBtn1">
-										<form:option value="" label="선택"/>
-										<form:option value="ma" label="관리자"/>
-										<form:option value="ft" label="사용자"/>
-									</form:select>
-									<strong class="tit hideBtn2">기간</strong>
+									<select name="schEtc02" id="schEtc02" class="text w150 hideBtn1">
+										<option value="">선택</option>
+										<option value="ma">관리자</option>  
+										<option value="ft">사용자</option>
+									</select>
+									<strong class="tit hideBtn2">기간</strong> 
 									<span class="calendar_input w150 hideBtn2" >
-										<form:input path="searchStartDate" id="searchStartDate" cssClass="text w80p" readonly="true"/>
-									</span>
+										<input type="text" name="searchStartDate" id="searchStartDate" class="text w80p" value="${searchVO.searchStartDate }" readonly/>
+									</span>   
 									<span class="input_wave hideBtn2">~</span>
 									<span class="calendar_input w150 hideBtn2" >
-										<form:input path="searchEndDate" id="searchEndDate" cssClass="text w80p" readonly="true"/>
+										<input type="text" name="searchEndDate" id="searchEndDate" class="text w80p" value="${searchVO.searchEndDate }" readonly/>
 									</span>
 									<strong class="tit hideBtn3">구분</strong>						
-									<form:select path="searchCondition" id="searchCondition" title="구분 선택" cssClass="selec hideBtn3" cssStyle="width:132px;">  
-										<form:option value="0" label="전체"/>
-										<form:option value="1" label="ID"/>
-										<form:option value="2" label="성명"/>
-									</form:select>
-									<form:input path="searchKeyword" id="searchKeyword" class="text w60p hideBtn3" /> 
+									<select title="구분 선택" name="searchCondition" id="searchCondition"  class="selec hideBtn3" style="width:132px;">  
+										<option value="0" >전체</option>
+										<option value="1" >ID</option>
+										<option value="2" >성명</option>
+									</select>
+									<input type="text" name="searchKeyword" id="searchKeyword" class="text w60p hideBtn3" /> 
 								</td>
 							</tr>		
-						</tbody>
+						</tbody>  
 					</table>
 					<span class="search_btns">
 						<button type="button" class="btn btn_search" id="btn_search">검색</button>
 					</span>
 				</div>
 			</fieldset>
-		</form:form>
+		</form>
 	</div>
 	<%-- //search --%>
 	<div class="tbl">
 	</div>
 </div>
-	
+	 
 <script type="text/javaScript">
+
 $(document).ready(function(){
 	fncPageBoard('addList','addList.do',$("#pageIndex").val());
 	fncDate('searchStartDate','searchEndDate');
 	$(".hideBtn3").hide();
+	 
+	$("[id^=schEtc]").on("change", function(){
+		fncPageBoard('addList','addList.do', '1');
+	});
 });
 
 // 검색 구분 값 숨김 및 보여주기 
@@ -76,7 +81,6 @@ function searchLog(val){
 	$(".hideBtn2").show();
 	$(".hideBtn3").hide();	
 	if(val == 0){
-		 
 		<%-- 전체탭 클릭시 --%> 
 		$("#schEtc03").val("");
 		$("#schEtc02").val("");
@@ -84,7 +88,6 @@ function searchLog(val){
 		fncPageBoard('addList','addList.do',1);
 		return false;
 	}else {
-		
 		<%-- 전체탭 이외 클릭시 --%>
 		$("#schEtc03").val(val);
 		$("#schEtc02").val("ma");		

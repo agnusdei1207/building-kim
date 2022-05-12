@@ -14,8 +14,11 @@
 				AND LOG_CONT LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
 	 	</if> 
+	 	<if test='schEtc02 != null and schEtc02 != "" '>
+			WHERE LOG_DIVN = #{schEtc02}
+		</if> 
 	</sql>         
-       
+ 	      
 	<select id="selectContents" parameterType="logLogVO" resultType="logLogVO">
 		/* LogLog.selectContents */
 		<![CDATA[
@@ -25,38 +28,40 @@
 				, LOG_CLIENT_IP 								 					 logClientIp
 				, F_USER_NM(LOG_ID)													 logId
 				, LOG_URL														     logUrl
+				, (SELECT MENU_NM FROM t_menu_info WHERE MENU_CD = LOG_MENU_CD)		 logMenuCd
 				, DATE_FORMAT(LOG_DT,'%Y.%m.%d')									 logDt
 				, LOG_DIVN 															 logDivn
 				, LOG_IP_ERR_YN 													 logIpErrYn
-				
+				  
 		     FROM  T_LOG_LOG
 				 AND LOG_SEQ = #{logSeq}
 		]]>
 	</select>
-	 
+	
 	<select id="selectList" parameterType="cmmnDefaultVO" resultType="logLogVO">
 		/* LogLog.selectList */
 		<![CDATA[  
       	     SELECT       
-      	        
+      	           
 				  LOG_SEQ															 logSeq
 				, LOG_CLIENT_IP 								 					 logClientIp
 				, F_USER_NM(LOG_ID)													 logId
 				, LOG_URL														     logUrl
+				, (SELECT MENU_NM FROM t_menu_info WHERE MENU_CD = LOG_MENU_CD)		 logMenuCd
 				, DATE_FORMAT(LOG_DT,'%Y.%m.%d')									 logDt
 				, LOG_DIVN 															 logDivn
 				, LOG_IP_ERR_YN 													 logIpErrYn
-				
+				 
 		     FROM T_LOG_LOG
-	      ]]>   
+	      ]]>    
 		     <include refid="Where"/>	 
 	     <![CDATA[    
 	    		ORDER BY LOG_SEQ DESC
 				LIMIT  #{firstIndex} , #{recordCountPerPage}
 		]]>
-	</select>	
+	</select>	 
 
-
+    
 	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
 		/* LogLog.selectCount */
 		<![CDATA[ 
@@ -74,29 +79,33 @@
            	  	  LOG_SEQ												
 				, LOG_CLIENT_IP 								 				
 				, LOG_ID														
-				, LOG_URL													
+				, LOG_URL		
+				, LOG_MENU_CD		
 				, LOG_DIVN 														
 				, LOG_IP_ERR_YN 																		  						
 			)        
-			VALUES (
+			VALUES ( 
 				 (SELECT IFNULL(MAX(TL.LOG_SEQ)+1,1) FROM T_LOG_LOG TL)
 				,#{logClientIp      }          
 				,#{loginSeq 		}  
 				,#{logUrl   	    }
+				,#{logMenuCd   	    }
 				,#{logDivn          }
 				,#{logIpErrYn       }
 			)
 		]]>
 	</insert>
-	
+	 
 	<update id="updateContents" parameterType="logLogVO">
 		/* LogLog.updateContents */
 		<![CDATA[
-			UPDATE T_LOG_LOG        
-			 SET     
+			UPDATE T_LOG_LOG       
+			 
+			 SET      
 			        
 				LOG_CLIENT_IP 								 						 =#{logClientIp}
 				, LOG_URL														     =#{logUrl     }
+				, LOG_MENU_CD														 =#{logMenuCd  }
 				, LOG_DT															 =#{logDt      }
 				, LOG_DIVN 															 =#{logDivn    }
 				, LOG_IP_ERR_YN 													 =#{logIpErrYn }

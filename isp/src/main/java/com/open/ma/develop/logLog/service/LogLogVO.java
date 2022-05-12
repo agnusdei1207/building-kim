@@ -15,11 +15,20 @@ public class LogLogVO extends CmmnDefaultVO implements Serializable {
 	private String logClientIp;
 	private String logId;
 	private String logUrl;
+	private String logMenuCd;
 	private String logDt;
 	private String logDivn;
 	private String logIpErrYn; 
 	private String logCnt;
     
+	
+	
+	public String getLogMenuCd() {
+		return logMenuCd;
+	}
+	public void setLogMenuCd(String logMenuCd) {
+		this.logMenuCd = logMenuCd;
+	}
 	public String getLogSeq() {
 		return logSeq;         
 	}

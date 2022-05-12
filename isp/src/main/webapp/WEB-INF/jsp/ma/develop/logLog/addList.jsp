@@ -4,34 +4,35 @@
 <%-- tbl --%>
 <div class="tbl_top">
 	<div class="tbl_left"><i class="i_all"></i> <span> 전체 : <strong>${paginationInfo.totalRecordCount}</strong> 건(${searchVO.pageIndex}/${paginationInfo.totalPageCount} Page) </span></div>
-	<div class="tbl_right"><a href="javascript:void(0)" class="btn_excel" id="btn_excel" ><span>엑셀다운로드</span></a></div>
-</div>
- 
+</div> 
+                
 <c:if test="${searchVO.schEtc03 ne '4' }">
-	<div class="tbl_wrap">  
+	<div class="tbl_wrap">   
 		<table class="tbl_col_type01 no_hover" id="fixTable">
 			<caption>목록(번호,제목,첨부,작성자,작성일,조회 로 구성)</caption>
 			<colgroup>
-				<col style="width:5%;">
-			<c:if test="${searchVO.schEtc03 ne '3' }"> 
+				<col style="width:5%;"> 
+			<c:if test="${searchVO.schEtc03 ne '3' }">
 				<col style="width:10%;">
 				<col style="width:10%;">       
 	            <col style="width:10%;">
-            </c:if> 
+	            <col style="width:20%;"> 
+            </c:if>  
 	            <col style="width:${searchVO.schEtc03 eq '3' ? '30%;':'15%;'}">
 	            <col>
 	            <c:if test="${searchVO.schEtc03 eq '2' }">
 	            	<col style="width:8%;">
 	            </c:if>
 			</colgroup>
-			<thead>
+			<thead> 
 				<tr>
 					<th scope="col">번호</th>
 				<c:if test="${searchVO.schEtc03 ne '3' }">
 					<th scope="col">구분</th>
 					<th scope="col">ID</th>  
-	                <th scope="col">성명</th>
-                </c:if>
+	                <th scope="col">접근 메뉴</th>  
+	                <th scope="col">URL</th>
+	            </c:if> 
 	                <th scope="col">${searchVO.schEtc03 eq '1' or searchVO.schEtc03 eq '3' ? '접속시간':'최근로그인'}</th>
 					<th scope="col">클라이언트IP</th>
 				<c:if test="${searchVO.schEtc03 eq '2' }">
@@ -39,7 +40,7 @@
 				</c:if>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody>  
 				<c:choose>
 					<c:when test="${fn:length(resultList) gt 0}">
 						<c:forEach var="result" items="${resultList}" varStatus="status">
@@ -48,8 +49,9 @@
 							<c:if test="${searchVO.schEtc03 ne '3' }">
 								<td>${result.logDivn eq 'ft' ? '사용자' : '관리자' }</td>
 								<td>${result.logId }</td> 
-								<td>${result.logId }</td> 
-							</c:if>
+								<td>${result.logMenuCd }</td> 
+								<td class="l">${result.logUrl }</td> 
+							</c:if> 
 								<td>${result.logDt }</td>
 								<td>${result.logClientIp }</td>
 								<c:if test="${searchVO.schEtc03 eq '2' }">
@@ -108,12 +110,12 @@
 							</tr>
 						</c:forEach>
 					</c:when> 
-					<c:otherwise>
+					<c:otherwise> 
 						<tr>
 							<td colspan="7" class="no_data">데이터가 없습니다.</td>
 						</tr>
 					</c:otherwise>
-				</c:choose>  
+				</c:choose>   
 			</tbody>
 		</table>
 	</div>
@@ -127,18 +129,8 @@
     </div>
 </div>
 <%-- //paging --%> 
-
+ 
 <script type="text/javascript"> 
    
-$("#btn_excel").click(function(){
-	<c:choose>
-		<c:when test="${fn:length(resultList) gt 0}">
-			fncPageBoard('list','excelDown.do');
-		</c:when>
-		<c:otherwise>
-			alert("데이터가 없습니다.");
-		</c:otherwise>
-	</c:choose> 
-});
               
 </script>
