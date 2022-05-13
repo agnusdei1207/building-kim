@@ -24,7 +24,7 @@ import com.open.cmmn.service.FileMngService;
 import com.open.cmmn.util.EncryptUtil;
 import com.open.cmmn.util.SessionUtil;
 import com.open.cmmn.util.StringUtil;
-import com.open.ma.develop.logLog.service.LogLogVO;
+import com.open.ma.develop.loginLog.service.LoginLogVO;
 import com.open.ma.login.service.LoginVO;
 import com.open.ma.sys.mn.service.MnVO;
 
@@ -59,24 +59,13 @@ public class LoginController {
 	@Resource
 	private MappingJackson2JsonView ajaxView;
 	
-    /** Program ID **/
+    /** Program ID **/ 
     private final static String PROGRAM_ID = "Login";
 
-    /** folderPath **/
-    private final static String folderPath = "/ma/login/";
-
-	//@Resource(name = "beanValidator")
-	//protected DefaultBeanValidator beanValidator;
-	
-    @Autowired
-	private EhCacheCacheManager cacheManager;
-    
 	Logger log = Logger.getLogger(this.getClass());
-	
 	
 	@RequestMapping(value = "/login.do")
 	public String maLogin(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
-		String clientIp = StringUtil.getClientIp(request);			 			
 		LoginVO loginVO = new LoginVO();
 		String returnUrl = StringUtil.nullString(request.getParameter("returnUrl"));	
 		loginVO.setReturnUrl(URLDecoder.decode(returnUrl, "UTF-8"));	
@@ -85,12 +74,12 @@ public class LoginController {
 		return  "/ma/login/login"; 
 	}
 	
-	
+	 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/loginProcess.do", method = RequestMethod.POST)
 	public String loginProcess(@ModelAttribute("loginVO") LoginVO loginVO	, HttpServletRequest request, ModelMap model) throws Exception {
+		
 		String clientIp = StringUtil.getClientIp(request);
-		CmmnDefaultVO searchVO = new CmmnDefaultVO();
 		
 		if(loginVO.getId() != null && loginVO.getPwd() != null && !"".equals(loginVO.getId()) && !"".equals(loginVO.getPwd())){
 			loginVO.setPwd(EncryptUtil.getString(EncryptUtil.Sha256EncryptB(loginVO.getPwd().getBytes("UTF-8"))));
@@ -102,8 +91,7 @@ public class LoginController {
 	    		/*로그인 실패횟수 증가
 	    		cmmnService.updateContents(loginVO, PROGRAM_ID+".failCntUpdateContent");*/
 	    		return  "/ma/login/login";  
-	    	}else{
-	    		
+	    	}else{ 
 	    		 	/** 세션 정보 입력 */
 					HttpSession session = request.getSession();					
 					session.setAttribute(SessionUtil.SESSION_MANAGE_KEY, userLoginVO);
@@ -115,6 +103,11 @@ public class LoginController {
 					session.setAttribute("loginMgrAuthCodeNm", userLoginVO.getAuthCodeNm()); //권한명
 					session.setAttribute("loginMgrSiteClcd", userLoginVO.getSiteClcd()); //사이트구분
 					
+					/* 로그인 로그 */
+					LoginLogVO loginLogVO = new LoginLogVO();
+					loginLogVO.setLogId(userLoginVO.getId());
+					loginLogVO.setLogClientIp(clientIp);
+					cmmnService.insertContents(loginLogVO, "LoginLog");
 					
 					MnVO auth = new MnVO();
     				auth.setLvl("2");
@@ -160,7 +153,6 @@ public class LoginController {
 					session.setAttribute("mgrMenu", menuVO.getMenuList());	//메뉴목록
     				session.setAttribute(SessionUtil.SESSION_MANAGE_MENU_AUTH_KEY, authList);//메뉴권한2차
     				session.setAttribute(SessionUtil.SESSION_MANAGE_MENU_AUTH_KEY2, authList2);//메뉴권한3차
-					
 					session.setMaxInactiveInterval(Integer.parseInt(globalProperties.getProperty("Globals.sessionTime")));	
 					
 			        if (loginVO.getReturnUrl() == null || loginVO.getReturnUrl().equals("")) {	

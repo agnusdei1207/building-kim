@@ -40,15 +40,15 @@ public class LogLogController {
 		return ".mLayout:"+ folderPath + "list";
 	}    
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
 
 		System.out.println("값 확인 : "+ searchVO.getSchEtc02());
-		System.out.println("값 확인 : "+ searchVO.getSchEtc02());
-		
+		System.out.println("값 확인 : "+ searchVO.getSchEtc03());
 		
 		searchVO.setPageUnit(10);
-		searchVO.setPageSize(11); 
+		searchVO.setPageSize(11);     
 
 		PaginationInfo paginationInfo = new PaginationInfo();  
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
@@ -58,14 +58,24 @@ public class LogLogController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
-		 
+		
+		if(!"2".equals(searchVO.getSchEtc03())){
 		int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID );
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 
-		@SuppressWarnings("unchecked")
 		List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, PROGRAM_ID );
 		model.addAttribute("resultList", resultList);
+		
+		}else{
+			 
+			int totCnt = cmmnService.selectCount(searchVO, "LoginLog" );
+			paginationInfo.setTotalRecordCount(totCnt);
+			model.addAttribute("paginationInfo", paginationInfo);
+			
+			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, "LoginLog" );
+			model.addAttribute("resultList", resultList);
+		}
 		
 		return folderPath + "addList";
 	}

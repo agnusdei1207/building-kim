@@ -6,28 +6,9 @@ import org.apache.ibatis.type.Alias;
 
 import com.open.cmmn.model.CmmnDefaultVO;
 
-/**
- * 관리자 VO 클래스
- * @author hw.park
- * @since 2015.09.01
- * @version 1.0
- * @see
- *  
- * <pre>
- * << 개정이력(Modification Information) >>
- * 
- *   수정일      수정자          수정내용
- *  -------    --------    ---------------------------
- *  2015.09.01  hw.park		최초생성 
- *  
- *  </pre>
- */
 @Alias("loginVO")
 public class LoginVO extends CmmnDefaultVO implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5828229720707546090L;
 
 	private String seq;

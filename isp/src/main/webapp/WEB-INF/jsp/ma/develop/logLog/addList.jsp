@@ -25,32 +25,32 @@
 	            </c:if>
 			</colgroup>
 			<thead> 
-				<tr>
-					<th scope="col">번호</th>
-				<c:if test="${searchVO.schEtc03 ne '3' }">
-					<th scope="col">구분</th>
-					<th scope="col">ID</th>  
-	                <th scope="col">접근 메뉴</th>  
-	                <th scope="col">URL</th>
-	            </c:if> 
-	                <th scope="col">${searchVO.schEtc03 eq '1' or searchVO.schEtc03 eq '3' ? '접속시간':'최근로그인'}</th>
+				<tr>   
+					<th scope="col">번호</th> 
+				<c:if test="${searchVO.schEtc03 ne '3' }"> 
+					<th scope="col">구분</th> 
+					<th scope="col">ID</th>    
+	                <th scope="col">${searchVO.schEtc03 ne '2' ? '접근 메뉴' :  searchVO.schEtc03 eq '2' ? '이름' : '접근 메뉴'}</th>  
+	                <th scope="col">${searchVO.schEtc03 ne '2' ? 'URL' :  searchVO.schEtc03 eq '2' ? '시간' : 'URL'}</th>
+				</c:if> 
+	                <th scope="col">${searchVO.schEtc03 eq '1' or searchVO.schEtc03 eq '3' ? '접속시간':'최근 로그인'}</th>
 					<th scope="col">클라이언트IP</th>
 				<c:if test="${searchVO.schEtc03 eq '2' }">
 					<th scope="col">접속횟수</th>
 				</c:if>
 				</tr>
 			</thead>
-			<tbody>  
+			<tbody>
 				<c:choose>
-					<c:when test="${fn:length(resultList) gt 0}">
+					<c:when test="${fn:length(resultList) gt 0}">   
 						<c:forEach var="result" items="${resultList}" varStatus="status">
 							<tr>
 								<td>${paginationInfo.totalRecordCount+1 - ((searchVO.pageIndex-1) * searchVO.pageUnit + status.count)}</td>
 							<c:if test="${searchVO.schEtc03 ne '3' }">
-								<td>${result.logDivn eq 'ft' ? '사용자' : '관리자' }</td>
-								<td>${result.logId }</td> 
-								<td>${result.logMenuCd }</td>  
-								<td class="l">${result.logUrl }</td> 
+								<td>${result.logDivn eq 'ft' ? '사용자' : '관리자' }</td>    
+								<td>${result.logId }</td>  
+								<td>${searchVO.schEtc03 ne '2' ? result.logMenuCd : searchVO.schEtc03 eq '2' ? result.logId : result.logMenuCd}</td>   
+								<td>${searchVO.schEtc03 ne '2' ? result.logUrl : searchVO.schEtc03 eq '2' ? result.maxLogDt : result.logUrl}</td> 
 							</c:if> 
 								<td>${result.logDt }</td>
 								<td>${result.logClientIp }</td>
