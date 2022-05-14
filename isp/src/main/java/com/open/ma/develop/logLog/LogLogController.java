@@ -58,7 +58,6 @@ public class LogLogController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
-		
 		if(!"2".equals(searchVO.getSchEtc03())){
 		int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID );
 		paginationInfo.setTotalRecordCount(totCnt);
@@ -68,7 +67,6 @@ public class LogLogController {
 		model.addAttribute("resultList", resultList);
 		
 		}else{
-			 
 			int totCnt = cmmnService.selectCount(searchVO, "LoginLog" );
 			paginationInfo.setTotalRecordCount(totCnt);
 			model.addAttribute("paginationInfo", paginationInfo);
