@@ -35,6 +35,10 @@ public class MemberController {
     
     private final static String folderPath = "/ft/member/login/";
     
+    private String message = "";
+    
+    private String cmmnScript = "";
+    
     private String layout = ".fLayout:";
  
 	    
@@ -45,31 +49,39 @@ public class MemberController {
 	} 
                       
  	@RequestMapping(folderPath + "loginProcess.do")
-	public String loginProcess(@ModelAttribute("searchVO") MemberVO searchVO	, HttpServletRequest request	, ModelMap model	, SessionStatus status) throws Exception {
+	public String loginProcess(@ModelAttribute("searchVO") MemberVO searchVO	, HttpServletRequest request	, ModelMap model) throws Exception {
 
+ 		
+ 		
  		if(searchVO.getMeId() != null && searchVO.getMePw() != null && !"".equals(searchVO.getMeId()) && !"".equals(searchVO.getMePw())){
 			searchVO.setMePw(EncryptUtil.getString(EncryptUtil.Sha256EncryptB(searchVO.getMePw().getBytes("UTF-8"))));
 			   
 			MemberVO userLoginVO  = (MemberVO)cmmnService.selectContents(searchVO, PROGRAM_ID);
 			    
 	    	if(userLoginVO == null || userLoginVO.getMeId() == null || "".equals(userLoginVO.getMeId())){
-	    		model.addAttribute("message", "아이디 또는 패스워드를 확인하시기 바랍니다.");
-	    		model.addAttribute("cmmnScript", folderPath + "loginFrm.do");
+	    		message = "아이디 또는 패스워드를 확인하시기 바랍니다.";
+				cmmnScript = folderPath + "loginFrm.do";
 	    		cmmnService.updateContents(userLoginVO, PROGRAM_ID + ".failCntUp");
+	    		MemberVO memberVO = (MemberVO)cmmnService.selectContents(userLoginVO, PROGRAM_ID + ".checkPwSelectContents");
+	    		if(Integer.parseInt(memberVO.getMeFailCnt()) > 5){
+	    			message = "비밀번호 입력횟수가 초과되었습니다. 관리자에게 연락하세요.";
+					cmmnScript = "/ft/main/main.do";
+	    		}
 	    		
 	    	}else{ 
-	    		 	/** 세션 정보 입력 */ 
 					HttpSession session = request.getSession();					
 					session.setAttribute(SessionUtil.SESSION_FRONT_KEY, userLoginVO);
 					session.setAttribute("memberVO", userLoginVO);
-					model.addAttribute("message", userLoginVO.getMeId()+" 님 환영합니다.");
-		    		model.addAttribute("cmmnScript", "/ft/main/main.do");
+					message = userLoginVO.getMeId()+" 님 환영합니다.";
+					cmmnScript = "/ft/main/main.do";
 		    }    	 
 		}else{ 
-    		status.setComplete();
-			model.addAttribute("message", "로그인정보가 넘어오지 않았습니다.");
-			model.addAttribute("cmmnScript", folderPath + "loginFrm.do");
+			message = "로그인정보가 넘어오지 않았습니다.";
+			cmmnScript = folderPath + "loginFrm.do";
 		} 
+ 		
+ 		model.addAttribute("message", message);
+		model.addAttribute("cmmnScript", cmmnScript);
 		return "cmmn/execute";
 	} 
  
@@ -79,10 +91,13 @@ public class MemberController {
 		HttpSession session = request.getSession(); 
 		MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
 		
-		model.addAttribute("message", memberVO.getMeId() +" 님 다시 만나요.");
-		model.addAttribute("cmmnScript", "/ft/main/main.do");
+		message = memberVO.getMeId() +" 님 다시 만나요.";
+		cmmnScript = "/ft/main/main.do";
+		
 		session.removeAttribute("memberVO");
 		
+		model.addAttribute("message", message);
+		model.addAttribute("cmmnScript", cmmnScript);
 		return "cmmn/execute"; 
 	}	
 	
