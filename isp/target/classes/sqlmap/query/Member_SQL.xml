@@ -114,6 +114,7 @@
 				, ME_PW															     
 				, ME_HP 															 
 				, ME_MAIL 															 										
+				, ME_FAIL_CNT 															 										
 			)   
 			VALUES (
 				 (SELECT IFNULL(MAX(TS.ME_SEQ)+1,1) FROM T_MEMBER TS)
@@ -122,12 +123,13 @@
 				,#{mePw     }
 				,#{meHp     }
 				,#{meMail   }
+				,0
 			)
 		]]>
 	</insert>
 	
-		<update id="updateContents" parameterType="memberVO">
-		/* Member.updateContents */
+	<update id="updateContents" parameterType="memberVO">
+	/* Member.updateContents */
 		<![CDATA[
 			UPDATE T_MEMBER         
 			 SET   
@@ -147,8 +149,8 @@
 		]]>
 	</update> 
 	
-		<update id="updateNewPw" parameterType="memberVO">
-		/* Member.updateNewPw */
+	<update id="updateNewPw" parameterType="memberVO">
+	/* Member.updateNewPw */
 		<![CDATA[
 			UPDATE T_MEMBER         
 			 SET   
@@ -159,8 +161,17 @@
 		]]>
 	</update> 
 	
-	
-
+	<update id="failCntUp" parameterType="memberVO">
+	/* Member."failCntUp" */
+		<![CDATA[
+			UPDATE T_MEMBER         
+			 SET   
+			      	    
+					ME_FAIL_CNT	= ME_FAIL_CNT + 1							
+				
+			WHERE  ME_ID = #{meId}    
+		]]>
+	</update> 
 
 	
 	

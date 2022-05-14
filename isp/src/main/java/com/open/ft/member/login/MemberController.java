@@ -55,6 +55,8 @@ public class MemberController {
 	    	if(userLoginVO == null || userLoginVO.getMeId() == null || "".equals(userLoginVO.getMeId())){
 	    		model.addAttribute("message", "아이디 또는 패스워드를 확인하시기 바랍니다.");
 	    		model.addAttribute("cmmnScript", folderPath + "loginFrm.do");
+	    		cmmnService.updateContents(userLoginVO, PROGRAM_ID + ".failCntUp");
+	    		
 	    	}else{ 
 	    		 	/** 세션 정보 입력 */ 
 					HttpSession session = request.getSession();					
