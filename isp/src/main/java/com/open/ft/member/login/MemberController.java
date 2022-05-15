@@ -35,17 +35,15 @@ public class MemberController {
     
     private String cmmnScript = "";
     
-    private String layout = ".fLayout:";
-	    
 	@RequestMapping(folderPath + "loginFrm.do")  
 	public String mainDo(@ModelAttribute("searchVO") MemberVO searchVO, Model model, String pass, HttpServletRequest request) throws Exception {
 		  
-		return layout + folderPath + "loginFrm";   
+		return ".fLayout" + folderPath + "loginFrm";   
 	} 
                       
  	@RequestMapping(folderPath + "loginProcess.do")
 	public String loginProcess(@ModelAttribute("searchVO") MemberVO searchVO	, HttpServletRequest request	, ModelMap model) throws Exception {
-
+ 
  		
  		if(searchVO.getMeId() != null && searchVO.getMePw() != null && !"".equals(searchVO.getMeId()) && !"".equals(searchVO.getMePw())){
 			searchVO.setMePw(EncryptUtil.getString(EncryptUtil.Sha256EncryptB(searchVO.getMePw().getBytes("UTF-8"))));
@@ -55,18 +53,12 @@ public class MemberController {
 	    	if(userLoginVO == null || userLoginVO.getMeId() == null || "".equals(userLoginVO.getMeId())){
 	    		message = "아이디 또는 패스워드를 확인하시기 바랍니다.";
 				cmmnScript = folderPath + "loginFrm.do";
-	    		cmmnService.updateContents(userLoginVO, PROGRAM_ID + ".failCntUp");
-	    		MemberVO memberVO = (MemberVO)cmmnService.selectContents(userLoginVO, PROGRAM_ID + ".checkPwSelectContents");
-	    		if(Integer.parseInt(memberVO.getMeFailCnt()) > 5){
-	    			message = "비밀번호 입력횟수가 초과되었습니다. 관리자에게 연락하세요.";
-					cmmnScript = "/ft/main/main.do";
-	    		}
 	    		
 	    	}else{ 
 					HttpSession session = request.getSession();					
 					session.setAttribute(SessionUtil.SESSION_FRONT_KEY, userLoginVO);
 					session.setAttribute("memberVO", userLoginVO);
-					message = userLoginVO.getMeId()+" 님 환영합니다.";
+					message = userLoginVO.getMeId()+" 님 환영합니다!";
 					cmmnScript = "/ft/main/main.do";
 		    }    	 
 		}else{ 
@@ -74,14 +66,13 @@ public class MemberController {
 			cmmnScript = folderPath + "loginFrm.do";
 		} 
  		
- 		model.addAttribute("message", message);
+ 		model.addAttribute("message", message); 
 		model.addAttribute("cmmnScript", cmmnScript);
 		return "cmmn/execute";
-	} 
+	}  
  
 	@RequestMapping(folderPath + "logout.do")
 	public String adminLogout(@ModelAttribute("searchVO") MemberVO searchVO, HttpServletRequest request, ModelMap model) throws Exception {
-  
 		HttpSession session = request.getSession(); 
 		MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
 		

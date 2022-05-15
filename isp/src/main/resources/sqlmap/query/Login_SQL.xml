@@ -41,13 +41,44 @@
 		]]>
 	</select>
 	
+	<select id="selectWithId" parameterType="loginVO" resultType="loginVO">
+		/* Login.selectWithId */
+		<![CDATA[
+		SELECT
+			SEQ seq
+			,ID id
+			,PWD pwd
+			,NAME name 
+			,AUTH_CODE authCode
+			,(SELECT AUTH_CODE_NM FROM T_AD_USER_AUTH WHERE A.AUTH_CODE=AUTH_CODE) authCodeNm
+			, DATE_FORMAT(LAST_DATE,'%Y.%m.%d %H:%i:%s') lastDate
+			, SITE_CLCD siteClcd
+		FROM
+			T_AD_USER A
+		WHERE ID = #{id} 
+			AND USE_YN='Y'
+		]]>
+	</select>
+	
+	
+	
 	<update id="updateContents" parameterType="loginVO">
 		/* Login.updateContents */
+		<![CDATA[
 			UPDATE T_AD_USER SET     
 			 	   LAST_DATE = NOW()
 			WHERE  SEQ = #{seq}  
-	</update>
+		]]>	
+	</update> 
 	
+	<update id="failCntUpdateContent" parameterType="loginVO">
+		/* Login.failCntUpdateContent */
+		<![CDATA[
+			UPDATE T_AD_USER SET     
+			 	   FAIL_CNT = FAIL_CNT + 1
+			WHERE  SEQ = #{seq}  
+		]]>
+	</update>
 	
 	
 	

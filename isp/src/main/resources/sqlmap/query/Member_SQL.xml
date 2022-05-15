@@ -152,10 +152,11 @@
 	<update id="updateNewPw" parameterType="memberVO">
 	/* Member.updateNewPw */
 		<![CDATA[
-			UPDATE T_MEMBER         
+			UPDATE T_MEMBER   
+			      
 			 SET   
 			      	    
-						ME_PW															    =#{mePw     }
+				ME_PW															    =#{mePw     }
 				
 			WHERE  ME_ID = #{meId}    
 		]]>

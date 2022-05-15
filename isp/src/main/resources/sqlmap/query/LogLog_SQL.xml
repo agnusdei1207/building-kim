@@ -43,8 +43,16 @@
 				, LOG_DIVN 																									 logDivn
 				, LOG_IP_ERR_YN 																							 logIpErrYn
 				    
+			]]>		       
+				<if test='schEtc03 == 4'>
+					<![CDATA[
+						,(SELECT ME_FAIL_CNT FROM t_member B WHERE A.LOG_ID = B.ME_ID)										 logCnt 
+					]]>
+				</if>  
+			     
+			<![CDATA[		    
 		     FROM t_log_log A
-		     WHERE 1 = 1
+		     WHERE 1 = 1 
 	      ]]>     
 		     <include refid="Where"/>	  
 	     <![CDATA[    

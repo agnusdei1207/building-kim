@@ -129,8 +129,3 @@
     </div>
 </div>
 <%-- //paging --%> 
- 
-<script type="text/javascript"> 
-   
-              
-</script>

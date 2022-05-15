@@ -7,7 +7,7 @@
 	    <h1>LOGIN</h1>  
 	    <div class="login2_box">
 	        <div class="login2">
-	            <fieldset>
+	            <fieldset>  
 	                <legend>로그인폼</legend>
 	                <div class="login2_input"> 
 	                    <ul>
@@ -56,8 +56,5 @@ function login(){
 	fncPageBoard("update", "loginProcess.do");
 	return true;
 }
-
- 
-
 
 </script>

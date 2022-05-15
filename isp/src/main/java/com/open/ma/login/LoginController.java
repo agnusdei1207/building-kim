@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -88,8 +86,15 @@ public class LoginController {
 
 	    	if(userLoginVO == null || userLoginVO.getId() == null || "".equals(userLoginVO.getId())){
 	    		model.addAttribute("message", "아이디 또는 패스워드를 확인하시기 바랍니다.");
-	    		/*로그인 실패횟수 증가
-	    		cmmnService.updateContents(loginVO, PROGRAM_ID+".failCntUpdateContent");*/
+	    		cmmnService.updateContents(loginVO, PROGRAM_ID+".failCntUpdateContent");
+	    		userLoginVO = (LoginVO)cmmnService.selectContents(loginVO, PROGRAM_ID+".selectWithId");
+	    		if(!"".equals(StringUtil.isNullToString(userLoginVO))){
+	    			if(Integer.parseInt(userLoginVO.getFailCnt()) > 5){
+	    				model.addAttribute("message", "비밀번호 입력횟수가 초과되었습니다.");
+	    			}
+	    		}
+	    		 
+	    		
 	    		return  "/ma/login/login";  
 	    	}else{ 
 	    		 	/** 세션 정보 입력 */

@@ -141,7 +141,6 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 						response.sendRedirect("/cmmn/fail.do");
 					} 
 					 
-					System.out.println("manuList : "+ manuList );
 					menuCd = StringUtil.getMenuCd(request.getRequestURI()).get("depth2");
 					// 로그 기록
 					logLogVO.setLogMenuCd(menuCd);

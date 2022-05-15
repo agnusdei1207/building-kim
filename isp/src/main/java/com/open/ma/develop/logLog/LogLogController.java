@@ -44,8 +44,8 @@ public class LogLogController {
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
 
-		System.out.println("값 확인 : "+ searchVO.getSchEtc02());
-		System.out.println("값 확인 : "+ searchVO.getSchEtc03());
+		System.out.println("ma / ft 확인 : "+ searchVO.getSchEtc02());
+		System.out.println("로그 구분 값 : "+ searchVO.getSchEtc03());
 		
 		searchVO.setPageUnit(10);
 		searchVO.setPageSize(11);     
@@ -59,13 +59,16 @@ public class LogLogController {
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
 		if(!"2".equals(searchVO.getSchEtc03())){
-		int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID );
-		paginationInfo.setTotalRecordCount(totCnt);
-		model.addAttribute("paginationInfo", paginationInfo);
-
-		List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, PROGRAM_ID );
-		model.addAttribute("resultList", resultList);
-		
+			
+			int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID );
+			paginationInfo.setTotalRecordCount(totCnt);
+			model.addAttribute("paginationInfo", paginationInfo);
+	
+			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, PROGRAM_ID );
+			model.addAttribute("resultList", resultList);
+			for (LogLogVO loglogVO : resultList){
+				System.out.println("로그인 실패 횟수 : "+loglogVO.getLogCnt()); 
+			}
 		}else{
 			int totCnt = cmmnService.selectCount(searchVO, "LoginLog" );
 			paginationInfo.setTotalRecordCount(totCnt);
@@ -73,7 +76,8 @@ public class LogLogController {
 			
 			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, "LoginLog" );
 			model.addAttribute("resultList", resultList);
-		}
+		} 
+		
 		
 		return folderPath + "addList";
 	}
