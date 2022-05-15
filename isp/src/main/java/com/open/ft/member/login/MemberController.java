@@ -27,10 +27,6 @@ public class MemberController {
 	@Resource(name = "cmmnService")
     protected CmmnService cmmnService;
 	
-	@Resource(name = "FileMngService")
-    private FileMngService fileMngService;
-    
-	
     private final static String PROGRAM_ID = "Member";
     
     private final static String folderPath = "/ft/member/login/";
@@ -40,7 +36,6 @@ public class MemberController {
     private String cmmnScript = "";
     
     private String layout = ".fLayout:";
- 
 	    
 	@RequestMapping(folderPath + "loginFrm.do")  
 	public String mainDo(@ModelAttribute("searchVO") MemberVO searchVO, Model model, String pass, HttpServletRequest request) throws Exception {
@@ -51,7 +46,6 @@ public class MemberController {
  	@RequestMapping(folderPath + "loginProcess.do")
 	public String loginProcess(@ModelAttribute("searchVO") MemberVO searchVO	, HttpServletRequest request	, ModelMap model) throws Exception {
 
- 		
  		
  		if(searchVO.getMeId() != null && searchVO.getMePw() != null && !"".equals(searchVO.getMeId()) && !"".equals(searchVO.getMePw())){
 			searchVO.setMePw(EncryptUtil.getString(EncryptUtil.Sha256EncryptB(searchVO.getMePw().getBytes("UTF-8"))));
