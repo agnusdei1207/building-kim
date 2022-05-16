@@ -59,18 +59,22 @@
 	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
 		/* LoginLog.selectCount */
 		<![CDATA[
-		SELECT 
+		SELECT
+			COUNT(cnt)
+			FROM
+			(SELECT 
+	
 			COUNT(LOG_SEQ) cnt
 			 
 			FROM T_LOGIN_LOG
 			WHERE 1 = 1
 		]]>
 			<include refid="Where"/>
-		<![CDATA[    
+		<![CDATA[	
 			GROUP BY DATE_FORMAT(LOG_DT,'%y.%m.%d'), LOG_ID, LOG_CLIENT_IP
-			HAVING cnt >= 10
+			HAVING cnt >= 10) A
 		]]>
-	</select>     
+	</select>      
 	
 	
 	

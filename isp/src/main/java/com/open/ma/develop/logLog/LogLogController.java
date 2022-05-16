@@ -60,26 +60,24 @@ public class LogLogController {
 		
 		if("".equals(searchVO.getSchEtc03()) || "1".equals(searchVO.getSchEtc03()) || "3".equals(searchVO.getSchEtc03())){
 		
-			System.out.println(9);
 			int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID );
-			
 			paginationInfo.setTotalRecordCount(totCnt);
-			
 			model.addAttribute("paginationInfo", paginationInfo);
 	
 			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, PROGRAM_ID );
 			model.addAttribute("resultList", resultList);
 			
 		}else if("2".equals(searchVO.getSchEtc03())){ 
-			System.out.println(10);
+			
 			int totCnt = cmmnService.selectCount(searchVO, "LoginLog");
 			paginationInfo.setTotalRecordCount(totCnt);
 			model.addAttribute("paginationInfo", paginationInfo);
 			
 			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, "LoginLog" );
 			model.addAttribute("resultList", resultList);
+			
 		}else{
-			System.out.println(11);
+			
 			int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".selectStrangeCount" );
 			paginationInfo.setTotalRecordCount(totCnt);
 			model.addAttribute("paginationInfo", paginationInfo);
