@@ -20,9 +20,18 @@ public class LogLogVO extends CmmnDefaultVO implements Serializable {
 	private String logDivn;
 	private String logIpErrYn; 
 	private String logCnt;
+	private String failCnt;
     
 	
 	
+	
+	
+	public String getFailCnt() {
+		return failCnt;
+	}
+	public void setFailCnt(String failCnt) {
+		this.failCnt = failCnt;
+	}
 	public String getLogMenuCd() {
 		return logMenuCd;
 	}

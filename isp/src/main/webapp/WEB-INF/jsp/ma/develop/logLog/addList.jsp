@@ -91,11 +91,11 @@
 					<th scope="col">ID</th>
 	                <th scope="col">성명</th>
 	                <th scope="col">최근로그인</th>
-					<th scope="col">최근 접속 IP</th>
+					<th scope="col">최근 접속 IP</th> 
 					<th scope="col">로그인 실패횟수</th>
 				</tr> 
-			</thead>  
-			<tbody>
+			</thead>   
+			<tbody> 
 				<c:choose> 
 					<c:when test="${fn:length(resultList) gt 0}">
 						<c:forEach var="result" items="${resultList}" varStatus="status">
@@ -106,7 +106,7 @@
 								<td>${result.logId }</td>  
 								<td>${result.logDt }</td>
 								<td>${result.logClientIp }</td>
-								<td><fmt:formatNumber value="${result.logCnt }" pattern="#,###"/></td>
+								<td><fmt:formatNumber value="${result.failCnt }" pattern="#,###"/></td>
 							</tr>
 						</c:forEach>
 					</c:when> 

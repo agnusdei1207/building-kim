@@ -58,12 +58,14 @@ public class FrontInterceptor extends HandlerInterceptorAdapter implements Handl
 		logLogVO.setLogClientIp(clientIp);
 		logLogVO.setLogUrl(currentUrl);
 		logLogVO.setLogDivn("ft");
-		
+		 
+		System.out.println("사용자 로그인 확인 : "+SessionUtil.isFrtLogined(request));
 		if (SessionUtil.isFrtLogined(request)){
 			MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
 			logLogVO.setLogId(memberVO.getMeId());
-		} 
-		      
+			System.out.println("아이디 확인 : "+ memberVO.getMeId());
+		}  
+		       
 		String menuCd = ""; 
 		menuCd = currentUrl.split("/")[3];
 		logLogVO.setLogMenuCd(menuCd);

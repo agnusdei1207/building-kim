@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.ddf.EscherColorRef.SysIndexProcedure;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,7 +45,6 @@ public class LogLogController {
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
 
-		String gooboon = searchVO.getSchEtc03();
 		
 		searchVO.setPageUnit(10);
 		searchVO.setPageSize(11);     
@@ -57,25 +57,37 @@ public class LogLogController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
-		if("0".equals(gooboon) || "1".equals(gooboon) || "3".equals(gooboon)){
+		
+		if("".equals(searchVO.getSchEtc03()) || "1".equals(searchVO.getSchEtc03()) || "3".equals(searchVO.getSchEtc03())){
+		
+			System.out.println(9);
 			int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID );
+			
 			paginationInfo.setTotalRecordCount(totCnt);
+			
 			model.addAttribute("paginationInfo", paginationInfo);
 	
 			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, PROGRAM_ID );
 			model.addAttribute("resultList", resultList);
 			
-		}else if("2".equals(gooboon)){
-			int totCnt = cmmnService.selectCount(searchVO, "LoginLog" );
+		}else if("2".equals(searchVO.getSchEtc03())){ 
+			System.out.println(10);
+			int totCnt = cmmnService.selectCount(searchVO, "LoginLog");
 			paginationInfo.setTotalRecordCount(totCnt);
 			model.addAttribute("paginationInfo", paginationInfo);
 			
 			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, "LoginLog" );
 			model.addAttribute("resultList", resultList);
 		}else{
-			
+			System.out.println(11);
+			int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".selectStrangeCount" );
+			paginationInfo.setTotalRecordCount(totCnt);
+			model.addAttribute("paginationInfo", paginationInfo);
+	
+			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, PROGRAM_ID +".selectStrangeList" );
+			model.addAttribute("resultList", resultList);
 		}
-		
+		 
 		
 		
 		return folderPath + "addList";

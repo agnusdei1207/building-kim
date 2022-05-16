@@ -115,9 +115,10 @@ public class LoginController {
 					session.setAttribute("loginMgrSiteClcd", userLoginVO.getSiteClcd()); //사이트구분
 					
 					/* 로그인 로그 */ 
-					LoginLogVO loginLogVO = new LoginLogVO();
+					LoginLogVO loginLogVO = new LoginLogVO(); 
 					loginLogVO.setLogId(userLoginVO.getId());
 					loginLogVO.setLogClientIp(clientIp);
+					loginLogVO.setLogDivn("ma");
 					cmmnService.insertContents(loginLogVO, "LoginLog");
 					 
 					MnVO auth = new MnVO();

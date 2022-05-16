@@ -24,42 +24,59 @@
 			VALUES ( 
 				 (SELECT IFNULL(MAX(TL.LOG_SEQ)+1,1) FROM T_LOGIN_LOG TL)
 				,#{logClientIp      }          
-				,#{loginSeq 		}  
-				,'ma'
+				,#{logId	 		}  
+				,#{logDivn			}
 				,'N'
 			)
 		]]>
 	</insert>
-	
+	 
+	<!-- 과다 접속자 -->
 	<select id="selectList" resultType="loginLogVO">
 		/* LoginLog.selectList */
 		<![CDATA[
 			SELECT
 			  
 				LOG_CLIENT_IP												logClientIp
-				,F_USER_NM(LOG_ID) 											logId
+				,LOG_ID			 											logId
 				,DATE_FORMAT(LOG_DT, '%y.%m.%d') 						 	logDt
 				,COUNT(LOG_SEQ) 											logCnt
 				,MAX(DATE_FORMAT(LOG_DT, '%T'))								maxLogDt
 				 
 				FROM t_login_log
-				WHERE 1 = 1 
-			]]>	
+				WHERE 1 = 1  
+			]]>	  
 				<include refid="Where"/>	
 			<![CDATA[	
 				GROUP BY logDt, logId, logClientIp
-				HAVING logCnt >= 5
-		]]>
+				HAVING logCnt >= 10 
+				
+	    		ORDER BY LOG_SEQ DESC
+				LIMIT  #{firstIndex} , #{recordCountPerPage}
+			]]>
 	</select>
 	
 	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
 		/* LoginLog.selectCount */
-		<![CDATA[ 
-			SELECT 
-				COUNT(LOG_SEQ) logCnt  
+		<![CDATA[
+		SELECT 
+			COUNT(LOG_SEQ) cnt
+			 
 			FROM T_LOGIN_LOG
-		]]>    
+			WHERE 1 = 1
+		]]>
+			<include refid="Where"/>
+		<![CDATA[    
+			GROUP BY DATE_FORMAT(LOG_DT,'%y.%m.%d'), LOG_ID, LOG_CLIENT_IP
+			HAVING cnt >= 10
+		]]>
 	</select>     
+	
+	
+	
+	
+	
+	
 	
 	
 </mapper>

@@ -151,7 +151,7 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 					}
 					
 					// 로그 기록 
-					logLogVO.setLogId(loginVO.getId()); 
+					logLogVO.setLogId(loginVO.getId());
 					
 					
     			}else{ 
