@@ -124,5 +124,15 @@ public class MainController {
 		
 		return "cmmn/execute";
 	}
-
+ 
+	@RequestMapping("/banIp.do")
+	public String banIp(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, Model model) throws Exception {
+		
+		model.addAttribute("message", "차단된 IP입니다.");     
+		model.addAttribute("cmmnScript", "https://www.naver.com/");
+		   
+		return "cmmn/execute";
+	}
+	
+	
 }  

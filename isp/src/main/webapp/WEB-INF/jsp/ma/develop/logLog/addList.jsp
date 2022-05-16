@@ -5,7 +5,7 @@
 <div class="tbl_top">
 	<div class="tbl_left"><i class="i_all"></i> <span> 전체 : <strong>${paginationInfo.totalRecordCount}</strong> 건(${searchVO.pageIndex}/${paginationInfo.totalPageCount} Page) </span></div>
 </div> 
-                
+                 
 <c:if test="${searchVO.schEtc03 ne '4' }">
 	<div class="tbl_wrap">   
 		<table class="tbl_col_type01 no_hover" id="fixTable">
@@ -24,7 +24,7 @@
 	            	<col style="width:8%;">
 	            </c:if>
 			</colgroup>
-			<thead> 
+			<thead>  
 				<tr>   
 					<th scope="col">번호</th> 
 				<c:if test="${searchVO.schEtc03 ne '3' }"> 
@@ -38,7 +38,7 @@
 				<c:if test="${searchVO.schEtc03 eq '2' }">
 					<th scope="col">접속횟수</th>
 				</c:if>
-				</tr>
+				</tr> 
 			</thead>
 			<tbody>
 				<c:choose>
@@ -56,7 +56,7 @@
 								<td>${result.logClientIp }</td>
 								<c:if test="${searchVO.schEtc03 eq '2' }">
 									<td><fmt:formatNumber value="${result.logCnt }" pattern="#,###"/></td>
-								</c:if>
+								</c:if> 
 							</tr>
 						</c:forEach>   
 					</c:when>  

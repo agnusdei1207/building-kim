@@ -26,7 +26,7 @@
 						</colgroup> 
 						<tbody>
 							<tr>      
-								<td>
+								<td> 
 									<strong class="tit hideBtn1">구분</strong>
 									<select name="schEtc02" id="schEtc02" class="text w150 hideBtn1">
 										<option value="">선택</option>
@@ -65,7 +65,7 @@
 </div>
 	 
 <script type="text/javaScript">
-
+ 
 $(document).ready(function(){
 	fncPageBoard('addList','addList.do',$("#pageIndex").val());
 	fncDate('searchStartDate','searchEndDate');

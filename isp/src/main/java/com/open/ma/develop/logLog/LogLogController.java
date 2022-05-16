@@ -47,8 +47,8 @@ public class LogLogController {
 
 		
 		searchVO.setPageUnit(10);
-		searchVO.setPageSize(11);     
-
+		searchVO.setPageSize(11);      
+		
 		PaginationInfo paginationInfo = new PaginationInfo();  
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
 		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
@@ -58,7 +58,8 @@ public class LogLogController {
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
 		
-		if("".equals(searchVO.getSchEtc03()) || "1".equals(searchVO.getSchEtc03()) || "3".equals(searchVO.getSchEtc03())){
+		 
+		if("".equals(searchVO.getSchEtc03()) || "1".equals(searchVO.getSchEtc03())){
 		
 			int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID );
 			paginationInfo.setTotalRecordCount(totCnt);
@@ -76,6 +77,13 @@ public class LogLogController {
 			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, "LoginLog" );
 			model.addAttribute("resultList", resultList);
 			
+		}else if("3".equals(searchVO.getSchEtc03())){  
+			int totCnt = cmmnService.selectCount(searchVO, "LogLog");
+			paginationInfo.setTotalRecordCount(totCnt); 
+			model.addAttribute("paginationInfo", paginationInfo);
+			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, "LogLog" );
+			model.addAttribute("resultList", resultList);
+			 
 		}else{
 			
 			int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".selectStrangeCount" );
@@ -86,7 +94,7 @@ public class LogLogController {
 			model.addAttribute("resultList", resultList);
 		}
 		 
-		
+		  
 		
 		return folderPath + "addList";
 	}

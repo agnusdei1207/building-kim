@@ -35,6 +35,21 @@
 	</select>
 	
 	
+	<select id="selectIp" parameterType="String" resultType="int">
+		/* IpLog.selectIp */
+		<![CDATA[
+			 SELECT   
+			 
+				COUNT(IP_SEQ)															
+				  
+		     FROM  T_IP_LOG  
+	    	 WHERE IP_USE_YN='Y'
+			 	AND IP_CLIENT_IP = #{ipClientIp}
+		]]>
+	</select>
+	
+	
+	
 	<select id="selectList" parameterType="cmmnDefaultVO" resultType="ipLogVO">
 		/* IpLog.selectList */
 		<![CDATA[  
@@ -55,8 +70,7 @@
 				LIMIT  #{firstIndex} , #{recordCountPerPage}
 		]]>
 	</select>	
-
-
+	
 	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
 		/* IpLog.selectCount */
 		<![CDATA[ 
@@ -67,6 +81,7 @@
 		]]>
 			 <include refid="Where"/>
 	</select>
+	
 	
 	<insert id="insertContents" parameterType="ipLogVO">
 		/* IpLog.insertContents */
@@ -100,7 +115,7 @@
 	<update id="deleteContents" parameterType="ipLogVO">
 		/* IpLog.deleteContents */
 		<![CDATA[   
-			UPDATE T_IP_LOG 
+			UPDATE T_IP_LOG      
 		       SET
 	          	 IP_USE_YN='N'
 			WHERE IP_SEQ=#{ipSeq}

@@ -16,9 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.open.cmmn.model.CmmnDefaultVO;
 import com.open.cmmn.service.CmmnService;
 import com.open.cmmn.util.SessionUtil;
 import com.open.cmmn.util.StringUtil;
+import com.open.ma.develop.ipLog.service.IpLogVO;
 import com.open.ma.develop.logLog.service.LogLogVO;
 import com.open.ma.login.service.LoginVO;
 
@@ -59,7 +61,7 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 	 * CmmnService.
 	 */
 	@Autowired
-	private CmmnService cmmnService;
+	private CmmnService cmmnService; 
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -68,8 +70,20 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 		// 클라이언트 IP 가져오기
 		String clientIp = StringUtil.getClientIp(request);
 		String menuCd = "";
+		LogLogVO logLogVO = new LogLogVO();
+		 
+		// IP 차단
+		int chkIp = (Integer)cmmnService.selectContents(clientIp, "IpLog.selectIp");
+		if(chkIp > 0){
+			logLogVO.setLogClientIp(clientIp);
+			logLogVO.setLogIpErrYn("Y");       
+			cmmnService.insertContents(logLogVO, "LogLog");
+			response.sendRedirect("/banIp.do");
+			return false;  
+		}     
+		  
 		HttpSession session = request.getSession();
-		
+		  
 		menuCd = StringUtil.getMenuCd(request.getRequestURI()).get("depth3");
 		 
 		LOGGER.debug("pre request URI ====================================>" + request.getRequestURI());
@@ -82,7 +96,6 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 		LOGGER.info("=================================== frontInterceptor currentUrl ::: " + currentUrl);
 		 
 		// 로그 기록 
-		LogLogVO logLogVO = new LogLogVO();
 		logLogVO.setLogClientIp(clientIp);
 		logLogVO.setLogUrl(currentUrl);
 		logLogVO.setLogDivn("ma");
@@ -144,7 +157,7 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 					menuCd = StringUtil.getMenuCd(request.getRequestURI()).get("depth2");
 					// 로그 기록
 					logLogVO.setLogMenuCd(menuCd);
-					
+					 
 					/*권한 없는 경우 */
 					if(!manuList.contains(menuCd) && !request.getRequestURI().equals("/ma/main.do") && request.getRequestURI().indexOf("/sb") < 0 && request.getRequestURI().indexOf("/mc01") < 0){
 						response.sendRedirect("/cmmn/fail.do");
@@ -152,6 +165,7 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 					
 					// 로그 기록 
 					logLogVO.setLogId(loginVO.getId());
+					logLogVO.setLogIpErrYn("N");
 					
 					
     			}else{ 
