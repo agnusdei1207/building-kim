@@ -14,6 +14,7 @@
 				, ME_PW															     mePw
 				, ME_HP 															 meHp
 				, ME_MAIL 															 meMail
+				, ME_FAIL_CNT														 meFailCnt
 				
 		     FROM  T_MEMBER
 			 WHERE  ME_USE_YN='Y'	
@@ -35,6 +36,7 @@
 				, ME_PW															     mePw
 				, ME_HP 															 meHp
 				, ME_MAIL 															 meMail
+				, ME_FAIL_CNT														 meFailCnt
 				
 		     FROM  T_MEMBER
 			 WHERE  ME_USE_YN='Y'	
@@ -57,6 +59,7 @@
 				, ME_PW															     mePw
 				, ME_HP 															 meHp
 				, ME_MAIL 															 meMail
+				, ME_FAIL_CNT														 meFailCnt
 				
 		     FROM  T_MEMBER
 			 WHERE  ME_USE_YN='Y'	
@@ -79,6 +82,7 @@
 				, ME_PW															     mePw
 				, ME_HP 															 meHp
 				, ME_MAIL 															 meMail
+				, ME_FAIL_CNT														 meFailCnt
 				
 		     FROM  T_MEMBER
 			 WHERE  ME_USE_YN='Y'	
@@ -138,10 +142,13 @@
 				, ME_NAME															=#{meName   }
 				, ME_HP 															=#{meHp     }
 				, ME_MAIL 															=#{meMail   }
-				
+				, ME_FAIL_CNT														= 0
+				 
 		]]>		 
 			<if test="mePw !=null and mePw !=''">
+				<![CDATA[
 				,ME_PW															    =#{mePw     }
+				]]>
 			</if>
 		<![CDATA[ 
 				
@@ -155,26 +162,36 @@
 			UPDATE T_MEMBER   
 			      
 			 SET   
-			      	    
+			      	     
 				ME_PW															    =#{mePw     }
 				
 			WHERE  ME_ID = #{meId}    
 		]]>
 	</update> 
 	
-	<update id="failCntUp" parameterType="memberVO">
-	/* Member."failCntUp" */
+	<update id="updateFailCnt" parameterType="memberVO">
+	/* Member."updateFailCnt" */
+		<![CDATA[
+			UPDATE T_MEMBER         
+			 SET   
+			      	      
+					ME_FAIL_CNT	= ME_FAIL_CNT + 1							
+				   
+			WHERE  ME_ID = #{meId}    
+		]]> 
+	</update> 
+
+	<update id="resetFailCnt" parameterType="memberVO">
+	/* Member."resetFailCnt" */
 		<![CDATA[
 			UPDATE T_MEMBER         
 			 SET   
 			      	    
-					ME_FAIL_CNT	= ME_FAIL_CNT + 1							
+					ME_FAIL_CNT	= 0							
 				
 			WHERE  ME_ID = #{meId}    
 		]]>
 	</update> 
-
-	
 	
 	
 	
