@@ -79,31 +79,28 @@
 				<col style="width:5%;">
 				<col style="width:15%;">
 				<col style="width:10%;">
-	            <col style="width:10%;">
 	            <col style="width:15%;">
 	            <col>
 	            <col style="width:8%;">
 			</colgroup>
 			<thead>
-				<tr>
+				<tr> 
 					<th scope="col">번호</th>
-					<th scope="col">부서</th>
+					<th scope="col">구분</th>
 					<th scope="col">ID</th>
-	                <th scope="col">성명</th>
-	                <th scope="col">최근로그인</th>
+	                <th scope="col">최근로그인</th>  
 					<th scope="col">최근 접속 IP</th> 
-					<th scope="col">로그인 실패횟수</th>
+					<th scope="col">누적 로그인 실패</th>
 				</tr> 
 			</thead>   
-			<tbody> 
+			<tbody>   
 				<c:choose> 
 					<c:when test="${fn:length(resultList) gt 0}">
 						<c:forEach var="result" items="${resultList}" varStatus="status">
 							<tr>
 								<td>${paginationInfo.totalRecordCount+1 - ((searchVO.pageIndex-1) * searchVO.pageUnit + status.count)}</td>
-								<td>${result.logDivn }</td>
+								<td>${result.logDivn eq 'ma' ? '관리자' : '사용자'}</td>
 								<td>${result.logId }</td>
-								<td>${result.logId }</td>  
 								<td>${result.logDt }</td>
 								<td>${result.logClientIp }</td>
 								<td><fmt:formatNumber value="${result.failCnt }" pattern="#,###"/></td>
@@ -112,7 +109,7 @@
 					</c:when> 
 					<c:otherwise> 
 						<tr>
-							<td colspan="7" class="no_data">데이터가 없습니다.</td>
+							<td colspan="6" class="no_data">데이터가 없습니다.</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>   
