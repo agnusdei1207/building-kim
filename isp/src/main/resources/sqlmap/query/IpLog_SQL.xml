@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.IpLog">
+
+	<sql id="Where"> 
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (IP_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR IP_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND IP_TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND IP_CONT LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+	 	</if>
+	</sql>       
+	    
+	
+	<select id="selectContents" parameterType="ipLogVO" resultType="ipLogVO">
+		/* IpLog.selectContents */
+		<![CDATA[
+			 SELECT  
+			 
+				  IP_SEQ															 ipSeq
+				, IP_CLIENT_IP													 	 ipClientIp
+				, DATE_FORMAT(IP_DT,'%Y.%m.%d')										 ipDt
+				, IP_RGST_ID														 ipRgstId
+				, DATE_FORMAT(IP_RGST_DT,'%Y.%m.%d')								 ipRgstDt
+				 
+		     FROM  T_IP_LOG  
+	    	 WHERE IP_USE_YN='Y'
+			 	AND IP_SEQ = #{ipSeq}
+		]]>
+	</select>
+	
+	
+	<select id="selectList" parameterType="cmmnDefaultVO" resultType="ipLogVO">
+		/* IpLog.selectList */
+		<![CDATA[  
+      	     SELECT       
+      	       
+				  IP_SEQ															 ipSeq
+				, IP_CLIENT_IP													 	 ipClientIp
+				, DATE_FORMAT(IP_DT,'%Y.%m.%d')										 ipDt
+				, IP_RGST_ID														 ipRgstId
+				, DATE_FORMAT(IP_RGST_DT,'%Y.%m.%d')								 ipRgstDt
+				
+		     FROM T_IP_LOG
+		     WHERE IP_USE_YN='Y'
+	      ]]>   
+		     <include refid="Where"/>	 
+	     <![CDATA[    
+	    		ORDER BY IP_SEQ DESC
+				LIMIT  #{firstIndex} , #{recordCountPerPage}
+		]]>
+	</select>	
+
+
+	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* IpLog.selectCount */
+		<![CDATA[ 
+			SELECT 
+				COUNT(IP_SEQ) ipCnt 
+			FROM T_IP_LOG
+			WHERE IP_USE_YN='Y'  
+		]]>
+			 <include refid="Where"/>
+	</select>
+	
+	<insert id="insertContents" parameterType="ipLogVO">
+		/* IpLog.insertContents */
+		<![CDATA[
+			INSERT INTO T_IP_LOG(
+           	  	  IP_SEQ														
+				, IP_CLIENT_IP	
+				, IP_RGST_ID														 
+			)    
+			VALUES (
+				 (SELECT IFNULL(MAX(TF.IP_SEQ)+1,1) FROM T_IP_LOG TF)
+				,#{ipClientIp }  
+				,#{ipRgstId }  
+			)
+		]]>
+	</insert>
+	
+	<update id="updateContents" parameterType="ipLogVO">
+		/* IpLog.updateContents */
+		<![CDATA[
+			UPDATE T_IP_LOG        
+			 SET   
+			      
+				 IP_CLIENT_IP													 	 =#{ipClientIp }
+				, IP_DT																 = NOW()
+				
+			WHERE  IP_SEQ = #{ipSeq}    
+		]]>
+	</update> 
+	 
+	<update id="deleteContents" parameterType="ipLogVO">
+		/* IpLog.deleteContents */
+		<![CDATA[   
+			UPDATE T_IP_LOG 
+		       SET
+	          	 IP_USE_YN='N'
+			WHERE IP_SEQ=#{ipSeq}
+		]]> 
+	</update>
+
+
+	
+	
+	
+	
+</mapper>

@@ -33,7 +33,7 @@
 	 
 	<!-- 과다 접속자 -->
 	<select id="selectList" resultType="loginLogVO">
-		/* LoginLog.selectList */
+		/* LoginLog.selectList */ 
 		<![CDATA[
 			SELECT
 			  
