@@ -17,9 +17,10 @@
 			,(SELECT AUTH_CODE_NM FROM T_AD_USER_AUTH WHERE A.AUTH_CODE=AUTH_CODE) authCodeNm
 			, DATE_FORMAT(LAST_DATE,'%Y.%m.%d %H:%i:%s') lastDate
 			, SITE_CLCD siteClcd
+			,FAIL_CNT failCnt
 		FROM
 			T_AD_USER A
-		WHERE ID = #{id} 
+		WHERE ID = #{id}  
 			AND PWD = #{pwd} 
 			AND USE_YN='Y'
 		]]>
@@ -53,6 +54,8 @@
 			,(SELECT AUTH_CODE_NM FROM T_AD_USER_AUTH WHERE A.AUTH_CODE=AUTH_CODE) authCodeNm
 			, DATE_FORMAT(LAST_DATE,'%Y.%m.%d %H:%i:%s') lastDate
 			, SITE_CLCD siteClcd
+			,FAIL_CNT failCnt
+			
 		FROM
 			T_AD_USER A
 		WHERE ID = #{id} 
@@ -71,8 +74,8 @@
 		]]>	
 	</update> 
 	
-	<update id="failCntUpdateContent" parameterType="loginVO">
-		/* Login.failCntUpdateContent */
+	<update id="updateFailCnt" parameterType="loginVO">
+		/* Login.updateFailCnt */
 		<![CDATA[
 			UPDATE T_AD_USER SET     
 			 	   FAIL_CNT = FAIL_CNT + 1
@@ -80,6 +83,14 @@
 		]]>
 	</update>
 	
+	<update id="resetFailCnt" parameterType="loginVO">
+		/* Login.resetFailCnt */
+		<![CDATA[
+			UPDATE T_AD_USER SET     
+			 	   FAIL_CNT = 0
+			WHERE  SEQ = #{seq}  
+		]]>
+	</update>
 	
 	
 </mapper>

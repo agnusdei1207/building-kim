@@ -53,7 +53,7 @@ public class LoginController {
 	
 	/**
 	 * MappingJackson2JsonView.
-	 */
+	 */  
 	@Resource
 	private MappingJackson2JsonView ajaxView;
 	
@@ -83,21 +83,27 @@ public class LoginController {
 			loginVO.setPwd(EncryptUtil.getString(EncryptUtil.Sha256EncryptB(loginVO.getPwd().getBytes("UTF-8"))));
 			
 			LoginVO userLoginVO  = (LoginVO)cmmnService.selectContents(loginVO, PROGRAM_ID);
-
+			LoginVO checkFailCnt  = (LoginVO)cmmnService.selectContents(loginVO, PROGRAM_ID + ".selectWithId");
+			
 	    	if(userLoginVO == null || userLoginVO.getId() == null || "".equals(userLoginVO.getId())){
-	    		model.addAttribute("message", "아이디 또는 패스워드를 확인하시기 바랍니다.");
-	    		cmmnService.updateContents(loginVO, PROGRAM_ID+".failCntUpdateContent");
-	    		userLoginVO = (LoginVO)cmmnService.selectContents(loginVO, PROGRAM_ID+".selectWithId");
-	    		if(!"".equals(StringUtil.isNullToString(userLoginVO))){
-	    			if(Integer.parseInt(userLoginVO.getFailCnt()) > 5){
-	    				model.addAttribute("message", "비밀번호 입력횟수가 초과되었습니다.");
+	    		if(checkFailCnt != null && checkFailCnt.getId() != null && checkFailCnt.getId() != ""){ 
+	    			cmmnService.updateContents(checkFailCnt, PROGRAM_ID+".updateFailCnt");
+	    			if(Integer.parseInt(checkFailCnt.getFailCnt()) > 5){ 
+	    				model.addAttribute("message", "비밀번호 입력횟수가 초과되었습니다. 관리자에게 문의하세요."); 
+	    				return  "/ma/login/login";
 	    			}
 	    		}
-	    		 
 	    		
-	    		return  "/ma/login/login";  
+	    		model.addAttribute("message", "아이디 또는 패스워드를 확인하시기 바랍니다.");
+	    		return  "/ma/login/login";   
 	    	}else{ 
 	    		 	/** 세션 정보 입력 */
+	    		if(Integer.parseInt(userLoginVO.getFailCnt()) > 5){ 
+    				model.addAttribute("message", "비밀번호 입력횟수가 초과되었습니다. 관리자에게 문의하세요."); 
+    				return  "/ma/login/login";
+    			}
+	    			cmmnService.updateContents(checkFailCnt, PROGRAM_ID+".resetFailCnt");
+ 
 					HttpSession session = request.getSession();					
 					session.setAttribute(SessionUtil.SESSION_MANAGE_KEY, userLoginVO);
 					
@@ -108,12 +114,12 @@ public class LoginController {
 					session.setAttribute("loginMgrAuthCodeNm", userLoginVO.getAuthCodeNm()); //권한명
 					session.setAttribute("loginMgrSiteClcd", userLoginVO.getSiteClcd()); //사이트구분
 					
-					/* 로그인 로그 */
+					/* 로그인 로그 */ 
 					LoginLogVO loginLogVO = new LoginLogVO();
 					loginLogVO.setLogId(userLoginVO.getId());
 					loginLogVO.setLogClientIp(clientIp);
 					cmmnService.insertContents(loginLogVO, "LoginLog");
-					
+					 
 					MnVO auth = new MnVO();
     				auth.setLvl("2");
     				auth.setMenuCl("ma");
@@ -180,7 +186,7 @@ public class LoginController {
 	}
 
 
-	
+	 
 	
 	@RequestMapping(value = "/logout.do")
 	public String adminLogout(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, ModelMap model) throws Exception {

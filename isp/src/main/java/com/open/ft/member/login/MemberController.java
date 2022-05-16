@@ -59,20 +59,25 @@ public class MemberController {
 			    		model.addAttribute("cmmnScript", cmmnScript);   
 			    		return "cmmn/execute";
 					}
-				} 
+				}   
 				      
 	    		message = "아이디 또는 패스워드를 확인하시기 바랍니다.";
-	    		cmmnScript = folderPath + "loginFrm.do";
+	    		cmmnScript = folderPath + "loginFrm.do"; 
 	    		
 	    	}else{      
-				HttpSession session = request.getSession();		
-				
-    			session.setAttribute(SessionUtil.SESSION_FRONT_KEY, userLoginVO);
-    			session.setAttribute("memberVO", userLoginVO);
-    			cmmnService.updateContents(userLoginVO, PROGRAM_ID + ".resetFailCnt");
-    			
-    			message = userLoginVO.getMeId()+" 님 환영합니다!";
-    			cmmnScript = "/ft/main/main.do";
+	    		
+	    		if(Integer.parseInt(userLoginVO.getMeFailCnt()) > 5){
+	    			message = "비밀번호 입력회수 초과! 관리자에게 문의바랍니다.";
+		    		cmmnScript = folderPath + "loginFrm.do";
+	    		}else{
+	    			HttpSession session = request.getSession();		
+	    			session.setAttribute(SessionUtil.SESSION_FRONT_KEY, userLoginVO);
+	    			session.setAttribute("memberVO", userLoginVO);
+	    			cmmnService.updateContents(userLoginVO, PROGRAM_ID + ".resetFailCnt");
+	    			  
+	    			message = userLoginVO.getMeId()+" 님 환영합니다!";
+	    			cmmnScript = "/ft/main/main.do";
+	    		}
 		    }    	 
 		}else{ 
 			message = "로그인정보가 넘어오지 않았습니다.";
