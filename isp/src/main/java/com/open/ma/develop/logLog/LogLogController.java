@@ -44,7 +44,8 @@ public class LogLogController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
-
+		
+		System.out.println("schEtc03 :::::::"+ searchVO.getSchEtc03());
 		
 		searchVO.setPageUnit(10);
 		searchVO.setPageSize(11);      
@@ -58,7 +59,6 @@ public class LogLogController {
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
 		
-		 
 		if("".equals(searchVO.getSchEtc03()) || "1".equals(searchVO.getSchEtc03())){
 		
 			int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID );
@@ -76,7 +76,7 @@ public class LogLogController {
 			
 			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, "LoginLog" );
 			model.addAttribute("resultList", resultList);
-			
+			 
 		}else if("3".equals(searchVO.getSchEtc03())){  
 			int totCnt = cmmnService.selectCount(searchVO, "LogLog");
 			paginationInfo.setTotalRecordCount(totCnt); 
@@ -85,7 +85,6 @@ public class LogLogController {
 			model.addAttribute("resultList", resultList);
 			 
 		}else{
-			
 			int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".selectStrangeCount" );
 			paginationInfo.setTotalRecordCount(totCnt);
 			model.addAttribute("paginationInfo", paginationInfo);

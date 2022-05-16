@@ -14,30 +14,25 @@
 				AND LOG_CONT LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>   
 	 	</if>         
-	 	<if test="searchStartDate !=null and searchStartDate !='' ">
+	 	<if test="searchStartDate !=null and searchStartDate !='' "> 
  				<![CDATA[ 
 					AND #{searchStartDate} <= DATE_FORMAT(LOG_DT, '%Y.%m.%d') AND #{searchEndDate} >= DATE_FORMAT(LOG_DT, '%Y.%m.%d')
-				]]>   
-		 	<if test="schEtc02 != null and schEtc02 !='' ">
+				]]> 
+		 	<if test="schEtc02 != null and schEtc02 !='' and schEtc03 != 3">
 				AND LOG_DIVN = #{schEtc02}
-				<if test='schEtc03 == 1'> 
+				<if test='schEtc03 == 1'>  
 					<![CDATA[
 						AND (DATE_FORMAT(LOG_DT, '%T') > '18:00:00' OR DATE_FORMAT(LOG_DT, '%T') < '09:00:00') 
 					]]> 
-				</if>   
+				</if>  
 			</if>      
-			<if test='schEtc03 == 3'>
-				<![CDATA[
-					AND LOG_IP_ERR_YN = 'Y'
-				]]> 
-			</if>     
-		</if>         
+		</if>        
 	</sql>         
- 	         
+ 	        
 	<select id="selectList" parameterType="cmmnDefaultVO" resultType="logLogVO">
 		/* LogLog.selectList */
 		<![CDATA[  
-      	    SELECT              
+      	    SELECT           
       	          	                
 				  LOG_SEQ																									 logSeq
 				, LOG_CLIENT_IP 								 															 logClientIp
@@ -47,10 +42,12 @@
 				, LOG_DT																									 logDt
 				, LOG_DIVN 																									 logDivn
 				, LOG_IP_ERR_YN 																							 logIpErrYn
-		     FROM t_log_log A
-		     WHERE 1 = 1 
-				      
-			]]>		       
+			     FROM t_log_log A
+			     WHERE 1 = 1 
+			]]>	   
+		     <if test='schEtc03 == 3'>
+				AND LOG_IP_ERR_YN = 'Y'
+			</if>  
 		     <include refid="Where"/>	  
 	     <![CDATA[    
 	    		ORDER BY LOG_SEQ DESC
@@ -66,7 +63,10 @@
 				COUNT(LOG_SEQ) logCnt  
 			FROM T_LOG_LOG
 			WHERE 1 = 1
-		]]>
+			]]>	 
+		     <if test='schEtc03 == 3'>
+				AND LOG_IP_ERR_YN = 'Y'
+			</if>  
 			 <include refid="Where"/>
 	</select> 
 	
@@ -85,11 +85,11 @@
 				, LOG_DIVN 																									 logDivn
 				, LOG_IP_ERR_YN 																							 logIpErrYn
 				, FAIL_CNT																									 failCnt
- 
+ 			
 				FROM t_log_log A, t_ad_user C
 				LEFT JOIN t_member
 				ON	t_member.ME_ID = C.ID
-				WHERE 1 = 1
+				WHERE 1 = 1 
 		 ]]>    
 		 		<include refid="Where"/>
 	     <![CDATA[
