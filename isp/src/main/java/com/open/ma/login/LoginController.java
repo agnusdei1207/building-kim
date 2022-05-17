@@ -22,6 +22,7 @@ import com.open.cmmn.service.FileMngService;
 import com.open.cmmn.util.EncryptUtil;
 import com.open.cmmn.util.SessionUtil;
 import com.open.cmmn.util.StringUtil;
+import com.open.ma.develop.logLog.service.LogLogVO;
 import com.open.ma.develop.loginLog.service.LoginLogVO;
 import com.open.ma.login.service.LoginVO;
 import com.open.ma.sys.mn.service.MnVO;
@@ -78,6 +79,7 @@ public class LoginController {
 	public String loginProcess(@ModelAttribute("loginVO") LoginVO loginVO	, HttpServletRequest request, ModelMap model) throws Exception {
 		
 		String clientIp = StringUtil.getClientIp(request);
+		LoginLogVO loginLogVO = new LoginLogVO(); 
 		
 		if(loginVO.getId() != null && loginVO.getPwd() != null && !"".equals(loginVO.getId()) && !"".equals(loginVO.getPwd())){
 			loginVO.setPwd(EncryptUtil.getString(EncryptUtil.Sha256EncryptB(loginVO.getPwd().getBytes("UTF-8"))));
@@ -95,6 +97,13 @@ public class LoginController {
 	    		}
 	    		
 	    		model.addAttribute("message", "아이디 또는 패스워드를 확인하시기 바랍니다.");
+	    		
+	    		loginLogVO.setLogId(userLoginVO.getId());
+				loginLogVO.setLogClientIp(clientIp);
+				loginLogVO.setLogDivn("ma"); 
+				loginLogVO.setLogLoginYn("N");
+				cmmnService.insertContents(loginLogVO, "LoginLog");
+	    		
 	    		return  "/ma/login/login";   
 	    	}else{ 
 	    		 	/** 세션 정보 입력 */
@@ -115,10 +124,10 @@ public class LoginController {
 					session.setAttribute("loginMgrSiteClcd", userLoginVO.getSiteClcd()); //사이트구분
 					
 					/* 로그인 로그 */ 
-					LoginLogVO loginLogVO = new LoginLogVO(); 
 					loginLogVO.setLogId(userLoginVO.getId());
 					loginLogVO.setLogClientIp(clientIp);
 					loginLogVO.setLogDivn("ma");
+					loginLogVO.setLogLoginYn("Y");
 					cmmnService.insertContents(loginLogVO, "LoginLog");
 					 
 					MnVO auth = new MnVO();

@@ -44,7 +44,10 @@ public class MemberController {
                        
  	@RequestMapping(folderPath + "loginProcess.do")
 	public String loginProcess(@ModelAttribute("searchVO") MemberVO searchVO	, HttpServletRequest request	, ModelMap model) throws Exception {
- 
+ 		
+		LoginLogVO loginLogVO = new LoginLogVO();
+		String clientIp = StringUtil.getClientIp(request);
+		
  		if(searchVO.getMeId() != null && searchVO.getMePw() != null && !"".equals(searchVO.getMeId()) && !"".equals(searchVO.getMePw())){
 			searchVO.setMePw(EncryptUtil.getString(EncryptUtil.Sha256EncryptB(searchVO.getMePw().getBytes("UTF-8"))));
 			   
@@ -55,15 +58,21 @@ public class MemberController {
 				// 로그인 실패 횟수 체크
 				if(checkFailCnt != null && checkFailCnt.getMeId() != null && checkFailCnt.getMeId() != ""){
 					cmmnService.updateContents(checkFailCnt, PROGRAM_ID + ".updateFailCnt");
+					loginLogVO.setLogId(checkFailCnt.getMeId());
+					loginLogVO.setLogClientIp(clientIp);
+					loginLogVO.setLogDivn("ft"); 
+					loginLogVO.setLogLoginYn("N");
+					cmmnService.insertContents(loginLogVO, "LoginLog");
+					
 					if(Integer.parseInt(checkFailCnt.getMeFailCnt()) > 5){
 						message = "비밀번호 입력회수 초과! 관리자에게 문의바랍니다.";
 			    		cmmnScript = folderPath + "loginFrm.do";
 			    		model.addAttribute("message", message); 
 			    		model.addAttribute("cmmnScript", cmmnScript);   
 			    		return "cmmn/execute";
-					}
-				}   
-				      
+					} 
+				}     
+				  
 	    		message = "아이디 또는 패스워드를 확인하시기 바랍니다.";
 	    		cmmnScript = folderPath + "loginFrm.do"; 
 	    		
@@ -79,17 +88,15 @@ public class MemberController {
 	    			cmmnService.updateContents(userLoginVO, PROGRAM_ID + ".resetFailCnt");
 	    			
 	    			/* 로그인 로그 */  
-	    			String clientIp = StringUtil.getClientIp(request);
-	    			System.out.println("IP : "+ clientIp);
-					LoginLogVO loginLogVO = new LoginLogVO();
 					loginLogVO.setLogId(userLoginVO.getMeId());
 					loginLogVO.setLogClientIp(clientIp);
 					loginLogVO.setLogDivn("ft");
+					loginLogVO.setLogLoginYn("Y");
 					cmmnService.insertContents(loginLogVO, "LoginLog");
 	    			  
 	    			message = userLoginVO.getMeId()+" 님 환영합니다!";
 	    			cmmnScript = "/ft/main/main.do";
-	    		}
+	    		} 
 		    }    	 
 		}else{ 
 			message = "로그인정보가 넘어오지 않았습니다."; 

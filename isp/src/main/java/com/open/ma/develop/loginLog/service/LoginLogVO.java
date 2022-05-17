@@ -20,10 +20,17 @@ public class LoginLogVO extends CmmnDefaultVO implements Serializable {
 	private String logDivn;
 	private String logIpErrYn; 
 	private String logCnt;
+	private String logLoginYn;
 	private String maxLogDt;
     
 	
 	
+	public String getLogLoginYn() {
+		return logLoginYn;
+	}
+	public void setLogLoginYn(String logLoginYn) {
+		this.logLoginYn = logLoginYn;
+	}
 	public String getMaxLogDt() {
 		return maxLogDt;
 	}

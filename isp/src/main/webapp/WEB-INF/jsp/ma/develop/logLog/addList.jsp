@@ -89,9 +89,9 @@
 	            <col style="width:15%;">  
 	            <col style="width:8%;">        
 			</colgroup>            
-			<thead>     
+			<thead>       
 				<tr>       
-					<th scope="col">전체 선택<input type="checkbox" onclick="allCheck();" id="all_checkbox"></th>
+					<th scope="col"><input type="checkbox" onclick="allCheck();" id="all_checkbox"></th>
 					<th scope="col">번호</th>
 					<th scope="col">구분</th>
 					<th scope="col">ID</th>

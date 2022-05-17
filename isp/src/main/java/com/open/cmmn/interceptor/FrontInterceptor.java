@@ -41,7 +41,7 @@ public class FrontInterceptor extends HandlerInterceptorAdapter implements Handl
 		
 		// IP 차단
 		int chkIp = (Integer)cmmnService.selectContents(clientIp, "IpLog.selectIp");
-		if(chkIp > 0){
+		if(chkIp > 0){ 
 			logLogVO.setLogClientIp(clientIp);
 			logLogVO.setLogIpErrYn("Y");
 			cmmnService.insertContents(logLogVO, "LogLog");
