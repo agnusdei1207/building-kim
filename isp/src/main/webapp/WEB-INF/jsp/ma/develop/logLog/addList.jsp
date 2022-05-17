@@ -4,8 +4,13 @@
 <%-- tbl --%>
 <div class="tbl_top">
 	<div class="tbl_left"><i class="i_all"></i> <span> 전체 : <strong>${paginationInfo.totalRecordCount}</strong> 건(${searchVO.pageIndex}/${paginationInfo.totalPageCount} Page) </span></div>
-</div> 
-                 
+	<c:if test="${searchVO.schEtc03 eq '4' }">
+		<div class="tbl_right"> 
+			<a href="javascript:void(0)" class="btn btn_sml btn_save" onclick="fncPageBoard('view', 'resetFailCnt.do')">실패횟수 초기화</a>
+		</div>   
+	</c:if>         
+</div>     
+                     
 <c:if test="${searchVO.schEtc03 ne '4' }">
 	<div class="tbl_wrap">   
 		<table class="tbl_col_type01 no_hover" id="fixTable">
@@ -44,7 +49,7 @@
 				<c:choose>
 					<c:when test="${fn:length(resultList) gt 0}">   
 						<c:forEach var="result" items="${resultList}" varStatus="status">
-							<tr>
+							<tr> 
 								<td>${paginationInfo.totalRecordCount+1 - ((searchVO.pageIndex-1) * searchVO.pageUnit + status.count)}</td>
 							<c:if test="${searchVO.schEtc03 ne '3' }">
 								<td>${result.logDivn eq 'ft' ? '사용자' : '관리자' }</td>    
@@ -83,8 +88,8 @@
 	            <col style="width:20%;">  
 	            <col style="width:15%;">  
 	            <col style="width:8%;">        
-			</colgroup>           
-			<thead>   
+			</colgroup>            
+			<thead>     
 				<tr>       
 					<th scope="col">전체 선택<input type="checkbox" onclick="allCheck();" id="all_checkbox"></th>
 					<th scope="col">번호</th>
@@ -92,25 +97,25 @@
 					<th scope="col">ID</th>
 	                <th scope="col">최근 로그인</th>   
 					<th scope="col">최근 접속 IP</th> 
-					<th scope="col">누적 로그인 실패</th>
-				</tr>     
+					<th scope="col">로그인 실패 횟수</th> 
+				</tr>          
 			</thead>    
-			<tbody>             
+			<tbody>                       
 				<c:choose>  
-					<c:when test="${fn:length(resultList) gt 0}">
+					<c:when test="${fn:length(resultList) gt 0}">  
 						<c:forEach var="result" items="${resultList}" varStatus="status">
-							<tr>   
-								<td><input type="checkbox" onclick="oneClick();" id="${result.logDivn}_${result.logSeq }" class="checkbox"></td>
+							<tr>         
+								<td><input type="checkbox" name="col2" onclick="oneCheck(this, '${result.logDivn}_${result.logId }');" id="${result.logDivn}_${result.logId }" value="${result.logDivn}_${result.logId }" class="checkbox"></td>
 								<td>${paginationInfo.totalRecordCount+1 - ((searchVO.pageIndex-1) * searchVO.pageUnit + status.count)}</td>
 								<td>${result.logDivn eq 'ma' ? '관리자' : '사용자'}</td>
 								<td>${result.logId }</td>
 								<td>${result.logDt }</td>
-								<td>${result.logClientIp }</td>
+								<td>${result.logClientIp }</td>  
 								<td><fmt:formatNumber value="${result.failCnt }" pattern="#,###"/></td>
 							</tr>
 						</c:forEach>
-					</c:when>  
-					<c:otherwise> 
+					</c:when>     
+					<c:otherwise>    
 						<tr>
 							<td colspan="7" class="no_data">데이터가 없습니다.</td>
 						</tr>
@@ -123,50 +128,81 @@
 <%-- //tbl --%>   
 
 <%-- paging --%>
-<div class="paging_wrap">
+<div class="paging_wrap"> 
    <div class="paging">
         <div class="paging"><ui:pagination paginationInfo="${paginationInfo}" type="manage" jsFunction="fncPageBoard" /></div>
-    </div>
+    </div>  
 </div>
 <%-- //paging --%> 
 
 
+<script> 
  
-<script>
+var chk_arr = [];
+  
 $(function(){
+	
 	if($("#all_checkbox").is(":checked")){
 		$(".checkbox").prop("checked",true);
-	}else{
+	}else{ 
 		$(".checkbox").prop("checked",false);
+	}  
+	   
+	chk_arr = Array.from(new Set($("#col1").val().split(",")));
+	
+	for(var i = 0; i < chk_arr.length; i++){
+		$("#"+chk_arr[i]).prop("checked", true);
+	} 
+	       
+	if($(".checkbox").prop("checked")){
+		$("#all_checkbox").prop("checked", true);
 	}
-
-})
-  
-
-
-function allCheck(){
-	if($("#all_checkbox").is(":checked")){
+		     
+})        
+             
+function allCheck(){   
+	if($("#all_checkbox").is(":checked")){   
 		$(".checkbox").prop("checked",true);
+		$(".checkbox").each(function(){ 
+			if(!$("#col1").val().indexOf(this.value) != -1){
+		        chk_arr.push(this.value);    
+			}                
+	   });             
+		
 	}else{
-		$(".checkbox").prop("checked",false);
-	}
-}
-  
-       
-  
-function oneClick(){ 
+		$(".checkbox").prop("checked",false);  
+		$(".checkbox").each(function(){ 
+			if(chk_arr.indexOf(this.value) != -1){
+				chk_arr.splice(chk_arr.indexOf(this.value),1);  
+			}   
+		});  
+	}        
+	      
+	chk_arr = Array.from(new Set(chk_arr));
+	$("#col1").val(chk_arr);   
+}     
+           
+                
+function oneCheck(e, gooboon){      
 	var total = $(".checkbox").length;
 	var checked = $("input[class=checkbox]:checked").length;
 	 
-	if(total != checked){
+	if($("#"+gooboon).is(":checked")){
+		chk_arr.push($(e).val());    
+	}else{        
+		if(chk_arr.indexOf($(e).val()) != -1){
+			chk_arr.splice(chk_arr.indexOf($(e).val()),1);  
+		}
+	} 
+	 
+	if(total != checked){     
 		$("#all_checkbox").prop("checked",false);
 	}else{
 		$("#all_checkbox").prop("checked",true);
 	}
-}
-
-
-
+	    
+	$("#col1").val(chk_arr);
+} 
 
 
 </script>

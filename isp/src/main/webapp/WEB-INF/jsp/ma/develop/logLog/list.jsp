@@ -16,7 +16,8 @@
 			<input type="hidden" name="pageIndex" id="pageIndex" value="${searchVO.pageIndex }" />
 			<input type="hidden" id="logSeq" name="logSeq" />
 			<input type="hidden" name="schEtc03" id="schEtc03" value="${searchVO.schEtc03 }"/>
-			<fieldset>        
+			<input type="text" id="col1" class="text w100p" name="col1"/> 
+			<fieldset>         
 				<legend>검색</legend> 
 				<div class="search_basic">
 					<table class="type03">
@@ -63,10 +64,9 @@
 	<div class="tbl">
 	</div>
 </div>
-	 
+	   
 <script type="text/javaScript">
  
-var checkbox = []; 
  
 $(document).ready(function(){
 	fncPageBoard('addList','addList.do',$("#pageIndex").val());

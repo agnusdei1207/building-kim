@@ -76,10 +76,10 @@
 				(SELECT
 		  				LOG_SEQ																										 logSeq
 						, LOG_CLIENT_IP 								 															 logClientIp
-						, LOG_ID																										 logId
-						, LOG_DT																										 logDt
+						, LOG_ID																									 logId
+						, LOG_DT																									 logDt
 						, LOG_DIVN 																									 logDivn
-						,(SELECT 	FAIL_CNT failCnt	FROM t_ad_user tau WHERE tau.ID = tll.LOG_ID)			 failCnt
+						,(SELECT 	FAIL_CNT failCnt	FROM t_ad_user tau WHERE tau.ID = tll.LOG_ID)								 failCnt
 	 				
 					FROM t_log_log tll
 				
@@ -88,19 +88,19 @@
 						AND LOG_ID <> ''
 						]]>  		 
 							<include refid="Where"/>	
-						<![CDATA[
-				
-					GROUP BY logId
-						    		)
+						<![CDATA[ 
+				   
+					GROUP BY logId 
+					HAVING failCnt > 5	 )
 			UNION
 				
 				(SELECT
 						LOG_SEQ																										 logSeq
 						, LOG_CLIENT_IP 								 															 logClientIp
-						, LOG_ID																										 logId
-						, LOG_DT																										 logDt
+						, LOG_ID																									 logId
+						, LOG_DT																									 logDt
 						, LOG_DIVN 																									 logDivn
-						,(SELECT 	ME_FAIL_CNT failCnt	FROM t_member tm WHERE tm.ME_ID = tll.LOG_ID)		 failCnt
+						,(SELECT 	ME_FAIL_CNT failCnt	FROM t_member tm WHERE tm.ME_ID = tll.LOG_ID)		 					  	 failCnt
 																								 
 					
 					FROM t_log_log tll
@@ -113,7 +113,7 @@
 							<include refid="Where"/>	
 						<![CDATA[
 					GROUP BY logId
-				 	)     
+				 	HAVING failCnt > 5)     
 				 	
 		 	ORDER BY logDt DESC
 			LIMIT  #{firstIndex} , #{recordCountPerPage}
@@ -123,7 +123,7 @@
 	<select id="selectStrangeCount" parameterType="cmmnDefaultVO" resultType="int">
 	/* LogLog.selectCount */
 	<![CDATA[ 
-		SELECT     
+		SELECT      
 			COUNT(logSeq) logCnt  	  
 		FROM ((SELECT
 		  				LOG_SEQ																										 logSeq
@@ -131,7 +131,7 @@
 						, LOG_ID																									 logId
 						, LOG_DT																									 logDt
 						, LOG_DIVN 																									 logDivn
-						,(SELECT 	FAIL_CNT failCnt	FROM t_ad_user tau WHERE tau.ID = tll.LOG_ID)			 failCnt
+						,(SELECT 	FAIL_CNT failCnt	FROM t_ad_user tau WHERE tau.ID = tll.LOG_ID)								 failCnt
 	 				
 					FROM t_log_log tll
 				
@@ -142,7 +142,8 @@
 							<include refid="Where"/>	
 						<![CDATA[
 				
-					GROUP BY logId)
+					GROUP BY logId
+					HAVING failCnt > 5)
 			UNION
 				  
 				(SELECT
@@ -151,7 +152,7 @@
 						, LOG_ID																									 logId
 						, LOG_DT																									 logDt
 						, LOG_DIVN 																									 logDivn
-						,(SELECT 	ME_FAIL_CNT failCnt	FROM t_member tm WHERE tm.ME_ID = tll.LOG_ID)		 failCnt
+						,(SELECT 	ME_FAIL_CNT failCnt	FROM t_member tm WHERE tm.ME_ID = tll.LOG_ID)								 failCnt
 					
 					FROM t_log_log tll
 				
@@ -161,8 +162,10 @@
 						]]>  		 
 							<include refid="Where"/>	
 						<![CDATA[ 
-					 
-					GROUP BY logId)) B
+					  
+					GROUP BY logId
+					HAVING failCnt > 5)) B
+					
 	
 		]]> 
 
@@ -210,6 +213,24 @@
 			WHERE  LOG_SEQ = #{logSeq}    
 		]]>    
 	</update> 
+	
+	
+	<update id="updateResetFailCnt" parameterType="logLogVO">
+		/* LogLog.updateResetFailCnt */
+		<if test='col2 == "ma"'>
+			UPDATE T_AD_USER     
+	 			SET
+	 				FAIL_CNT = 0
+				WHERE ID = #{col3}
+		</if>
+		<if test='col2 == "ft"'>
+			UPDATE T_MEMBER    
+				SET 
+					ME_FAIL_CNT = 0
+				WHERE ME_ID = #{col3}
+		</if>
+	</update> 
+	 
 	    
 	<update id="deleteContents" parameterType="logLogVO">
 		/* LogLog.deleteContents */

@@ -95,9 +95,27 @@ public class LogLogController {
 		
 		return folderPath + "addList";
 	}
-	
-
-	
+	 
+	@RequestMapping(folderPath + "resetFailCnt.do") 
+	public String resetFailCnt(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
+          
+		System.out.println("찍기" + searchVO.getCol1());
+		
+		
+		String [] array = searchVO.getCol1().split(",");
+		for(int i = 1; i < array.length; i++){
+			searchVO.setCol2(array[i].split("_")[0]);
+			searchVO.setCol3(array[i].split("_")[1]);
+			
+			cmmnService.updateContents(searchVO, PROGRAM_ID +".updateResetFailCnt" );
+			
+		}    
+		
+		
+		model.addAttribute("cmmnScript", "list.do");
+		model.addAttribute("message", "초기화 완료");
+		return "cmmn/execute";
+	}    
 		
 
 }
