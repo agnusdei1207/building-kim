@@ -38,7 +38,7 @@
 				<c:if test="${searchVO.schEtc03 eq '2' }">
 					<th scope="col">접속횟수</th>
 				</c:if>
-				</tr> 
+				</tr>  
 			</thead>
 			<tbody>
 				<c:choose>
@@ -86,21 +86,21 @@
 			</colgroup>           
 			<thead>   
 				<tr>       
-					<th scope="col">전체 선택<input type="checkbox" id="all_checkbox"></th>
+					<th scope="col">전체 선택<input type="checkbox" onclick="allCheck();" id="all_checkbox"></th>
 					<th scope="col">번호</th>
 					<th scope="col">구분</th>
 					<th scope="col">ID</th>
-	                <th scope="col">최근 로그인</th>  
+	                <th scope="col">최근 로그인</th>   
 					<th scope="col">최근 접속 IP</th> 
 					<th scope="col">누적 로그인 실패</th>
 				</tr>     
 			</thead>    
-			<tbody>         
-				<c:choose> 
+			<tbody>             
+				<c:choose>  
 					<c:when test="${fn:length(resultList) gt 0}">
 						<c:forEach var="result" items="${resultList}" varStatus="status">
-							<tr>  
-								<td><input type="checkbox" id="${result.logSeq }"></td>
+							<tr>   
+								<td><input type="checkbox" onclick="oneClick();" id="${result.logDivn}_${result.logSeq }" class="checkbox"></td>
 								<td>${paginationInfo.totalRecordCount+1 - ((searchVO.pageIndex-1) * searchVO.pageUnit + status.count)}</td>
 								<td>${result.logDivn eq 'ma' ? '관리자' : '사용자'}</td>
 								<td>${result.logId }</td>
@@ -129,3 +129,44 @@
     </div>
 </div>
 <%-- //paging --%> 
+
+
+ 
+<script>
+$(function(){
+	if($("#all_checkbox").is(":checked")){
+		$(".checkbox").prop("checked",true);
+	}else{
+		$(".checkbox").prop("checked",false);
+	}
+
+})
+  
+
+
+function allCheck(){
+	if($("#all_checkbox").is(":checked")){
+		$(".checkbox").prop("checked",true);
+	}else{
+		$(".checkbox").prop("checked",false);
+	}
+}
+  
+       
+  
+function oneClick(){ 
+	var total = $(".checkbox").length;
+	var checked = $("input[class=checkbox]:checked").length;
+	 
+	if(total != checked){
+		$("#all_checkbox").prop("checked",false);
+	}else{
+		$("#all_checkbox").prop("checked",true);
+	}
+}
+
+
+
+
+
+</script>

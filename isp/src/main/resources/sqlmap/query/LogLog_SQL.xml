@@ -12,7 +12,7 @@
 			</if>
 			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
 				AND LOG_CLIENT_IP LIKE CONCAT('%',#{searchKeyword},'%')
-			</if>   
+			</if>    
 	 	</if>           
 	 	<if test="searchStartDate !=null and searchStartDate !='' ">      
  				<![CDATA[ 
@@ -85,6 +85,7 @@
 				
 					WHERE 1 = 1 
 						AND LOG_DIVN = 'ma'
+						AND LOG_ID <> ''
 						]]>  		 
 							<include refid="Where"/>	
 						<![CDATA[
@@ -107,15 +108,17 @@
 				
 					WHERE 1 = 1 
 						AND LOG_DIVN = 'ft'
+						AND LOG_ID <> ''
 						]]>  		 
 							<include refid="Where"/>	
 						<![CDATA[
-					 
 					GROUP BY logId
-				 	)  
-		 	ORDER BY logDt DESC;
-	    ]]>   
-	</select> 	  
+				 	)     
+				 	
+		 	ORDER BY logDt DESC
+			LIMIT  #{firstIndex} , #{recordCountPerPage}
+	    ]]>     
+	</select> 	   
 	   
 	<select id="selectStrangeCount" parameterType="cmmnDefaultVO" resultType="int">
 	/* LogLog.selectCount */
@@ -134,6 +137,7 @@
 				
 					WHERE 1 = 1 
 						AND LOG_DIVN = 'ma'
+						AND LOG_ID <> ''
 						]]>  		 
 							<include refid="Where"/>	
 						<![CDATA[
@@ -153,6 +157,7 @@
 				
 					WHERE 1 = 1 
 						AND LOG_DIVN = 'ft'
+						AND LOG_ID <> ''
 						]]>  		 
 							<include refid="Where"/>	
 						<![CDATA[ 
