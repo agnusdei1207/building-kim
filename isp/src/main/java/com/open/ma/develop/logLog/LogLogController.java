@@ -38,6 +38,7 @@ public class LogLogController {
 		searchVO.setSearchStartDate(time);
 		searchVO.setSearchEndDate(time);
 		
+		
 		return ".mLayout:"+ folderPath + "list";
 	}    
 	 
@@ -45,10 +46,8 @@ public class LogLogController {
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
 		
-		System.out.println("schEtc03 :::::::"+ searchVO.getSchEtc03());
-		 
-		searchVO.setPageUnit(3);
-		searchVO.setPageSize(4);      
+		searchVO.setPageUnit(7);
+		searchVO.setPageSize(8);      
 		
 		PaginationInfo paginationInfo = new PaginationInfo();  
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
@@ -57,7 +56,7 @@ public class LogLogController {
 		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-		
+		 
 		
 		if("".equals(searchVO.getSchEtc03()) || "1".equals(searchVO.getSchEtc03())){
 		
@@ -83,8 +82,8 @@ public class LogLogController {
 			model.addAttribute("paginationInfo", paginationInfo);
 			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, "LogLog" );
 			model.addAttribute("resultList", resultList);
-			 
-		}else{
+			    
+		}else if("4".equals(searchVO.getSchEtc03())){
 			int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".selectStrangeCount" );
 			paginationInfo.setTotalRecordCount(totCnt);
 			model.addAttribute("paginationInfo", paginationInfo);
@@ -99,19 +98,16 @@ public class LogLogController {
 	@RequestMapping(folderPath + "resetFailCnt.do") 
 	public String resetFailCnt(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
           
-		System.out.println("찍기" + searchVO.getCol1());
-		
-		
 		String [] array = searchVO.getCol1().split(",");
-		for(int i = 1; i < array.length; i++){
-			searchVO.setCol2(array[i].split("_")[0]);
-			searchVO.setCol3(array[i].split("_")[1]);
-			
-			cmmnService.updateContents(searchVO, PROGRAM_ID +".updateResetFailCnt" );
-			
-		}    
-		
-		
+		for(int i = 1; i < array.length; i++){   
+			searchVO.setCol2(array[i].split("_")[1]);
+			if("ma".equals(array[i].split("_")[0])){ 
+				cmmnService.updateContents(searchVO, PROGRAM_ID +".maResetFailCnt");
+			}else{
+				cmmnService.updateContents(searchVO, PROGRAM_ID +".ftResetFailCnt");
+			}
+		}     
+		  
 		model.addAttribute("cmmnScript", "list.do");
 		model.addAttribute("message", "초기화 완료");
 		return "cmmn/execute";

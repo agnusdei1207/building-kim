@@ -157,9 +157,8 @@ $(function(){
 	if($(".checkbox").prop("checked")){
 		$("#all_checkbox").prop("checked", true);
 	}
-		     
-})        
-             
+})         
+              
 function allCheck(){   
 	if($("#all_checkbox").is(":checked")){   
 		$(".checkbox").prop("checked",true);
@@ -177,7 +176,7 @@ function allCheck(){
 			}   
 		});  
 	}        
-	      
+	       
 	chk_arr = Array.from(new Set(chk_arr));
 	$("#col1").val(chk_arr);   
 }     
