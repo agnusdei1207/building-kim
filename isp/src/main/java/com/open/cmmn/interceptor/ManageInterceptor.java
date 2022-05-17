@@ -198,8 +198,9 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 		LOGGER.debug("=================================== Loading Report preHandle ::: " + (endTime - loadingTime));
 		
 		// 로그 찍기
-		cmmnService.insertContents(logLogVO, "LogLog");
-		
+		if(request.getRequestURI().indexOf("addList") < 0){
+			cmmnService.insertContents(logLogVO, "LogLog");
+		}
 		
 		return true;
 	} 

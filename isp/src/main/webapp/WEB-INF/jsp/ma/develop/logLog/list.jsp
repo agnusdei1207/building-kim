@@ -24,7 +24,7 @@
 							<col style="width:550px">
 							<col>  
 						</colgroup> 
-						<tbody>
+						<tbody> 
 							<tr>      
 								<td> 
 									<strong class="tit hideBtn1">구분</strong>
@@ -41,11 +41,11 @@
 									<span class="calendar_input w150 hideBtn2" >
 										<input type="text" name="searchEndDate" id="searchEndDate" class="text w80p" value="${searchVO.searchEndDate }" readonly/>
 									</span>
-									<strong class="tit hideBtn3">구분</strong>						
+									<strong class="tit hideBtn3">검색</strong>						
 									<select title="구분 선택" name="searchCondition" id="searchCondition"  class="selec hideBtn3" style="width:132px;">  
 										<option value="0" >전체</option>
-										<option value="1" >ID</option>
-										<option value="2" >성명</option>
+										<option value="1" >ID</option> 
+										<option value="2" >IP</option>     
 									</select>
 									<input type="text" name="searchKeyword" id="searchKeyword" class="text w60p hideBtn3" /> 
 								</td>
@@ -65,6 +65,8 @@
 </div>
 	 
 <script type="text/javaScript">
+ 
+var checkbox = []; 
  
 $(document).ready(function(){
 	fncPageBoard('addList','addList.do',$("#pageIndex").val());

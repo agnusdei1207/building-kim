@@ -76,28 +76,31 @@
 		<table class="tbl_col_type01 no_hover" id="fixTable">
 			<caption>목록(번호,제목,첨부,작성자,작성일,조회 로 구성)</caption>
 			<colgroup>
+				<col style="width:3%;">  
 				<col style="width:5%;">
-				<col style="width:15%;">
+				<col style="width:10%;">  
 				<col style="width:10%;">
-	            <col style="width:15%;">
-	            <col>
-	            <col style="width:8%;">
-			</colgroup>
-			<thead>
-				<tr> 
+	            <col style="width:20%;">  
+	            <col style="width:15%;">  
+	            <col style="width:8%;">        
+			</colgroup>           
+			<thead>   
+				<tr>       
+					<th scope="col">전체 선택<input type="checkbox" id="all_checkbox"></th>
 					<th scope="col">번호</th>
 					<th scope="col">구분</th>
 					<th scope="col">ID</th>
-	                <th scope="col">최근로그인</th>  
+	                <th scope="col">최근 로그인</th>  
 					<th scope="col">최근 접속 IP</th> 
 					<th scope="col">누적 로그인 실패</th>
-				</tr> 
-			</thead>   
-			<tbody>   
+				</tr>     
+			</thead>    
+			<tbody>         
 				<c:choose> 
 					<c:when test="${fn:length(resultList) gt 0}">
 						<c:forEach var="result" items="${resultList}" varStatus="status">
-							<tr>
+							<tr>  
+								<td><input type="checkbox" id="${result.logSeq }"></td>
 								<td>${paginationInfo.totalRecordCount+1 - ((searchVO.pageIndex-1) * searchVO.pageUnit + status.count)}</td>
 								<td>${result.logDivn eq 'ma' ? '관리자' : '사용자'}</td>
 								<td>${result.logId }</td>
@@ -106,10 +109,10 @@
 								<td><fmt:formatNumber value="${result.failCnt }" pattern="#,###"/></td>
 							</tr>
 						</c:forEach>
-					</c:when> 
+					</c:when>  
 					<c:otherwise> 
 						<tr>
-							<td colspan="6" class="no_data">데이터가 없습니다.</td>
+							<td colspan="7" class="no_data">데이터가 없습니다.</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>   

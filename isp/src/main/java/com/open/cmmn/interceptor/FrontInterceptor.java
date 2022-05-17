@@ -85,8 +85,10 @@ public class FrontInterceptor extends HandlerInterceptorAdapter implements Handl
 		logLogVO.setLogIpErrYn("N");     
 		   
 		// 로그 찍기
-		cmmnService.insertContents(logLogVO, "LogLog");
-		
+		if(request.getRequestURI().indexOf("addList") < 0){
+			cmmnService.insertContents(logLogVO, "LogLog");
+		}
+		 
 		return true;
 	}
 

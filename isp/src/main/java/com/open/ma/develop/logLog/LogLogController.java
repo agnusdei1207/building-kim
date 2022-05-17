@@ -40,15 +40,15 @@ public class LogLogController {
 		
 		return ".mLayout:"+ folderPath + "list";
 	}    
-	
+	 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
 		
 		System.out.println("schEtc03 :::::::"+ searchVO.getSchEtc03());
-		
-		searchVO.setPageUnit(10);
-		searchVO.setPageSize(11);      
+		 
+		searchVO.setPageUnit(3);
+		searchVO.setPageSize(4);      
 		
 		PaginationInfo paginationInfo = new PaginationInfo();  
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
@@ -92,8 +92,6 @@ public class LogLogController {
 			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, PROGRAM_ID +".selectStrangeList" );
 			model.addAttribute("resultList", resultList);
 		}
-		 
-		  
 		
 		return folderPath + "addList";
 	}

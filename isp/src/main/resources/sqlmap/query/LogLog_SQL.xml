@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.open.LogLog">
-	
-	<sql id="Where">  
+	 
+	<sql id="Where">       
 		<if test="searchKeyword !=null and searchKeyword !=''">
 			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
-				AND (LOG_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR LOG_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
-			</if>
+				AND (LOG_ID LIKE CONCAT('%',#{searchKeyword},'%') OR LOG_CLIENT_IP LIKE CONCAT('%',#{searchKeyword},'%'))
+			</if>    
 			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
-				AND LOG_TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+				AND LOG_ID LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
 			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
-				AND LOG_CONT LIKE CONCAT('%',#{searchKeyword},'%')
+				AND LOG_CLIENT_IP LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>   
-	 	</if>         
-	 	<if test="searchStartDate !=null and searchStartDate !='' "> 
+	 	</if>           
+	 	<if test="searchStartDate !=null and searchStartDate !='' ">      
  				<![CDATA[ 
 					AND #{searchStartDate} <= DATE_FORMAT(LOG_DT, '%Y.%m.%d') AND #{searchEndDate} >= DATE_FORMAT(LOG_DT, '%Y.%m.%d')
 				]]> 
-		 	<if test="schEtc02 != null and schEtc02 !='' and schEtc03 != 3">
+		 	<if test="schEtc02 != null and schEtc02 !='' and schEtc03 != 3 and schEtc03 != 4">
 				AND LOG_DIVN = #{schEtc02}
 				<if test='schEtc03 == 1'>  
 					<![CDATA[
@@ -27,8 +27,8 @@
 				</if>  
 			</if>      
 		</if>        
-	</sql>         
- 	        
+	</sql>          
+ 	         
 	<select id="selectList" parameterType="cmmnDefaultVO" resultType="logLogVO">
 		/* LogLog.selectList */
 		<![CDATA[  
@@ -66,58 +66,103 @@
 			]]>	 
 		     <if test='schEtc03 == 3'>
 				AND LOG_IP_ERR_YN = 'Y'
-			</if>  
+			</if>   
 			 <include refid="Where"/>
 	</select> 
-	
-	
 		
 	<select id="selectStrangeList" parameterType="cmmnDefaultVO" resultType="logLogVO">
 		/* LogLog.selectStrangeList */
 		<![CDATA[
-		 SELECT
-  				LOG_SEQ																										 logSeq
-				, LOG_CLIENT_IP 								 															 logClientIp
-				, LOG_ID																									 logId
-				, LOG_URL														  											 logUrl
-				, (SELECT MENU_NM FROM t_menu_info B WHERE B.MENU_CD = A.LOG_MENU_CD AND B.MENU_CL = A.LOG_DIVN )     		 logMenuCd
-				, LOG_DT																									 logDt
-				, LOG_DIVN 																									 logDivn
-				, LOG_IP_ERR_YN 																							 logIpErrYn
-				, FAIL_CNT																									 failCnt
- 				 
-				FROM t_log_log A, t_ad_user C
-				LEFT JOIN t_member
-				ON	t_member.ME_ID = C.ID
-				WHERE 1 = 1 
-		]]>		 
-				 <include refid="Where"/>
-		<![CDATA[	
-				GROUP BY logId
-	    		ORDER BY LOG_SEQ DESC
-	    ]]>
-	</select>	 
+				(SELECT
+		  				LOG_SEQ																										 logSeq
+						, LOG_CLIENT_IP 								 															 logClientIp
+						, LOG_ID																										 logId
+						, LOG_DT																										 logDt
+						, LOG_DIVN 																									 logDivn
+						,(SELECT 	FAIL_CNT failCnt	FROM t_ad_user tau WHERE tau.ID = tll.LOG_ID)			 failCnt
+	 				
+					FROM t_log_log tll
+				
+					WHERE 1 = 1 
+						AND LOG_DIVN = 'ma'
+						]]>  		 
+							<include refid="Where"/>	
+						<![CDATA[
+				
+					GROUP BY logId
+						    		)
+			UNION
+				
+				(SELECT
+						LOG_SEQ																										 logSeq
+						, LOG_CLIENT_IP 								 															 logClientIp
+						, LOG_ID																										 logId
+						, LOG_DT																										 logDt
+						, LOG_DIVN 																									 logDivn
+						,(SELECT 	ME_FAIL_CNT failCnt	FROM t_member tm WHERE tm.ME_ID = tll.LOG_ID)		 failCnt
+																								 
+					
+					FROM t_log_log tll
+			
+				
+					WHERE 1 = 1 
+						AND LOG_DIVN = 'ft'
+						]]>  		 
+							<include refid="Where"/>	
+						<![CDATA[
+					 
+					GROUP BY logId
+				 	)  
+		 	ORDER BY logDt DESC;
+	    ]]>   
+	</select> 	  
 	   
 	<select id="selectStrangeCount" parameterType="cmmnDefaultVO" resultType="int">
 	/* LogLog.selectCount */
-	<![CDATA[
-		SELECT  
-		COUNT(logCnt) logCnt  	  
-		FROM (SELECT 
-					COUNT(LOG_SEQ) logCnt  
-				FROM t_log_log A, t_ad_user C
-				LEFT JOIN t_member
-				ON	t_member.ME_ID = C.ID
-				WHERE 1 = 1 
+	<![CDATA[ 
+		SELECT     
+			COUNT(logSeq) logCnt  	  
+		FROM ((SELECT
+		  				LOG_SEQ																										 logSeq
+						, LOG_CLIENT_IP 								 															 logClientIp
+						, LOG_ID																									 logId
+						, LOG_DT																									 logDt
+						, LOG_DIVN 																									 logDivn
+						,(SELECT 	FAIL_CNT failCnt	FROM t_ad_user tau WHERE tau.ID = tll.LOG_ID)			 failCnt
+	 				
+					FROM t_log_log tll
+				
+					WHERE 1 = 1 
+						AND LOG_DIVN = 'ma'
+						]]>  		 
+							<include refid="Where"/>	
+						<![CDATA[
+				
+					GROUP BY logId)
+			UNION
+				  
+				(SELECT
+						LOG_SEQ																										 logSeq
+						, LOG_CLIENT_IP 								 															 logClientIp
+						, LOG_ID																									 logId
+						, LOG_DT																									 logDt
+						, LOG_DIVN 																									 logDivn
+						,(SELECT 	ME_FAIL_CNT failCnt	FROM t_member tm WHERE tm.ME_ID = tll.LOG_ID)		 failCnt
+					
+					FROM t_log_log tll
+				
+					WHERE 1 = 1 
+						AND LOG_DIVN = 'ft'
+						]]>  		 
+							<include refid="Where"/>	
+						<![CDATA[ 
+					 
+					GROUP BY logId)) B
+	
 		]]> 
-		<include refid="Where"/>
-		<![CDATA[
-			GROUP BY LOG_ID
-	    	ORDER BY LOG_SEQ DESC) a
-	    ]]>
-	</select> 
-	
-	
+
+	</select>  
+	 
 	
 	<insert id="insertContents" parameterType="logLogVO">
 		/* LogLog.insertContents */
@@ -140,9 +185,9 @@
 				,#{logDivn          }
 				,#{logIpErrYn 		}
 			) 
-		]]>
+		]]> 
 	</insert>
-	 
+	  
 	<update id="updateContents" parameterType="logLogVO">
 		/* LogLog.updateContents */
 		<![CDATA[
