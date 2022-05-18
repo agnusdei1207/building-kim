@@ -228,7 +228,7 @@
 				LIMIT  #{firstIndex} , #{recordCountPerPage}
 		]]>
 	</select>	 
-
+ 
 
 	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
 		/* Excel.selectCount */
@@ -439,13 +439,97 @@
 			UPDATE T_EXCEL        
 			 SET   
 			      
-				FR_RGST_DT								 							 = NOW()
-				, FR_RVSE_ID														 =#{loginSeq	}	
-				, FR_ATCH_FILE_ID 													 =#{frAtchFileId}
-				, FR_TITLE														     =#{frTitle     }
-				, FR_CONT 															 =#{frCont      }
-				, FR_ID 															 =#{frId        }
-				, FR_DT																 = NOW()
+				XL_RCP_NUM												=#{xlRcpNum                }
+				,XL_LCNS_NUM      										=#{xlLcnsNum               }
+				,XL_WAT_SUM      										=#{xlWatSum                }
+				,XL_FROM_MHZ      										=#{xlFromMhz               }
+				,XL_TO_MHZ     											=#{xlToMhz                 }
+				,XL_ADDRS_NUM      										=#{xlAddrsNum              }
+				,XL_ADDRS1    											=#{xlAddrs1                }
+				,XL_ADDRS2   											=#{xlAddrs2                }
+				,XL_ADDRS_GOOBOON      									=#{xlAddrsGooboon          }
+				,XL_MEAS_METH   										=#{xlMeasMeth              }
+				,XL_MSR_UNT   											=#{xlMsrUnt                }
+				,XL_EM_INT_STD    										=#{xlEmIntStd              }
+				,XL_MSR_VL      										=#{xlMsrVl                 }
+				,XL_EXP_IDX     										=#{xlExpIdx                }
+				,XL_RADIO_STNM      									=#{xlRadioStnm             }
+				,XL_CALL_NAME      										=#{xlCallName              }
+				,XL_LAT_ANG     										=#{xlLatAng                }
+				,XL_LAT_MIN     										=#{xlLatMin                }
+				,XL_LAT_SEC     										=#{xlLatSec                }
+				,XL_LNGTD_ANG      										=#{xlLngtdAng              }
+				,XL_LNGTD_MIN      										=#{xlLngtdMin              }
+				,XL_LNGTD_SEC      										=#{xlLngtdSec              }
+				,XL_ANT_TYP      										=#{xlAntTyp                }
+				,XL_ANT_TYP_NAME     									=#{xlAntTypName            }
+				,XL_ANTN_DEUK      										=#{xlAntnDeuk              }
+				,XL_ANTN_HGHT      										=#{xlAntnHght              }
+				,XL_GRND_CLRNC      									=#{xlGrndClrnc             }
+				,XL_ANT_BEAM_CNT      									=#{xlAntBeamCnt            }
+				,XL_ANT_BEAM_FRM       									=#{xlAntBeamFrm            }
+				,XL_EQVLN_ISRDP      									=#{xlEqvlnIsrdp            }
+				,XL_CTR_FREQ      										=#{xlCtrFreq               }
+				,XL_BANDWIDTH     										=#{xlBandwidth             }
+				,XL_REF_SIG_MEAS_FREQ    								=#{xlRefSigMeasFreq        }
+				,XL_ANT_TILDED_ANG       								=#{xlAntTildedAng          }
+				,XL_MAX_VRT_BEAM_ANG    								=#{xlMaxVrtBeamAng         }
+				,XL_MXM_HRZ_BM_ANG      								=#{xlMxmHrzBmAng           }
+				,XL_RGS_SGN_GRP_CYC     								=#{xlRgsSgnGrpCyc          }
+				,XL_NBR_SLOT_FORMATS    								=#{xlNbrSlotFormats        }
+				,XL_NBR_FREQ_RC_BLOCKS  								=#{xlNbrFreqRcBlocks       }
+				,XL_NBR_AUX_CA_WAVES    								=#{xlNbrAuxCaWaves         }
+				,XL_NMB_UPW_GRD_SYM    									=#{xlNmbUpwGrdSym          }
+				,XL_SGL_SLOT_SYM_CNT   									=#{xlSglSlotSymCnt         }
+				,XL_SLOT_FMT_INFO    									=#{xlSlotFmtInfo           }
+				,XL_CALC_S_BOUNDARY    									=#{xlCalcSBoundary         }
+				,XL_DST_WRLESS_STA    									=#{xlDstWrlessSta          }
+				,XL_MSRN_PNT      										=#{xlMsrnPnt               }
+				,XL_NOTES      											=#{xlNotes                 }
+				,XL_MSRM_DATE      										=#{xlMsrmDate              }
+				,XL_MSRM_FROM_TIME      								=#{xlMsrmFromTime          }
+				,XL_MSRM_TO_TIME      									=#{xlMsrmToTime            }
+				,XL_TEMPERATURE      									=#{xlTemperature           }
+				,XL_HUMIDITY      										=#{xlHumidity              }
+				,XL_WEATHER     										=#{xlWeather               }
+				,XL_PROV_MODEL_NAME      								=#{xlProvModelName         }
+				,XL_PROV_SRL_NMBR      									=#{xlProvSrlNmbr           }
+				,XL_PROV_MNFCT      									=#{xlProvMnfct             }
+				,XL_PROV_FROM_FRQNC_BAND     							=#{xlProvFromFrqncBand     }
+				,XL_PROV_TO_FRQNC_BAND      							=#{xlProvToFrqncBand       }
+				,XL_PROV_CLBRT_DATE      								=#{xlProvClbrtDate         }
+				,XL_RCVR_MODEL_NAME     								=#{xlRcvrModelName         }
+				,XL_RCVR_SRL_NMBR      									=#{xlRcvrSrlNmbr           }
+				,XL_RCVR_MNFCT     										=#{xlRcvrMnfct             }
+				,XL_RCVR_FROM_FRQNC_BAND     							=#{xlRcvrFromFrqncBand     }
+				,XL_RCVR_TO_FRQNC_BAND      							=#{xlRcvrToFrqncBand       }
+				,XL_RCVR_CLBRT_DATE      								=#{xlRcvrClbrtDate         }
+				,XL_MEASURE_VAL_1      									=#{xlMeasureVal1           }
+				,XL_MEASURE_VAL_2      									=#{xlMeasureVal2           }
+				,XL_MEASURE_VAL_3      									=#{xlMeasureVal3           }
+				,XL_CALC_VAL_1      									=#{xlCalcVal1              }
+				,XL_CALC_VAL_2      									=#{xlCalcVal2              }
+				,XL_CALC_VAL_3     										=#{xlCalcVal3              }
+				,XL_AVRG_MSTM_MIN      									=#{xlAvrgMstmMin           }
+				,XL_RWRD_CFCNT      									=#{xlRwrdCfcnt             }
+				,XL_CMP_CFC_DUE_TRF      								=#{xlCmpCfcDueTrf          }
+				,XL_MEAS_MAX      										=#{xlMeasMax               }
+				,XL_CALC_MAX      										=#{xlCalcMax               }
+				,XL_FROM_ELCTR_INRFV      								=#{xlFromElctrInrfv        }
+				,XL_TO_ELCTR_INRFV      								=#{xlToElctrInrfv          }
+				,XL_RFRNC_FRQNC      									=#{xlRfrncFrqnc            }
+				,XL_PWRMS_CNVRS     									=#{xlPwrmsCnvrs            }
+				,XL_DATE_PRPRT      									=#{xlDatePrprt             }
+				,XL_NMMS_INSTT     										=#{xlNmmsInstt             }
+				,XL_MSRN_INST_ADRS     									=#{xlMsrnInstAdrs          }
+				,XL_MEASURERS_HUMAN_NAME      							=#{xlMeasurersHumanName    }
+				,XL_WRITER      										=#{xlWriter                }
+				,XL_SYSTEM_LOSS     									=#{xlSystemLoss            }
+				,XL_MSRNG_INTRV     									=#{xlMsrngIntrv            }
+				,XL_NBR_MEAS_PTS    									=#{xlNbrMeasPts            }
+				,XL_NMBR_CPS     										=#{xlNmbrCps               }
+				,XL_MLTPL_RDEXN      									=#{xlMltplRdexn            }
+				,XL_MOBILE_CRRR_AREA      								=#{xlMobileCrrrArea        }
 				
 			WHERE  XL_SEQ = #{xlSeq}    
 		]]> 
@@ -461,7 +545,7 @@
 		]]>
 	</update>
 
-
+     
 	
 	
 	
