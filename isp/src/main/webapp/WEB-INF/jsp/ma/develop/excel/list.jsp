@@ -10,8 +10,14 @@
 			<input type="hidden" id="xlSeq" name="xlSeq"/>
 			<input type="hidden" id="pageIndex" name="pageIndex"/>
 			<fieldset>
-				<legend>검색</legend>
-				<div class="search_basic">           
+				<legend>검색</legend>  
+				<div class="search_basic">         
+					<strong class="tit">첨부파일</strong>
+					<form:select path="schEtc01" id="schEtc01" title="구분 선택" cssClass="w100"  >  
+						<form:option value="0" label="전체"/>
+						<form:option value="Y" label="첨부"/>     
+						<form:option value="N" label="미첨부"/>   
+					</form:select>   
 					<strong class="tit">검색구분</strong> 
 					<form:select path="searchCondition" id="searchCondition" title="구분 선택" cssClass="w100"  >  
 						<form:option value="0" label="전체"/>
@@ -19,12 +25,6 @@
 						<form:option value="2" label="허가번호"/>    
 					</form:select>  
 					<form:input path="searchKeyword" id="searchKeyword" class="text w50p" />
-					<strong class="tit">첨부파일</strong>
-					<form:select path="schEtc01" id="schEtc01" title="구분 선택" cssClass="w100"  >  
-						<form:option value="0" label="전체"/>
-						<form:option value="Y" label="첨부"/>     
-						<form:option value="N" label="미첨부"/>   
-					</form:select> 
 					<span class="search_btns">
 						<button type="button" class="btn btn_search" id="btn_search">검색</button>
 					</span>

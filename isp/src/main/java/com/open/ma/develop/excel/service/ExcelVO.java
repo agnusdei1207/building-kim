@@ -7,8 +7,9 @@ import org.apache.ibatis.type.Alias;
 
 import com.open.cmmn.model.CmmnDefaultVO;
 
- 
+       
 @Alias("excelVO")
+@SuppressWarnings("serial")
 public class ExcelVO extends CmmnDefaultVO implements Serializable {
 	
 	private String xlRcpNum             ;
@@ -105,6 +106,15 @@ public class ExcelVO extends CmmnDefaultVO implements Serializable {
 	private String xlMobileCrrrArea     ;
 	private String xlAtchFileId		    ;
 	private String xlCnt				;
+	private List<ExcelVO> excelList 	;
+	
+	
+	public List<ExcelVO> getExcelList() {
+		return excelList;
+	}
+	public void setExcelList(List<ExcelVO> excelList) {
+		this.excelList = excelList;
+	}
 	public String getXlRcpNum() {
 		return xlRcpNum;
 	}

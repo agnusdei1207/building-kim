@@ -17,7 +17,7 @@
 	 	<if test='schEtc01 !=null and schEtc01 !="" and schEtc01 != "0" '>
 			AND IF(XL_ATCH_FILE_ID = '' , 'N' , 'Y') = #{schEtc01}  
 		</if>
-	</sql>       
+	</sql>        
 	    
 	<select id="selectContents" parameterType="excelVO" resultType="excelVO">
 		/* Excel.selectContents */
@@ -246,6 +246,207 @@
 			 <include refid="Where"/>
 	</select>
 	
+	<insert id="excelInsertContents" parameterType="excelVO"> 
+		/* Excel.excelInsertContents */
+		<![CDATA[
+			INSERT INTO T_EXCEL(
+				XL_RCP_NUM
+				,XL_LCNS_NUM      			
+				,XL_WAT_SUM      			
+				,XL_FROM_MHZ      			
+				,XL_TO_MHZ     				
+				,XL_ADDRS_NUM      			
+				,XL_ADDRS1    				
+				,XL_ADDRS2   				
+				,XL_ADDRS_GOOBOON      		
+				,XL_MEAS_METH   			
+				,XL_MSR_UNT   				
+				,XL_EM_INT_STD    			
+				,XL_MSR_VL      			
+				,XL_EXP_IDX     			
+				,XL_RADIO_STNM      		
+				,XL_CALL_NAME      			
+				,XL_LAT_ANG     			
+				,XL_LAT_MIN     			
+				,XL_LAT_SEC     			
+				,XL_LNGTD_ANG      			
+				,XL_LNGTD_MIN      			
+				,XL_LNGTD_SEC      			
+				,XL_ANT_TYP      			
+				,XL_ANT_TYP_NAME     		
+				,XL_ANTN_DEUK      			
+				,XL_ANTN_HGHT      			
+				,XL_GRND_CLRNC      		
+				,XL_ANT_BEAM_CNT      		
+				,XL_ANT_BEAM_FRM       		
+				,XL_EQVLN_ISRDP      		
+				,XL_CTR_FREQ      			
+				,XL_BANDWIDTH     			
+				,XL_REF_SIG_MEAS_FREQ    	
+				,XL_ANT_TILDED_ANG       	
+				,XL_MAX_VRT_BEAM_ANG    	
+				,XL_MXM_HRZ_BM_ANG      	
+				,XL_RGS_SGN_GRP_CYC     	
+				,XL_NBR_SLOT_FORMATS    	
+				,XL_NBR_FREQ_RC_BLOCKS  	
+				,XL_NBR_AUX_CA_WAVES    	
+				,XL_NMB_UPW_GRD_SYM    		
+				,XL_SGL_SLOT_SYM_CNT   		
+				,XL_SLOT_FMT_INFO    		
+				,XL_CALC_S_BOUNDARY    		
+				,XL_DST_WRLESS_STA    		
+				,XL_MSRN_PNT      			
+				,XL_NOTES      				
+				,XL_MSRM_DATE      			
+				,XL_MSRM_FROM_TIME      	
+				,XL_MSRM_TO_TIME      		
+				,XL_TEMPERATURE      		
+				,XL_HUMIDITY      			
+				,XL_WEATHER     			
+				,XL_PROV_MODEL_NAME      	
+				,XL_PROV_SRL_NMBR      		
+				,XL_PROV_MNFCT      		
+				,XL_PROV_FROM_FRQNC_BAND    
+				,XL_PROV_TO_FRQNC_BAND      
+				,XL_PROV_CLBRT_DATE      	
+				,XL_RCVR_MODEL_NAME     	
+				,XL_RCVR_SRL_NMBR      		
+				,XL_RCVR_MNFCT     			
+				,XL_RCVR_FROM_FRQNC_BAND    
+				,XL_RCVR_TO_FRQNC_BAND      
+				,XL_RCVR_CLBRT_DATE      	
+				,XL_MEASURE_VAL_1      		
+				,XL_MEASURE_VAL_2      		
+				,XL_MEASURE_VAL_3      		
+				,XL_CALC_VAL_1      		
+				,XL_CALC_VAL_2      		
+				,XL_CALC_VAL_3     			
+				,XL_AVRG_MSTM_MIN      		
+				,XL_RWRD_CFCNT      		
+				,XL_CMP_CFC_DUE_TRF      	
+				,XL_MEAS_MAX      			
+				,XL_CALC_MAX      			
+				,XL_FROM_ELCTR_INRFV      	
+				,XL_TO_ELCTR_INRFV      	
+				,XL_RFRNC_FRQNC      		
+				,XL_PWRMS_CNVRS     		
+				,XL_DATE_PRPRT      		
+				,XL_NMMS_INSTT     			
+				,XL_MSRN_INST_ADRS     		
+				,XL_MEASURERS_HUMAN_NAME    
+				,XL_WRITER      			
+				,XL_SYSTEM_LOSS     		
+				,XL_MSRNG_INTRV     		
+				,XL_NBR_MEAS_PTS    		
+				,XL_NMBR_CPS     			
+				,XL_MLTPL_RDEXN      		
+				,XL_MOBILE_CRRR_AREA  
+				,XL_ATCH_FILE_ID      									    	     					  						
+						)    
+			VALUES  
+			]]>      
+			<foreach collection="excelList" item="item" separator=",">
+			<![CDATA[ 
+			(
+				(SELECT IFNULL(MAX(TE.XL_RCP_NUM)+1,1) FROM T_EXCEL TE)
+				,#{item.xlLcnsNum             }      
+				,#{item.xlWatSum              }      
+				,#{item.xlFromMhz             }      
+				,#{item.xlToMhz               }      
+				,#{item.xlAddrsNum            }      
+				,#{item.xlAddrs1              }      
+				,#{item.xlAddrs2              }      
+				,#{item.xlAddrsGooboon        }      
+				,#{item.xlMeasMeth            }      
+				,#{item.xlMsrUnt              }      
+				,#{item.xlEmIntStd            }      
+				,#{item.xlMsrVl               }       
+				,#{item.xlExpIdx              }      
+				,#{item.xlRadioStnm           }      
+				,#{item.xlCallName            }      
+				,#{item.xlLatAng              }      
+				,#{item.xlLatMin              }      
+				,#{item.xlLatSec              }      
+				,#{item.xlLngtdAng            }      
+				,#{item.xlLngtdMin            }      
+				,#{item.xlLngtdSec            }      
+				,#{item.xlAntTyp              }      
+				,#{item.xlAntTypName          }      
+				,#{item.xlAntnDeuk            }      
+				,#{item.xlAntnHght            }      
+				,#{item.xlGrndClrnc           }      
+				,#{item.xlAntBeamCnt          }      
+				,#{item.xlAntBeamFrm          }      
+				,#{item.xlEqvlnIsrdp          }      
+				,#{item.xlCtrFreq             }      
+				,#{item.xlBandwidth           }      
+				,#{item.xlRefSigMeasFreq      }      
+				,#{item.xlAntTildedAng        }      
+				,#{item.xlMaxVrtBeamAng       }      
+				,#{item.xlMxmHrzBmAng         }      
+				,#{item.xlRgsSgnGrpCyc        }      
+				,#{item.xlNbrSlotFormats      }      
+				,#{item.xlNbrFreqRcBlocks     }      
+				,#{item.xlNbrAuxCaWaves       }      
+				,#{item.xlNmbUpwGrdSym        }      
+				,#{item.xlSglSlotSymCnt       }      
+				,#{item.xlSlotFmtInfo         }      
+				,#{item.xlCalcSBoundary       }      
+				,#{item.xlDstWrlessSta        }      
+				,#{item.xlMsrnPnt             }       
+				,#{item.xlNotes               }      
+				,#{item.xlMsrmDate            }      
+				,#{item.xlMsrmFromTime        }      
+				,#{item.xlMsrmToTime          }       
+				,#{item.xlTemperature         }      
+				,#{item.xlHumidity            }      
+				,#{item.xlWeather             }       
+				,#{item.xlProvModelName       }      
+				,#{item.xlProvSrlNmbr         }      
+				,#{item.xlProvMnfct           }      
+				,#{item.xlProvFromFrqncBand   }      
+				,#{item.xlProvToFrqncBand     }      
+				,#{item.xlProvClbrtDate       }      
+				,#{item.xlRcvrModelName       }      
+				,#{item.xlRcvrSrlNmbr         }      
+				,#{item.xlRcvrMnfct           }      
+				,#{item.xlRcvrFromFrqncBand   }      
+				,#{item.xlRcvrToFrqncBand     }      
+				,#{item.xlRcvrClbrtDate       }      
+				,#{item.xlMeasureVal1         }      
+				,#{item.xlMeasureVal2         }      
+				,#{item.xlMeasureVal3         }      
+				,#{item.xlCalcVal1            }      
+				,#{item.xlCalcVal2            }      
+				,#{item.xlCalcVal3            }      
+				,#{item.xlAvrgMstmMin         }      
+				,#{item.xlRwrdCfcnt           }      
+				,#{item.xlCmpCfcDueTrf        }      
+				,#{item.xlMeasMax             }      
+				,#{item.xlCalcMax             }      
+				,#{item.xlFromElctrInrfv      }      
+				,#{item.xlToElctrInrfv        }      
+				,#{item.xlRfrncFrqnc          }      
+				,#{item.xlPwrmsCnvrs          }      
+				,#{item.xlDatePrprt           }       
+				,#{item.xlNmmsInstt           }      
+				,#{item.xlMsrnInstAdrs        }      
+				,#{item.xlMeasurersHumanName  }      
+				,#{item.xlWriter              }      
+				,#{item.xlSystemLoss          }      
+				,#{item.xlMsrngIntrv          }      
+				,#{item.xlNbrMeasPts          }      
+				,#{item.xlNmbrCps             }      
+				,#{item.xlMltplRdexn          }      
+				,#{item.xlMobileCrrrArea      }    
+				,#{item.xlAtchFileId     	  }    
+			)
+		]]>
+			</foreach>
+	</insert>
+	
+	
+	
 	<insert id="insertContents" parameterType="excelVO">
 		/* Excel.insertContents */
 		<![CDATA[
@@ -389,7 +590,7 @@
 				,#{xlSlotFmtInfo         }      
 				,#{xlCalcSBoundary       }      
 				,#{xlDstWrlessSta        }      
-				,#{xlMsrnPnt             }      
+				,#{xlMsrnPnt             }       
 				,#{xlNotes               }      
 				,#{xlMsrmDate            }      
 				,#{xlMsrmFromTime        }      
