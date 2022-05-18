@@ -377,7 +377,6 @@ function closePopup(obj,divn,seq) {
 			$.cookie(divn+"_popUpYn", "N", 1);
 			view_hide(divn);
 		}
-		
 	}
 }
  
