@@ -4,6 +4,7 @@
 <div class="content_box">  
 	<form name="defaultFrm" id="defaultFrm" method="post">
 		<input type="hidden" name="xlSeq" id="xlSeq" value="${excelVO.xlSeq }">
+		<input type="hidden" name="xlAtchFileId" id="xlAtchFileId" value="${excelVO.xlAtchFileId }">
 		<jsp:directive.include file="/WEB-INF/jsp/cmmn/inc/incSearchForm.jsp"/>
 		<div class="tbl_wrap">
 			<table class="tbl_row_type01">      
@@ -316,16 +317,6 @@
 						</td> 
 					</tr>
 					<tr>  
-						<th scope="row"><strong>허가 번호</strong></th> 
-						<td>
-							<input type="text" name="xlLcnsNum" id="xlLcnsNum" class="text w100p" maxlength="70" value="${excelVO.xlLcnsNum }" />
-						</td>
-						<th scope="row"><strong>안테나 전력의 합 (W)</strong></th>
-						<td>
-							<input type="text" name="xlWatSum" id="xlWatSum" class="text w100p" maxlength="70" value="${excelVO.xlWatSum }" />
-						</td> 
-					</tr>
-					<tr>  
 						<th scope="row"><strong>수신기(제조사)</strong></th> 
 						<td>
 							<input type="text" name="xlRcvrMnfct" id="xlRcvrMnfct" class="text w100p" maxlength="70" value="${excelVO.xlRcvrMnfct }" />
@@ -466,16 +457,6 @@
 						</td> 
 					</tr>
 					<tr>  
-						<th scope="row"><strong>허가 번호</strong></th> 
-						<td>
-							<input type="text" name="xlLcnsNum" id="xlLcnsNum" class="text w100p" maxlength="70" value="${excelVO.xlLcnsNum }" />
-						</td>
-						<th scope="row"><strong>안테나 전력의 합 (W)</strong></th>
-						<td>
-							<input type="text" name="xlWatSum" id="xlWatSum" class="text w100p" maxlength="70" value="${excelVO.xlWatSum }" />
-						</td> 
-					</tr>
-					<tr>  
 						<th scope="row"><strong>다중복사원총노출지수</strong></th> 
 						<td>
 							<input type="text" name="xlMltplRdexn" id="xlMltplRdexn" class="text w100p" maxlength="70" value="${excelVO.xlMltplRdexn }" />
@@ -485,11 +466,17 @@
 							<input type="text" name="xlMobileCrrrArea" id="xlMobileCrrrArea" class="text w100p" maxlength="70" value="${excelVO.xlMobileCrrrArea }" />
 						</td> 
 					</tr>
-				</tbody>  
+					<tr> 
+						<th scope="row"><strong>첨부 파일</strong></th>     
+						<td colspan="3">  
+							<iframe name="xlAtchFileIdFrame" id="xlAtchFileIdFrame" src="/atch/fileUpload.do?atchFileId=${excelVO.xlAtchFileId }&fileCnt=5&atchFileIdNm=xlAtchFileId&updateType=imageUpload" style="width: 100%;" frameborder="0" frTitle="파일 업로드 폼"></iframe>
+						</td>
+					</tr>
+				</tbody>   
 			</table> 
 		</div>
 		<div class="btn_area">
-			<a href="javascript:void(0)" class="btn btn_mdl btn_${searchVO.procType eq 'update'? 'rewrite':'save'}" onclick="submit('${excelVO.xlLcnsNum}')" id="btn_submit">${not empty excelVO.poTitle ? '수정' : '등록'}</a>
+			<a href="javascript:void(0)" class="btn btn_mdl btn_${searchVO.procType eq 'update'? 'rewrite':'save'}" onclick="submit('${excelVO.xlLcnsNum}')" id="btn_submit">${not empty excelVO.xlLcnsNum ? '수정' : '등록'}</a>
 			<c:if test="${searchVO.procType eq  'update'}">
 				<a href="javascript:void(0)" class="btn btn_mdl btn_cancel" id="btn_returnView">취소</a>
 			</c:if>
@@ -517,8 +504,6 @@ function submit(title){
 		fncPageBoard('update','updateProc.do');
 		return false;
 	}
-	
-		 
 } 
   
 $("#btn_returnView").click(function(){

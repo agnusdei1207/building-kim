@@ -2,11 +2,12 @@
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
 
 <div class="content_box">
-	<form name="defaultFrm" id="defaultFrm" method="post">   
+	<form name="defaultFrm" id="defaultFrm" method="post">    
 		<input type="hidden" name="xlSeq" id="xlSeq" value="${excelVO.xlSeq }">
+		<input type="hidden" name="xlAtchFileId" id="xlAtchFileId" value="${excelVO.xlAtchFileId }">
 		<jsp:directive.include file="/WEB-INF/jsp/cmmn/inc/incSearchForm.jsp"/>
 		<!-- tbl -->    
-		<div class="tbl_wrap"> 
+		<div class="tbl_wrap">  
 			<table class="tbl_row_type01">   
 				<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>
 				<colgroup>
@@ -317,16 +318,6 @@
 						</td> 
 					</tr>
 					<tr>  
-						<th scope="row"><strong>허가 번호</strong></th> 
-						<td>
-							${excelVO.xlLcnsNum }
-						</td>
-						<th scope="row"><strong>안테나 전력의 합 (W)</strong></th>
-						<td>
-							${excelVO.xlWatSum }
-						</td> 
-					</tr>
-					<tr>  
 						<th scope="row"><strong>수신기(제조사)</strong></th> 
 						<td>
 							${excelVO.xlRcvrMnfct }
@@ -465,17 +456,7 @@
 						<td>
 							${excelVO.xlNmbrCps }
 						</td> 
-					</tr>
-					<tr>  
-						<th scope="row"><strong>허가 번호</strong></th> 
-						<td>
-							${excelVO.xlLcnsNum }
-						</td>
-						<th scope="row"><strong>안테나 전력의 합 (W)</strong></th>
-						<td>
-							${excelVO.xlWatSum }
-						</td> 
-					</tr>
+					</tr> 
 					<tr>  
 						<th scope="row"><strong>다중복사원총노출지수</strong></th> 
 						<td>
@@ -486,9 +467,15 @@
 							${excelVO.xlMobileCrrrArea }
 						</td> 
 					</tr>
+					<tr>
+						<th scope="row"><strong>첨부 파일</strong></th>     
+						<td colspan="3">  
+							<iframe name="xlAtchFileIdFrame" id="xlAtchFileIdFrame" src="/atch/fileUpload.do?atchFileId=${excelVO.xlAtchFileId }&fileCnt=5&atchFileIdNm=xlAtchFileId&updateType=imageUpload" style="width: 100%;" frameborder="0" frTitle="파일 업로드 폼"></iframe>
+						</td>
+					</tr>
 				</tbody>
 			</table>
-		</div>
+		</div> 
 		
 	<div class="btn_area">
 		<a href="javascript:void(0)" id="btn_update" class="btn btn_mdl btn_rewrite" >수정</a> 

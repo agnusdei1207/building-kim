@@ -1,18 +1,17 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
 
-
+ 
 <%-- content --%>
 <div class="content_box">
-	<%-- search  --%>
+	<%-- search  --%> 
 	<div class="search_box">
 		<form:form commandName="searchVO" name="defaultFrm" id="defaultFrm" method="post"  onsubmit="return false;">
 			<input type="hidden" id="xlSeq" name="xlSeq"/>
 			<input type="hidden" id="pageIndex" name="pageIndex"/>
 			<fieldset>
 				<legend>검색</legend>
-				<div class="search_basic">   
-					<strong class="tit">게시판</strong> 
+				<div class="search_basic">         
 					<strong class="tit">검색구분</strong> 
 					<form:select path="searchCondition" id="searchCondition" title="구분 선택" cssClass="w100"  >  
 						<form:option value="0" label="전체"/>

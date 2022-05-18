@@ -103,6 +103,7 @@ public class ExcelVO extends CmmnDefaultVO implements Serializable {
 	private String xlNmbrCps            ;
 	private String xlMltplRdexn         ;
 	private String xlMobileCrrrArea     ;
+	private String xlAtchFileId		    ;
 	private String xlCnt				;
 	public String getXlRcpNum() {
 		return xlRcpNum;
@@ -655,6 +656,13 @@ public class ExcelVO extends CmmnDefaultVO implements Serializable {
 	}
 	public void setXlMobileCrrrArea(String xlMobileCrrrArea) {
 		this.xlMobileCrrrArea = xlMobileCrrrArea;
+	}
+	
+	public String getXlAtchFileId() {
+		return xlAtchFileId;
+	}
+	public void setXlAtchFileId(String xlAtchFileId) {
+		this.xlAtchFileId = xlAtchFileId;
 	}
 	public String getXlCnt() {
 		return xlCnt;

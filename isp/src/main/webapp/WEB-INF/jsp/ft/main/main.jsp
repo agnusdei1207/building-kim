@@ -314,7 +314,7 @@ function fncP_PopUp(){
 			if(hideChk.indexOf("/[${list.poSeq}]") == -1){
 				var html=""; 
 				html = '<div id="p_display_view_${list.poSeq}"class="mainPop js-mainPop id_popup1 p_main_pop">';
-				html += '<h1 class="mainPop_tag">공지<br>사항</h1>';
+				html += '<h1 class="mainPop_tag">공지<br>사항</h1>'; 
 				html += '<h2 class="mainPop_tit">${util:unEscape(list.poTitle)}</h2>';
 				html += '<div class="mainPop_cont">';
 				html += '<p>${util:unEscape(list.poCont)}</p>';

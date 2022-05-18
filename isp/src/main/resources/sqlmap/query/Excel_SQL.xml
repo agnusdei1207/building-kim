@@ -5,17 +5,17 @@
 	<sql id="Where"> 
 		<if test="searchKeyword !=null and searchKeyword !=''">
 			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
-				AND (FR_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR FR_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
+				AND (XL_RCP_NUM LIKE CONCAT('%',#{searchKeyword},'%') OR XL_LCNS_NUM LIKE CONCAT('%',#{searchKeyword},'%'))
 			</if>
 			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
-				AND FR_TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+				AND XL_RCP_NUM LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
 			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
-				AND FR_CONT LIKE CONCAT('%',#{searchKeyword},'%')
-			</if>
+				AND XL_LCNS_NUM LIKE CONCAT('%',#{searchKeyword},'%')
+			</if> 
 	 	</if>
 	</sql>       
-	   
+	    
 	<select id="selectContents" parameterType="excelVO" resultType="excelVO">
 		/* Excel.selectContents */
 		<![CDATA[
@@ -113,6 +113,7 @@
 				,XL_NMBR_CPS     										xlNmbrCps           
 				,XL_MLTPL_RDEXN      									xlMltplRdexn        
 				,XL_MOBILE_CRRR_AREA      								xlMobileCrrrArea    
+				,XL_ATCH_FILE_ID      									xlAtchFileId
 
 		     FROM  T_EXCEL
 			 WHERE  1 = 1	
@@ -217,7 +218,8 @@
 				,XL_NBR_MEAS_PTS    									xlNbrMeasPts        
 				,XL_NMBR_CPS     										xlNmbrCps           
 				,XL_MLTPL_RDEXN      									xlMltplRdexn        
-				,XL_MOBILE_CRRR_AREA      								xlMobileCrrrArea       
+				,XL_MOBILE_CRRR_AREA      								xlMobileCrrrArea    
+				,XL_ATCH_FILE_ID      									xlAtchFileId   
 				
 		      FROM 	T_EXCEL
 			 WHERE	1 = 1	
@@ -335,7 +337,8 @@
 				,XL_NBR_MEAS_PTS    		
 				,XL_NMBR_CPS     			
 				,XL_MLTPL_RDEXN      		
-				,XL_MOBILE_CRRR_AREA      	     					  						
+				,XL_MOBILE_CRRR_AREA  
+				,XL_ATCH_FILE_ID      									    	     					  						
 						)    
 			VALUES (
 				(SELECT IFNULL(MAX(TE.XL_RCP_NUM)+1,1) FROM T_EXCEL TE)
@@ -428,11 +431,12 @@
 				,#{xlNbrMeasPts          }      
 				,#{xlNmbrCps             }      
 				,#{xlMltplRdexn          }      
-				,#{xlMobileCrrrArea      }      
+				,#{xlMobileCrrrArea      }    
+				,#{xlAtchFileId     	 }    
 			)
 		]]>
 	</insert>
-	
+	 
 	<update id="updateContents" parameterType="excelVO">
 		/* Excel.updateContents */
 		<![CDATA[
@@ -530,7 +534,8 @@
 				,XL_NMBR_CPS     										=#{xlNmbrCps               }
 				,XL_MLTPL_RDEXN      									=#{xlMltplRdexn            }
 				,XL_MOBILE_CRRR_AREA      								=#{xlMobileCrrrArea        }
-				
+				,XL_ATCH_FILE_ID      									=#{xlAtchFileId      	   }
+				 
 			WHERE  XL_SEQ = #{xlSeq}    
 		]]> 
 	</update> 

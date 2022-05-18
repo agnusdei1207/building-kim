@@ -11,17 +11,18 @@
 			<col style="width:5%">
 			<col>
 			<col style="width:5%">
+			<col style="width:5%">
 			<col style="width:10%">
-			<col style="width:10%">
-		</colgroup>
+		</colgroup> 
 		<thead>
-			<tr>
+			<tr> 
 				<th scope="col">번호</th>
 				<th scope="col" class="subject">접수 번호</th>
 				<th scope="col">허가 번호</th> 
+				<th scope="col">첨부파일</th> 
 				<th scope="col">작성자</th>
 			</tr>
-		</thead>   
+		</thead>     
 		<tbody>
 			<c:choose> 
 				<c:when test="${fn:length(resultList) gt 0}">
@@ -32,12 +33,13 @@
 							</td>    
 							<td class="subject" >${result.xlRcpNum }</td>
 							<td>${result.xlLcnsNum }</td>
+							<td>${not empty result.xlAtchFileId ? '📬' : '📫' }</td>
 							<td>${result.xlWriter }</td>
 						</tr> 
 					</c:forEach> 
 				</c:when>   
 				<c:otherwise>
-					<tr><td colspan="4" class="no_data">데이터가 없습니다.</td></tr>
+					<tr><td colspan="5" class="no_data">데이터가 없습니다.</td></tr>
 				</c:otherwise>
 			</c:choose>
 		</tbody>
