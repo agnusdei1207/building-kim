@@ -16,9 +16,9 @@
 			<input type="hidden" name="pageIndex" id="pageIndex" value="${searchVO.pageIndex }" />
 			<input type="hidden" id="logSeq" name="logSeq" />
 			<input type="hidden" name="schEtc03" id="schEtc03" value="${searchVO.schEtc03 }"/>
-			<input type="text" id="col1" class="text w100p" name="col1"/> 
+			<input type="hidden" id="col1" class="text w100p" name="col1"/> 
 			<fieldset>             
-				<legend>검색</legend> 
+				<legend>검색</legend>   
 				<div class="search_basic"> 
 					<table class="type03">
 						<colgroup>

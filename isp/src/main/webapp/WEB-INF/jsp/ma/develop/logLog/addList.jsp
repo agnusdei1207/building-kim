@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
-
+ 
 <%-- tbl --%>
 <div class="tbl_top">
 	<div class="tbl_left"><i class="i_all"></i> <span> 전체 : <strong>${paginationInfo.totalRecordCount}</strong> 건(${searchVO.pageIndex}/${paginationInfo.totalPageCount} Page) </span></div>
@@ -141,7 +141,7 @@
 $(function(){ 
 	var chk_arr = $("#col1").val().split("//");
 	 
-	if($("#all_checkbox").is(":checked")){ 
+	if($("#all_checkbox").is(":checked")){  
 		$(".checkbox").prop("checked",true);
 	}else{ 
 		$(".checkbox").prop("checked",false);
@@ -178,7 +178,7 @@ function allCheck(){
 	}                                          
 }                    
                               
-function oneCheck(obj, gooboon){         
+function oneCheck(obj, gooboon){  
 	var text = $("#col1").val();
 	var total = $(".checkbox").length;
 	var checked = $("input[class=checkbox]:checked").length;
@@ -196,5 +196,5 @@ function oneCheck(obj, gooboon){
 	}
 	$("#col1").val(text);
 } 
-                     
+                        
 </script>
