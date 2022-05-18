@@ -120,6 +120,11 @@ public class ExcelController {
 		ExcelVO excelVO = new ExcelVO();
 		excelVO = (ExcelVO) cmmnService.selectContents(searchVO, PROGRAM_ID );
 		model.addAttribute("excelVO", excelVO);
+		 
+		FileVO fileVO = new FileVO();     
+		fileVO.setAtchFileId(excelVO.getXlAtchFileId());
+		List<FileVO> fileSnList = fileMngService.selectFileInfs(fileVO);
+		model.addAttribute("fileSnList", fileSnList);  
 		
 		return ".mLayout:"+ folderPath + "view";
 	}
@@ -164,27 +169,27 @@ public class ExcelController {
 		return "cmmn/execute";
 
 	}
-
+ 
 	  
 	 @ResponseBody
 	 @RequestMapping(folderPath+"saveExcel.json")
-	    public ModelAndView COUNTRY_01_excelProc(@ModelAttribute("searchVO") ExcelVO searchVO, ModelMap model , HttpServletRequest request) throws Exception {
+     public ModelAndView COUNTRY_01_excelProc(@ModelAttribute("searchVO") ExcelVO searchVO, ModelMap model , HttpServletRequest request) throws Exception {
 		  
-	    List<ExcelVO> list = null;
-	    FileVO fileVO = new FileVO(); 
-
-	    int total = 0;// 총건수 
-        int cnt   = 0;// 성공건수 
-        int fail  = 0;// 실패건수 
-          
-	    String filePath   = "";// 파일경로
-	    String atchFileId = "";// 첨부파일ID
-	    String fileSn  = "";// 첨부파일순번
-	    String fileEncodingNm = "";// 변환된 파일이름 (ex : ATCH201709190721371290)
-        String fileExtnnNm = "";// 확장자
-	          
-        atchFileId = StringUtil.nullString(searchVO.getAtchFileId());
-	    fileSn   = "0";
+		    List<ExcelVO> list = null;
+		    FileVO fileVO = new FileVO(); 
+	    
+		    int total = 0;// 총건수 
+	        int cnt   = 0;// 성공건수 
+	        int fail  = 0;// 실패건수 
+	           
+		    String filePath   = "";// 파일경로
+		    String atchFileId = "";// 첨부파일ID
+		    String fileSn  = "";// 첨부파일순번
+		    String fileEncodingNm = "";// 변환된 파일이름 (ex : ATCH201709190721371290)
+	        String fileExtnnNm = "";// 확장자
+		          
+	        atchFileId = StringUtil.nullString(searchVO.getAtchFileId());
+		    fileSn   = "0";
 	    	  
 	    	// 첨부파일ID, 순번 셋팅
 	        fileVO.setAtchFileId(atchFileId);
@@ -224,8 +229,8 @@ public class ExcelController {
 			        }catch(FileNotFoundException fe){
 			        	fail++;
 			        	fe.printStackTrace();
-			        }
-		        }
+			        } 
+		        } 
 	        
 	        }else{
 	        	model.addAttribute("error", "파일이 없습니다.");
@@ -236,6 +241,7 @@ public class ExcelController {
 	        model.addAttribute("fail", fail);
 	        
 	    return new ModelAndView(ajaxView,model);
+	    
 	    }
  
 
@@ -254,16 +260,15 @@ public class ExcelController {
 	 
 
 	@SuppressWarnings({ "resource", "deprecation" })
-	    public List<ExcelVO> xlsxReadList(String filePath) throws Exception{
+    public List<ExcelVO> xlsxReadList(String filePath) throws Exception{
 
 	    List<ExcelVO> outArray = new ArrayList<>();
 	    FileInputStream fis = null;
 	    XSSFWorkbook workbook = null;
 
 	    try{
-	        
 	        fis = new FileInputStream(filePath);
-	        workbook = new XSSFWorkbook(fis);
+	        workbook = new XSSFWorkbook(fis); // 경로를 받아 XLS 파일을 읽는다.
 	        
 	        XSSFSheet curSheet;
 	        XSSFRow curRow;
@@ -278,177 +283,171 @@ public class ExcelController {
 
 	        // row(세로데이터) 탐색 for문 (row 0은 헤더정보이기 때문에 1부터 시작)
 	        for(int rowIndex=1; rowIndex < rowLength; rowIndex++){
-
-	    // 현재 row 반환
-	    curRow = curSheet.getRow(rowIndex);
-	    outData = new ExcelVO();
-	    String value;
-
-	    // cell 길이
-	    int cellLength = curRow.getPhysicalNumberOfCells();
-
-	    // cell(가로데이터) 탐색 for문
-	    for(int cellIndex = 0; cellIndex <= cellLength; cellIndex++){
-	    curCell = curRow.getCell(cellIndex);
-	    // cell 스타일이 다르더라도 String으로 변환 받음
-	    if(curCell != null){
-	    switch (curCell.getCellType()){
-	    case HSSFCell.CELL_TYPE_FORMULA :
-	    value = curCell.getCellFormula(); 
-	    break;
-	    case HSSFCell.CELL_TYPE_NUMERIC :
-	    value = (int)curCell.getNumericCellValue()+"";
-	    break;
-	    case HSSFCell.CELL_TYPE_STRING :
-	    value = curCell.getStringCellValue()+"";
-	    break;
-	    case HSSFCell.CELL_TYPE_BLANK :
-	    //value = curCell.getBooleanCellValue()+"";
-	    value = "";
-	    break;
-	    case HSSFCell.CELL_TYPE_ERROR :
-	    value = curCell.getErrorCellValue()+"";
-	    break;
-	    default :
-	    value = new String();
-	    break;
-	    }
-	    }else{
-	    value = ""; 
-	    }
-	    if(cellIndex ==  0){  outData.setXlRcpNum(value);}            
-	    if(cellIndex ==  1){  outData.setXlSeq(value);}               
-	    if(cellIndex ==  2){  outData.setXlLcnsNum(value);}           
-	    if(cellIndex ==  3){  outData.setXlWatSum(value);}            
-	    if(cellIndex ==  4){  outData.setXlFromMhz(value);}           
-	    if(cellIndex ==  5){  outData.setXlToMhz(value);}             
-	    if(cellIndex ==  6){  outData.setXlAddrsNum(value);}          
-	    if(cellIndex ==  7){  outData.setXlAddrs1(value);}            
-	    if(cellIndex ==  8){  outData.setXlAddrs2(value);}            
-	    if(cellIndex ==  9){  outData.setXlAddrsGooboon(value);}      
-	    if(cellIndex == 10){  outData.setXlMeasMeth(value);}          
-	    if(cellIndex == 11){  outData.setXlMsrUnt(value);}            
-	    if(cellIndex == 12){  outData.setXlEmIntStd(value);}          
-	    if(cellIndex == 13){  outData.setXlMsrVl(value);}           
-	    if(cellIndex == 14){  outData.setXlExpIdx(value);}            
-	    if(cellIndex == 15){  outData.setXlRadioStnm(value);}         
-	    if(cellIndex == 16){  outData.setXlCallName(value);}          
-	    if(cellIndex == 17){  outData.setXlLatAng(value);}            
-	    if(cellIndex == 18){  outData.setXlLatMin(value);}            
-	    if(cellIndex == 19){  outData.setXlLatSec(value);}            
-	    if(cellIndex == 20){  outData.setXlLngtdAng(value);}          
-	    if(cellIndex == 21){  outData.setXlLngtdMin(value);}          
-	    if(cellIndex == 22){  outData.setXlLngtdSec(value);}          
-	    if(cellIndex == 23){  outData.setXlAntTyp(value);}            
-	    if(cellIndex == 24){  outData.setXlAntTypName(value);}        
-	    if(cellIndex == 25){  outData.setXlAntnDeuk(value);}          
-	    if(cellIndex == 26){  outData.setXlAntnHght(value);}          
-	    if(cellIndex == 27){  outData.setXlGrndClrnc(value);}         
-	    if(cellIndex == 28){  outData.setXlAntBeamCnt(value);}        
-	    if(cellIndex == 29){  outData.setXlAntBeamFrm(value);}        
-	    if(cellIndex == 30){  outData.setXlEqvlnIsrdp(value);}        
-	    if(cellIndex == 31){  outData.setXlCtrFreq(value);}           
-	    if(cellIndex == 32){  outData.setXlBandwidth(value);}         
-	    if(cellIndex == 33){  outData.setXlRefSigMeasFreq(value);}    
-	    if(cellIndex == 34){  outData.setXlAntTildedAng(value);}      
-	    if(cellIndex == 35){  outData.setXlMaxVrtBeamAng(value);}     
-	    if(cellIndex == 36){  outData.setXlMxmHrzBmAng(value);}       
-	    if(cellIndex == 37){  outData.setXlRgsSgnGrpCyc(value);}      
-	    if(cellIndex == 38){  outData.setXlNbrSlotFormats(value);}    
-	    if(cellIndex == 39){  outData.setXlNbrFreqRcBlocks(value);}   
-	    if(cellIndex == 40){  outData.setXlNbrAuxCaWaves(value);}     
-	    if(cellIndex == 41){  outData.setXlNmbUpwGrdSym(value);}      
-	    if(cellIndex == 42){  outData.setXlSglSlotSymCnt(value);}     
-	    if(cellIndex == 43){  outData.setXlSlotFmtInfo(value);}       
-	    if(cellIndex == 44){  outData.setXlCalcSBoundary(value);}     
-	    if(cellIndex == 45){  outData.setXlDstWrlessSta(value);}      
-	    if(cellIndex == 46){  outData.setXlMsrnPnt(value);}           
-	    if(cellIndex == 47){  outData.setXlNotes(value);}           
-	    if(cellIndex == 48){  outData.setXlMsrmDate(value);}          
-	    if(cellIndex == 49){  outData.setXlMsrmFromTime(value);}      
-	    if(cellIndex == 50){  outData.setXlMsrmToTime(value);}     
-	    if(cellIndex == 51){  outData.setXlTemperature(value);}     
-	    if(cellIndex == 52){  outData.setXlHumidity(value);}     
-	    if(cellIndex == 53){  outData.setXlWeather(value);}     
-	    if(cellIndex == 54){  outData.setXlProvModelName(value);}     
-	    if(cellIndex == 55){  outData.setXlProvSrlNmbr(value);}     
-	    if(cellIndex == 56){  outData.setXlProvMnfct(value);}     		
-	    if(cellIndex == 57){  outData.setXlProvFromFrqncBand(value);}         
-	    if(cellIndex == 58){  outData.setXlProvToFrqncBand(value);}         
-	    if(cellIndex == 59){  outData.setXlProvClbrtDate(value);}         
-	    if(cellIndex == 60){  outData.setXlRcvrModelName(value);}         
-	    if(cellIndex == 61){  outData.setXlRcvrSrlNmbr(value);}         
-	    if(cellIndex == 62){  outData.setXlRcvrMnfct(value);}         
-	    if(cellIndex == 63){  outData.setXlRcvrFromFrqncBand(value);}         
-	    if(cellIndex == 64){  outData.setXlRcvrToFrqncBand(value);}         
-	    if(cellIndex == 65){  outData.setXlRcvrClbrtDate(value);}         
-	    if(cellIndex == 66){  outData.setXlMeasureVal1(value);}         
-	    if(cellIndex == 67){  outData.setXlMeasureVal2(value);}         
-	    if(cellIndex == 68){  outData.setXlMeasureVal3(value);}         
-	    if(cellIndex == 69){  outData.setXlCalcVal1(value);}         
-	    if(cellIndex == 70){  outData.setXlCalcVal2(value);}         
-	    if(cellIndex == 71){  outData.setXlCalcVal3(value);}         
-	    if(cellIndex == 72){  outData.setXlAvrgMstmMin(value);}         
-	    if(cellIndex == 73){  outData.setXlRwrdCfcnt(value);}         
-	    if(cellIndex == 74){  outData.setXlCmpCfcDueTrf(value);}         
-	    if(cellIndex == 75){  outData.setXlMeasMax(value);}         
-	    if(cellIndex == 76){  outData.setXlCalcMax(value);}         
-	    if(cellIndex == 77){  outData.setXlFromElctrInrfv(value);}         
-	    if(cellIndex == 78){  outData.setXlToElctrInrfv(value);}         
-	    if(cellIndex == 79){  outData.setXlRfrncFrqnc(value);}         
-	    if(cellIndex == 80){  outData.setXlPwrmsCnvrs(value);}         
-	    if(cellIndex == 81){  outData.setXlDatePrprt(value);}         
-	    if(cellIndex == 82){  outData.setXlNmmsInstt(value);}         
-	    if(cellIndex == 83){  outData.setXlMsrnInstAdrs(value);}         
-	    if(cellIndex == 84){  outData.setXlMeasurersHumanName(value);}         
-	    if(cellIndex == 85){  outData.setXlWriter(value);}         
-	    if(cellIndex == 86){  outData.setXlSystemLoss(value);}         
-	    if(cellIndex == 87){  outData.setXlMsrngIntrv(value);}         
-	    if(cellIndex == 88){  outData.setXlNbrMeasPts(value);}         
-	    if(cellIndex == 89){  outData.setXlNmbrCps(value);}         
-	    if(cellIndex == 90){  outData.setXlMltplRdexn(value);}         
-	    if(cellIndex == 91){  outData.setXlMobileCrrrArea(value);}         
-	      
-	    if(cellIndex == 92){  
-	        String atchFileId = imageUp(curSheet,rowIndex,cellIndex);
-	        System.out.println("첨부파일 찍기 : "+ atchFileId);  
-	        if(!StringUtil.nullConvert(atchFileId).equals("")){
-	            outData.setXlAtchFileId(atchFileId); 
-	        }
-	    }                                                                   //첫번째 첨부파일
-	    if(cellIndex == 93){  
-	    	String atchFileId = imageUp(curSheet,rowIndex,cellIndex);
-	    	System.out.println("첨부파일 찍기 : "+ atchFileId);  
-	    	if(!StringUtil.nullConvert(atchFileId).equals("")){
-	    		outData.setXlAtchFileId(atchFileId); 
-	    	}
-	    }                                                             
-	    if(cellIndex == 94){  
-	    	String atchFileId = imageUp(curSheet,rowIndex,cellIndex);
-	    	System.out.println("첨부파일 찍기 : "+ atchFileId);  
-	    	if(!StringUtil.nullConvert(atchFileId).equals("")){
-	    		outData.setXlAtchFileId(atchFileId); 
-	    	}
-	    }                                                            
-	    } 
-	    outArray.add(outData);
-	        }
-	        
+			    // 현재 row 반환
+			    curRow = curSheet.getRow(rowIndex);
+			    outData = new ExcelVO();
+			    String value;
+		 
+			    // cell 길이
+			    int cellLength = curRow.getPhysicalNumberOfCells();
+			    
+			    // cell 최대 길이 
+			    int cellEnd = curRow.getLastCellNum();
+			    
+			    System.out.println("cellLength :: "+ cellLength);
+			    System.out.println("cellEnd :: "+ cellEnd);
+			    
+			    // cell(가로데이터) 탐색 for문
+			    for(int cellIndex = 0; cellIndex <= cellEnd; cellIndex++){
+			    	
+				    curCell = curRow.getCell(cellIndex);
+				    // cell 스타일이 다르더라도 String으로 변환 받음
+				    if(curCell != null){
+				    	switch (curCell.getCellType()){
+						    case HSSFCell.CELL_TYPE_FORMULA :
+							    value = curCell.getCellFormula(); 
+							    break;
+						    case HSSFCell.CELL_TYPE_NUMERIC :
+							    value = (int)curCell.getNumericCellValue()+"";
+							    break;
+						    case HSSFCell.CELL_TYPE_STRING :
+							    value = curCell.getStringCellValue()+"";
+							    break;
+						    case HSSFCell.CELL_TYPE_BLANK :
+							    //value = curCell.getBooleanCellValue()+"";
+							    value = "";
+						    break;
+							    case HSSFCell.CELL_TYPE_ERROR :
+							    value = curCell.getErrorCellValue()+"";
+						    break;
+							    default :
+							    value = new String();
+						    break;
+				    	} 
+				    }else{
+				    	value = "-"; 
+				    }
+				    if(cellIndex ==  0){  outData.setXlRcpNum(value);}            
+				    if(cellIndex ==  1){  outData.setXlSeq(value);}               
+				    if(cellIndex ==  2){  outData.setXlLcnsNum(value);}           
+				    if(cellIndex ==  3){  outData.setXlWatSum(value);}            
+				    if(cellIndex ==  4){  outData.setXlFromMhz(value);}           
+				    if(cellIndex ==  5){  outData.setXlToMhz(value);}             
+				    if(cellIndex ==  6){  outData.setXlAddrsNum(value);}          
+				    if(cellIndex ==  7){  outData.setXlAddrs1(value);}            
+				    if(cellIndex ==  8){  outData.setXlAddrs2(value);}            
+				    if(cellIndex ==  9){  outData.setXlAddrsGooboon(value);}      
+				    if(cellIndex == 10){  outData.setXlMeasMeth(value);}          
+				    if(cellIndex == 11){  outData.setXlMsrUnt(value);}            
+				    if(cellIndex == 12){  outData.setXlEmIntStd(value);}          
+				    if(cellIndex == 13){  outData.setXlMsrVl(value);}           
+				    if(cellIndex == 14){  outData.setXlExpIdx(value);}            
+				    if(cellIndex == 15){  outData.setXlRadioStnm(value);}         
+				    if(cellIndex == 16){  outData.setXlCallName(value);}          
+				    if(cellIndex == 17){  outData.setXlLatAng(value);}            
+				    if(cellIndex == 18){  outData.setXlLatMin(value);}            
+				    if(cellIndex == 19){  outData.setXlLatSec(value);}            
+				    if(cellIndex == 20){  outData.setXlLngtdAng(value);}          
+				    if(cellIndex == 21){  outData.setXlLngtdMin(value);}          
+				    if(cellIndex == 22){  outData.setXlLngtdSec(value);}          
+				    if(cellIndex == 23){  outData.setXlAntTyp(value);}            
+				    if(cellIndex == 24){  outData.setXlAntTypName(value);}        
+				    if(cellIndex == 25){  outData.setXlAntnDeuk(value);}          
+				    if(cellIndex == 26){  outData.setXlAntnHght(value);}          
+				    if(cellIndex == 27){  outData.setXlGrndClrnc(value);}         
+				    if(cellIndex == 28){  outData.setXlAntBeamCnt(value);}        
+				    if(cellIndex == 29){  outData.setXlAntBeamFrm(value);}        
+				    if(cellIndex == 30){  outData.setXlEqvlnIsrdp(value);}        
+				    if(cellIndex == 31){  outData.setXlCtrFreq(value);}           
+				    if(cellIndex == 32){  outData.setXlBandwidth(value);}         
+				    if(cellIndex == 33){  outData.setXlRefSigMeasFreq(value);}    
+				    if(cellIndex == 34){  outData.setXlAntTildedAng(value);}      
+				    if(cellIndex == 35){  outData.setXlMaxVrtBeamAng(value);}     
+				    if(cellIndex == 36){  outData.setXlMxmHrzBmAng(value);}       
+				    if(cellIndex == 37){  outData.setXlRgsSgnGrpCyc(value);}      
+				    if(cellIndex == 38){  outData.setXlNbrSlotFormats(value);}    
+				    if(cellIndex == 39){  outData.setXlNbrFreqRcBlocks(value);}   
+				    if(cellIndex == 40){  outData.setXlNbrAuxCaWaves(value);}     
+				    if(cellIndex == 41){  outData.setXlNmbUpwGrdSym(value);}      
+				    if(cellIndex == 42){  outData.setXlSglSlotSymCnt(value);}     
+				    if(cellIndex == 43){  outData.setXlSlotFmtInfo(value);}       
+				    if(cellIndex == 44){  outData.setXlCalcSBoundary(value);}     
+				    if(cellIndex == 45){  outData.setXlDstWrlessSta(value);}      
+				    if(cellIndex == 46){  outData.setXlMsrnPnt(value);}            
+				    if(cellIndex == 47){  outData.setXlNotes(value);}           
+				    if(cellIndex == 48){  outData.setXlMsrmDate(value);}          
+				    if(cellIndex == 49){  outData.setXlMsrmFromTime(value);}      
+				    if(cellIndex == 50){  outData.setXlMsrmToTime(value);}     
+				    if(cellIndex == 51){  outData.setXlTemperature(value);}     
+				    if(cellIndex == 52){  outData.setXlHumidity(value);}     
+				    if(cellIndex == 53){  outData.setXlWeather(value);}     
+				    if(cellIndex == 54){  outData.setXlProvModelName(value);}     
+				    if(cellIndex == 55){  outData.setXlProvSrlNmbr(value);}     
+				    if(cellIndex == 56){  outData.setXlProvMnfct(value);}     		
+				    if(cellIndex == 57){  outData.setXlProvFromFrqncBand(value);}         
+				    if(cellIndex == 58){  outData.setXlProvToFrqncBand(value);}         
+				    if(cellIndex == 59){  outData.setXlProvClbrtDate(value);}         
+				    if(cellIndex == 60){  outData.setXlRcvrModelName(value);}         
+				    if(cellIndex == 61){  outData.setXlRcvrSrlNmbr(value);}         
+				    if(cellIndex == 62){  outData.setXlRcvrMnfct(value);}         
+				    if(cellIndex == 63){  outData.setXlRcvrFromFrqncBand(value);}         
+				    if(cellIndex == 64){  outData.setXlRcvrToFrqncBand(value);}         
+				    if(cellIndex == 65){  outData.setXlRcvrClbrtDate(value);}         
+				    if(cellIndex == 66){  outData.setXlMeasureVal1(value);}         
+				    if(cellIndex == 67){  outData.setXlMeasureVal2(value);}         
+				    if(cellIndex == 68){  outData.setXlMeasureVal3(value);}         
+				    if(cellIndex == 69){  outData.setXlCalcVal1(value);}         
+				    if(cellIndex == 70){  outData.setXlCalcVal2(value);}         
+				    if(cellIndex == 71){  outData.setXlCalcVal3(value);}         
+				    if(cellIndex == 72){  outData.setXlAvrgMstmMin(value);}         
+				    if(cellIndex == 73){  outData.setXlRwrdCfcnt(value);}         
+				    if(cellIndex == 74){  outData.setXlCmpCfcDueTrf(value);}         
+				    if(cellIndex == 75){  outData.setXlMeasMax(value);}         
+				    if(cellIndex == 76){  outData.setXlCalcMax(value);}         
+				    if(cellIndex == 77){  outData.setXlFromElctrInrfv(value);}         
+				    if(cellIndex == 78){  outData.setXlToElctrInrfv(value);}         
+				    if(cellIndex == 79){  outData.setXlRfrncFrqnc(value);}         
+				    if(cellIndex == 80){  outData.setXlPwrmsCnvrs(value);}         
+				    if(cellIndex == 81){  outData.setXlDatePrprt(value);}         
+				    if(cellIndex == 82){  outData.setXlNmmsInstt(value);}         
+				    if(cellIndex == 83){  outData.setXlMsrnInstAdrs(value);}         
+				    if(cellIndex == 84){  outData.setXlMeasurersHumanName(value);}         
+				    if(cellIndex == 85){  outData.setXlWriter(value);}         
+				    if(cellIndex == 86){  outData.setXlSystemLoss(value);}         
+				    if(cellIndex == 87){  outData.setXlMsrngIntrv(value);}         
+				    if(cellIndex == 88){  outData.setXlNbrMeasPts(value);}         
+				    if(cellIndex == 89){  outData.setXlNmbrCps(value);}         
+				    if(cellIndex == 90){  outData.setXlMltplRdexn(value);}         
+				    if(cellIndex == 91){  outData.setXlMobileCrrrArea(value);}          
+				    // 첨부파일  
+				    if(cellIndex == 92){  
+				        String atchFileId = imageUp(curSheet,rowIndex,cellIndex);
+				        System.out.println("첨부파일 찍기 : "+ atchFileId);  
+				        if(!StringUtil.nullConvert(atchFileId).equals("")){
+				            outData.setXlAtchFileId(atchFileId); 
+				        }
+				    }                                                                  
+			                                                            
+			    } // for
+			    outArray.add(outData);
+	        } // for
+	         
 	        }catch(FileNotFoundException e){
-	        e.printStackTrace();
+		        	
+		        e.printStackTrace();
 	        }catch(IOException e){
-	        e.printStackTrace();
+	        	e.printStackTrace();
 	        }finally{
-	        try{
-	        if(workbook != null) {
-	        workbook = null;
-	        }
-	        if(fis != null){
-	        fis.close();
-	        }
-	        }catch(IOException e){
-	        e.printStackTrace();
-	        }
+		        try{
+			        if(workbook != null) {
+			        	workbook = null;
+			        }
+			        if(fis != null){
+			        	fis.close();
+			        }
+		        }catch(IOException e){
+		        	e.printStackTrace();
+		        } 
 	        }
 
 	    return outArray;
@@ -456,70 +455,64 @@ public class ExcelController {
 
 	 
 
-	    public String imageUp(XSSFSheet curSheet,int rowIdx, int cellIdx ) throws Exception {
-	          double beforeTime = System.currentTimeMillis();
-	          double afterTime = 0; 
-	          String reTime = "-1";
-	          XSSFDrawing drawing = curSheet.createDrawingPatriarch(); 
-	          String atchFileIdString = ""; // 첨부파일 아이디
-	          for (XSSFShape shape : drawing.getShapes()) { 
-	             if (shape instanceof XSSFPicture) { 
-	                XSSFPicture picture = (XSSFPicture) shape; 
-	                if (picture.getPictureData()==null) {
-	                      continue; 
-	                   } 
-	                    XSSFPictureData xssfPictureData = picture.getPictureData();
-	                    ClientAnchor anchor = picture.getPreferredSize(); 
-	                    int row1 = anchor.getRow1(); 
-	                    int row2 = anchor.getRow2(); 
-	                    int col1 = anchor.getCol1();  
-	                    int col2 = anchor.getCol2(); 
-	                    if(rowIdx == row1 && cellIdx == col1){ // 시트,셀위치 검사
-	                       
-	                       String ext = xssfPictureData.suggestFileExtension(); // 확장자
-	                       String fileType = xssfPictureData.getMimeType(); //파일타입
-	                       byte[] data = xssfPictureData.getData(); //파일 byte
-	                       String fileUploadPath = fileUploadProperties.getProperty("file.upload.path").replaceAll("\\.\\.", "");
-	                       String storePathString = fileUploadPath + getFolderPath();
-	                       if (storePathString != null && !"".equals(storePathString)) {
-	                          File saveFolder = new File(storePathString);
-	                          if (!saveFolder.exists() || saveFolder.isFile()) {
-	                             saveFolder.mkdirs();
-	                          }
-	                       }
-	                       atchFileIdString = idgenService.getNextStringId();
-	                       String newName= "EXCEL" + StringUtil.getTimeStamp() + atchFileIdString;
-	                       FileOutputStream out = new FileOutputStream(storePathString + File.separator + newName); 
-	                       out.write(data); 
-	                       out.close(); 
-	                       
-	                       FileVO fileVO = new FileVO();
-	                       fileVO.setFileStreCours(storePathString);
-	                       fileVO.setAtchFileId(atchFileIdString);
-	                       fileVO.setOrignFileNm("다운 받을 이미지 : "+ext);
-	                       fileVO.setStreFileNm(newName);
-	                       fileVO.setFileExtsn(ext);
-	                       fileVO.setFileType(fileType);
-	                       fileMngService.insertFileInf(fileVO);
-	                       break;
-	                    }
-	                } 
-	             }
-	          
-	             afterTime = System.currentTimeMillis(); 
-	             double secDiffTime = (afterTime - beforeTime)/1000;
-	             reTime = String.format("%.1f",secDiffTime);
-	             System.out.println("re :: "+reTime);
-	          return atchFileIdString;
-
-	       }    
-	
-	
-	
-	
-	
-
-	
+	public String imageUp(XSSFSheet curSheet,int rowIdx, int cellIdx ) throws Exception {
+		double beforeTime = System.currentTimeMillis();
+		double afterTime = 0; 
+		String reTime = "-1";
+		XSSFDrawing drawing = curSheet.createDrawingPatriarch(); 
+		String atchFileIdString = ""; // 첨부파일 아이디
+		for (XSSFShape shape : drawing.getShapes()) { 
+			  
+			if (shape instanceof XSSFPicture) { 
+				XSSFPicture picture = (XSSFPicture) shape; 
+				if (picture.getPictureData()==null) {
+					continue; 
+				} 
+				XSSFPictureData xssfPictureData = picture.getPictureData();
+				ClientAnchor anchor = picture.getPreferredSize(); 
+				int row1 = anchor.getRow1(); 
+				int row2 = anchor.getRow2(); 
+				int col1 = anchor.getCol1();  
+				int col2 = anchor.getCol2(); 
+				if(rowIdx == row1 && cellIdx == col1){ // 시트,셀위치 검사
+		
+				String ext = xssfPictureData.suggestFileExtension(); // 확장자
+				String fileType = xssfPictureData.getMimeType(); //파일타입
+				byte[] data = xssfPictureData.getData(); //파일 byte
+				String fileUploadPath = fileUploadProperties.getProperty("file.upload.path").replaceAll("\\.\\.", "");
+				String storePathString = fileUploadPath + getFolderPath();
+				if (storePathString != null && !"".equals(storePathString)) {
+					File saveFolder = new File(storePathString);
+					if (!saveFolder.exists() || saveFolder.isFile()) {
+						saveFolder.mkdirs();
+					}
+				}
+				atchFileIdString = idgenService.getNextStringId();
+				String newName= "EXCEL" + StringUtil.getTimeStamp() + atchFileIdString;
+				FileOutputStream out = new FileOutputStream(storePathString + File.separator + newName); 
+				out.write(data); 
+				out.close(); 
+				
+				FileVO fileVO = new FileVO();
+				fileVO.setFileStreCours(storePathString);
+				fileVO.setAtchFileId(atchFileIdString);
+				fileVO.setOrignFileNm("다운 받을 이미지 : "+ext);
+				fileVO.setStreFileNm(newName);
+				fileVO.setFileExtsn(ext);
+				fileVO.setFileType(fileType);
+				fileMngService.insertFileInf(fileVO);
+				break;
+				}
+			} 
+		}
+		afterTime = System.currentTimeMillis(); 
+		double secDiffTime = (afterTime - beforeTime)/1000;
+		reTime = String.format("%.1f",secDiffTime);
+		System.out.println("re :: "+reTime);
+		return atchFileIdString;
+		
+		}       
+		
 		
 
 }

@@ -466,11 +466,20 @@
 						<td>
 							${excelVO.xlMobileCrrrArea }
 						</td> 
-					</tr>
+					</tr>  
 					<tr>
-						<th scope="row"><strong>첨부 파일</strong></th>     
-						<td colspan="3">  
-							<iframe name="xlAtchFileIdFrame" id="xlAtchFileIdFrame" src="/atch/fileUpload.do?atchFileId=${excelVO.xlAtchFileId }&fileCnt=5&atchFileIdNm=xlAtchFileId&updateType=imageUpload" style="width: 100%;" frameborder="0" frTitle="파일 업로드 폼"></iframe>
+						<th scope="row"><strong>첨부파일</strong></th>  
+						<td colspan="3">
+							<c:choose>   
+								<c:when test="${fn:length(fileSnList) gt 0 }">
+									<c:forEach var="i" items="${fileSnList }">
+										<img src="/atch/getImage.do?atchFileId=${excelVO.xlAtchFileId }&fileSn=${i.fileSn}" alt="">      
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									이미지 없음     
+								</c:otherwise>  
+							</c:choose>
 						</td>
 					</tr>
 				</tbody>

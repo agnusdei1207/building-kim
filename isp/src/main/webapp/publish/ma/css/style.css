@@ -241,9 +241,8 @@ box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.24);}
 .btn_address,
 .btn_previews {background-color:#fff;border-color:#646664;color:#555;}
 .btn_list > strong {vertical-align:baseline;}
-
+      
 .btn_excel {padding-right: 8px; padding-left: 8px; color: #444444;border-color:#cccccc;background-color:#fff;}
-.btn_excel span {padding-left: 22px;background: url(../images/f_icon_excel.png) no-repeat 0 50%; vertical-align: baseline; letter-spacing: -0.06rem;}
 .btn_excel i {font-size:10px;}
 .btn_i_del {width: 30px;height: 30px;color: #444444;border-color:#444444;background-color:#fff;}
 .btn_i_del span {display: block;height: 100%;text-indent: -9999px;background: url(../images/i_del.png) no-repeat 50% 50%;}

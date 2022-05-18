@@ -55,9 +55,9 @@
 				</c:otherwise>
 			</c:choose>  
 		</tbody>   
-	</table>
+	</table> 
 </div>
-<%-- //tbl end --%>      
+<%-- //tbl end --%>       
 <%-- paging start --%> 
 <div class="paging_wrap">      
 	<div class="paging"> 
@@ -74,15 +74,12 @@
 </div>
 <%-- //paging end--%>             
        
-<script>
+<script> 
    
 function fncExcelUp(){
     if($("#excelFileId").val() != null && $("#excelFileId").val() != '' ){
-    	
         if(confirm("파일을 업로드 하시겠습니까?")){
-        
             var inData = {};
-                       
             inData.atchFileId = $("#excelFileId").val();
         
             $.ajax({
@@ -90,7 +87,7 @@ function fncExcelUp(){
                 dataType : "JSON",
                 data : inData,
                 success : function(data){
-                    var totalCnt = data.total;
+                    var totalCnt = data.total; 
                     var successCnt = data.cnt;
                     alert("총 "+totalCnt+"건 중에서 "+successCnt+"건 입력 성공하였습니다.");
                     fncPageBoard('addList','addList.do',1);
