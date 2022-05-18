@@ -393,7 +393,7 @@
 				,#{xlNotes               }      
 				,#{xlMsrmDate            }      
 				,#{xlMsrmFromTime        }      
-				,#{xlMsrmToTime          }      
+				,#{xlMsrmToTime          }       
 				,#{xlTemperature         }      
 				,#{xlHumidity            }      
 				,#{xlWeather             }       
@@ -424,7 +424,7 @@
 				,#{xlToElctrInrfv        }      
 				,#{xlRfrncFrqnc          }      
 				,#{xlPwrmsCnvrs          }      
-				,#{xlDatePrprt           }      
+				,#{xlDatePrprt           }       
 				,#{xlNmmsInstt           }      
 				,#{xlMsrnInstAdrs        }      
 				,#{xlMeasurersHumanName  }      
