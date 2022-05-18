@@ -17,14 +17,20 @@
 						<form:option value="0" label="전체"/>
 						<form:option value="1" label="제목"/>  
 						<form:option value="2" label="내용"/>  
-					</form:select>         
+					</form:select>  
 					<form:input path="searchKeyword" id="searchKeyword" class="text w50p" />
 					<span class="search_btns">
 						<button type="button" class="btn btn_search" id="btn_search">검색</button>
 					</span>
+					<strong class="tit">첨부파일</strong>
+					<form:select path="schEtc01" id="schEtc01" title="구분 선택" cssClass="w100"  >  
+						<form:option value="0" label="전체"/>
+						<form:option value="Y" label="첨부"/>  
+						<form:option value="N" label="미첨부"/>
+					</form:select> 
 				</div> 
 			</fieldset>
-		</form:form>
+		</form:form>  
 	</div>
 	<%--// search  --%>  
 	<div class="tbl">
@@ -36,5 +42,9 @@
 $(document).ready(function(){
 	fncPageBoard('addList','addList.do','${searchVO.pageIndex}');
 });
+
+$("[id^=schEtc]").on("change", function(){
+	fncPageBoard('addList','addList.do','1');
+})
 </script>
 

@@ -14,6 +14,9 @@
 				AND XL_LCNS_NUM LIKE CONCAT('%',#{searchKeyword},'%')
 			</if> 
 	 	</if>
+	 	<if test='schEtc01 !=null and schEtc01 !="" and schEtc01 != "0" '>
+			AND IF(XL_ATCH_FILE_ID = '' , 'N' , 'Y') = #{schEtc01}  
+		</if>
 	</sql>       
 	    
 	<select id="selectContents" parameterType="excelVO" resultType="excelVO">
@@ -443,8 +446,7 @@
 			UPDATE T_EXCEL        
 			 SET   
 			      
-				XL_RCP_NUM												=#{xlRcpNum                }
-				,XL_LCNS_NUM      										=#{xlLcnsNum               }
+				XL_LCNS_NUM      										=#{xlLcnsNum               }
 				,XL_WAT_SUM      										=#{xlWatSum                }
 				,XL_FROM_MHZ      										=#{xlFromMhz               }
 				,XL_TO_MHZ     											=#{xlToMhz                 }
@@ -537,8 +539,8 @@
 				,XL_ATCH_FILE_ID      									=#{xlAtchFileId      	   }
 				 
 			WHERE  XL_SEQ = #{xlSeq}    
-		]]> 
-	</update> 
+		]]>    
+	</update>  
 	
 	<update id="deleteContents" parameterType="excelVO">
 		/* Excel.deleteContents */
