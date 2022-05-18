@@ -115,24 +115,23 @@
 		/* LogLog.selectCount */
 		<![CDATA[ 
 			SELECT  
-			COUNT(logSeq)	cnt  
-			 FROM    
-			    (      
-				SELECT
-						LOG_SEQ																										 logSeq
-						, LOG_ID																									 logId
-						
-						,CASE
-							WHEN	LOG_DIVN = 'ma'
-							THEN	(SELECT 	FAIL_CNT FROM t_ad_user tau WHERE tau.ID = tll.LOG_ID) 
-							WHEN	LOG_DIVN = 'ft'
-							THEN	(SELECT 	ME_FAIL_CNT FROM t_member tm WHERE tm.ME_ID = tll.LOG_ID) 
-							ELSE	''
-						  END	failCnt
-		 					  
-				  FROM	t_log_log	tll
-					       
-				 WHERE	1 = 1    
+			 	  	COUNT(logSeq)	cnt  
+			  FROM     
+			    	(      
+					SELECT
+							LOG_SEQ																									 logSeq
+							,LOG_ID																									 logId
+							,CASE
+								WHEN	LOG_DIVN = 'ma'
+								THEN	(SELECT 	FAIL_CNT FROM t_ad_user tau WHERE tau.ID = tll.LOG_ID) 
+								WHEN	LOG_DIVN = 'ft'
+								THEN	(SELECT 	ME_FAIL_CNT FROM t_member tm WHERE tm.ME_ID = tll.LOG_ID) 
+								ELSE	''
+							  END	failCnt
+			 					  
+					  FROM	t_log_log	tll
+						       
+					 WHERE	1 = 1    
 		   	   ]]>     
 		<include refid="Where" />		 	 
 		<![CDATA[
@@ -146,23 +145,23 @@
 	<insert id="insertContents" parameterType="logLogVO">
 		/* LogLog.insertContents */
 		<![CDATA[
-			INSERT INTO T_LOG_LOG(
-           	  	  LOG_SEQ												
-				, LOG_CLIENT_IP 								 				
-				, LOG_ID														
-				, LOG_URL		
-				, LOG_MENU_CD		
-				, LOG_DIVN 														
-				, LOG_IP_ERR_YN 				 														  						
+			INSERT	INTO T_LOG_LOG(
+	           	  	LOG_SEQ												
+					,LOG_CLIENT_IP 								 				
+					,LOG_ID														
+					,LOG_URL		
+					,LOG_MENU_CD		
+					,LOG_DIVN 														
+					,LOG_IP_ERR_YN 				 														  						
 			)         
-			VALUES ( 
-				 (SELECT IFNULL(MAX(TL.LOG_SEQ)+1,1) FROM T_LOG_LOG TL)
-				,#{logClientIp      }          
-				,#{logId	 		}  
-				,#{logUrl   	    }
-				,#{logMenuCd   	    }
-				,#{logDivn          }
-				,#{logIpErrYn 		}
+			VALUES	( 
+				 	(SELECT IFNULL(MAX(TL.LOG_SEQ)+1,1) FROM T_LOG_LOG TL)
+					,#{logClientIp      }          
+					,#{logId	 		}  
+					,#{logUrl   	    }
+					,#{logMenuCd   	    }
+					,#{logDivn          }
+					,#{logIpErrYn 		}
 			) 
 			 ]]>
 	</insert> 

@@ -11,7 +11,7 @@
 				<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>
 				<colgroup>
 					<col style="width:20%;">   
-					<col style="width:30%;">
+					<col style="width:30%;"> 
 					<col style="width:20%;">
 					<col style="width:30%;">
 				</colgroup>   

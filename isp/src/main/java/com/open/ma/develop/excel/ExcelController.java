@@ -486,13 +486,13 @@ public class ExcelController {
 					if (!saveFolder.exists() || saveFolder.isFile()) {
 						saveFolder.mkdirs();
 					}
-				}
+				} 
 				atchFileIdString = idgenService.getNextStringId();
 				String newName= "EXCEL" + StringUtil.getTimeStamp() + atchFileIdString;
 				FileOutputStream out = new FileOutputStream(storePathString + File.separator + newName); 
 				out.write(data); 
 				out.close(); 
-				
+				 
 				FileVO fileVO = new FileVO();
 				fileVO.setFileStreCours(storePathString);
 				fileVO.setAtchFileId(atchFileIdString);
