@@ -6,10 +6,10 @@
 	<div class="tbl_left"><i class="i_all"></i> <span> 전체 : <strong>${paginationInfo.totalRecordCount}</strong> 건(${searchVO.pageIndex}/${paginationInfo.totalPageCount} Page) </span></div>
 	<c:if test="${searchVO.schEtc03 eq '4' }">
 		<div class="tbl_right"> 
-			<a href="javascript:void(0)" class="btn btn_sml btn_save" onclick="resetFailCnt();">실패횟수 초기화</a>
+			<a href="javascript:void(0)" class="btn btn_sml btn_save" onclick="fncPageBoard('view', 'resetFailCnt.do');">실패횟수 초기화</a>
 		</div>   
-	</c:if>         
-</div>     
+	</c:if>             
+</div>      
                       
 <c:if test="${searchVO.schEtc03 ne '4' }">
 	<div class="tbl_wrap">   
@@ -135,9 +135,9 @@
 </div>
 <%-- //paging --%> 
 
-    
-<script>  
-    
+     
+<script>   
+// 전역 배열 사용하지 않고 체크박스 해결하는 방법  
 $(function(){ 
 	var chk_arr = $("#col1").val().split("//");
 	 
@@ -148,12 +148,11 @@ $(function(){
 	}    
 	if($(".checkbox").prop("checked")){
 		$("#all_checkbox").prop("checked", true);
-	}  
-	      
+	}    
 	for(var i = 1; i < chk_arr.length; i++){
 		$("#"+chk_arr[i]).prop("checked", true);
 	}         
-	        
+	         
 	if($("input[class=checkbox]:checked").length == $(".checkbox").length){     
 		$("#all_checkbox").prop("checked",true);
 	}else{
@@ -177,8 +176,8 @@ function allCheck(){
 			$("#col1").val(text); 
 		});                                             
 	}                                          
-}                   
-                             
+}                    
+                              
 function oneCheck(obj, gooboon){         
 	var text = $("#col1").val();
 	var total = $(".checkbox").length;
@@ -198,11 +197,4 @@ function oneCheck(obj, gooboon){
 	$("#col1").val(text);
 } 
                      
-function resetFailCnt(){
-	fncPageBoard('view', 'resetFailCnt.do');
-}
-
-
-
-
 </script>
