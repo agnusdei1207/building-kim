@@ -48,8 +48,8 @@ public class LogLogController {
 		
 		String gooboon = searchVO.getSchEtc03();
 		
-		searchVO.setPageUnit(7);
-		searchVO.setPageSize(8);      
+		searchVO.setPageUnit(3);
+		searchVO.setPageSize(4);      
 		  
 		PaginationInfo paginationInfo = new PaginationInfo();  
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
@@ -95,11 +95,11 @@ public class LogLogController {
 		 
 		return folderPath + "addList";
 	}
-	 
+	   
 	@RequestMapping(folderPath + "resetFailCnt.do") 
 	public String resetFailCnt(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
           
-		String [] array = searchVO.getCol1().split(",");
+		String [] array = searchVO.getCol1().split("//");
 		for(int i = 1; i < array.length; i++){   
 			searchVO.setCol2(array[i].split("_")[1]);
 			if("ma".equals(array[i].split("_")[0])){ 

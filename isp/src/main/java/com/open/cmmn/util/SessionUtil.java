@@ -40,6 +40,7 @@ public class SessionUtil {
 	public static final String SESSION_MANAGE_MENU_AUTH_KEY2 = "SECURITY_MN_MENU_AUTH2";
 	public static final String SESSION_FRONT_MENU_KEY = "SECURITY_MN_FRONT_MENU";
 
+	
 	public static HttpSession getSession(final HttpServletRequest request) {
 		return request.getSession(true);
 	}

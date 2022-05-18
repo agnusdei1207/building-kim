@@ -9,17 +9,17 @@
 	    <li id="menu1"><a href="javascript:void(0);" onclick="searchLog(1);">업무시간 외 접속</a></li>
 	    <li id="menu2"><a href="javascript:void(0);" onclick="searchLog(2);">과다 접속자관리</a></li>
 	    <li id="menu3"><a href="javascript:void(0);" onclick="searchLog(3);">접속 지점이상</a></li>
-	    <li id="menu4"><a href="javascript:void(0);" onclick="searchLog(4);">로그인 이상관리</a></li>
+	    <li id="menu4"><a href="javascript:void(0);" onclick="searchLog(4);">로그인 이상관리</a></li> 
 	</ul> 
 	<div class="search_box">    
 		<form name="defaultFrm" id="defaultFrm" method="post">
 			<input type="hidden" name="pageIndex" id="pageIndex" value="${searchVO.pageIndex }" />
 			<input type="hidden" id="logSeq" name="logSeq" />
 			<input type="hidden" name="schEtc03" id="schEtc03" value="${searchVO.schEtc03 }"/>
-			<input type="hidden" id="col1" class="text w100p" name="col1"/> 
-			<fieldset>           
+			<input type="text" id="col1" class="text w100p" name="col1"/> 
+			<fieldset>             
 				<legend>검색</legend> 
-				<div class="search_basic">
+				<div class="search_basic"> 
 					<table class="type03">
 						<colgroup>
 							<col style="width:550px">

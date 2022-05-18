@@ -17,7 +17,7 @@
 				test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
 				AND LOG_CLIENT_IP LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
-		</if>
+		</if> 
 		<if    
 			test="searchStartDate !=null and searchStartDate !='' and schEtc03 != 4">      
  				<![CDATA[ 
@@ -81,13 +81,13 @@
 	<select id="selectStrangeList" parameterType="cmmnDefaultVO" resultType="logLogVO">
 		
 		/* LogLog.selectStrangeList */
-		<![CDATA[     
-				SELECT
+		<![CDATA[        
+				SELECT 
 		  			  	LOG_SEQ																										 logSeq
 						, LOG_CLIENT_IP 								 															 logClientIp
 						, LOG_ID																									 logId
 						, LOG_DT																								  	 logDt
-						, LOG_DIVN 																									 logDivn
+						, LOG_DIVN 						 																			 logDivn
 						
 						,CASE
 							WHEN	LOG_DIVN = 'ma'
@@ -119,11 +119,8 @@
 			 FROM    
 			    (      
 				SELECT
-		  			  	LOG_SEQ																										 logSeq
-						, LOG_CLIENT_IP 								 															 logClientIp
+						LOG_SEQ																										 logSeq
 						, LOG_ID																									 logId
-						, LOG_DT																								  	 logDt
-						, LOG_DIVN 																									 logDivn
 						
 						,CASE
 							WHEN	LOG_DIVN = 'ma'
@@ -132,15 +129,15 @@
 							THEN	(SELECT 	ME_FAIL_CNT FROM t_member tm WHERE tm.ME_ID = tll.LOG_ID) 
 							ELSE	''
 						  END	failCnt
-		 					 
+		 					  
 				  FROM	t_log_log	tll
-					      
+					       
 				 WHERE	1 = 1    
-		   	   ]]> 
-		<include refid="Where" />		 	
+		   	   ]]>     
+		<include refid="Where" />		 	 
 		<![CDATA[
 			GROUP BY	logId  
-			  HAVING	failCnt > 0
+			  HAVING	failCnt > 5
 				   ) 	A 
 			  ]]>
 	</select>
@@ -168,19 +165,19 @@
 				,#{logIpErrYn 		}
 			) 
 			 ]]>
-	</insert>
-
+	</insert> 
+ 	 
 	<update id="updateContents" parameterType="logLogVO">
 		/* LogLog.updateContents */
 		<![CDATA[  
 			UPDATE	T_LOG_LOG       
 			   SET      
-					LOG_CLIENT_IP 								 						 =#{logClientIp}
-					, LOG_URL														     =#{logUrl     }
-					, LOG_MENU_CD														 =#{logMenuCd  }
-					, LOG_DT															 =#{logDt      }
-					, LOG_DIVN 															 =#{logDivn    }
-					, LOG_IP_ERR_YN 													 =#{logIpErrYn }
+					LOG_CLIENT_IP 								 						 = #{logClientIp}
+					, LOG_URL														     = #{logUrl     }
+					, LOG_MENU_CD														 = #{logMenuCd  }
+					, LOG_DT															 = #{logDt      }
+					, LOG_DIVN 															 = #{logDivn    }
+					, LOG_IP_ERR_YN 													 = #{logIpErrYn }
 				 
 			 WHERE  LOG_SEQ = #{logSeq}    
 			  ]]>

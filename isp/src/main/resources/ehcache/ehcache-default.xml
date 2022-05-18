@@ -9,5 +9,4 @@
            diskPersistent="false"  
            memoryStoreEvictionPolicy="LRU">
    </cache>
-   
 </ehcache>
