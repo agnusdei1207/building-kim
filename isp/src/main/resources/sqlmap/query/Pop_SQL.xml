@@ -78,18 +78,16 @@
 		/* Pop.insertContents */
 		<![CDATA[
 			INSERT INTO T_POP(
-           	 	  PO_SEQ															 
-				, PO_ATCH_FILE_ID 													 
+				 PO_ATCH_FILE_ID 													 
 				, PO_TITLE														     
 				, PO_CONT 															 
 				, PO_WIDTH 															 
-				, PO_HEIGHT 														 
+				, PO_HEIGHT 				 										 
 				, PO_LEFT 		
 				, PO_RGST_ID										 
-			)   
+			)    
 			VALUES (
-				 (SELECT IFNULL(MAX(TF.PO_SEQ)+1,1) FROM T_POP TF)
-				,#{ poAtchFileId   }  
+				#{ poAtchFileId   }  
 				,#{ poTitle        }
 				,#{ poCont         }
 				,#{ poWidth        }

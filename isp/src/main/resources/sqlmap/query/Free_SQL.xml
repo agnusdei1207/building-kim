@@ -50,7 +50,7 @@
 	 <select id="nextSelectContents" parameterType="freeVO" resultType="freeVO">
 		/* Free.nextSelectContents */
 		<![CDATA[
-			 SELECT  
+			 SELECT   
 			 
 				  FR_SEQ															 frSeq
 				, DATE_FORMAT(FR_RGST_DT,'%Y.%m.%d') 								 frRgstDt

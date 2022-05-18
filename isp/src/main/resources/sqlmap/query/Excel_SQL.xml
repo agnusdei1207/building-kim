@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.Excel">
+
+	<sql id="Where"> 
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (FR_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR FR_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND FR_TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND FR_CONT LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+	 	</if>
+	</sql>       
+	   
+	<select id="selectContents" parameterType="excelVO" resultType="excelVO">
+		/* Excel.selectContents */
+		<![CDATA[
+			 SELECT  
+			   
+				XL_RCP_NUM												xlRcpNum            
+				,XL_SEQ 												xlSeq               
+				,XL_LCNS_NUM      										xlLcnsNum           
+				,XL_WAT_SUM      										xlWatSum            
+				,XL_FROM_MHZ      										xlFromMhz           
+				,XL_TO_MHZ     											xlToMhz             
+				,XL_ADDRS_NUM      										xlAddrsNum          
+				,XL_ADDRS1    											xlAddrs1            
+				,XL_ADDRS2   											xlAddrs2            
+				,XL_ADDRS_GOOBOON      									xlAddrsGooboon      
+				,XL_MEAS_METH   										xlMeasMeth          
+				,XL_MSR_UNT   											xlMsrUnt            
+				,XL_EM_INT_STD    										xlEmIntStd          
+				,XL_MSR_VL      										xlMsrVl             
+				,XL_EXP_IDX     										xlExpIdx            
+				,XL_RADIO_STNM      									xlRadioStnm         
+				,XL_CALL_NAME      										xlCallName          
+				,XL_LAT_ANG     										xlLatAng            
+				,XL_LAT_MIN     										xlLatMin            
+				,XL_LAT_SEC     										xlLatSec            
+				,XL_LNGTD_ANG      										xlLngtdAng          
+				,XL_LNGTD_MIN      										xlLngtdMin          
+				,XL_LNGTD_SEC      										xlLngtdSec          
+				,XL_ANT_TYP      										xlAntTyp            
+				,XL_ANT_TYP_NAME     									xlAntTypName        
+				,XL_ANTN_DEUK      										xlAntnDeuk          
+				,XL_ANTN_HGHT      										xlAntnHght          
+				,XL_GRND_CLRNC      									xlGrndClrnc         
+				,XL_ANT_BEAM_CNT      									xlAntBeamCnt        
+				,XL_ANT_BEAM_FRM       									xlAntBeamFrm        
+				,XL_EQVLN_ISRDP      									xlEqvlnIsrdp        
+				,XL_CTR_FREQ      										xlCtrFreq           
+				,XL_BANDWIDTH     										xlBandwidth         
+				,XL_REF_SIG_MEAS_FREQ    								xlRefSigMeasFreq    
+				,XL_ANT_TILDED_ANG       								xlAntTildedAng      
+				,XL_MAX_VRT_BEAM_ANG    								xlMaxVrtBeamAng     
+				,XL_MXM_HRZ_BM_ANG      								xlMxmHrzBmAng       
+				,XL_RGS_SGN_GRP_CYC     								xlRgsSgnGrpCyc      
+				,XL_NBR_SLOT_FORMATS    								xlNbrSlotFormats    
+				,XL_NBR_FREQ_RC_BLOCKS  								xlNbrFreqRcBlocks   
+				,XL_NBR_AUX_CA_WAVES    								xlNbrAuxCaWaves     
+				,XL_NMB_UPW_GRD_SYM    									xlNmbUpwGrdSym      
+				,XL_SGL_SLOT_SYM_CNT   									xlSglSlotSymCnt     
+				,XL_SLOT_FMT_INFO    									xlSlotFmtInfo       
+				,XL_CALC_S_BOUNDARY    									xlCalcSBoundary     
+				,XL_DST_WRLESS_STA    									xlDstWrlessSta      
+				,XL_MSRN_PNT      										xlMsrnPnt           
+				,XL_NOTES      											xlNotes             
+				,XL_MSRM_DATE      										xlMsrmDate          
+				,XL_MSRM_FROM_TIME      								xlMsrmFromTime      
+				,XL_MSRM_TO_TIME      									xlMsrmToTime        
+				,XL_TEMPERATURE      									xlTemperature       
+				,XL_HUMIDITY      										xlHumidity          
+				,XL_WEATHER     										xlWeather           
+				,XL_PROV_MODEL_NAME      								xlProvModelName     
+				,XL_PROV_SRL_NMBR      									xlProvSrlNmbr       
+				,XL_PROV_MNFCT      									xlProvMnfct         
+				,XL_PROV_FROM_FRQNC_BAND     							xlProvFromFrqncBand 
+				,XL_PROV_TO_FRQNC_BAND      							xlProvToFrqncBand   
+				,XL_PROV_CLBRT_DATE      								xlProvClbrtDate     
+				,XL_RCVR_MODEL_NAME     								xlRcvrModelName     
+				,XL_RCVR_SRL_NMBR      									xlRcvrSrlNmbr       
+				,XL_RCVR_MNFCT     										xlRcvrMnfct         
+				,XL_RCVR_FROM_FRQNC_BAND     							xlRcvrFromFrqncBand 
+				,XL_RCVR_TO_FRQNC_BAND      							xlRcvrToFrqncBand   
+				,XL_RCVR_CLBRT_DATE      								xlRcvrClbrtDate     
+				,XL_MEASURE_VAL_1      									xlMeasureVal1       
+				,XL_MEASURE_VAL_2      									xlMeasureVal2       
+				,XL_MEASURE_VAL_3      									xlMeasureVal3       
+				,XL_CALC_VAL_1      									xlCalcVal1          
+				,XL_CALC_VAL_2      									xlCalcVal2          
+				,XL_CALC_VAL_3     										xlCalcVal3          
+				,XL_AVRG_MSTM_MIN      									xlAvrgMstmMin       
+				,XL_RWRD_CFCNT      									xlRwrdCfcnt         
+				,XL_CMP_CFC_DUE_TRF      								xlCmpCfcDueTrf      
+				,XL_MEAS_MAX      										xlMeasMax           
+				,XL_CALC_MAX      										xlCalcMax           
+				,XL_FROM_ELCTR_INRFV      								xlFromElctrInrfv    
+				,XL_TO_ELCTR_INRFV      								xlToElctrInrfv      
+				,XL_RFRNC_FRQNC      									xlRfrncFrqnc        
+				,XL_PWRMS_CNVRS     									xlPwrmsCnvrs        
+				,XL_DATE_PRPRT      									xlDatePrprt         
+				,XL_NMMS_INSTT     										xlNmmsInstt         
+				,XL_MSRN_INST_ADRS     									xlMsrnInstAdrs      
+				,XL_MEASURERS_HUMAN_NAME      							xlMeasurersHumanName
+				,XL_WRITER      										xlWriter            
+				,XL_SYSTEM_LOSS     									xlSystemLoss        
+				,XL_MSRNG_INTRV     									xlMsrngIntrv        
+				,XL_NBR_MEAS_PTS    									xlNbrMeasPts        
+				,XL_NMBR_CPS     										xlNmbrCps           
+				,XL_MLTPL_RDEXN      									xlMltplRdexn        
+				,XL_MOBILE_CRRR_AREA      								xlMobileCrrrArea    
+
+		     FROM  T_EXCEL
+			 WHERE  1 = 1	
+				 AND XL_SEQ = #{xlSeq}
+		]]>
+	</select>
+	 
+	
+	<select id="selectList" parameterType="cmmnDefaultVO" resultType="excelVO">
+		/* Excel.selectList */
+		<![CDATA[  
+      	     SELECT       
+      	       
+				XL_RCP_NUM												xlRcpNum            
+				,XL_SEQ 												xlSeq               
+				,XL_LCNS_NUM      										xlLcnsNum           
+				,XL_WAT_SUM      										xlWatSum            
+				,XL_FROM_MHZ      										xlFromMhz           
+				,XL_TO_MHZ     											xlToMhz             
+				,XL_ADDRS_NUM      										xlAddrsNum          
+				,XL_ADDRS1    											xlAddrs1            
+				,XL_ADDRS2   											xlAddrs2            
+				,XL_ADDRS_GOOBOON      									xlAddrsGooboon      
+				,XL_MEAS_METH   										xlMeasMeth          
+				,XL_MSR_UNT   											xlMsrUnt            
+				,XL_EM_INT_STD    										xlEmIntStd          
+				,XL_MSR_VL      										xlMsrVl             
+				,XL_EXP_IDX     										xlExpIdx            
+				,XL_RADIO_STNM      									xlRadioStnm         
+				,XL_CALL_NAME      										xlCallName          
+				,XL_LAT_ANG     										xlLatAng            
+				,XL_LAT_MIN     										xlLatMin            
+				,XL_LAT_SEC     										xlLatSec            
+				,XL_LNGTD_ANG      										xlLngtdAng          
+				,XL_LNGTD_MIN      										xlLngtdMin          
+				,XL_LNGTD_SEC      										xlLngtdSec          
+				,XL_ANT_TYP      										xlAntTyp            
+				,XL_ANT_TYP_NAME     									xlAntTypName        
+				,XL_ANTN_DEUK      										xlAntnDeuk          
+				,XL_ANTN_HGHT      										xlAntnHght          
+				,XL_GRND_CLRNC      									xlGrndClrnc         
+				,XL_ANT_BEAM_CNT      									xlAntBeamCnt        
+				,XL_ANT_BEAM_FRM       									xlAntBeamFrm        
+				,XL_EQVLN_ISRDP      									xlEqvlnIsrdp        
+				,XL_CTR_FREQ      										xlCtrFreq           
+				,XL_BANDWIDTH     										xlBandwidth         
+				,XL_REF_SIG_MEAS_FREQ    								xlRefSigMeasFreq    
+				,XL_ANT_TILDED_ANG       								xlAntTildedAng      
+				,XL_MAX_VRT_BEAM_ANG    								xlMaxVrtBeamAng     
+				,XL_MXM_HRZ_BM_ANG      								xlMxmHrzBmAng       
+				,XL_RGS_SGN_GRP_CYC     								xlRgsSgnGrpCyc      
+				,XL_NBR_SLOT_FORMATS    								xlNbrSlotFormats    
+				,XL_NBR_FREQ_RC_BLOCKS  								xlNbrFreqRcBlocks   
+				,XL_NBR_AUX_CA_WAVES    								xlNbrAuxCaWaves     
+				,XL_NMB_UPW_GRD_SYM    									xlNmbUpwGrdSym      
+				,XL_SGL_SLOT_SYM_CNT   									xlSglSlotSymCnt     
+				,XL_SLOT_FMT_INFO    									xlSlotFmtInfo       
+				,XL_CALC_S_BOUNDARY    									xlCalcSBoundary     
+				,XL_DST_WRLESS_STA    									xlDstWrlessSta      
+				,XL_MSRN_PNT      										xlMsrnPnt           
+				,XL_NOTES      											xlNotes             
+				,XL_MSRM_DATE      										xlMsrmDate          
+				,XL_MSRM_FROM_TIME      								xlMsrmFromTime      
+				,XL_MSRM_TO_TIME      									xlMsrmToTime        
+				,XL_TEMPERATURE      									xlTemperature       
+				,XL_HUMIDITY      										xlHumidity          
+				,XL_WEATHER     										xlWeather           
+				,XL_PROV_MODEL_NAME      								xlProvModelName     
+				,XL_PROV_SRL_NMBR      									xlProvSrlNmbr       
+				,XL_PROV_MNFCT      									xlProvMnfct         
+				,XL_PROV_FROM_FRQNC_BAND     							xlProvFromFrqncBand 
+				,XL_PROV_TO_FRQNC_BAND      							xlProvToFrqncBand   
+				,XL_PROV_CLBRT_DATE      								xlProvClbrtDate     
+				,XL_RCVR_MODEL_NAME     								xlRcvrModelName     
+				,XL_RCVR_SRL_NMBR      									xlRcvrSrlNmbr       
+				,XL_RCVR_MNFCT     										xlRcvrMnfct         
+				,XL_RCVR_FROM_FRQNC_BAND     							xlRcvrFromFrqncBand 
+				,XL_RCVR_TO_FRQNC_BAND      							xlRcvrToFrqncBand   
+				,XL_RCVR_CLBRT_DATE      								xlRcvrClbrtDate     
+				,XL_MEASURE_VAL_1      									xlMeasureVal1       
+				,XL_MEASURE_VAL_2      									xlMeasureVal2       
+				,XL_MEASURE_VAL_3      									xlMeasureVal3       
+				,XL_CALC_VAL_1      									xlCalcVal1          
+				,XL_CALC_VAL_2      									xlCalcVal2          
+				,XL_CALC_VAL_3     										xlCalcVal3          
+				,XL_AVRG_MSTM_MIN      									xlAvrgMstmMin       
+				,XL_RWRD_CFCNT      									xlRwrdCfcnt         
+				,XL_CMP_CFC_DUE_TRF      								xlCmpCfcDueTrf      
+				,XL_MEAS_MAX      										xlMeasMax           
+				,XL_CALC_MAX      										xlCalcMax           
+				,XL_FROM_ELCTR_INRFV      								xlFromElctrInrfv    
+				,XL_TO_ELCTR_INRFV      								xlToElctrInrfv      
+				,XL_RFRNC_FRQNC      									xlRfrncFrqnc        
+				,XL_PWRMS_CNVRS     									xlPwrmsCnvrs        
+				,XL_DATE_PRPRT      									xlDatePrprt         
+				,XL_NMMS_INSTT     										xlNmmsInstt         
+				,XL_MSRN_INST_ADRS     									xlMsrnInstAdrs      
+				,XL_MEASURERS_HUMAN_NAME      							xlMeasurersHumanName
+				,XL_WRITER      										xlWriter            
+				,XL_SYSTEM_LOSS     									xlSystemLoss        
+				,XL_MSRNG_INTRV     									xlMsrngIntrv        
+				,XL_NBR_MEAS_PTS    									xlNbrMeasPts        
+				,XL_NMBR_CPS     										xlNmbrCps           
+				,XL_MLTPL_RDEXN      									xlMltplRdexn        
+				,XL_MOBILE_CRRR_AREA      								xlMobileCrrrArea       
+				
+		      FROM 	T_EXCEL
+			 WHERE	1 = 1	
+	      ]]>   
+		     <include refid="Where"/>	 
+	     <![CDATA[    
+	    		ORDER BY XL_SEQ DESC
+				LIMIT  #{firstIndex} , #{recordCountPerPage}
+		]]>
+	</select>	 
+
+
+	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* Excel.selectCount */
+		<![CDATA[ 
+			SELECT 
+				COUNT(XL_SEQ) frCnt 
+			FROM T_EXCEL
+			WHERE 1 = 1  
+		]]>
+			 <include refid="Where"/>
+	</select>
+	
+	<insert id="insertContents" parameterType="excelVO">
+		/* Excel.insertContents */
+		<![CDATA[
+			INSERT INTO T_EXCEL(
+				XL_RCP_NUM
+				,XL_LCNS_NUM      			
+				,XL_WAT_SUM      			
+				,XL_FROM_MHZ      			
+				,XL_TO_MHZ     				
+				,XL_ADDRS_NUM      			
+				,XL_ADDRS1    				
+				,XL_ADDRS2   				
+				,XL_ADDRS_GOOBOON      		
+				,XL_MEAS_METH   			
+				,XL_MSR_UNT   				
+				,XL_EM_INT_STD    			
+				,XL_MSR_VL      			
+				,XL_EXP_IDX     			
+				,XL_RADIO_STNM      		
+				,XL_CALL_NAME      			
+				,XL_LAT_ANG     			
+				,XL_LAT_MIN     			
+				,XL_LAT_SEC     			
+				,XL_LNGTD_ANG      			
+				,XL_LNGTD_MIN      			
+				,XL_LNGTD_SEC      			
+				,XL_ANT_TYP      			
+				,XL_ANT_TYP_NAME     		
+				,XL_ANTN_DEUK      			
+				,XL_ANTN_HGHT      			
+				,XL_GRND_CLRNC      		
+				,XL_ANT_BEAM_CNT      		
+				,XL_ANT_BEAM_FRM       		
+				,XL_EQVLN_ISRDP      		
+				,XL_CTR_FREQ      			
+				,XL_BANDWIDTH     			
+				,XL_REF_SIG_MEAS_FREQ    	
+				,XL_ANT_TILDED_ANG       	
+				,XL_MAX_VRT_BEAM_ANG    	
+				,XL_MXM_HRZ_BM_ANG      	
+				,XL_RGS_SGN_GRP_CYC     	
+				,XL_NBR_SLOT_FORMATS    	
+				,XL_NBR_FREQ_RC_BLOCKS  	
+				,XL_NBR_AUX_CA_WAVES    	
+				,XL_NMB_UPW_GRD_SYM    		
+				,XL_SGL_SLOT_SYM_CNT   		
+				,XL_SLOT_FMT_INFO    		
+				,XL_CALC_S_BOUNDARY    		
+				,XL_DST_WRLESS_STA    		
+				,XL_MSRN_PNT      			
+				,XL_NOTES      				
+				,XL_MSRM_DATE      			
+				,XL_MSRM_FROM_TIME      	
+				,XL_MSRM_TO_TIME      		
+				,XL_TEMPERATURE      		
+				,XL_HUMIDITY      			
+				,XL_WEATHER     			
+				,XL_PROV_MODEL_NAME      	
+				,XL_PROV_SRL_NMBR      		
+				,XL_PROV_MNFCT      		
+				,XL_PROV_FROM_FRQNC_BAND    
+				,XL_PROV_TO_FRQNC_BAND      
+				,XL_PROV_CLBRT_DATE      	
+				,XL_RCVR_MODEL_NAME     	
+				,XL_RCVR_SRL_NMBR      		
+				,XL_RCVR_MNFCT     			
+				,XL_RCVR_FROM_FRQNC_BAND    
+				,XL_RCVR_TO_FRQNC_BAND      
+				,XL_RCVR_CLBRT_DATE      	
+				,XL_MEASURE_VAL_1      		
+				,XL_MEASURE_VAL_2      		
+				,XL_MEASURE_VAL_3      		
+				,XL_CALC_VAL_1      		
+				,XL_CALC_VAL_2      		
+				,XL_CALC_VAL_3     			
+				,XL_AVRG_MSTM_MIN      		
+				,XL_RWRD_CFCNT      		
+				,XL_CMP_CFC_DUE_TRF      	
+				,XL_MEAS_MAX      			
+				,XL_CALC_MAX      			
+				,XL_FROM_ELCTR_INRFV      	
+				,XL_TO_ELCTR_INRFV      	
+				,XL_RFRNC_FRQNC      		
+				,XL_PWRMS_CNVRS     		
+				,XL_DATE_PRPRT      		
+				,XL_NMMS_INSTT     			
+				,XL_MSRN_INST_ADRS     		
+				,XL_MEASURERS_HUMAN_NAME    
+				,XL_WRITER      			
+				,XL_SYSTEM_LOSS     		
+				,XL_MSRNG_INTRV     		
+				,XL_NBR_MEAS_PTS    		
+				,XL_NMBR_CPS     			
+				,XL_MLTPL_RDEXN      		
+				,XL_MOBILE_CRRR_AREA      	     					  						
+						)    
+			VALUES (
+				(SELECT IFNULL(MAX(TE.XL_RCP_NUM)+1,1) FROM T_EXCEL TE)
+				,#{xlLcnsNum             }      
+				,#{xlWatSum              }      
+				,#{xlFromMhz             }      
+				,#{xlToMhz               }      
+				,#{xlAddrsNum            }      
+				,#{xlAddrs1              }      
+				,#{xlAddrs2              }      
+				,#{xlAddrsGooboon        }      
+				,#{xlMeasMeth            }      
+				,#{xlMsrUnt              }      
+				,#{xlEmIntStd            }      
+				,#{xlMsrVl               }       
+				,#{xlExpIdx              }      
+				,#{xlRadioStnm           }      
+				,#{xlCallName            }      
+				,#{xlLatAng              }      
+				,#{xlLatMin              }      
+				,#{xlLatSec              }      
+				,#{xlLngtdAng            }      
+				,#{xlLngtdMin            }      
+				,#{xlLngtdSec            }      
+				,#{xlAntTyp              }      
+				,#{xlAntTypName          }      
+				,#{xlAntnDeuk            }      
+				,#{xlAntnHght            }      
+				,#{xlGrndClrnc           }      
+				,#{xlAntBeamCnt          }      
+				,#{xlAntBeamFrm          }      
+				,#{xlEqvlnIsrdp          }      
+				,#{xlCtrFreq             }      
+				,#{xlBandwidth           }      
+				,#{xlRefSigMeasFreq      }      
+				,#{xlAntTildedAng        }      
+				,#{xlMaxVrtBeamAng       }      
+				,#{xlMxmHrzBmAng         }      
+				,#{xlRgsSgnGrpCyc        }      
+				,#{xlNbrSlotFormats      }      
+				,#{xlNbrFreqRcBlocks     }      
+				,#{xlNbrAuxCaWaves       }      
+				,#{xlNmbUpwGrdSym        }      
+				,#{xlSglSlotSymCnt       }      
+				,#{xlSlotFmtInfo         }      
+				,#{xlCalcSBoundary       }      
+				,#{xlDstWrlessSta        }      
+				,#{xlMsrnPnt             }      
+				,#{xlNotes               }      
+				,#{xlMsrmDate            }      
+				,#{xlMsrmFromTime        }      
+				,#{xlMsrmToTime          }      
+				,#{xlTemperature         }      
+				,#{xlHumidity            }      
+				,#{xlWeather             }      
+				,#{xlProvModelName       }      
+				,#{xlProvSrlNmbr         }      
+				,#{xlProvMnfct           }      
+				,#{xlProvFromFrqncBand   }      
+				,#{xlProvToFrqncBand     }      
+				,#{xlProvClbrtDate       }      
+				,#{xlRcvrModelName       }      
+				,#{xlRcvrSrlNmbr         }      
+				,#{xlRcvrMnfct           }      
+				,#{xlRcvrFromFrqncBand   }      
+				,#{xlRcvrToFrqncBand     }      
+				,#{xlRcvrClbrtDate       }      
+				,#{xlMeasureVal1         }      
+				,#{xlMeasureVal2         }      
+				,#{xlMeasureVal3         }      
+				,#{xlCalcVal1            }      
+				,#{xlCalcVal2            }      
+				,#{xlCalcVal3            }      
+				,#{xlAvrgMstmMin         }      
+				,#{xlRwrdCfcnt           }      
+				,#{xlCmpCfcDueTrf        }      
+				,#{xlMeasMax             }      
+				,#{xlCalcMax             }      
+				,#{xlFromElctrInrfv      }      
+				,#{xlToElctrInrfv        }      
+				,#{xlRfrncFrqnc          }      
+				,#{xlPwrmsCnvrs          }      
+				,#{xlDatePrprt           }      
+				,#{xlNmmsInstt           }      
+				,#{xlMsrnInstAdrs        }      
+				,#{xlMeasurersHumanName  }      
+				,#{xlWriter              }      
+				,#{xlSystemLoss          }      
+				,#{xlMsrngIntrv          }      
+				,#{xlNbrMeasPts          }      
+				,#{xlNmbrCps             }      
+				,#{xlMltplRdexn          }      
+				,#{xlMobileCrrrArea      }      
+			)
+		]]>
+	</insert>
+	
+	<update id="updateContents" parameterType="excelVO">
+		/* Excel.updateContents */
+		<![CDATA[
+			UPDATE T_EXCEL        
+			 SET   
+			      
+				FR_RGST_DT								 							 = NOW()
+				, FR_RVSE_ID														 =#{loginSeq	}	
+				, FR_ATCH_FILE_ID 													 =#{frAtchFileId}
+				, FR_TITLE														     =#{frTitle     }
+				, FR_CONT 															 =#{frCont      }
+				, FR_ID 															 =#{frId        }
+				, FR_DT																 = NOW()
+				
+			WHERE  XL_SEQ = #{xlSeq}    
+		]]> 
+	</update> 
+	
+	<update id="deleteContents" parameterType="excelVO">
+		/* Excel.deleteContents */
+		<![CDATA[   
+			UPDATE T_EXCEL
+		       SET
+	          	 FR_USE_YN='N'
+			WHERE XL_SEQ=#{xlSeq}
+		]]>
+	</update>
+
+
+	
+	
+	
+	
+</mapper>

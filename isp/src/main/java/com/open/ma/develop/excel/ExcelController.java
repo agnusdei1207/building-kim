@@ -28,7 +28,7 @@ public class ExcelController {
 	@Resource(name = "cmmnService")     
     protected CmmnService cmmnService;
 	
-    /** Program ID **/
+    /** Program ID **/ 
     private final static String PROGRAM_ID = "Excel";
 
     /** folderPath **/
@@ -67,7 +67,7 @@ public class ExcelController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		  
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked") 
 		List<ExcelVO> resultList = (List<ExcelVO>) cmmnService.selectList(searchVO, PROGRAM_ID );
 		model.addAttribute("resultList", resultList);
 		
