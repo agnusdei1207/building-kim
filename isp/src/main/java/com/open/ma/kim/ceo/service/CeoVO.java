@@ -8,28 +8,17 @@ import org.apache.ibatis.type.Alias;
 import com.open.cmmn.model.CmmnDefaultVO;
 import com.open.cmmn.util.StringUtil;
 import com.open.ma.kim.banner.service.BannerVO;
-
-/**
- * Content VO 클래스
- * @author 공통서비스 개발팀 yd.go
- * @since 2016.09.08
- * @version 1.0
- * @see
- *  
  
- */
-@Alias("ceoVO")
+@Alias("ceoVO") 
 public class CeoVO extends CmmnDefaultVO implements Serializable {
-	/**
-	 * 
-	 */
+	  
 	private static final long serialVersionUID = 2172623835339565860L;
 	
 	private String ceSeq;
 	private String ceAtchFileId;
 	private String ceName;
 	private String ceDt;
-	private String ceNum;
+	private String ceNum;   
 	private String ceHp;
 	private String ceAdd;
 	private String[] baSeq;  
@@ -45,7 +34,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	private String[] baExposeYn;
 	private String[] baOrderNum; 
 	private String baCnt;
-	private List<BannerVO> bannerList; 
+	private List<CeoVO> bannerList; 
 	  
 	
 	public String getCeSeq() {
@@ -96,10 +85,10 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	public void setBaCnt(String baCnt) {
 		this.baCnt = baCnt;
 	}
-	public List<BannerVO> getBannerList() {
-		return bannerList;
+	public List<CeoVO> getBannerList() {
+		return bannerList;   
 	}
-	public void setBannerList(List<BannerVO> bannerList) {
+	public void setBannerList(List<CeoVO> bannerList) {
 		this.bannerList = bannerList;
 	}
 	public static long getSerialversionuid() {

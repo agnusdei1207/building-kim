@@ -46,12 +46,11 @@
 							<iframe name="ceAtchFileIdFrame" id="ceAtchFileIdFrame" src="/atch/fileUpload.do?atchFileId=${ceoVO.ceAtchFileId }&fileCnt=5&atchFileIdNm=ceAtchFileId&updateType=upload" style="width: 100%;" frameborder="0" frTitle="파일 업로드 폼"></iframe>
 						</td>
 					</tr> 
-				</tbody>    
+				</tbody>      
 			</table>     
-		</div>                      
-	 	<div class="tbl_wrap">                                                        
-			<h3 class="tit_page">상단 배너</h3> 
-		  	<a href="javascript:void(0)" onclick="addUpBanner();" id="place_a" class="btn btn_mdl btn_rewrite">추가</a> 
+		</div>                          
+	 	<div class="tbl_wrap">                                                             
+			<h3 class="tit_page">상단 배너  <a href="javascript:void(0)" onclick="addUpBanner();" id="place_a" class="btn btn_mdl btn_rewrite"> 추가</a> </h3> 
 		 	  <div class="addPlaceUpBanner"> </div>
 		</div>
 	     
@@ -60,14 +59,13 @@
 		</div>
 	</form>  
 </div>	 
-	             
+	              
 	        
-	          
+	           
 	        
 <script type="text/javascript">
-      
          
-function iterator(){
+function iterator(){ 
 	if('${fn:length(upBannerList)}' > 0){  
 		var html = '';               
 		html += '<c:forEach var="bannerVO" items="${upBannerList}">';
@@ -138,7 +136,6 @@ function iterator(){
 	}
 } 
 
-
 $(function(){              
 	iterator();
 }) 
@@ -155,7 +152,6 @@ function execDaumPostcode() {
         }).open(); 
     });
 } 
- 
  
 function submit(title){  
 	
@@ -179,6 +175,9 @@ function submit(title){
 		fncPageBoard('update','updateProc.do'); 
 		return false;  
 	}       
+	
+	
+	
 }                                    
                                                                 
 function addUpBanner(){    
@@ -241,16 +240,16 @@ function addUpBanner(){
 		html += '</td>';
 		html += '</tr>';
 		html += '</tbody>'; 
-		html += '</table>';   
+		html += '</table>';    
 	 	     
 	$(".addPlaceUpBanner").before(html); 
 }        
    
-             
+               
       
 function delUpBanner(seq){  
-	
-	if(confirm(seq + " 번 배너를 삭제하시겠습니까?")){
+	 
+	if(confirm(seq + " 번")){
 		$.ajax({  
 			method : "POST",
 			url : "delUpBanner.do",

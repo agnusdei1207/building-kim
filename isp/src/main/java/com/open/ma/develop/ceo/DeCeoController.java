@@ -1,6 +1,8 @@
 package com.open.ma.develop.ceo;
 
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.open.cmmn.service.CmmnService;
+import com.open.cmmn.util.StringUtil;
 import com.open.ma.kim.banner.service.BannerVO;
 import com.open.ma.kim.ceo.service.CeoVO;
 
@@ -24,13 +27,12 @@ public class DeCeoController {
 
 	@Resource(name = "cmmnService")   
     protected CmmnService cmmnService;
-	
-    /** Program ID **/
+	 
     private final static String PROGRAM_ID = "Ceo";
 
-    /** folderPath **/ 
     private final static String folderPath = "/ma/develop/deCeo/";
     
+	@SuppressWarnings("unchecked")
 	@RequestMapping(folderPath + "{procType}form.do")    
 	public String form(@ModelAttribute("searchVO") CeoVO searchVO, Model model,@PathVariable String procType, HttpServletRequest request) throws Exception {
 		     
@@ -40,14 +42,50 @@ public class DeCeoController {
 			model.addAttribute("ceoVO", ceoVO);
 		}    
 		   
-		  
 		List<BannerVO> upBannerList = (List<BannerVO>)cmmnService.selectList(searchVO, "Banner.upBannerSelectList");
 		model.addAttribute("upBannerList", upBannerList); 
 		 
 		List<BannerVO> downBannerList = (List<BannerVO>)cmmnService.selectList(searchVO, "Banner.downBannerSelectList");
 		model.addAttribute("downBannerList", downBannerList);
 		
+		    							    					  
+		HashMap<String, Object> returnMap = new HashMap<>();
+		String msg = "저장이 실패하였습니다";
 		 
+		
+		
+		try {
+			if(ceoVO.getBannerList() != null && ceoVO.getBannerList().size() > 0) {
+				System.out.println("ceoVO.getBannerList() ::: " + ceoVO.getBannerList());
+				Iterator<CeoVO> tempList = ceoVO.getBannerList().iterator();
+				System.out.println("tempList ::: " + tempList);
+				while(tempList.hasNext()) {  
+					System.out.println("tempList.hasNext() ::: " + tempList.hasNext());
+					CeoVO tempVO = tempList.next();
+					System.out.println("tempVO ::: " + tempVO);
+					if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) {
+						tempList.remove();     		   
+					}     
+				}  
+				      
+				cmmnService.deleteContents(tempList, "Banner"); //
+				for (CeoVO tempVO : ceoVO.getBannerList()) {
+					System.out.println("아래쪽 tempVO ::: " + tempVO);
+					if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) {
+						cmmnService.insertContents(tempVO, "Banner"); //
+					}else {
+						cmmnService.updateContents(tempVO, "Banner"); //
+					}
+				}
+				msg = "저장되었습니다";
+			}
+		}catch(Exception e) {
+			msg = ""+e;
+		}finally {
+			returnMap.put("msg", msg);
+		}
+		
+		
 		return ".mLayout:"+ folderPath + "form";
 	}     
   
