@@ -157,16 +157,15 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 					menuCd = StringUtil.getMenuCd(request.getRequestURI()).get("depth2");
 					// 로그 기록
 					logLogVO.setLogMenuCd(menuCd);
-					 
+					  
 					/*권한 없는 경우 */
 					if(!manuList.contains(menuCd) && !request.getRequestURI().equals("/ma/main.do") && request.getRequestURI().indexOf("/sb") < 0 && request.getRequestURI().indexOf("/mc01") < 0){
 						response.sendRedirect("/cmmn/fail.do");
 					}
 					
-					// 로그 기록 
+					// 로그 기록  
 					logLogVO.setLogId(loginVO.getId());
 					logLogVO.setLogIpErrYn("N");
-					
 					
     			}else{ 
     				/* 메뉴 권한 확인*/
@@ -191,9 +190,6 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 				}
 			}
 			
-			
-		
-			 
 		long endTime = System.currentTimeMillis();
 		LOGGER.debug("=================================== Loading Report preHandle ::: " + (endTime - loadingTime));
 		

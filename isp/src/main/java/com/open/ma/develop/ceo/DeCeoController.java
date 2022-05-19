@@ -41,20 +41,18 @@ public class DeCeoController {
 		if (ceoVO != null) {        
 			model.addAttribute("ceoVO", ceoVO);
 		}    
-		   
-		List<BannerVO> upBannerList = (List<BannerVO>)cmmnService.selectList(searchVO, "Banner.upBannerSelectList");
+		      
+		List<CeoVO> upBannerList = (List<CeoVO>)cmmnService.selectList(searchVO, "Banner.upBannerSelectList");
 		model.addAttribute("upBannerList", upBannerList); 
 		 
-		List<BannerVO> downBannerList = (List<BannerVO>)cmmnService.selectList(searchVO, "Banner.downBannerSelectList");
+		List<CeoVO> downBannerList = (List<CeoVO>)cmmnService.selectList(searchVO, "Banner.downBannerSelectList");
 		model.addAttribute("downBannerList", downBannerList);
 		
-		    							    					  
 		HashMap<String, Object> returnMap = new HashMap<>();
 		String msg = "저장이 실패하였습니다";
 		 
-		
-		
-		try {
+		ceoVO.setBannerList(upBannerList);    							    					  
+		try { 
 			if(ceoVO.getBannerList() != null && ceoVO.getBannerList().size() > 0) {
 				System.out.println("ceoVO.getBannerList() ::: " + ceoVO.getBannerList());
 				Iterator<CeoVO> tempList = ceoVO.getBannerList().iterator();

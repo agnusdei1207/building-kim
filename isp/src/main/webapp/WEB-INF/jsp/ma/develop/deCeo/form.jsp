@@ -48,25 +48,87 @@
 					</tr> 
 				</tbody>      
 			</table>     
-		</div>                          
+		</div>                                     
 	 	<div class="tbl_wrap">                                                             
 			<h3 class="tit_page">상단 배너  <a href="javascript:void(0)" onclick="addUpBanner();" id="place_a" class="btn btn_mdl btn_rewrite"> 추가</a> </h3> 
-		 	  <div class="addPlaceUpBanner"> </div>
+			<c:if test="${fn:length(upBannerList) gt 0 }"> 
+			 	<c:forEach var="bannerVO" items="${upBannerList}">
+					 <div id="div_${bannerVO.baSeq}">
+						 <input type="hidden" name="baAtchFileId" id="baAtchFileId">
+							 <table class="tbl_row_type01">
+								 <caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>
+								 <caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>
+							 <colgroup>  
+								 <col style="width:20%"> 
+								 <col style="width:30%">
+								 <col style="width:20%">
+								 <col style="width:30%"> 
+							 </colgroup> 
+							 <tbody>    
+								 <tr> 
+									 <th scope="row"><strong class="th_tit">제목</strong></th>
+									 <td colspan="3">
+										 <input type="text" name="baTitle" id="baTitle" class="text w90p" maxlength="70" value="${bannerVO.baTitle}" />
+									 	<a href="javascript:void(0)" onclick="delUpBanner(${bannerVO.baSeq})" class="btn btn_mdl btn_del" style="margin-left:39px" >삭제</a>
+									 </td>
+								 </tr> 
+								 <tr>      
+									 <th scope="row"><strong>URL</strong></th>
+									 <td>
+										 <input type="text" name="baUrl" id="baUrl" class="text w100p" maxlength="120" value="${bannerVO.baUrl}" />
+									 </td>
+									 <th scope="row"><strong>새창 유무</strong></th>
+									 <td>
+										 사용 <input type="checkbox" id="check_window" onclick="checkBox()">
+									 <input type="hidden" name="baWindow" id="baWindow">
+									 </td>  
+								 </tr> 
+								 <tr>
+								 <th scope="row"><strong>전시 순서</strong></th>  
+								 <td>
+									 <select name="baOrderNum" id="baOrderNum">            
+										 <option value="">순서 선택</option>                   
+										 <c:forEach var="num" items="${upBannerList}" varStatus="status">           
+											 <option value="${status.count}" ${bannerVO.baOrderNum eq status.count ? "checked" : ""}>${status.count}</option>
+										 </c:forEach>   
+									 </select>     
+								 </td> 
+								 <th scope="row"><strong>전시 유무</strong></th>
+									 <td>
+										 전시 <input type="checkbox" id="check_baExposeYn" onclick="checkBox()"  ${bannerVO.baExposeYn eq "Y" ? "checked" : ""}>
+										 <input type="hidden" name="baExposeYn" id="baExposeYn">
+									 </td> 
+								 </tr>
+								 <tr>   
+									 <th scope="row"><strong>내용</strong></th> 
+									 <td colspan="3">
+										 <textarea name="baCont" id="baCont" class="txt_area w_100p" style="resize:none">${bannerVO.baCont}</textarea>
+									 </td>  
+								 </tr>   
+								 <tr>    
+									 <th scope="row"><strong>첨부파일</strong></th>
+									 <td colspan="3">
+										 <iframe name="baAtchFileIdFrame" id="baAtchFileIdFrame" src="/atch/fileUpload.do?atchFileId=&fileCnt=5&atchFileIdNm=${bannerVO.baAtchFileId}&updateType=upload" style="width: 100%" frameborder="0" baTitle="파일 업로드 폼"></iframe>
+									 </td>
+								 </tr> 
+							 </tbody>           
+						 </table>        
+					 </div>
+			 </c:forEach>  
+		</c:if>  
+		 	  <div class="addPlaceUpBanner"> 
+		 	  </div>
 		</div>
-	     
 	  	<div class="btn_area">
 			<a href="javascript:void(0)" class="btn btn_mdl btn_${searchVO.procType eq 'update'? 'rewrite':'save'}" onclick="submit('${ceoVO.ceName}')" id="btn_submit">등록</a>
 		</div>
 	</form>  
-</div>	 
-	              
-	        
-	           
+</div>	     
 	        
 <script type="text/javascript">
          
-function iterator(){ 
-	if('${fn:length(upBannerList)}' > 0){  
+function fncBnnList(){ 
+	if('${fn:length(upBannerList)}' > 0){   
 		var html = '';               
 		html += '<c:forEach var="bannerVO" items="${upBannerList}">';
 		html += '<div id="div_${bannerVO.baSeq}">';
@@ -100,14 +162,14 @@ function iterator(){
 		html += '</td>';
 		html += '</tr>'; 
 		html += '<tr>';
-		html += '<th scope="row"><strong>전시 순서</strong></th>';
+		html += '<th scope="row"><strong>전시 순서</strong></th>';  
 		html += '<td>';
-		html += '<select name="baOrderNum" id="baOrderNum">';
-		html += '<option value="">순서 선택</option>'; 
-		html += '<option value="1" ${bannerVO.baOrderNum eq "1" ? "checked" : ""}>1</option>';
-		html += '<option value="2" ${bannerVO.baOrderNum eq "2" ? "checked" : ""}>2</option>';
-		html += '<option value="3" ${bannerVO.baOrderNum eq "3" ? "checked" : ""}>3</option>';
-		html += '</select>'; 
+		html += '<select name="baOrderNum" id="baOrderNum">';            
+		html += '<option value="">순서 선택</option>';                   
+		html += '<c:forEach var="num" items="${upBannerList}" varStatus="status">';           
+		html += '<option value="${status.count}" ${bannerVO.baOrderNum eq status.count ? "checked" : ""}>${status.count}</option>';
+		html += '</c:forEach>';   
+		html += '</select>';     
 		html += '</td>'; 
 		html += '<th scope="row"><strong>전시 유무</strong></th>';
 		html += '<td>';
@@ -136,8 +198,8 @@ function iterator(){
 	}
 } 
 
-$(function(){              
-	iterator();
+$(function(){         
+	
 }) 
           
 /** 주소 검색  **/      
@@ -176,9 +238,7 @@ function submit(title){
 		return false;  
 	}       
 	
-	
-	
-}                                    
+}                                     
                                                                 
 function addUpBanner(){    
 	
@@ -246,7 +306,7 @@ function addUpBanner(){
 }        
    
                
-      
+       
 function delUpBanner(seq){  
 	 
 	if(confirm(seq + " 번")){

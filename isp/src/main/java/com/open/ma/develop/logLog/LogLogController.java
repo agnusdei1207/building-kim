@@ -78,6 +78,7 @@ public class LogLogController {
 			model.addAttribute("resultList", resultList);
 			 
 		}else if("3".equals(gooboon)){  
+			
 			int totCnt = cmmnService.selectCount(searchVO, "LogLog");
 			paginationInfo.setTotalRecordCount(totCnt); 
 			model.addAttribute("paginationInfo", paginationInfo);
@@ -85,6 +86,7 @@ public class LogLogController {
 			model.addAttribute("resultList", resultList);
 			    
 		}else if("4".equals(gooboon)){
+			
 			int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".selectStrangeCount" );
 			paginationInfo.setTotalRecordCount(totCnt);
 			model.addAttribute("paginationInfo", paginationInfo);
