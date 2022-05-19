@@ -31,14 +31,6 @@ public class DeCeoController {
     /** folderPath **/ 
     private final static String folderPath = "/ma/develop/deCeo/";
     
-    private String message = "";
-    
-    private String pName = ""; 
-    
-    private String pValue = "";
-    
-    private String cmmnScript = "";
-    
 	@RequestMapping(folderPath + "{procType}form.do")    
 	public String form(@ModelAttribute("searchVO") CeoVO searchVO, Model model,@PathVariable String procType, HttpServletRequest request) throws Exception {
 		     
@@ -47,7 +39,7 @@ public class DeCeoController {
 		if (ceoVO != null) {        
 			model.addAttribute("ceoVO", ceoVO);
 		}    
-		
+		   
 		  
 		List<BannerVO> upBannerList = (List<BannerVO>)cmmnService.selectList(searchVO, "Banner.upBannerSelectList");
 		model.addAttribute("upBannerList", upBannerList); 
@@ -60,26 +52,9 @@ public class DeCeoController {
 	}     
   
 	@RequestMapping(folderPath + "{procType}Proc.do")
-	public String proc(@ModelAttribute("searchVO") CeoVO searchVO, Model model, SessionStatus status,@PathVariable String procType, HttpServletRequest request) throws Exception {
+	public void proc(@ModelAttribute("searchVO") CeoVO searchVO, Model model, SessionStatus status,@PathVariable String procType, HttpServletRequest request) throws Exception {
 		    
-		System.out.println("searchVO >> "+ searchVO.getCeAdd());
-		System.out.println("procType >> "+ procType);
-		            
-		if(procType != null){ 
-			if (procType.equals("insert")) {
-				cmmnService.insertContents(searchVO, PROGRAM_ID);
-				message = "등록되었습니다.";
-				cmmnScript = "form.do";
-			} else if (procType.equals("update") ) {				
-				cmmnService.updateContents(searchVO, PROGRAM_ID);	
-				message = "등록되었습니다.";
-				cmmnScript = "form.do";
-			}   
-		}  
 		     
-		model.addAttribute("message", message);     
-		model.addAttribute("cmmnScript", cmmnScript);
-		return "cmmn/execute";
 	}      
         
 	@ResponseBody

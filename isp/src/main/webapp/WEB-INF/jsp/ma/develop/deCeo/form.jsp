@@ -62,11 +62,6 @@
 </div>	 
 	             
 	        
-	        
-	        
-	        
-	        
-	        
 	          
 	        
 <script type="text/javascript">
@@ -141,10 +136,7 @@ function iterator(){
 		   
 		$(".addPlaceUpBanner").before(html); 
 	}
-}
-
-
-
+} 
 
 
 $(function(){              
@@ -163,14 +155,13 @@ function execDaumPostcode() {
         }).open(); 
     });
 } 
-
+ 
  
 function submit(title){  
-	var procType = ""; 
 	
 	if($("#ceName").val() == null || $("#ceName").val() == ""){
 		checkMsg("#ceName", "이름을 입력해주세요.");
-		return false;
+		return false; 
 	}  
 	if($("#ceNum").val() == null || $("#ceNum").val() == ""){
 		checkMsg("#ceNum", "사업자 번호를 입력해주세요.");
@@ -191,6 +182,7 @@ function submit(title){
 }                                    
                                                                 
 function addUpBanner(){    
+	
 	var html = '<input type="hidden" name="baAtchFileId" id="baAtchFileId">';
 		html += '<table class="tbl_row_type01">';
 		html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
@@ -201,8 +193,8 @@ function addUpBanner(){
 		html += '<col style="width:20%;">';
 		html += '<col style="width:30%;">'; 
 		html += '</colgroup>';
-		html += '<tbody>';     
-		html += '<tr>';        
+		html += '<tbody>';      
+		html += '<tr>';         
 		html += '<th scope="row"><strong class="th_tit">제목</strong></th>';
 		html += '<td colspan="3">';
 		html += '<input type="text" name="baTitle" id="baTitle" class="text w90p" maxlength="70" value="" />';
@@ -254,22 +246,20 @@ function addUpBanner(){
 	$(".addPlaceUpBanner").before(html); 
 }        
    
-        
-    
+             
+      
 function delUpBanner(seq){  
 	
-	alert(seq);
-	  
-	$.ajax({  
-		method : "POST",
-		url : "delUpBanner.do",
-		data : {"baSeq" : seq},
-		success : function(data){
-			alert(seq);
-			$("#div_"+seq).remove();
-			/* iterator(); */    
-		}
-	})
+	if(confirm(seq + " 번 배너를 삭제하시겠습니까?")){
+		$.ajax({  
+			method : "POST",
+			url : "delUpBanner.do",
+			data : {"baSeq" : seq},
+			success : function(data){
+				$("#div_"+seq).remove();
+			}
+		})     
+	}
 }
        
 
