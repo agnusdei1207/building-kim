@@ -35,9 +35,9 @@
 						</td>      
 					</tr>  
 					<tr>           
-						<th scope="row"><strong>내용</strong></th>  
+						<th scope="row"><strong>내용</strong></th>        
 						<td colspan="3">    
-							<textarea name="baCont" id="baCont" class="txt_area w_100p" style="resize:none;" >${bannerVO.baCont}</textarea>
+							<textarea name="baCont" id="baCont" class="txt_area w_100p" style="resize:none;" >${util:unEscape(bannerVO.baCont)}</textarea>
 						</td> 
 					</tr>
 					<tr>
