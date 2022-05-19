@@ -54,28 +54,103 @@
 		  	<a href="javascript:void(0)" onclick="addUpBanner();" id="place_a" class="btn btn_mdl btn_rewrite">추가</a> 
 		 	  <div class="addPlaceUpBanner"> </div>
 		</div>
-	    
+	     
 	  	<div class="btn_area">
 			<a href="javascript:void(0)" class="btn btn_mdl btn_${searchVO.procType eq 'update'? 'rewrite':'save'}" onclick="submit('${ceoVO.ceName}')" id="btn_submit">등록</a>
 		</div>
 	</form>  
 </div>	 
-	      
+	             
+	        
+	        
+	        
+	        
+	        
+	        
+	          
+	        
 <script type="text/javascript">
-   
-$(function(){            
-	$.ajax({  
-		method : "POST",           
-		url : "addList.do",
-		data : "HTML",
-		dataType : "HTML",
-		success : function(data){
-			$(".addPlaceUpBanner").html(data);
-		}
-	}) 
-})
+      
+         
+function iterator(){
+	if('${fn:length(upBannerList)}' > 0){  
+		var html = '';               
+		html += '<c:forEach var="bannerVO" items="${upBannerList}">';
+		html += '<div id="div_${bannerVO.baSeq}">';
+		html += '<input type="hidden" name="baAtchFileId" id="baAtchFileId">';
+		html += '<table class="tbl_row_type01">';
+		html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
+		html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
+		html += '<colgroup>';  
+		html += '<col style="width:20%;">'; 
+		html += '<col style="width:30%;">';
+		html += '<col style="width:20%;">';
+		html += '<col style="width:30%;">'; 
+		html += '</colgroup>';
+		html += '<tbody>';    
+		html += '<tr>';
+		html += '<th scope="row"><strong class="th_tit">제목</strong></th>';
+		html += '<td colspan="3">';
+		html += '<input type="text" name="baTitle" id="baTitle" class="text w90p" maxlength="70" value="${bannerVO.baTitle}" />';
+		html += '<a href="javascript:void(0)" onclick="delUpBanner(${bannerVO.baSeq});" class="btn btn_mdl btn_del" style="margin-left:42px;" >삭제</a>';
+		html += '</td>';
+		html += '</tr>'; 
+		html += '<tr>';  
+		html += '<th scope="row"><strong>URL</strong></th>';
+		html += '<td>';
+		html += '<input type="text" name="baUrl" id="baUrl" class="text w100p" maxlength="120" value="${bannerVO.baUrl}" />';
+		html += '</td>';
+		html += '<th scope="row"><strong>새창 유무</strong></th>';
+		html += '<td>';
+		html += '사용 <input type="checkbox" id="check_window" onclick="checkBox();">';
+		html += '<input type="hidden" name="baWindow" id="baWindow">';
+		html += '</td>';
+		html += '</tr>'; 
+		html += '<tr>';
+		html += '<th scope="row"><strong>전시 순서</strong></th>';
+		html += '<td>';
+		html += '<select name="baOrderNum" id="baOrderNum">';
+		html += '<option value="">순서 선택</option>'; 
+		html += '<option value="1" ${bannerVO.baOrderNum eq "1" ? "checked" : ""}>1</option>';
+		html += '<option value="2" ${bannerVO.baOrderNum eq "2" ? "checked" : ""}>2</option>';
+		html += '<option value="3" ${bannerVO.baOrderNum eq "3" ? "checked" : ""}>3</option>';
+		html += '</select>'; 
+		html += '</td>'; 
+		html += '<th scope="row"><strong>전시 유무</strong></th>';
+		html += '<td>';
+		html += '전시 <input type="checkbox" id="check_baExposeYn" onclick="checkBox();"  ${bannerVO.baExposeYn eq "Y" ? "checked" : ""}>';
+		html += '<input type="hidden" name="baExposeYn" id="baExposeYn">';
+		html += '</td>';
+		html += '</tr>';
+		html += '<tr>';   
+		html += '<th scope="row"><strong>내용</strong></th>'; 
+		html += '<td colspan="3">';
+		html += '<textarea name="baCont" id="baCont" class="txt_area w_100p" style="resize:none;" value="${bannerVO.baCont}" ></textarea>';
+		html += '</td>';  
+		html += '</tr>';  
+		html += '<tr>';    
+		html += '<th scope="row"><strong>첨부파일</strong></th>';
+		html += '<td colspan="3">';
+		html += '<iframe name="baAtchFileIdFrame" id="baAtchFileIdFrame" src="/atch/fileUpload.do?atchFileId=&fileCnt=5&atchFileIdNm=${bannerVO.baAtchFileId}&updateType=upload" style="width: 100%;" frameborder="0" baTitle="파일 업로드 폼"></iframe>';
+		html += '</td>';
+		html += '</tr>'; 
+		html += '</tbody>';           
+		html += '</table>';        
+		html += '</div>';
+		html += '</c:forEach>'; 
+		   
+		$(".addPlaceUpBanner").before(html); 
+	}
+}
+
+
+
+
+
+$(function(){              
+	iterator();
+}) 
           
-     
 /** 주소 검색  **/      
 function execDaumPostcode() { 
     daum.postcode.load(function(){ 
@@ -85,11 +160,10 @@ function execDaumPostcode() {
               $("#ceAdd1").val(data.zonecode);
               $("#ceAdd2").val(data.roadAddress);
             }
-        }).open();
+        }).open(); 
     });
 } 
 
-  
  
 function submit(title){  
 	var procType = ""; 
@@ -114,85 +188,90 @@ function submit(title){
 		fncPageBoard('update','updateProc.do'); 
 		return false;  
 	}       
-}                              
-                                                        
+}                                    
+                                                                
 function addUpBanner(){    
-	$.ajax({       
-		method : "POST",            
-		url : "addBannerFrm.do",
-		data : "HTML",
-		dataType : "HTML",
-		success : function(data){
-			$("#place_a").after(data);
-		}
-	}) 
+	var html = '<input type="hidden" name="baAtchFileId" id="baAtchFileId">';
+		html += '<table class="tbl_row_type01">';
+		html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
+		html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
+		html += '<colgroup>';
+		html += '<col style="width:20%;">';
+		html += '<col style="width:30%;">';
+		html += '<col style="width:20%;">';
+		html += '<col style="width:30%;">'; 
+		html += '</colgroup>';
+		html += '<tbody>';     
+		html += '<tr>';        
+		html += '<th scope="row"><strong class="th_tit">제목</strong></th>';
+		html += '<td colspan="3">';
+		html += '<input type="text" name="baTitle" id="baTitle" class="text w90p" maxlength="70" value="" />';
+		html += '<a href="javascript:void(0)" onclick="delUpBanner(${bannerVO.baSeq});" class="btn btn_mdl btn_del" style="margin-left:42px;" >삭제</a>';
+		html += '</td>';
+		html += '</tr>';
+		html += '<tr>';
+		html += '<th scope="row"><strong>URL</strong></th>';
+		html += '<td>';
+		html += '<input type="text" name="baUrl" id="baUrl" class="text w100p" maxlength="120" value="" />';
+		html += '</td>';
+		html += '<th scope="row"><strong>새창 유무</strong></th>';
+		html += '<td>';
+		html += '사용 <input type="checkbox" id="check_window" onclick="checkBox();">';
+		html += '<input type="hidden" name="baWindow" id="baWindow">';
+		html += '</td>';
+		html += '</tr>'; 
+		html += '<tr>';
+		html += '<th scope="row"><strong>전시 순서</strong></th>';
+		html += '<td>';
+		html += '<select name="baOrderNum" id="baOrderNum">';
+		html += '<option value="">순서 선택</option>';
+		html += '<option value="1">1</option>';
+		html += '<option value="2">2</option>';
+		html += '<option value="3">3</option>';
+		html += '</select>'; 
+		html += '</td>';
+		html += '<th scope="row"><strong>전시 유무</strong></th>';
+		html += '<td>';
+		html += '전시 <input type="checkbox" id="check_baExposeYn" onclick="checkBox();">';
+		html += '<input type="hidden" name="baExposeYn" id="baExposeYn">';
+		html += '</td>';
+		html += '</tr>';
+		html += '<tr>';
+		html += '<th scope="row"><strong>내용</strong></th>'; 
+		html += '<td colspan="3">';
+		html += '<textarea name="baCont" id="baCont" class="txt_area w_100p" style="resize:none;" ></textarea>';
+		html += '</td>';
+		html += '</tr>';  
+		html += '<tr>';
+		html += '<th scope="row"><strong>첨부파일</strong></th>';
+		html += '<td colspan="3">';
+		html += '<iframe name="baAtchFileIdFrame" id="baAtchFileIdFrame" src="/atch/fileUpload.do?atchFileId=&fileCnt=5&atchFileIdNm=baAtchFileId&updateType=upload" style="width: 100%;" frameborder="0" baTitle="파일 업로드 폼"></iframe>';
+		html += '</td>';
+		html += '</tr>';
+		html += '</tbody>'; 
+		html += '</table>';   
+	 	     
+	$(".addPlaceUpBanner").before(html); 
 }        
    
-var html = '<input type="hidden" name="baAtchFileId" id="baAtchFileId">';
-	html += '<table class="tbl_row_type01">';
-	html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
-    html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
-	html += '<colgroup>';
-	html += '<col style="width:20%;">';
-	html += '<col style="width:30%;">';
-	html += '<col style="width:20%;">';
-	html += '<col style="width:30%;">';
-	html += '</colgroup>';
-	html += '<tbody>';
-	html += '<tr>';
-	html += '<th scope="row"><strong class="th_tit">제목</strong></th>';
-	html += '<td colspan="3">';
-	html += '<input type="text" name="baTitle" id="baTitle" class="text w100p" maxlength="70" value="" />';
-	html += '</td>';
-	html += '</tr>';
-	html += '<tr>';
-	html += '<th scope="row"><strong>URL</strong></th>';
-	html += '<td>';
-	html += '<input type="text" name="baUrl" id="baUrl" class="text w100p" maxlength="120" value="" />';
-	html += '</td>';
-	html += '<th scope="row"><strong>새창 유무</strong></th>';
-	html += '<td>';
-	html += '사용 <input type="checkbox" id="check_window" onclick="checkBox();">';
-	html += '<input type="hidden" name="baWindow" id="baWindow">';
-	html += '</td>';
-	html += '</tr>';
-	html += '<tr>';
-	html += '<th scope="row"><strong>전시 순서</strong></th>';
-	html += '<td>';
-	html += '<select name="baOrderNum" id="baOrderNum">';
-	html += '<option value="">순서 선택</option>';
-	html += '<option value="1">1</option>';
-	html += '<option value="2">2</option>';
-	html += '<option value="3">3</option>';
-	html += '</select>';
-	html += '</td>';
-	html += '<th scope="row"><strong>전시 유무</strong></th>';
-	html += '<td>';
-	html += '전시 <input type="checkbox" id="check_baExposeYn" onclick="checkBox();">';
-	html += '<input type="hidden" name="baExposeYn" id="baExposeYn">';
-	html += '</td>';
-	html += '</tr>';
-	html += '<tr>';
-	html += '<th scope="row"><strong>내용</strong></th>'; 
-	html += '<td colspan="3">';
-	html += '<textarea name="baCont" id="baCont" class="txt_area w_100p" style="resize:none;" ></textarea>';
-	html += '</td>';
-	html += '</tr>';
-	html += '<tr>';
-	html += '<th scope="row"><strong>첨부파일</strong></th>';
-	html += '<td colspan="3">';
-	html += '<iframe name="baAtchFileIdFrame" id="baAtchFileIdFrame" src="/atch/fileUpload.do?atchFileId=&fileCnt=5&atchFileIdNm=baAtchFileId&updateType=upload" style="width: 100%;" frameborder="0" baTitle="파일 업로드 폼"></iframe>';
-	html += '</td>';
-	html += '</tr>';
-	html += '</tbody>';
-	html += '</table>';
-	html += '<a href="javascript:void(0)" onclick="delUpBanner();" class="btn btn_mdl btn_del"  >삭제</a>';
-			
-  
-function delUpBanner(){  
-	$(".addPlace").html("");
-}
+        
     
+function delUpBanner(seq){  
+	
+	alert(seq);
+	  
+	$.ajax({  
+		method : "POST",
+		url : "delUpBanner.do",
+		data : {"baSeq" : seq},
+		success : function(data){
+			alert(seq);
+			$("#div_"+seq).remove();
+			/* iterator(); */    
+		}
+	})
+}
+       
 
 
 </script>

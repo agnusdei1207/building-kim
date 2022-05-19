@@ -8,19 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.open.cmmn.model.CmmnDefaultVO;
 import com.open.cmmn.service.CmmnService;
 import com.open.ma.kim.banner.service.BannerVO;
 import com.open.ma.kim.ceo.service.CeoVO;
-import com.open.ma.kim.free.service.FreeVO;
-
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 
 @Controller
@@ -51,6 +47,14 @@ public class DeCeoController {
 		if (ceoVO != null) {        
 			model.addAttribute("ceoVO", ceoVO);
 		}    
+		
+		  
+		List<BannerVO> upBannerList = (List<BannerVO>)cmmnService.selectList(searchVO, "Banner.upBannerSelectList");
+		model.addAttribute("upBannerList", upBannerList); 
+		 
+		List<BannerVO> downBannerList = (List<BannerVO>)cmmnService.selectList(searchVO, "Banner.downBannerSelectList");
+		model.addAttribute("downBannerList", downBannerList);
+		
 		 
 		return ".mLayout:"+ folderPath + "form";
 	}     
@@ -77,6 +81,13 @@ public class DeCeoController {
 		model.addAttribute("cmmnScript", cmmnScript);
 		return "cmmn/execute";
 	}      
-                         
-
+        
+	@ResponseBody
+	@RequestMapping(folderPath + "delUpBanner.do")
+	public void delUpBanner(@ModelAttribute("searchVO") CeoVO searchVO, Model model, SessionStatus status, HttpServletRequest request) throws Exception {
+		
+		cmmnService.deleteContents(searchVO, "Banner");    
+		
+	}     
+	
 }
