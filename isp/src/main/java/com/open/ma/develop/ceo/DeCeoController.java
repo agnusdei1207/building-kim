@@ -25,14 +25,14 @@ import com.open.ma.kim.ceo.service.CeoVO;
 @Controller
 public class DeCeoController {
 
-	@Resource(name = "cmmnService")   
+	@Resource(name = "cmmnService")    
     protected CmmnService cmmnService;
-	 
+	
     private final static String PROGRAM_ID = "Ceo";
-
+     
     private final static String folderPath = "/ma/develop/deCeo/";
     
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked") 
 	@RequestMapping(folderPath + "{procType}form.do")    
 	public String form(@ModelAttribute("searchVO") CeoVO searchVO, Model model,@PathVariable String procType, HttpServletRequest request) throws Exception {
 		     
@@ -40,7 +40,7 @@ public class DeCeoController {
 		ceoVO = (CeoVO) cmmnService.selectContents(searchVO, PROGRAM_ID);
 		if (ceoVO != null) {        
 			model.addAttribute("ceoVO", ceoVO);
-		}    
+		}     
 		      
 		List<CeoVO> upBannerList = (List<CeoVO>)cmmnService.selectList(searchVO, "Banner.upBannerSelectList");
 		model.addAttribute("upBannerList", upBannerList); 
@@ -48,10 +48,30 @@ public class DeCeoController {
 		List<CeoVO> downBannerList = (List<CeoVO>)cmmnService.selectList(searchVO, "Banner.downBannerSelectList");
 		model.addAttribute("downBannerList", downBannerList);
 		
+		return ".mLayout:"+ folderPath + "form";
+	}     
+  
+	@RequestMapping(folderPath + "{procType}Proc.do")
+	public void proc(@ModelAttribute("searchVO") CeoVO searchVO, Model model, SessionStatus status,@PathVariable String procType, HttpServletRequest request) throws Exception {
+		
+		CeoVO ceoVO = new CeoVO();
+		ceoVO = (CeoVO) cmmnService.selectContents(searchVO, PROGRAM_ID);
+		if (ceoVO != null) {        
+			model.addAttribute("ceoVO", ceoVO);
+		}     
+		       
+		List<CeoVO> upBannerList = (List<CeoVO>)cmmnService.selectList(searchVO, "Banner.upBannerSelectList");
+		model.addAttribute("upBannerList", upBannerList); 
+		 
+		List<CeoVO> downBannerList = (List<CeoVO>)cmmnService.selectList(searchVO, "Banner.downBannerSelectList");
+		model.addAttribute("downBannerList", downBannerList);
+		  
+		// 시작
 		HashMap<String, Object> returnMap = new HashMap<>();
 		String msg = "저장이 실패하였습니다";
-		 
-		ceoVO.setBannerList(upBannerList);    							    					  
+		  
+		searchVO.setBannerList(upBannerList);    
+		  
 		try { 
 			if(ceoVO.getBannerList() != null && ceoVO.getBannerList().size() > 0) {
 				System.out.println("ceoVO.getBannerList() ::: " + ceoVO.getBannerList());
@@ -65,7 +85,7 @@ public class DeCeoController {
 						tempList.remove();     		   
 					}     
 				}  
-				      
+				        
 				cmmnService.deleteContents(tempList, "Banner"); //
 				for (CeoVO tempVO : ceoVO.getBannerList()) {
 					System.out.println("아래쪽 tempVO ::: " + tempVO);
@@ -81,18 +101,9 @@ public class DeCeoController {
 			msg = ""+e;
 		}finally {
 			returnMap.put("msg", msg);
-		}
+		}	    
+	}       
 		
-		
-		return ".mLayout:"+ folderPath + "form";
-	}     
-  
-	@RequestMapping(folderPath + "{procType}Proc.do")
-	public void proc(@ModelAttribute("searchVO") CeoVO searchVO, Model model, SessionStatus status,@PathVariable String procType, HttpServletRequest request) throws Exception {
-		    
-		     
-	}      
-        
 	@ResponseBody
 	@RequestMapping(folderPath + "delUpBanner.do")
 	public void delUpBanner(@ModelAttribute("searchVO") CeoVO searchVO, Model model, SessionStatus status, HttpServletRequest request) throws Exception {
