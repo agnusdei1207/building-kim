@@ -346,11 +346,11 @@ function fncM_PopUp(){
 			$('.m_main_pop').show();
 			$('#js-popup-bg').show();
 			$('#js-popup-bg').click(function(){
-				view_hide('m');
+				view_hide('m');  
 			});
 		}
 	}
-}       
+}
 
 <%-- 팝업 닫기 --%>  
 var hideChk = "";
@@ -391,6 +391,7 @@ function mainResponse(){
 		fncP_PopUp();
 	}
 }
+
 $(window).resize(function(){
 	mainResponse();
 });

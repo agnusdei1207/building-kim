@@ -63,7 +63,7 @@
 				 AND BA_SEQ = #{baSeq}
 		]]>
 	</select>
-	
+	 
 	
 	<select id="selectList" parameterType="cmmnDefaultVO" resultType="bannerVO">
 		/* Banner.selectList */
@@ -101,6 +101,58 @@
 			 <include refid="Where"/>
 	</select>
 	
+	
+	<select id="upBannerSelectList" parameterType="cmmnDefaultVO" resultType="bannerVO">
+		/* Banner.upBannerSelectList */
+		<![CDATA[  
+      	     SELECT  
+      	       
+				  BA_SEQ															 baSeq
+				, DATE_FORMAT(BA_RGST_DT,'%Y.%m.%d') 								 baRgstDt
+				, F_USER_NM(BA_RGST_ID) 											 baRgstId
+				, BA_ATCH_FILE_ID 													 baAtchFileId
+				, BA_TITLE														     baTitle
+				, BA_CONT 															 baCont
+				, BA_URL 															 baUrl
+				, BA_WINDOW															 baWindow
+				, BA_EXPOSE_YN														 baExposeYn
+				, BA_ORDER_NUM														 baOrderNum
+				
+				
+		     FROM T_BANNER
+			 WHERE BA_USE_YN='Y'	
+	      ]]>   
+		     <include refid="Where"/>	 
+	     <![CDATA[    
+	    		ORDER BY BA_SEQ DESC
+		]]> 
+	</select>	
+	
+	<select id="downBannerSelectList" parameterType="cmmnDefaultVO" resultType="bannerVO">
+		/* Banner.upBannerSelectList */
+		<![CDATA[  
+      	     SELECT  
+      	       
+				  BA_SEQ															 baSeq
+				, DATE_FORMAT(BA_RGST_DT,'%Y.%m.%d') 								 baRgstDt
+				, F_USER_NM(BA_RGST_ID) 											 baRgstId
+				, BA_ATCH_FILE_ID 													 baAtchFileId
+				, BA_TITLE														     baTitle
+				, BA_CONT 															 baCont
+				, BA_URL 															 baUrl
+				, BA_WINDOW															 baWindow
+				, BA_EXPOSE_YN														 baExposeYn
+				, BA_ORDER_NUM														 baOrderNum
+				
+		     FROM T_BANNER
+			 WHERE BA_USE_YN='Y'	
+	      ]]>   
+		     <include refid="Where"/>	 
+	     <![CDATA[    
+	    		ORDER BY BA_SEQ DESC
+		]]>
+	</select>	
+	
 	<insert id="insertContents" parameterType="bannerVO">
 		/* Banner.insertContents */
 		<![CDATA[
@@ -111,21 +163,24 @@
 				, BA_TITLE													
 				, BA_CONT 													
 				, BA_URL 														
-				, BA_WINDOW																										
+				, BA_WINDOW			
+				, BA_EXPOSE_YN														 
+				, BA_ORDER_NUM														 																							
 			)   
 			VALUES (
 				 (SELECT IFNULL(MAX(TS.BA_SEQ)+1,1) FROM T_BANNER TS)
 				,#{loginSeq     }          
 				,#{baAtchFileId }  
 				,#{baTitle      }
-				,#{baCont       }
+				,#{baCont       }  
 				,#{baUrl        }
 				,#{baWindow     }
-				 
-			)
+				,#{baExposeYn   }
+				,#{baOrderNum   }
+			) 
 		]]>
 	</insert>
-	
+	 
 	<update id="updateContents" parameterType="bannerVO">
 		/* Banner.updateContents */
 		<![CDATA[

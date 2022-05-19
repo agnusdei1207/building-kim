@@ -7,15 +7,8 @@ import org.apache.ibatis.type.Alias;
 
 import com.open.cmmn.model.CmmnDefaultVO;
 
-/**
- * Content VO 클래스
- * @author 공통서비스 개발팀 yd.go
- * @since 2016.09.08
- * @version 1.0
- * @see
- *  
  
- */
+   
 @Alias("bannerVO")
 public class BannerVO extends CmmnDefaultVO implements Serializable {
 	/**
@@ -33,11 +26,30 @@ public class BannerVO extends CmmnDefaultVO implements Serializable {
 	private String baCont;
 	private String baUrl;
 	private String baWindow;
+	private String baExposeYn;
+	private String baOrderNum; 
 	private String baCnt;
+	private List<BannerVO> bannerList;
 	
-	
-	
-	
+	     
+	public List<BannerVO> getBannerList() {
+		return bannerList;
+	}
+	public void setBannerList(List<BannerVO> bannerList) {
+		this.bannerList = bannerList;
+	}
+	public String getBaExposeYn() {
+		return baExposeYn;
+	}
+	public void setBaExposeYn(String baExposeYn) {
+		this.baExposeYn = baExposeYn;
+	}
+	public String getBaOrderNum() {
+		return baOrderNum;
+	}
+	public void setBaOrderNum(String baOrderNum) {
+		this.baOrderNum = baOrderNum;
+	}
 	public String getBaSeq() {
 		return baSeq;
 	}

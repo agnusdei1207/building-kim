@@ -38,7 +38,7 @@
 								<c:out value="${util:unEscape(sampleVO.cont)}" escapeXml="false"/>
 							</div>
 						</td>
-					</tr>
+					</tr>  
 					<tr>
 						<th scope="row"><strong>첨부파일</strong></th>
 						<td colspan="3">
