@@ -192,10 +192,14 @@
 					, BA_CONT 															 =#{baCont      }
 					, BA_URL 															 =#{baUrl       }
 					, BA_WINDOW 														 =#{baWindow    }
-				 
+				 	, BA_EXPOSE_YN														 =#{baExposeYn	}
+					, BA_ORDER_NUM														 =#{baOrderNum  }
+				 	      
 			 WHERE	BA_SEQ = #{baSeq}    
-		]]>
+		]]>  
 	</update>   
+	  
+	  
 	  
 	<update id="updateReverse" parameterType="bannerVO">
 		/* Banner.updateReverse */
@@ -233,7 +237,7 @@
 			UPDATE	T_BANNER
 		       SET   
 	          	  	BA_USE_YN='N'
-			 WHERE 	BA_SEQ=#{baSeq}
+			 WHERE 	BA_SEQ = #{baSeq}
 		]]>
 	</update>
   
@@ -241,9 +245,9 @@
 		/* Banner.deleteBannerContents */
 		<![CDATA[   
 			UPDATE	T_BANNER
-		       SET   
+		       SET    
 	          	  	BA_USE_YN='N'
-			 WHERE 	BA_SEQ=#{col1}
+			 WHERE 	BA_SEQ = #{col1}
 		]]>
 	</update>
 	

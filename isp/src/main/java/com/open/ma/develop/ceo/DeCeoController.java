@@ -67,7 +67,7 @@ public class DeCeoController {
 		     
 		ceoVO.setBannerList(upBannerList);              
 		System.out.println("배열 제목 체크 : "+ searchVO.getBaTitle());
-		   
+		    
 		 
 		  
 //		String [] baSeq = searchVO.getBaSeq();
