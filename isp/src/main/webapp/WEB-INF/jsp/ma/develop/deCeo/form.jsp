@@ -85,23 +85,23 @@
 									 <input type="hidden" name="baWindow" id="baWindow_${status.count }"> 
 									 </td>     
 								 </tr>                     
-								 <tr>     
+								 <tr>       
 								 <th scope="row"><strong>전시 순서</strong></th>  
-								 <td>
+								 <td> 
 									 <select name="baOrderNum" id="baOrderNum_${status.count }">             
-										 <option value="">순서 선택</option>                    
-										 <c:forEach var="num" items="${upBannerList}" varStatus="status">           
-											 <option value="${status.count}" ${bannerVO.baOrderNum eq status.count ? "checked" : ""}>${status.count}</option>
+										 <option value="">순서 선택</option>                       
+										 <c:forEach var="num" items="${upBannerList}" varStatus="inner">           
+											 <option value="${inner.count}" ${bannerVO.baOrderNum eq inner.count ? "checked" : ""}>${inner.count}</option>
 										 </c:forEach>     
-									 </select>                
-								 </td>                    
-								 <th scope="row"><strong>전시 유무 </strong></th>                  
+									 </select>                 
+								 </td>                        
+								 <th scope="row"><strong>전시 유무 </strong></th>                   
 									 <td>           
-										 전시 <input type="radio" name="showYn_${status.count }" id="radio_baExposeYn" ${bannerVO.baExposeYn eq "Y" ? "checked" : ""}>
-										 미전시 <input type="radio" name="showYn_${status.count }" id="radio_baExposeYn" ${bannerVO.baExposeYn eq "N" ? "checked" : ""}>
-									 	<input type="hidden" name="baExposeYn" id="baExposeYn">
+										 전시 <input type="radio" name="showYn_${status.count }" id="radio_baExposeYn_${status.count }" ${bannerVO.baExposeYn eq "Y" ? "checked" : ""}>
+										 미전시 <input type="radio" name="showYn_${status.count }" id="radio_baExposeYn_${status.count }" ${bannerVO.baExposeYn eq "N" ? "checked" : ""}>
+									 	<input type="hidden" name="baExposeYn" id="baExposeYn_${status.count }">
 									 </td>   
-								 </tr>     
+								 </tr>      
 								 <tr>          
 									 <th scope="row"><strong>내용</strong></th>                     
 									 <td colspan="3">            
@@ -185,10 +185,8 @@ function fncSetOptionNum(){
 		}
 		$(this).html(html);
 	})           
-}     
-                
-                                                   
-                  
+}      
+
 function addUpBanner(){                  
 	var num = $("[id^=baOrderNum_]").length + 1;    
 	alert(num + "번째 창이 추가되었습니다.");
@@ -198,7 +196,7 @@ function addUpBanner(){
 		html += '<table class="tbl_row_type01">';  
 		html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
 		html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
-		html += '<colgroup>';   
+		html += '<colgroup>';    
 		html += '<col style="width:20%;">';     
 		html += '<col style="width:30%;">';            
 		html += '<col style="width:20%;">';
@@ -221,23 +219,23 @@ function addUpBanner(){
 		html += '<td>'; 
 		html += ' 사용 <input type="radio" name="newWindow" id="radio_window_'+num+'" ${bannerVO.baWindow eq "Y" ? "checked" : "" }>';
 		html += '미사용 <input type="radio" name="newWindow" id="radio_window_'+num+'" ${bannerVO.baWindow eq "N" ? "checked" : "" }>';
-		html += '<input type="hidden" name="baWindow" id="baWindow">';	 
+		html += '<input type="hidden" name="baWindow" id="baWindow_'+num+'">';	 
 		html += '</td>';          
-		html += '</tr>';  
+		html += '</tr>';     
 		html += '<tr>'; 
 		html += '<th scope="row"><strong>전시 순서</strong></th>';     
-		html += '<td>';
+		html += '<td>'; 
 		html += '<select name="baOrderNum" id="baOrderNum_'+num+'">';  
 		html += '</select>';       
 		html += '</td>';      
 		html += '<th scope="row"><strong>전시 유무</strong></th>';  
-		html += '<td>';
+		html += '<td>';  
 		html += '전시 <input type="radio" name="showYn" id="radio_baExposeYn_'+num+'" ${bannerVO.baExposeYn eq "Y" ? "checked" : ""}>';
 		html += '미전시 <input type="radio" name="showYn" id="radio_baExposeYn_'+num+'" ${bannerVO.baExposeYn eq "N" ? "checked" : ""}>';
-		html += '<input type="hidden" name="baExposeYn" id="baExposeYn">';
+		html += '<input type="hidden" name="baExposeYn" id="baExposeYn_'+num+'">';
 		html += '</td>';     
 		html += '</tr>';         
-		html += '<tr>';   
+		html += '<tr>';    
 		html += '<th scope="row"><strong>내용</strong></th>'; 
 		html += '<td colspan="3">';     
 		html += '<input type="text" name="baCont" id="baCont_'+num+'" class="text w100p" maxlength="50" value=" "/>';
