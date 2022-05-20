@@ -107,20 +107,19 @@
 		<![CDATA[  
       	     SELECT  
       	       
-				  BA_SEQ															 baSeq
-				, DATE_FORMAT(BA_RGST_DT,'%Y.%m.%d') 								 baRgstDt
-				, F_USER_NM(BA_RGST_ID) 											 baRgstId
-				, BA_ATCH_FILE_ID 													 baAtchFileId
-				, BA_TITLE														     baTitle
-				, BA_CONT 															 baCont
-				, BA_URL 															 baUrl
-				, BA_WINDOW															 baWindow
-				, BA_EXPOSE_YN														 baExposeYn
-				, BA_ORDER_NUM														 baOrderNum
+					  BA_SEQ															 baSeq
+					, DATE_FORMAT(BA_RGST_DT,'%Y.%m.%d') 								 baRgstDt
+					, F_USER_NM(BA_RGST_ID) 											 baRgstId
+					, BA_ATCH_FILE_ID 													 baAtchFileId
+					, BA_TITLE														     baTitle
+					, BA_CONT 															 baCont
+					, BA_URL 															 baUrl
+					, BA_WINDOW															 baWindow
+					, BA_EXPOSE_YN														 baExposeYn
+					, BA_ORDER_NUM														 baOrderNum
 				
-				
-		     FROM T_BANNER
-			 WHERE BA_USE_YN='Y'	
+		      FROM	T_BANNER
+			 WHERE	BA_USE_YN='Y'	
 	      ]]>   
 		     <include refid="Where"/>	 
 	     <![CDATA[    
@@ -131,21 +130,20 @@
 	<select id="downBannerSelectList" parameterType="cmmnDefaultVO" resultType="bannerVO">
 		/* Banner.upBannerSelectList */
 		<![CDATA[  
-      	     SELECT  
-      	       
-				  BA_SEQ															 baSeq
-				, DATE_FORMAT(BA_RGST_DT,'%Y.%m.%d') 								 baRgstDt
-				, F_USER_NM(BA_RGST_ID) 											 baRgstId
-				, BA_ATCH_FILE_ID 													 baAtchFileId
-				, BA_TITLE														     baTitle
-				, BA_CONT 															 baCont
-				, BA_URL 															 baUrl
-				, BA_WINDOW															 baWindow
-				, BA_EXPOSE_YN														 baExposeYn
-				, BA_ORDER_NUM														 baOrderNum
-				
-		     FROM T_BANNER
-			 WHERE BA_USE_YN='Y'	
+      	     SELECT		  
+					  BA_SEQ															 baSeq
+					, DATE_FORMAT(BA_RGST_DT,'%Y.%m.%d') 								 baRgstDt
+					, F_USER_NM(BA_RGST_ID) 											 baRgstId
+					, BA_ATCH_FILE_ID 													 baAtchFileId
+					, BA_TITLE														     baTitle
+					, BA_CONT 															 baCont
+					, BA_URL 															 baUrl
+					, BA_WINDOW															 baWindow
+					, BA_EXPOSE_YN														 baExposeYn
+					, BA_ORDER_NUM														 baOrderNum
+				    
+		       FROM	T_BANNER
+			  WHERE	BA_USE_YN='Y'	
 	      ]]>   
 		     <include refid="Where"/>	 
 	     <![CDATA[    
@@ -156,27 +154,27 @@
 	<insert id="insertContents" parameterType="bannerVO">
 		/* Banner.insertContents */
 		<![CDATA[
-			INSERT INTO T_BANNER(
-           	  	 BA_SEQ															
-				, BA_RGST_ID
-				, BA_ATCH_FILE_ID 									
-				, BA_TITLE													
-				, BA_CONT 													
-				, BA_URL 														
-				, BA_WINDOW			
-				, BA_EXPOSE_YN														 
-				, BA_ORDER_NUM														 																							
-			)   
-			VALUES (
-				 (SELECT IFNULL(MAX(TS.BA_SEQ)+1,1) FROM T_BANNER TS)
-				,#{loginSeq     }          
-				,#{baAtchFileId }  
-				,#{baTitle      }
-				,#{baCont       }  
-				,#{baUrl        }
-				,#{baWindow     }
-				,#{baExposeYn   }
-				,#{baOrderNum   }
+			INSERT	INTO	T_BANNER(
+			           	  	BA_SEQ				  											
+							, BA_RGST_ID
+							, BA_ATCH_FILE_ID 									
+							, BA_TITLE													
+							, BA_CONT 													
+							, BA_URL 														
+							, BA_WINDOW			
+							, BA_EXPOSE_YN		 												 
+							, BA_ORDER_NUM		   												 																							
+			)     
+			VALUES	(   
+							(SELECT IFNULL(MAX(TS.BA_SEQ)+1,1) FROM T_BANNER TS)
+							,#{loginSeq     }          
+							,#{baAtchFileId }  
+							,#{baTitle      }
+							,#{baCont       }  
+							,#{baUrl        }
+							,#{baWindow     }
+							,#{baExposeYn   }
+							,#{baOrderNum   }
 			) 
 		]]>
 	</insert>
@@ -184,32 +182,70 @@
 	<update id="updateContents" parameterType="bannerVO">
 		/* Banner.updateContents */
 		<![CDATA[
-			UPDATE T_BANNER        
-			 SET   
-			      
-				BA_RGST_DT								 							 = NOW()
-				, BA_RVSE_ID														 =#{loginSeq	}	
-				, BA_ATCH_FILE_ID 													 =#{baAtchFileId}
-				, BA_TITLE														     =#{baTitle     }
-				, BA_CONT 															 =#{baCont      }
-				, BA_URL 															 =#{baUrl        }
-				, BA_WINDOW 														 =#{baWindow        }
-				
-			WHERE  BA_SEQ = #{baSeq}    
+			UPDATE	T_BANNER       
+			 
+			   SET   
+					BA_RGST_DT								 							 = NOW()
+					, BA_RVSE_ID														 =#{loginSeq	}	
+					, BA_ATCH_FILE_ID 													 =#{baAtchFileId}
+					, BA_TITLE														     =#{baTitle     }
+					, BA_CONT 															 =#{baCont      }
+					, BA_URL 															 =#{baUrl       }
+					, BA_WINDOW 														 =#{baWindow    }
+				 
+			 WHERE	BA_SEQ = #{baSeq}    
 		]]>
-	</update> 
+	</update>   
+	  
+	<update id="updateReverse" parameterType="bannerVO">
+		/* Banner.updateReverse */
+		<![CDATA[
+			UPDATE	T_BANNER     
+			        
+			   SET   
+					BA_RGST_DT								 							 = NOW()
+					, BA_RVSE_ID														 =#{loginSeq	}	
+			]]>		
+				<if test='baTitle != null and baTitle != "" '>
+					, BA_TITLE														     =#{baTitle     }
+				</if>
+			<![CDATA[		
+			]]>		
+				<if test='baCont != null and baCont != "" '>
+					, BA_CONT 															 =#{baCont      }
+				</if>
+			<![CDATA[		    
+			]]>		
+				<if test='baWindow != null and baWindow != "" '>
+					, BA_WINDOW 														 =#{baWindow    }
+				</if>
+			<![CDATA[		
+			
+					, BA_USE_YN 														 = 'Y'
+				      
+			 WHERE	BA_SEQ = #{baSeq}    
+		]]> 
+	</update>  
 	
 	<update id="deleteContents" parameterType="bannerVO">
 		/* Banner.deleteContents */
 		<![CDATA[   
-			UPDATE T_BANNER
-		       SET  
-	          	 BA_USE_YN='N'
-			WHERE BA_SEQ=#{baSeq}
+			UPDATE	T_BANNER
+		       SET   
+	          	  	BA_USE_YN='N'
+			 WHERE 	BA_SEQ=#{baSeq}
 		]]>
 	</update>
-
- 
+  
+ 	<update id="deleteBannerContents" parameterType="bannerVO">
+		/* Banner.deleteBannerContents */
+		<![CDATA[   
+			UPDATE	T_BANNER
+		       SET   
+	          	  	BA_USE_YN='N'
+			 WHERE 	BA_SEQ=#{col1}
+		]]>
+	</update>
 	
 	
 	

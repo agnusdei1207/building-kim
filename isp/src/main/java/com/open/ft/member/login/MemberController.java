@@ -71,7 +71,7 @@ public class MemberController {
 			    		model.addAttribute("cmmnScript", cmmnScript);   
 			    		return "cmmn/execute";
 					} 
-				}     
+				}      
 				  
 	    		message = "아이디 또는 패스워드를 확인하시기 바랍니다.";
 	    		cmmnScript = folderPath + "loginFrm.do"; 

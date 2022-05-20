@@ -34,9 +34,18 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	private String[] baExposeYn;
 	private String[] baOrderNum; 
 	private String baCnt;
-	private List<CeoVO> bannerList; 
+	private List<BannerVO> bannerList; 
 	  
 	
+	
+	
+	
+	public List<BannerVO> getBannerList() {
+		return bannerList;
+	}
+	public void setBannerList(List<BannerVO> bannerList) {
+		this.bannerList = bannerList;
+	}
 	public String getCeSeq() {
 		return ceSeq;
 	}
@@ -84,12 +93,6 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	}
 	public void setBaCnt(String baCnt) {
 		this.baCnt = baCnt;
-	}
-	public List<CeoVO> getBannerList() {
-		return bannerList;   
-	}
-	public void setBannerList(List<CeoVO> bannerList) {
-		this.bannerList = bannerList;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;

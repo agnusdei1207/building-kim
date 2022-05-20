@@ -29,7 +29,16 @@ public class BannerVO extends CmmnDefaultVO implements Serializable {
 	private String baExposeYn;
 	private String baOrderNum; 
 	private String baCnt;
+	private List<BannerVO> bannerList;
 	     
+	
+	
+	public List<BannerVO> getBannerList() {
+		return bannerList;
+	}
+	public void setBannerList(List<BannerVO> bannerList) {
+		this.bannerList = bannerList;
+	}
 	public String getBaExposeYn() {
 		return baExposeYn;
 	}
