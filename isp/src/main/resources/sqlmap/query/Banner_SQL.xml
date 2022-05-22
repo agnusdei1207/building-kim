@@ -201,7 +201,7 @@
 	  
 	  
 	  
-	<update id="updateReverse" parameterType="bannerVO">
+	<update id="updateReverse" parameterType="int">
 		/* Banner.updateReverse */
 		<![CDATA[
 			UPDATE	T_BANNER     
@@ -250,8 +250,6 @@
 			 WHERE 	BA_SEQ = #{col1}
 		]]>
 	</update>
-	
-	
 	
 	
 </mapper>

@@ -1,6 +1,7 @@
 package com.open.ma.develop.ceo;
 
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -61,60 +62,64 @@ public class DeCeoController {
 		}      
 		  
 		List<BannerVO> upBannerList = (List<BannerVO>)cmmnService.selectList(searchVO, "Banner.upBannerSelectList"); 
-		for(BannerVO vo : upBannerList){
-			System.out.println("배너 시퀀스 확인 : "+ vo.getBaSeq());
-		}
-		     
-		ceoVO.setBannerList(upBannerList);              
-		System.out.println("배열 제목 체크 : "+ searchVO.getBaTitle());
-		    
 		 
-		  
-//		String [] baSeq = searchVO.getBaSeq();
-//		for (String seq : baSeq) {
-//			System.out.println("배열 체크 : "+ seq);
-//		} 
-		 
-		try {   
-			System.out.println("if 전");           
-			if(ceoVO.getBannerList() != null && ceoVO.getBannerList().size() > 0) { 
-				System.out.println("if 후");   
-				System.out.println("ceoVO.getBannerList() : " + ceoVO.getBannerList());
-				System.out.println("ceoVO.getBannerList() 시퀀스 : " + ceoVO.getBannerList());
-				Iterator<BannerVO> tempList = ceoVO.getBannerList().iterator();
-				System.out.println("tempList : " + tempList);  
-				System.out.println("tempList.hasNext() : " + tempList.hasNext());
-				while(tempList.hasNext()) {       
-					BannerVO tempVO = tempList.next();
-					System.out.println("tempVO : " + tempVO);
-					System.out.println("tempVO 꺼내기 : " + tempVO.getBaSeq());
-					if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) {
-						System.out.println("빈 값 삭제");
-						tempList.remove();     		      
-					}else{   
-						System.out.println("delete 실행 baSeq :" + tempVO.getBaSeq());
-						cmmnService.deleteContents(tempVO, "Banner"); 
+		ceoVO.setBaSeq(searchVO.getBaSeq());
+		ceoVO.setBaTitle(searchVO.getBaTitle());
+		ceoVO.setBaCont(searchVO.getBaCont());
+		ceoVO.setBaUrl(searchVO.getBaUrl());
+		ceoVO.setBaWindow(searchVO.getBaWindow());
+		ceoVO.setBaExposeYn(searchVO.getBaExposeYn());
+		ceoVO.setBaOrderNum(searchVO.getBaOrderNum());
+		ceoVO.setBannerList(upBannerList);      
+		
+		List<String> delList = new ArrayList<>();
+		BannerVO bannerVO = new BannerVO();
+		
+		if(ceoVO.getBaTitle() != null || ceoVO.getBaTitle().length > 0){
+			for(int j = 0; j < ceoVO.getBaSeq().length; j++){
+				for(int i = 0; i < upBannerList.size(); i++){
+					if(ceoVO.getBaSeq()[j].equals(upBannerList.get(i))){
+						delList.add(ceoVO.getBaSeq()[i]);
+						cmmnService.deleteContents(ceoVO.getBaSeq()[i], "Banner.updateReverse");
 					}
-				}       
-				                           
-				System.out.println("forEach 전 : " + ceoVO.getBannerList());
-				for (BannerVO tempVO : ceoVO.getBannerList()) { 
-					System.out.println("아래쪽 tempVO : " + tempVO.getBaSeq());
-					if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) {  
-						cmmnService.insertContents(tempVO, "Banner");  
-					}else {   
-						System.out.println("reverse 실행 baSeq : "+ tempVO.getBaSeq());
-						cmmnService.updateContents(tempVO, "Banner.updateReverse"); 
-					}  
 				}
-				
-			}  
-			
-		}catch(Exception e) { 
-
-		}finally {
-		   	 
-		}	     
+				if(ceoVO.getBaSeq()[j] == null || ceoVO.getBaSeq()[j] == "" || ceoVO.getBaSeq()[j] == " "){
+					bannerVO.setBaTitle(ceoVO.getBaTitle()[j]);
+					bannerVO.setBaCont(ceoVO.getBaCont()[j]);
+					bannerVO.setBaUrl(ceoVO.getBaUrl()[j]);
+					bannerVO.setBaWindow(ceoVO.getBaWindow()[j]);
+					bannerVO.setBaExposeYn(ceoVO.getBaExposeYn()[j]);
+					bannerVO.setBaOrderNum(ceoVO.getBaOrderNum()[j]);
+					cmmnService.insertContents(bannerVO, "Banner");
+				}
+			}
+		}
+		
+		
+		
+		
+		
+//		if(ceoVO.getBannerList() != null && ceoVO.getBannerList().size() > 0) { 
+//			Iterator<BannerVO> tempList = ceoVO.getBannerList().iterator();
+//			while(tempList.hasNext()) {       
+//				BannerVO tempVO = tempList.next();
+//				if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) {
+//					tempList.remove();     		      
+//				}else{   
+//					cmmnService.deleteContents(tempVO, "Banner"); 
+//				}
+//			}        
+//			                           
+//			for (BannerVO tempVO : ceoVO.getBannerList()) { 
+//				if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) {  
+//					cmmnService.insertContents(tempVO, "Banner");  
+//				}else {   
+//					cmmnService.updateContents(tempVO, "Banner.updateReverse"); 
+//				}  
+//			}
+//			
+//		}  
+	     
 	        
 		model.addAttribute("upBannerList", upBannerList); 
 		return ".mLayout:"+ folderPath + "form";

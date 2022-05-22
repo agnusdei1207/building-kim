@@ -48,7 +48,7 @@
 					</tr> 
 				</tbody>      
 			</table>     
-		</div>                         
+		</div>                          
 		
 		            
 	 	<div class="tbl_wrap">                                                             
@@ -69,14 +69,14 @@
 								 <tr> 
 									 <th scope="row"><strong class="th_tit">제목</strong></th>    
 									 <td colspan="3">      
-										 <input type="text" name="baTitle" id="baTitle_${status.count }" class="text w90p" maxlength="70" value="${bannerVO.baTitle}" />
+										 <input type="text" name="baTitle" id="baTitle_${status.count }" class="text w90p" maxlength="70" value="${bannerVO.baTitle} " />
 									 	<a href="javascript:void(0)" onclick="fncDelBanner(${status.count }, ${bannerVO.baSeq} )" id="btn_del_${status.count }" class="btn btn_mdl btn_del btn_cnt" style="margin-left:39px" >삭제</a>
 									 </td>                    
 								 </tr>           
 								 <tr>       
 									 <th scope="row"><strong>URL</strong></th>          
 									 <td>  
-										 <input type="text" name="baUrl" id="baUrl_${status.count }" class="text w100p" maxlength="120" value="${bannerVO.baUrl}" />
+										 <input type="text" name="baUrl" id="baUrl_${status.count }" class="text w100p" maxlength="120" value="${bannerVO.baUrl} " />
 									 </td>
 									 <th scope="row"><strong>새창 유무</strong></th>  
 									 <td>      
@@ -105,7 +105,7 @@
 								 <tr>          
 									 <th scope="row"><strong>내용</strong></th>                     
 									 <td colspan="3">            
-										 <input type="text" name="baCont" id="baCont_${status.count }" class="text w100p" maxlength="50" value="${bannerVO.baCont }"/>
+										 <input type="text" name="baCont" id="baCont_${status.count }" class="text w100p" maxlength="50" value="${bannerVO.baCont } "/>
 									 </td>     
 								 </tr>         
 								 <tr>                                
@@ -116,7 +116,7 @@
 									 </td>          
 								 </tr>   
 							 </tbody>                       
-						 </table>         
+						 </table>           
 					 </div>
 			 </c:forEach>     
 		</c:if>     
