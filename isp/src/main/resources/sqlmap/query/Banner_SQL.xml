@@ -144,10 +144,10 @@
 				    
 		       FROM	T_BANNER
 			  WHERE	BA_USE_YN='Y'	
-	     	  ]]>   
+	     	  ]]>    
 		     <include refid="Where"/>	 
-	     <![CDATA[    
-	    		ORDER BY BA_SEQ DESC
+	     <![CDATA[     
+	    		ORDER BY BA_SEQ DESC 
 			   ]]>
 	</select>	   
 	
@@ -216,7 +216,7 @@
 				<if test='baCont != null and baCont != "" '>
 					, BA_CONT 															 =#{baCont      }
 				</if>
-			<![CDATA[		    
+			<![CDATA[		     
 			]]>		
 				<if test='baWindow != null and baWindow != "" '>
 					, BA_WINDOW 														 =#{baWindow    }

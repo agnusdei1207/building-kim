@@ -63,47 +63,31 @@ public class DeCeoController {
 		if (ceoVO != null) {        
 			model.addAttribute("ceoVO", ceoVO);
 		}       
-		   
-		List<BannerVO> upBannerList = (List<BannerVO>)cmmnService.selectList(searchVO, "Banner.upBannerSelectList"); 
-		 
-		if(searchVO != null || !"".equals(StringUtil.nullConvert(searchVO))){
-			ceoVO.setBaSeq(searchVO.getBaSeq());
-			ceoVO.setBaTitle(searchVO.getBaTitle());
-			ceoVO.setBaCont(searchVO.getBaCont());
-			ceoVO.setBaUrl(searchVO.getBaUrl());
-			ceoVO.setBaWindow(searchVO.getBaWindow());
-			ceoVO.setBaExposeYn(searchVO.getBaExposeYn());
-			ceoVO.setBaOrderNum(searchVO.getBaOrderNum());
-		} 
-		    
-		ceoVO.setBannerList(upBannerList);       
-		List<String> delSeqList = new ArrayList<>();
-		BannerVO bannerVO = new BannerVO();  
-    
-		 
-		if(ceoVO.getBaTitle() != null || ceoVO.getBaTitle().length > 0){
-			for(int j = 0; j < ceoVO.getBaSeq().length; j++){
-				for(int i = 0; i < upBannerList.size(); i++){
-					if(ceoVO.getBaSeq()[j].equals(upBannerList.get(i))){
-						delSeqList.add(ceoVO.getBaSeq()[i]);
-						cmmnService.deleteContents(ceoVO.getBaSeq()[i], "Banner.updateReverse");
-					}  
-				}      
-				if(ceoVO.getBaSeq()[j] == null || ceoVO.getBaSeq()[j] == "" || ceoVO.getBaSeq()[j] == " "){
-					bannerVO.setBaTitle(ceoVO.getBaTitle()[j]);  
-					bannerVO.setBaCont(ceoVO.getBaCont()[j]);   
-					bannerVO.setBaUrl(ceoVO.getBaUrl()[j]); 
-					bannerVO.setBaWindow(ceoVO.getBaWindow()[j]);
-					bannerVO.setBaExposeYn(ceoVO.getBaExposeYn()[j]);
-					bannerVO.setBaOrderNum(ceoVO.getBaOrderNum()[j]);  
-					cmmnService.insertContents(bannerVO, "Banner");
-					System.out.println("입력값 확인용 toSring ::: " + bannerVO.toString());
-				}
-			}  
-		}   
-		 
+		         
 		       
-		  
+		BannerVO bannerVO = new BannerVO();  
+		for(int i = 0; i < searchVO.getBaSeq().length; i++){    
+				
+				bannerVO.setBaSeq(searchVO.getBaSeq()[i]); 
+				bannerVO.setBaTitle(searchVO.getBaTitle()[i]);    
+				bannerVO.setBaCont(searchVO.getBaCont()[i]);   
+				bannerVO.setBaUrl(searchVO.getBaUrl()[i]); 
+				bannerVO.setBaWindow(searchVO.getBaWindow()[i]);  
+				bannerVO.setBaExposeYn(searchVO.getBaExposeYn()[i]); 
+				bannerVO.setBaOrderNum(searchVO.getBaOrderNum()[i]); 
+									
+				if(Integer.parseInt(searchVO.getBaSeq()[i]) >= 0){
+					cmmnService.updateContents(bannerVO, "Banner.updateReverse");
+				} 
+				if(searchVO.getBaSeq()[i] == null || searchVO.getBaSeq()[i] == "" || searchVO.getBaSeq()[i] == " "){
+					cmmnService.insertContents(bannerVO, "Banner");
+				}
+		}  
+		
+		model.addAttribute("message", "등록되었습니다.");  
+		model.addAttribute("cmmnScript", folderPath + "form.do");
+		return "cmmn/execute";
+	}        
 		 
 		
 //		if(ceoVO.getBannerList() != null && ceoVO.getBannerList().size() > 0) { 
@@ -127,10 +111,7 @@ public class DeCeoController {
 //			
 //		}  
 	            
-		model.addAttribute("message", "등록되었습니다.");  
-		model.addAttribute("cmmnScript", folderPath + "form.do");
-		return "cmmn/execute";
-	}        
+		
 		   
 	@ResponseBody
 	@RequestMapping(folderPath + "delUpBanner.do")

@@ -22,7 +22,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	private String ceHp;
 	private String ceAdd;
 	private String baCnt;
-	private String[] baSeq;   
+	private String[] baSeq;  
 	private String[] baRgstDt;
 	private String[] baRgstId; 
 	private String[] baRvseDt;
@@ -110,11 +110,11 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 			this.baSeq[i] = StringUtil.nullConvert(baSeq[i]);
 		}
 	}
-	 
+	
 	public String[] getBaRgstDt() {
 		String[] newArr = null;
 		if(baRgstDt != null){
-			newArr = new String[baRgstDt.length];
+			newArr = new String[baSeq.length];
 			for (int i = 0; i < baRgstDt.length; i++) {
 				newArr[i] = StringUtil.nullConvert(this.baRgstDt[i]);
 			}
@@ -131,7 +131,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	public String[] getBaRgstId() {
 		String[] newArr = null;
 		if(baRgstId != null){
-			newArr = new String[baRgstId.length];
+			newArr = new String[baSeq.length];
 			for (int i = 0; i < baRgstId.length; i++) {
 				newArr[i] = StringUtil.nullConvert(this.baRgstId[i]);
 			}
@@ -148,7 +148,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	public String[] getBaRvseDt() {
 		String[] newArr = null;
 		if(baRvseDt != null){
-			newArr = new String[baRvseDt.length];
+			newArr = new String[baSeq.length];
 			for (int i = 0; i < baRvseDt.length; i++) {
 				newArr[i] = StringUtil.nullConvert(this.baRvseDt[i]);
 			}
@@ -165,7 +165,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	public String[] getBaRvseId() {
 		String[] newArr = null;
 		if(baRvseId != null){
-			newArr = new String[baRvseId.length];
+			newArr = new String[baSeq.length];
 			for (int i = 0; i < baRvseId.length; i++) {
 				newArr[i] = StringUtil.nullConvert(this.baRvseId[i]);
 			}
@@ -182,7 +182,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	public String[] getBaAtchFileId() {
 		String[] newArr = null;
 		if(baAtchFileId != null){
-			newArr = new String[baAtchFileId.length];
+			newArr = new String[baSeq.length];
 			for (int i = 0; i < baAtchFileId.length; i++) {
 				newArr[i] = StringUtil.nullConvert(this.baAtchFileId[i]);
 			}
@@ -199,7 +199,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	public String[] getBaTitle() {
 		String[] newArr = null;
 		if(baTitle != null){
-			newArr = new String[baTitle.length];
+			newArr = new String[baSeq.length];
 			for (int i = 0; i < baTitle.length; i++) {
 				newArr[i] = StringUtil.nullConvert(this.baTitle[i]);
 			}
@@ -216,7 +216,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	public String[] getBaCont() {
 		String[] newArr = null;
 		if(baCont != null){
-			newArr = new String[baCont.length];
+			newArr = new String[baSeq.length];
 			for (int i = 0; i < baCont.length; i++) {
 				newArr[i] = StringUtil.nullConvert(this.baCont[i]);
 			}
@@ -233,7 +233,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	public String[] getBaUrl() {
 		String[] newArr = null;
 		if(baUrl != null){
-			newArr = new String[baUrl.length];
+			newArr = new String[baSeq.length];
 			for (int i = 0; i < baUrl.length; i++) {
 				newArr[i] = StringUtil.nullConvert(this.baUrl[i]);
 			}
@@ -250,7 +250,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	public String[] getBaWindow() {
 		String[] newArr = null;
 		if(baWindow != null){
-			newArr = new String[baWindow.length];
+			newArr = new String[baSeq.length];
 			for (int i = 0; i < baWindow.length; i++) {
 				newArr[i] = StringUtil.nullConvert(this.baWindow[i]);
 			}
@@ -263,11 +263,11 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 			this.baWindow[i] = StringUtil.nullConvert(baWindow[i]);
 		}
 	}
-
+ 
 	public String[] getBaExposeYn() {
 		String[] newArr = null;
 		if(baExposeYn != null){
-			newArr = new String[baExposeYn.length];
+			newArr = new String[baSeq.length];
 			for (int i = 0; i < baExposeYn.length; i++) {
 				newArr[i] = StringUtil.nullConvert(this.baExposeYn[i]);
 			} 
@@ -284,7 +284,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	public String[] getBaOrderNum() {
 		String[] newArr = null;
 		if(baOrderNum != null){
-			newArr = new String[baOrderNum.length];
+			newArr = new String[baSeq.length];
 			for (int i = 0; i < baOrderNum.length; i++) {
 				newArr[i] = StringUtil.nullConvert(this.baOrderNum[i]);
 			} 
