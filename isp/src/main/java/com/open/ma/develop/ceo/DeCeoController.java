@@ -74,11 +74,11 @@ public class DeCeoController {
 				bannerVO.setBaExposeYn(searchVO.getBaExposeYn()[i]); 
 				bannerVO.setBaOrderNum(searchVO.getBaOrderNum()[i]); 
 				bannerVO.setBaAtchFileId(searchVO.getBaAtchFileId()[i]); 
-									     
+							 		     
 				if("N".equals(searchVO.getBaSeq()[i])){ 
 					cmmnService.insertContents(bannerVO, "Banner");
 				}else{
-					cmmnService.updateContents(bannerVO, "Banner.updateReverse");
+					cmmnService.updateContents(bannerVO, "Banner");
 				}
 		}  
 		

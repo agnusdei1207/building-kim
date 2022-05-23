@@ -154,7 +154,7 @@
 	<insert id="insertContents" parameterType="bannerVO">
 		/* Banner.insertContents */
 		<![CDATA[
-			INSERT	INTO	T_BANNER(
+			INSERT	INTO	T_BANNER( 
 							BA_RGST_ID
 							, BA_ATCH_FILE_ID 									
 							, BA_TITLE													
@@ -197,25 +197,6 @@
 		]]>  
 	</update>   
 	  
-	     
-	      
-	<update id="updateReverse" parameterType="bannerVO">
-		/* Banner.updateReverse */
-		<![CDATA[
-			UPDATE	T_BANNER      
-			         
-			   SET     
-					  BA_RVSE_DT								 						 = NOW()
-					, BA_TITLE														     =#{baTitle     }
-					, BA_CONT 															 =#{baCont      }   
-					, BA_WINDOW 	 													 =#{baWindow	}				
-					, BA_EXPOSE_YN 	 													 =#{baExposeYn	}				
-					, BA_ORDER_NUM														 =#{baOrderNum  }
-					, BA_ATCH_FILE_ID													 =#{baAtchFileId}
-				       
-			 WHERE	BA_SEQ = #{baSeq}    
-		]]> 
-	</update>  
 	
 	<update id="deleteContents" parameterType="bannerVO">
 		/* Banner.deleteContents */

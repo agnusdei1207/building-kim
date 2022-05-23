@@ -116,7 +116,7 @@
 		<![CDATA[ 
 			SELECT  
 			 	  	COUNT(logSeq)	cnt  
-			  FROM     
+			  FROM      
 			    	(      
 					SELECT
 							LOG_SEQ																									 logSeq
@@ -129,7 +129,7 @@
 								ELSE	''
 							  END	failCnt
 			 					  
-					  FROM	t_log_log	tll
+					  FROM	t_log_log	tll 
 						       
 					 WHERE	1 = 1    
 		   	   ]]>     
