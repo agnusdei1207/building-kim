@@ -155,19 +155,17 @@
 		/* Banner.insertContents */
 		<![CDATA[
 			INSERT	INTO	T_BANNER(
-			           	  	BA_SEQ				  											
-							, BA_RGST_ID
+							BA_RGST_ID
 							, BA_ATCH_FILE_ID 									
 							, BA_TITLE													
-							, BA_CONT 													
+							, BA_CONT 				 									
 							, BA_URL 														
 							, BA_WINDOW			
 							, BA_EXPOSE_YN		 												 
 							, BA_ORDER_NUM		   												 																							
 			)     
-			VALUES	(   
-							(SELECT IFNULL(MAX(TS.BA_SEQ)+1,1) FROM T_BANNER TS)
-							,#{loginSeq     }          
+			VALUES	(    
+							#{loginSeq     }          
 							,#{baAtchFileId }  
 							,#{baTitle      }
 							,#{baCont       }  
@@ -199,7 +197,7 @@
 		]]>  
 	</update>   
 	  
-	  
+	   
 	  
 	<update id="updateReverse" parameterType="int">
 		/* Banner.updateReverse */
@@ -212,7 +210,7 @@
 			]]>		
 				<if test='baTitle != null and baTitle != "" '>
 					, BA_TITLE														     =#{baTitle     }
-				</if>
+				</if> 
 			<![CDATA[		
 			]]>		
 				<if test='baCont != null and baCont != "" '>
@@ -223,8 +221,22 @@
 				<if test='baWindow != null and baWindow != "" '>
 					, BA_WINDOW 														 =#{baWindow    }
 				</if>
-			<![CDATA[		
-			
+			<![CDATA[		 
+			]]>		
+				<if test='baExposeYn != null and baExposeYn != "" '>
+					, BA_EXPOSE_YN														 =#{baExposeYn  }
+				</if>
+			<![CDATA[
+			]]>		
+				<if test='baOrderNum != null and baOrderNum != "" '>
+					, BA_ORDER_NUM														 =#{baOrderNum  }
+				</if>
+			<![CDATA[  
+			]]>		
+				<if test='baAtchFileId != null and baAtchFileId != "" '>
+					, BA_ATCH_FILE_ID													=${baAtchFileId  }
+				</if>
+			<![CDATA[ 
 					, BA_USE_YN 														 = 'Y'
 				      
 			 WHERE	BA_SEQ = #{baSeq}    

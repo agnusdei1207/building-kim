@@ -13,7 +13,7 @@ import com.open.ma.kim.banner.service.BannerVO;
 public class CeoVO extends CmmnDefaultVO implements Serializable {
 	  
 	private static final long serialVersionUID = 2172623835339565860L;
-	
+	 
 	private String ceSeq;
 	private String ceAtchFileId;
 	private String ceName;
@@ -22,7 +22,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	private String ceHp;
 	private String ceAdd;
 	private String baCnt;
-	private String[] baSeq;  
+	private String[] baSeq;   
 	private String[] baRgstDt;
 	private String[] baRgstId; 
 	private String[] baRvseDt;
@@ -35,9 +35,6 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	private String[] baExposeYn;
 	private String[] baOrderNum; 
 	private List<BannerVO> bannerList; 
-	  
-	
-	
 	
 	
 	public List<BannerVO> getBannerList() {
@@ -273,7 +270,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 			newArr = new String[baExposeYn.length];
 			for (int i = 0; i < baExposeYn.length; i++) {
 				newArr[i] = StringUtil.nullConvert(this.baExposeYn[i]);
-			}
+			} 
 		}
 		return newArr;
 	}
@@ -290,15 +287,15 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 			newArr = new String[baOrderNum.length];
 			for (int i = 0; i < baOrderNum.length; i++) {
 				newArr[i] = StringUtil.nullConvert(this.baOrderNum[i]);
-			}
+			} 
 		}
-		return newArr;
+		return newArr;   
 	}
 	public void setBaOrderNum(String[] baOrderNum) {
 		this.baOrderNum = new String[baOrderNum.length];
 		for (int i = 0; i < baOrderNum.length; i++){
 			this.baOrderNum[i] = StringUtil.nullConvert(baOrderNum[i]);
-		}
+		} 
 	}
 	
 	

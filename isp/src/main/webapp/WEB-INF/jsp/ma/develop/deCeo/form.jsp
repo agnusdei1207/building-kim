@@ -62,15 +62,17 @@
 							 <colgroup>   
 								 <col style="width:20%"> 
 								 <col style="width:30%">
-								 <col style="width:20%">  
+								 <col style="width:20%">   
 								 <col style="width:30%">  
-							 </colgroup>     
+							 </colgroup>        
 							 <tbody>            
 							 	<tr style="display:none;"> 
-									 <th scope="row"><strong>시퀀스</strong></th>    
-									 <td colspan="3"> 
-										<input type="text" name="baSeq" id="baSeq_${status.count }" value="${bannerVO.baSeq} " />
-										<input type="text" name="schEtc01" id="schEtc01_${status.count }" value="1" />
+									 <th scope="row"><strong>정보</strong></th>    
+									 <td colspan="3">    
+										<input type="text" name="baSeq" id="baSeq_${status.count }" value="${bannerVO.baSeq} " /> 
+										<input type="text" name="baRgstId" id="baRgstId_${status.count }" value="${bannerVO.baRgstId } " />
+										<input type="text" name="baRvseId" id="baRvseId_${status.count }" value="${bannerVO.baRgstDt } " />
+										<input type="text" name="schEtc02" id="schEtc02_${status.count }" value="1" />
 									 </td>                    
 								 </tr>
 								 <tr> 
@@ -89,16 +91,16 @@
 									 <td>      
 										 사용 <input type="radio" name="newWindow_${bannerVO.baSeq }" id="radio_window_${status.count }" ${bannerVO.baWindow eq "Y" ? "checked" : "" }>
 										 미사용 <input type="radio" name="newWindow_${bannerVO.baSeq }" id="radio_window_${status.count }" ${bannerVO.baWindow eq "N" ? "checked" : "" }>
-									 <input type="hidden" name="baWindow" id="baWindow_${status.count }"> 
+									 <input type="hidden" name="baWindow" id="baWindow_${status.count }" value=" "> 
 									 </td>     
-								 </tr>                     
-								 <tr>       
-								 <th scope="row"><strong>전시 순서</strong></th>  
-								 <td>  
+								 </tr>                      
+								 <tr>             
+								 <th scope="row"><strong>전시 순서</strong></th>      
+								 <td>    
 									 <select name="baOrderNum" id="baOrderNum_${status.count }">             
-										 <option value="">순서 선택</option>                       
-										 <c:forEach var="num" items="${upBannerList}" varStatus="inner">           
-											 <option value="${inner.count}" ${bannerVO.baOrderNum eq inner.count ? "checked" : ""}>${inner.count}</option>
+										 <option value="">순서 선택</option>                        
+										 <c:forEach var="num" items="${upBannerList}" varStatus="inner">              
+											 <option value="${inner.count}" ${bannerVO.baOrderNum eq inner.count ? "selected" : ""}>${inner.count}</option>
 										 </c:forEach>     
 									 </select>                 
 								 </td>                        
@@ -106,35 +108,35 @@
 									 <td>           
 										 전시 <input type="radio" name="showYn_${status.count }" id="radio_baExposeYn_${status.count }" ${bannerVO.baExposeYn eq "Y" ? "checked" : ""}>
 										 미전시 <input type="radio" name="showYn_${status.count }" id="radio_baExposeYn_${status.count }" ${bannerVO.baExposeYn eq "N" ? "checked" : ""}>
-									 	<input type="hidden" name="baExposeYn" id="baExposeYn_${status.count }">
+									 	<input type="hidden" name="baExposeYn" id="baExposeYn_${status.count }" value=" ">
 									 </td>   
-								 </tr>      
+								 </tr>       
 								 <tr>          
 									 <th scope="row"><strong>내용</strong></th>                     
 									 <td colspan="3">            
 										 <input type="text" name="baCont" id="baCont_${status.count }" class="text w100p" maxlength="50" value="${bannerVO.baCont } "/>
-									 </td>     
+									 </td>      
 								 </tr>         
 								 <tr>                                
 									 <th scope="row"><strong>첨부파일</strong></th>                   					
 									 <td colspan="3">    
 									 	 <iframe name="baAtchFileId_${status.count }Frame" id="baAtchFileId_${status.count }Frame" src="/atch/fileUpload.do?atchFileId=${bannerVO.baAtchFileId }&fileCnt=5&atchFileIdNm=baAtchFileId_${status.count }&updateType=upload" style="width:100%" frameborder="0"></iframe>
 									 	 <input type="hidden" name="baAtchFileId" id="baAtchFileId_${status.count }" value="${bannerVO.baAtchFileId }">
-									 </td>          
+									 </td>           
 								 </tr>   
 							 </tbody>                       
 						 </table>           
-					 </div>
+					 </div> 
 			 </c:forEach>       
 		</c:if>     
 		 	  <div class="addPlaceUpBanner"> 
-		 	  </div>
+		 	  </div>  
 		</div>           
 	  	<div class="btn_area">  
 			<a href="javascript:void(0)" class="btn btn_mdl btn_save" onclick="submit('${ceoVO.ceName}')" id="btn_submit">등록</a>
-		</div> 
+		</div>         
 	</form>  
-</div>	          
+</div>	           
 	         
 <script type="text/javascript">
                      
@@ -148,58 +150,53 @@ function execDaumPostcode() {
             }
         }).open(); 
     });   
-}    
+}       
    
-function submit(title){  
-	
-	$("[id^=baOrderNum_]").each(function(){
-		if(this.value == null || this.value == ""){
-			checkMsg("#"+this.id, "순서를 선택해주세요.");
-			return false;
-		}
-	});  
+function submit(title){    
+	    
+	$("[id^=baAtchFileId_]").each(function(){ 
+		alert($("#"+ this.id).attr("src"));
+	})
 	  
+	$("[id^=baOrderNum_]").each(function(){                  
+		if($("#"+this.id).attr("selected") == false){         
+			checkMsg("#"+this.id, "순서를 선택해주세요.");
+		}         
+	});  
+	   
 	$("[id^=radio_baExposeYn_]").each(function(){
 		if(this.value == null || this.value == ""){
 			checkMsg("#"+this.id, "전시 여부를 선택해주세요."); 
-			return false; 
 		}      
 	});  
 	  
 	$("[id^=baWindow_]").each(function(){  
 		if(this.value == null || this.value == ""){ 
 			checkMsg("#"+this.id, "새창 여부를 선택해주세요.");
-			return false;
 		}
 	});  
-	 
+	  
 	 
 	if($("#ceName").val() == null || $("#ceName").val() == ""){
 		checkMsg("#ceName", "이름을 입력해주세요.");
-		return false; 
 	}  
 	if($("#ceNum").val() == null || $("#ceNum").val() == ""){
 		checkMsg("#ceNum", "사업자 번호를 입력해주세요.");
-		return false;
 	}  
 	if($("#ceAdd3").val() == null || $("#ceAdd3").val() == ""){
 		checkMsg("#ceAdd3", "상세주소를 입력해주세요.");
-		return false;  
 	}                
 	
 	$("[id^=baTitle_]").each(function(){   
 		if(this.value == null || this.value == ""){ 
 			checkMsg("#"+this.id, "제목을 입력해주세요.");
-			return false;
 		}
-	});  
+	});       
 	$("[id^=baUrl_]").each(function(){  
 		if(this.value == null || this.value == ""){ 
 			checkMsg("#"+this.id, "Url을 입력해주세요.");
-			return false;
 		}
 	});  
-	
   
 	$("[id^=baCont_]").each(function(){  
 		if(this.value == null || this.value == ""){ 
@@ -207,17 +204,20 @@ function submit(title){
 			return false;
 		}  
 	});   
-	
+	   
 	if(title == null || title == ""){    
-		fncPageBoard('write','insertProc.do');
+		fncPageBoard('write','insertProc.do'); 
 		return false; 
 	}else{
 		fncPageBoard('update','updateProc.do'); 
 		return false;  
 	}         
-	
-}                                                    
-                                       
+	 
+}                                                     
+ 
+var arrOrderNum = []; 
+
+
 function fncSetOptionNum(){
 	var leng = $("[id^=baOrderNum_]").length;      
 	 
@@ -228,7 +228,7 @@ function fncSetOptionNum(){
 			var selected = ""; 
 			if(i == val){ 
 				selected = "selected";
-			}            
+			}              
 			html += '<option value="'+i+'"' + selected + '">' + i + '</option>';
 		}
 		$(this).html(html);
@@ -242,7 +242,7 @@ function fncAddUpBanner(){
 	 	html += '<div id="div_'+ num +'">'; 
 		html += '<input type="hidden" name="baAtchFileId" id="baAtchFileId">';
 		html += '<input type="hidden" name="baSeq" id="baSeq_'+num+'" value=" ">';   
-		html += '<input type="hidden" name="schEtc01" id="schEtc01_'+num+'" value="1"/>';
+		html += '<input type="hidden" name="schEtc02" id="schEtc02_'+num+'" value="2"/>';
 		html += '<table class="tbl_row_type01">';    
 		html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
 		html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
@@ -261,41 +261,41 @@ function fncAddUpBanner(){
 		html += '</td>';                 
 		html += '</tr>';                 
 		html += '<tr>';           
-		html += '<th scope="row"><strong>URL</strong></th>';   
+		html += '<th scope="row"><strong>URL</strong></th>';    
 		html += '<td>'; 
 		html += '<input type="text" name="baUrl" id="baUrl_'+num+'" class="text w100p" maxlength="120" value=" " />';
-		html += '</td>';   
+		html += '</td>';    
 		html += '<th scope="row"><strong>새창 유무</strong></th>';     
 		html += '<td>'; 
 		html += ' 사용 <input type="radio" name="newWindow" id="radio_window_'+num+'" ${bannerVO.baWindow eq "Y" ? "checked" : "" }>';
 		html += '미사용 <input type="radio" name="newWindow" id="radio_window_'+num+'" ${bannerVO.baWindow eq "N" ? "checked" : "" }>';
-		html += '<input type="hidden" name="baWindow" id="baWindow_'+num+'">';	 
+		html += '<input type="hidden" name="baWindow" id="baWindow_'+num+'" value=" ">';	 
 		html += '</td>';          
 		html += '</tr>';     
 		html += '<tr>'; 
 		html += '<th scope="row"><strong>전시 순서</strong></th>';     
 		html += '<td>'; 
 		html += '<select name="baOrderNum" id="baOrderNum_'+num+'">';  
-		html += '</select>';       
+		html += '</select>';        
 		html += '</td>';      
 		html += '<th scope="row"><strong>전시 유무</strong></th>';  
 		html += '<td>';  
 		html += '전시 <input type="radio" name="showYn" id="radio_baExposeYn_'+num+'" ${bannerVO.baExposeYn eq "Y" ? "checked" : ""}>';
 		html += '미전시 <input type="radio" name="showYn" id="radio_baExposeYn_'+num+'" ${bannerVO.baExposeYn eq "N" ? "checked" : ""}>';
-		html += '<input type="hidden" name="baExposeYn" id="baExposeYn_'+num+'">';
+		html += '<input type="hidden" name="baExposeYn" id="baExposeYn_'+num+'" value=" ">';
 		html += '</td>';     
 		html += '</tr>';         
 		html += '<tr>';    
 		html += '<th scope="row"><strong>내용</strong></th>'; 
 		html += '<td colspan="3">';     
 		html += '<input type="text" name="baCont" id="baCont_'+num+'" class="text w100p" maxlength="50" value=" "/>';
-		html += '</td>';
+		html += '</td>'; 
 		html += '</tr>';       
 		html += '<tr>';                     
 		html += '<th scope="row"><strong>첨부파일</strong></th>';    
 		html += '<td colspan="3">';
 		html += '<iframe name="baAtchFileId_'+num+'Frame" id="baAtchFileId_'+num+'Frame" src="/atch/fileUpload.do?atchFileId=${bannerVO.baAtchFileId }&fileCnt=5&atchFileIdNm=baAtchFileId_'+num+'&updateType=upload" style="width:100%" frameborder="0"></iframe>';
-		html += '<input type="hidden" name="baAtchFileId" id="baAtchFileId_'+num+'" value="${bannerVO.baAtchFileId }">';
+		html += '<input type="hidden" name="baAtchFileId" id="baAtchFileId_'+num+'" value=" ">'; 
 		html += '</td>';                 
 		html += '</tr>';  
 		html += '</tbody>';      
