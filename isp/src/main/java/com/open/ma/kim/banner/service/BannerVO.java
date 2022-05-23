@@ -121,6 +121,13 @@ public class BannerVO extends CmmnDefaultVO implements Serializable {
 		return serialVersionUID;
 	}
 	  
+	@Override
+	public String toString() {
+		return "BannerVO [baSeq=" + baSeq + ", baRgstDt=" + baRgstDt + ", baRgstId=" + baRgstId + ", baRvseDt="
+				+ baRvseDt + ", baRvseId=" + baRvseId + ", baAtchFileId=" + baAtchFileId + ", baTitle=" + baTitle
+				+ ", baCont=" + baCont + ", baUrl=" + baUrl + ", baWindow=" + baWindow + ", baExposeYn=" + baExposeYn
+				+ ", baOrderNum=" + baOrderNum + ", baCnt=" + baCnt + ", bannerList=" + bannerList + "]";
+	}
 	
 	
 	

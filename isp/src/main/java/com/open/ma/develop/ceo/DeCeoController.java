@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.open.cmmn.model.CmmnDefaultVO;
 import com.open.cmmn.service.CmmnService;
 import com.open.cmmn.util.StringUtil;
 import com.open.ma.kim.banner.service.BannerVO;
@@ -32,20 +33,21 @@ public class DeCeoController {
      
     private final static String folderPath = "/ma/develop/deCeo/";
     
-	@SuppressWarnings("unchecked") 
-	@RequestMapping(folderPath + "{procType}form.do")    
-	public String form(@ModelAttribute("searchVO") CeoVO searchVO, Model model,@PathVariable String procType, HttpServletRequest request) throws Exception {
+	@SuppressWarnings("unchecked")  
+	@RequestMapping(folderPath + "form.do")    
+	public String form(@ModelAttribute("searchVO") CeoVO searchVO, Model model, HttpServletRequest request) throws Exception {
 		     
 		CeoVO ceoVO = new CeoVO();
 		ceoVO = (CeoVO) cmmnService.selectContents(searchVO, PROGRAM_ID);
 		if (ceoVO != null) {        
 			model.addAttribute("ceoVO", ceoVO);
 		}     
-		      
-		List<CeoVO> upBannerList = (List<CeoVO>)cmmnService.selectList(searchVO, "Banner.upBannerSelectList");
+		            
+		CmmnDefaultVO cmmnDefaultVo = new CmmnDefaultVO();
+		List<CeoVO> upBannerList = (List<CeoVO>)cmmnService.selectList(cmmnDefaultVo, "Banner.upBannerSelectList");
 		model.addAttribute("upBannerList", upBannerList); 
 		 
-		List<CeoVO> downBannerList = (List<CeoVO>)cmmnService.selectList(searchVO, "Banner.downBannerSelectList");
+		List<CeoVO> downBannerList = (List<CeoVO>)cmmnService.selectList(cmmnDefaultVo, "Banner.downBannerSelectList");
 		model.addAttribute("downBannerList", downBannerList);
 		
 		return ".mLayout:"+ folderPath + "form";
@@ -59,43 +61,47 @@ public class DeCeoController {
 		ceoVO = (CeoVO) cmmnService.selectContents(searchVO, PROGRAM_ID);
 		if (ceoVO != null) {        
 			model.addAttribute("ceoVO", ceoVO);
-		}      
+		}       
 		  
 		List<BannerVO> upBannerList = (List<BannerVO>)cmmnService.selectList(searchVO, "Banner.upBannerSelectList"); 
 		 
-		ceoVO.setBaSeq(searchVO.getBaSeq());
-		ceoVO.setBaTitle(searchVO.getBaTitle());
-		ceoVO.setBaCont(searchVO.getBaCont());
-		ceoVO.setBaUrl(searchVO.getBaUrl());
-		ceoVO.setBaWindow(searchVO.getBaWindow());
-		ceoVO.setBaExposeYn(searchVO.getBaExposeYn());
-		ceoVO.setBaOrderNum(searchVO.getBaOrderNum());
+		if(searchVO != null || !"".equals(StringUtil.nullConvert(searchVO))){
+			ceoVO.setBaSeq(searchVO.getBaSeq());
+			ceoVO.setBaTitle(searchVO.getBaTitle());
+			ceoVO.setBaCont(searchVO.getBaCont());
+			ceoVO.setBaUrl(searchVO.getBaUrl());
+			ceoVO.setBaWindow(searchVO.getBaWindow());
+			ceoVO.setBaExposeYn(searchVO.getBaExposeYn());
+			ceoVO.setBaOrderNum(searchVO.getBaOrderNum());
+		}
+		  
 		ceoVO.setBannerList(upBannerList);      
-		
-		List<String> delList = new ArrayList<>();
-		BannerVO bannerVO = new BannerVO();
+		List<String> delSeqList = new ArrayList<>();
+		BannerVO bannerVO = new BannerVO();  
+		  
 		
 		if(ceoVO.getBaTitle() != null || ceoVO.getBaTitle().length > 0){
 			for(int j = 0; j < ceoVO.getBaSeq().length; j++){
 				for(int i = 0; i < upBannerList.size(); i++){
 					if(ceoVO.getBaSeq()[j].equals(upBannerList.get(i))){
-						delList.add(ceoVO.getBaSeq()[i]);
+						delSeqList.add(ceoVO.getBaSeq()[i]);
 						cmmnService.deleteContents(ceoVO.getBaSeq()[i], "Banner.updateReverse");
-					}
-				}
+					}  
+				} 
 				if(ceoVO.getBaSeq()[j] == null || ceoVO.getBaSeq()[j] == "" || ceoVO.getBaSeq()[j] == " "){
 					bannerVO.setBaTitle(ceoVO.getBaTitle()[j]);
-					bannerVO.setBaCont(ceoVO.getBaCont()[j]);
-					bannerVO.setBaUrl(ceoVO.getBaUrl()[j]);
+					bannerVO.setBaCont(ceoVO.getBaCont()[j]);   
+					bannerVO.setBaUrl(ceoVO.getBaUrl()[j]); 
 					bannerVO.setBaWindow(ceoVO.getBaWindow()[j]);
 					bannerVO.setBaExposeYn(ceoVO.getBaExposeYn()[j]);
-					bannerVO.setBaOrderNum(ceoVO.getBaOrderNum()[j]);
+					bannerVO.setBaOrderNum(ceoVO.getBaOrderNum()[j]);  
 					cmmnService.insertContents(bannerVO, "Banner");
+					System.out.println("toSring ::: " + bannerVO.toString());
 				}
-			}
-		}
+			}  
+		}  
 		
-		
+		       
 		
 		
 		
@@ -119,10 +125,10 @@ public class DeCeoController {
 //			}
 //			
 //		}  
-	     
 	        
-		model.addAttribute("upBannerList", upBannerList); 
-		return ".mLayout:"+ folderPath + "form";
+		model.addAttribute("message", "등록되었습니다.");  
+		model.addAttribute("cmmnScript", folderPath + "form.do");
+		return "cmmn/execute";
 	}        
 		   
 	@ResponseBody

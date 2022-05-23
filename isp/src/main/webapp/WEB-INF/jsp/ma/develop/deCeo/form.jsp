@@ -50,9 +50,9 @@
 			</table>     
 		</div>                          
 		
-		            
+		             
 	 	<div class="tbl_wrap">                                                             
-			<h3 class="tit_page">상단 배너  <a href="javascript:void(0)" onclick="addUpBanner();" id="place_a" class="btn btn_mdl btn_rewrite"> 추가</a> </h3> 
+			<h3 class="tit_page">상단 배너  <a href="javascript:void(0)" onclick="fncAddUpBanner();" id="place_a" class="btn btn_mdl btn_rewrite"> 추가</a> </h3> 
 			<c:if test="${fn:length(upBannerList) gt 0 }"> 
 			 	<c:forEach var="bannerVO" items="${upBannerList}" varStatus="status">      
 					 <div id="div_${status.count}"> 
@@ -64,12 +64,19 @@
 								 <col style="width:30%">
 								 <col style="width:20%">  
 								 <col style="width:30%">  
-							 </colgroup> 
-							 <tbody>           
+							 </colgroup>     
+							 <tbody>            
+							 	<tr style="display:none;"> 
+									 <th scope="row"><strong>시퀀스</strong></th>    
+									 <td colspan="3"> 
+										<input type="text" name="baSeq" id="baSeq_${status.count }" value="${bannerVO.baSeq} " />
+										<input type="text" name="schEtc01" id="schEtc01_${status.count }" value="1" />
+									 </td>                    
+								 </tr>
 								 <tr> 
 									 <th scope="row"><strong class="th_tit">제목</strong></th>    
-									 <td colspan="3">      
-										 <input type="text" name="baTitle" id="baTitle_${status.count }" class="text w90p" maxlength="70" value="${bannerVO.baTitle} " />
+									 <td colspan="3"> 
+										<input type="text" name="baTitle" id="baTitle_${status.count }" class="text w90p" maxlength="70" value="${bannerVO.baTitle} " />
 									 	<a href="javascript:void(0)" onclick="fncDelBanner(${status.count }, ${bannerVO.baSeq} )" id="btn_del_${status.count }" class="btn btn_mdl btn_del btn_cnt" style="margin-left:39px" >삭제</a>
 									 </td>                    
 								 </tr>           
@@ -87,7 +94,7 @@
 								 </tr>                     
 								 <tr>       
 								 <th scope="row"><strong>전시 순서</strong></th>  
-								 <td> 
+								 <td>  
 									 <select name="baOrderNum" id="baOrderNum_${status.count }">             
 										 <option value="">순서 선택</option>                       
 										 <c:forEach var="num" items="${upBannerList}" varStatus="inner">           
@@ -118,7 +125,7 @@
 							 </tbody>                       
 						 </table>           
 					 </div>
-			 </c:forEach>     
+			 </c:forEach>       
 		</c:if>     
 		 	  <div class="addPlaceUpBanner"> 
 		 	  </div>
@@ -140,11 +147,33 @@ function execDaumPostcode() {
               $("#ceAdd2").val(data.roadAddress);
             }
         }).open(); 
-    }); 
+    });   
 }    
-  
+   
 function submit(title){  
 	
+	$("[id^=baOrderNum_]").each(function(){
+		if(this.value == null || this.value == ""){
+			checkMsg("#"+this.id, "순서를 선택해주세요.");
+			return false;
+		}
+	});  
+	  
+	$("[id^=radio_baExposeYn_]").each(function(){
+		if(this.value == null || this.value == ""){
+			checkMsg("#"+this.id, "전시 여부를 선택해주세요."); 
+			return false; 
+		}      
+	});  
+	  
+	$("[id^=baWindow_]").each(function(){  
+		if(this.value == null || this.value == ""){ 
+			checkMsg("#"+this.id, "새창 여부를 선택해주세요.");
+			return false;
+		}
+	});  
+	 
+	 
 	if($("#ceName").val() == null || $("#ceName").val() == ""){
 		checkMsg("#ceName", "이름을 입력해주세요.");
 		return false; 
@@ -155,9 +184,29 @@ function submit(title){
 	}  
 	if($("#ceAdd3").val() == null || $("#ceAdd3").val() == ""){
 		checkMsg("#ceAdd3", "상세주소를 입력해주세요.");
-		return false; 
+		return false;  
 	}                
-	   
+	
+	$("[id^=baTitle_]").each(function(){   
+		if(this.value == null || this.value == ""){ 
+			checkMsg("#"+this.id, "제목을 입력해주세요.");
+			return false;
+		}
+	});  
+	$("[id^=baUrl_]").each(function(){  
+		if(this.value == null || this.value == ""){ 
+			checkMsg("#"+this.id, "Url을 입력해주세요.");
+			return false;
+		}
+	});  
+	
+  
+	$("[id^=baCont_]").each(function(){  
+		if(this.value == null || this.value == ""){ 
+			checkMsg("#"+this.id, "내용을 입력해주세요.");
+			return false;
+		}  
+	});   
 	
 	if(title == null || title == ""){    
 		fncPageBoard('write','insertProc.do');
@@ -171,14 +220,13 @@ function submit(title){
                                        
 function fncSetOptionNum(){
 	var leng = $("[id^=baOrderNum_]").length;      
-	
+	 
 	$("[id^=baOrderNum_]").each(function(){
-		var id = $(this).attr("id");
-		var val = $("#" + id + "option:selected").val();
-		var html = '<option value="">순서 선택</option>';
+		var val = $("#" + this.id + "option:selected").val();
+		var html = '<option value="">순서 선택</option>'; 
 		for(var i = 1; i <= leng; i++){
-			var selected = "";
-			if(i == val){
+			var selected = ""; 
+			if(i == val){ 
 				selected = "selected";
 			}            
 			html += '<option value="'+i+'"' + selected + '">' + i + '</option>';
@@ -186,24 +234,26 @@ function fncSetOptionNum(){
 		$(this).html(html);
 	})           
 }      
-
-function addUpBanner(){                  
-	var num = $("[id^=baOrderNum_]").length + 1;    
+     
+function fncAddUpBanner(){                    
+	var num = $("[id^=baOrderNum_]").length + 1;     
 	alert(num + "번째 창이 추가되었습니다.");
-	var html = '';                    
-	 	html += '<div id="div_'+ num +'">';
+	var html = '';                          
+	 	html += '<div id="div_'+ num +'">'; 
 		html += '<input type="hidden" name="baAtchFileId" id="baAtchFileId">';
-		html += '<table class="tbl_row_type01">';  
+		html += '<input type="hidden" name="baSeq" id="baSeq_'+num+'" value=" ">';   
+		html += '<input type="hidden" name="schEtc01" id="schEtc01_'+num+'" value="1"/>';
+		html += '<table class="tbl_row_type01">';    
 		html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
 		html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
-		html += '<colgroup>';    
-		html += '<col style="width:20%;">';     
+		html += '<colgroup>';     
+		html += '<col style="width:20%;">';      
 		html += '<col style="width:30%;">';            
 		html += '<col style="width:20%;">';
 		html += '<col style="width:30%;">';     
-		html += '</colgroup>';
+		html += '</colgroup>';    
 		html += '<tbody>';             
-		html += '<tr>';                        
+		html += '<tr>';                              
 		html += '<th scope="row"><strong class="th_tit">제목</strong></th>';     
 		html += '<td colspan="3">'; 
 		html += '<input type="text" name="baTitle" id="baTitle_'+num+'" class="text w90p" maxlength="70" value=" " />';
@@ -212,7 +262,7 @@ function addUpBanner(){
 		html += '</tr>';                 
 		html += '<tr>';           
 		html += '<th scope="row"><strong>URL</strong></th>';   
-		html += '<td>';
+		html += '<td>'; 
 		html += '<input type="text" name="baUrl" id="baUrl_'+num+'" class="text w100p" maxlength="120" value=" " />';
 		html += '</td>';   
 		html += '<th scope="row"><strong>새창 유무</strong></th>';     
