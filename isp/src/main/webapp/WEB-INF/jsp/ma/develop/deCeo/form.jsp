@@ -92,10 +92,10 @@
 									 <input type="hidden" name="baWindow" id="baWindow_${status.count }" value="${bannerVO.baWindow }"> 
 									 </td>     
 								 </tr>                       
-								 <tr>             
+								 <tr>              
 								 <th scope="row"><strong>전시 순서</strong></th>      
-								 <td>    
-									 <select name="baOrderNum" id="baOrderNum_${status.count }">             
+								 <td>     
+									 <select name="baOrderNum" id="baOrderNum_${status.count }" onchange="selectChange();">             
 										 <option value="">순서 선택</option>                        
 										 <c:forEach var="num" items="${upBannerList}" varStatus="inner">              
 											 <option value="${inner.count}" ${bannerVO.baOrderNum eq inner.count ? "selected" : ""}>${inner.count}</option>
@@ -114,18 +114,18 @@
 									 <td colspan="3">            
 										 <input type="text" name="baCont" id="baCont_${status.count }" class="text w100p" maxlength="50" value="${bannerVO.baCont } "/>
 									 </td>      
-								 </tr>         
+								 </tr>          
 								 <tr>                                
 									 <th scope="row"><strong>첨부파일</strong></th>                   					
 									 <td colspan="3">    
 									 	 <iframe name="baAtchFileId_${status.count }Frame" id="baAtchFileId_${status.count }Frame" src="/atch/fileUpload.do?atchFileId=${bannerVO.baAtchFileId }&fileCnt=5&atchFileIdNm=baAtchFileId_${status.count }&updateType=upload" style="width:100%" frameborder="0"></iframe>
-									 	 <input type="hidden" name="baAtchFileId" id="baAtchFileId-${status.count }" value="${bannerVO.baAtchFileId }">
-									 </td>           
+									 	 <input type="hidden" name="baAtchFileId" id="baAtchFileId_${status.count }" value="${bannerVO.baAtchFileId }">
+									 </td>            
 								 </tr>   
 							 </tbody>                       
 						 </table>           
 					 </div> 
-			 </c:forEach>       
+			 </c:forEach>        
 		</c:if>     
 		 	  <div class="addPlaceUpBanner"> 
 		 	  </div>  
@@ -136,8 +136,21 @@
 	</form>   
 </div>	           
 	         
-<script type="text/javascript">
-                     
+<script type="text/javascript"> 
+                      
+function selectChange(num){
+	if($("select[id^=baOrderNum_] option:selected[value='" + $("baOrderNum_" + num).val() + "']").length > 1){
+		$("#baOrderNum_" + num).val(1111).prop("selected", true);
+	 	alert("순서 중복2"); 
+	 	return false;   
+	}  
+	if($("select[id^=baOrderNum_] option:selected[value=']" + $("#baOrderNum_" + num).val() + "']").length > 1){
+		$("#baOrderNum_" + num).val(1111).prop("selected", true);
+		alert("순서 중복1");
+		return false;
+	} 
+}
+                      
 // 주소 API
 function execDaumPostcode() { 
     daum.postcode.load(function(){ 
@@ -151,12 +164,7 @@ function execDaumPostcode() {
 }        
         
 function submit(title){             
-	           
-	$("[id^=baAtchFileId_]").each(function(){ 
-		var atchFileId = $("#"+ this.id).attr("src").split('=')[1].split('&')[0];       
-		var num = this.id.split('_')[1].split('F')[0];   
-	})
-	  
+	
 	$("[id^=baOrderNum_]").each(function(){                  
 		if($("#"+this.id).attr("selected") == false){         
 			checkMsg("#"+this.id, "순서를 선택해주세요.");
@@ -235,9 +243,8 @@ function fncAddUpBanner(){
 	var num = $("[id^=baOrderNum_]").length + 1;     
 	alert(num + "번째 창이 추가되었습니다.");
 	var html = '';                          
-	 	html += '<div id="div_'+ num +'">';  
-		html += '<input type="hidden" name="baAtchFileId" id="baAtchFileId">';
-		html += '<input type="hidden" name="baSeq" id="baSeq_'+num+'" value=" ">';   
+	 	html += '<div id="div_'+ num +'">';     
+		html += '<input type="hidden" name="baSeq" id="baSeq_'+num+'" value="N">';   
 		html += '<input type="hidden" name="schEtc01" id="schEtc01_'+num+'" value="2"/>';
 		html += '<table class="tbl_row_type01">';    
 		html += '<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
@@ -248,7 +255,7 @@ function fncAddUpBanner(){
 		html += '<col style="width:20%;">';
 		html += '<col style="width:30%;">';     
 		html += '</colgroup>';    
-		html += '<tbody>';             
+		html += '<tbody>';              
 		html += '<tr>';                              
 		html += '<th scope="row"><strong class="th_tit">제목</strong></th>';     
 		html += '<td colspan="3">'; 
@@ -269,9 +276,9 @@ function fncAddUpBanner(){
 		html += '</td>';          
 		html += '</tr>';     
 		html += '<tr>'; 
-		html += '<th scope="row"><strong>전시 순서</strong></th>';     
-		html += '<td>'; 
-		html += '<select name="baOrderNum" id="baOrderNum_'+num+'">';  
+		html += '<th scope="row"><strong>전시 순서</strong></th>';      
+		html += '<td>';   
+		html += '<select name="baOrderNum" id="baOrderNum_'+num+'" onchange="selectChange();">';  
 		html += '</select>';        
 		html += '</td>';      
 		html += '<th scope="row"><strong>전시 유무</strong></th>';  
@@ -290,11 +297,11 @@ function fncAddUpBanner(){
 		html += '<tr>';                        
 		html += '<th scope="row"><strong>첨부파일</strong></th>';    
 		html += '<td colspan="3">';
-		html += '<iframe name="baAtchFileId_'+num+'Frame" id="baAtchFileId_'+num+'Frame" src="/atch/fileUpload.do?atchFileId=${bannerVO.baAtchFileId }&fileCnt=5&atchFileIdNm=baAtchFileId_'+num+'&updateType=upload" style="width:100%" frameborder="0"></iframe>';
-		html += '<input type="hidden" name="baAtchFileId" id="baAtchFileId-'+num+'">'; 
+		html += '<iframe name="baAtchFileId_'+num+'Frame" id="baAtchFileId_'+num+'Frame" src="/atch/fileUpload.do?atchFileId=${bannerVO.baAtchFileId }&fileCnt=1&atchFileIdNm=baAtchFileId_'+num+'&updateType=upload" style="width:100%" frameborder="0"></iframe>';
+		html += '<input type="text" name="baAtchFileId" id="baAtchFileId_'+num+'">'; 
 		html += '</td>';                 
-		html += '</tr>';  
-		html += '</tbody>';      
+		html += '</tr>';   
+		html += '</tbody>';       
 		html += '</table>';         
 		html += '</div>';    
 	 	                
@@ -320,7 +327,6 @@ function fncDelBanner(cnt, seq){
 	}
 }
           
-      
   
 
 </script>

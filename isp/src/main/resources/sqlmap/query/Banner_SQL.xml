@@ -82,7 +82,7 @@
 		     FROM T_BANNER
 			 WHERE BA_USE_YN='Y'	
 	      ]]>   
-		     <include refid="Where"/>	 
+		     <include refid="Where"/>	  
 	     <![CDATA[    
 	    		ORDER BY BA_SEQ DESC
 				LIMIT  #{firstIndex} , #{recordCountPerPage}
@@ -162,16 +162,16 @@
 							, BA_URL 														
 							, BA_WINDOW			
 							, BA_EXPOSE_YN		 												 
-							, BA_ORDER_NUM		   												 																							
+							, BA_ORDER_NUM		  
 			)     
 			VALUES	(    
 							#{loginSeq     }          
 							,#{baAtchFileId }  
 							,#{baTitle      }
 							,#{baCont       }  
-							,#{baUrl        }
-							,#{baWindow     }
-							,#{baExposeYn   }
+							,#{baUrl        }  
+							,IF(#{baWindow} = '', 'N', #{baWindow})
+							,IF(#{baExposeYn} = '', 'N', #{baExposeYn})
 							,#{baOrderNum   }
 			) 
 		]]>
@@ -197,48 +197,22 @@
 		]]>  
 	</update>   
 	  
-	   
-	  
-	<update id="updateReverse" parameterType="int">
+	     
+	      
+	<update id="updateReverse" parameterType="bannerVO">
 		/* Banner.updateReverse */
 		<![CDATA[
-			UPDATE	T_BANNER     
-			        
-			   SET   
-					BA_RGST_DT								 							 = NOW()
-					, BA_RVSE_ID														 =#{loginSeq	}	
-			]]>		
-				<if test='baTitle != null and baTitle != "" '>
+			UPDATE	T_BANNER      
+			         
+			   SET     
+					  BA_RVSE_DT								 						 = NOW()
 					, BA_TITLE														     =#{baTitle     }
-				</if> 
-			<![CDATA[		
-			]]>		
-				<if test='baCont != null and baCont != "" '>
-					, BA_CONT 															 =#{baCont      }
-				</if>
-			<![CDATA[		     
-			]]>		
-				<if test='baWindow != null and baWindow != "" '>
-					, BA_WINDOW 														 =#{baWindow    }
-				</if>
-			<![CDATA[		 
-			]]>		
-				<if test='baExposeYn != null and baExposeYn != "" '>
-					, BA_EXPOSE_YN														 =#{baExposeYn  }
-				</if>
-			<![CDATA[
-			]]>		
-				<if test='baOrderNum != null and baOrderNum != "" '>
+					, BA_CONT 															 =#{baCont      }   
+					, BA_WINDOW 	 													 =#{baWindow	}				
+					, BA_EXPOSE_YN 	 													 =#{baExposeYn	}				
 					, BA_ORDER_NUM														 =#{baOrderNum  }
-				</if>
-			<![CDATA[  
-			]]>		
-				<if test='baAtchFileId != null and baAtchFileId != "" '>
-					, BA_ATCH_FILE_ID													=${baAtchFileId  }
-				</if>
-			<![CDATA[ 
-					, BA_USE_YN 														 = 'Y'
-				      
+					, BA_ATCH_FILE_ID													 =#{baAtchFileId}
+				       
 			 WHERE	BA_SEQ = #{baSeq}    
 		]]> 
 	</update>  

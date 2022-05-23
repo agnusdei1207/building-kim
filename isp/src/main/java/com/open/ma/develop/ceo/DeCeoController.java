@@ -53,7 +53,6 @@ public class DeCeoController {
 		return ".mLayout:"+ folderPath + "form"; 
 	}          
    
-	@SuppressWarnings("unchecked")
 	@RequestMapping(folderPath + "updateProc.do")
 	public String proc(@ModelAttribute("searchVO") CeoVO searchVO, Model model, SessionStatus status, HttpServletRequest request) throws Exception {
 		
@@ -64,31 +63,30 @@ public class DeCeoController {
 			model.addAttribute("ceoVO", ceoVO);
 		}       
 		         
-		       
-		BannerVO bannerVO = new BannerVO();  
+		BannerVO bannerVO = new BannerVO();   
 		for(int i = 0; i < searchVO.getBaSeq().length; i++){    
-				
+			     
 				bannerVO.setBaSeq(searchVO.getBaSeq()[i]); 
 				bannerVO.setBaTitle(searchVO.getBaTitle()[i]);    
-				bannerVO.setBaCont(searchVO.getBaCont()[i]);   
+				bannerVO.setBaCont(searchVO.getBaCont()[i]);    
 				bannerVO.setBaUrl(searchVO.getBaUrl()[i]); 
 				bannerVO.setBaWindow(searchVO.getBaWindow()[i]);  
 				bannerVO.setBaExposeYn(searchVO.getBaExposeYn()[i]); 
 				bannerVO.setBaOrderNum(searchVO.getBaOrderNum()[i]); 
-									
-				if(Integer.parseInt(searchVO.getBaSeq()[i]) >= 0){
-					cmmnService.updateContents(bannerVO, "Banner.updateReverse");
-				} 
-				if(searchVO.getBaSeq()[i] == null || searchVO.getBaSeq()[i] == "" || searchVO.getBaSeq()[i] == " "){
+				bannerVO.setBaAtchFileId(searchVO.getBaAtchFileId()[i]); 
+									     
+				if("N".equals(searchVO.getBaSeq()[i])){ 
 					cmmnService.insertContents(bannerVO, "Banner");
+				}else{
+					cmmnService.updateContents(bannerVO, "Banner.updateReverse");
 				}
 		}  
 		
-		model.addAttribute("message", "등록되었습니다.");  
-		model.addAttribute("cmmnScript", folderPath + "form.do");
-		return "cmmn/execute";
-	}        
-		 
+		
+		
+		
+		
+		
 		
 //		if(ceoVO.getBannerList() != null && ceoVO.getBannerList().size() > 0) { 
 //			Iterator<BannerVO> tempList = ceoVO.getBannerList().iterator();
@@ -100,7 +98,7 @@ public class DeCeoController {
 //					cmmnService.deleteContents(tempVO, "Banner"); 
 //				}
 //			}        
-//			                           
+//			
 //			for (BannerVO tempVO : ceoVO.getBannerList()) { 
 //				if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) {  
 //					cmmnService.insertContents(tempVO, "Banner");  
@@ -109,8 +107,17 @@ public class DeCeoController {
 //				}  
 //			}
 //			
+//			
 //		}  
-	            
+		
+		model.addAttribute("message", "등록되었습니다.");  
+		model.addAttribute("cmmnScript", folderPath + "form.do");
+		return "cmmn/execute";
+		
+	}        
+		 
+		
+            
 		
 		   
 	@ResponseBody
