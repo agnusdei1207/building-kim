@@ -64,7 +64,7 @@ public class DeCeoController {
 		}        
 		         
 		BannerVO bannerVO = new BannerVO();    
-		
+		 
 		for(int i = 0; i < searchVO.getBaSeq().length; i++){    
 			    
 				bannerVO.setBaSeq(searchVO.getBaSeq()[i]);  
@@ -82,38 +82,30 @@ public class DeCeoController {
 					cmmnService.updateContents(bannerVO, "Banner");
 				} 
 				
-		}            
-		 
-		
+		}               
 		  
-		System.out.println(1);
+		/*	Iterator 사용법
 		if(searchVO.getBannerList() != null && searchVO.getBannerList().size() > 0) { 
-			System.out.println(2);
 			Iterator<BannerVO> tempList = searchVO.getBannerList().iterator();
-			System.out.println(3);
 			while(tempList.hasNext()) {        
-				System.out.println(4);
 				BannerVO tempVO = tempList.next();  
 				if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) { 
-					System.out.println("rrrrrrrrrrrr");
 					tempList.remove();     		      
 				}else{      
-					System.out.println("5");
 					cmmnService.deleteContents(tempVO, "Banner");  
 				}  
 			}           
 			  
 			for (BannerVO tempVO : ceoVO.getBannerList()) {  
-				System.out.println("temp :::: "+ tempVO);
 				if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) {  
-					System.out.println(6);
 					cmmnService.insertContents(tempVO, "Banner");  
 				}else {   
-					System.out.println(7);
 					cmmnService.updateContents(tempVO, "Banner.updateReverse"); 
 				}  
 			}   
-		}  
+		}  */
+		
+		
 		model.addAttribute("message", "등록되었습니다.");  
 		model.addAttribute("cmmnScript", folderPath + "form.do");
 		return "cmmn/execute";

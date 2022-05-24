@@ -237,16 +237,15 @@ function fncSelectChange(num){
 		$("#baOrderNum_" + num).val(previous).prop("selected", true);
 	 	alert("순서가 중복되었습니다.");      
 	 	return false;    
-	}         
+	}          
 	
 	previous = $("#baOrderNum_" + num).val();
 }          
       
-function fncFocusSave(num){             
+function fncFocusSave(num){                  
 	previous = $("#baOrderNum_" + num).val();                                 
 } 
-      
-      
+        
    
 function fncChangeExpose(num, obj){ 
 	var text = $("input[name="+obj.name+"]:checked").val()
@@ -259,9 +258,7 @@ function fncChangeWindow(num, obj){
 	$("#baWindow_"+num).val(text);
 	return true;  
 } 
-   
-   
-   
+     
 <%-- 주소 API --%>
 function execDaumPostcode() { 
     daum.postcode.load(function(){ 
@@ -504,7 +501,7 @@ function fncAddDownBanner(){
 	 	                        
 	$(".addPlaceDownBanner").after(html);       
 	fncSetOptionNumDownBanner();
-}         
+}          
     
 function fncDelDownBanner(cnt, seq){ 
 	      
@@ -571,9 +568,6 @@ function fncSubmit(title){
 		}    
 	}   
 	 
-	 
-	
-	          
 	if(title == null || title == ""){    
 		fncPageBoard('write','insertProc.do'); 
 		return false; 

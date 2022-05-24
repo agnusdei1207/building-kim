@@ -308,7 +308,7 @@ public final class DateUtils {
 
 		return ChronoUnit.DAYS.between(startDate, endDate);
 	}
-
+	
 	/**
 	 * <p>
 	 * yyyyMMdd 혹은 yyyy-MM-dd 형식의 날짜 문자열을 입력 받아 유효한 날짜인지 검사.
@@ -341,7 +341,7 @@ public final class DateUtils {
 			LocalDate locDate = LocalDate.parse(dateStr, dateFormat);
 			return dateFormat.format(locDate).equals(dateStr);
 	}
-
+	
 	/**
 	 * <p>
 	 * 입력한 년, 월, 일이 유효한지 검사.
@@ -360,7 +360,7 @@ public final class DateUtils {
 		return checkDate(StringUtils.leftPad(year, LENGTH_YEAR, '0') + StringUtils.leftPad(month, LENGTH_MONTH, '0')
 				+ StringUtils.leftPad(day, LENGTH_DAY, '0'));
 	}
-
+	
 	/**
 	 * <pre>
 	 * Description :  날짜형태의 String의 날짜 포맷 및 TimeZone을 변경해 주는 메서드.
@@ -421,7 +421,7 @@ public final class DateUtils {
 			dateFormat = DateTimeFormatter.ofPattern(strFromDateFormat, Locale.getDefault());
 			srcDate = LocalDateTime.parse(strSource, dateFormat);
 
-			// Output 처리
+			// Output 처리 
 			dateFormat = DateTimeFormatter.ofPattern(strToDateFormat, Locale.getDefault());
 			if (!StringUtils.defaultString(strTimeZone).trim().equals("")) {
 				ZonedDateTime zoneDt = srcDate.atZone(ZoneId.of(ZoneId.SHORT_IDS.get(strTimeZone)));
@@ -432,7 +432,7 @@ public final class DateUtils {
 			throw new RuntimeException(exception);
 		}
 	}
-
+	 
 	/**
 	 * <pre>
 	 * Description :  yyyyMMdd 형식의 날짜문자열을 원하는 캐릭터(ch)로 쪼개 돌려준다.
@@ -447,9 +447,10 @@ public final class DateUtils {
 	 * @param sDate
 	 *        yyyyMMdd 형식의 날짜문자열
 	 * @param ch
-	 *        구분자
-	 * @return 변환된 문자열
+	 *        구분자   
+	 * @return 변환된 문자열 
 	 */
+	
 	public static String formatDate(final String sDate, final char ch) {
 		String dateStr = sDate;
 
@@ -477,8 +478,8 @@ public final class DateUtils {
 			return dateFormat.format(yearMonth);
 		} else if (dateStr.length() == LENGTH_YEAR) {
 			return dateStr;
-		} else {
-			return "";
+		} else { 
+			return ""; 
 		}
 	}
 

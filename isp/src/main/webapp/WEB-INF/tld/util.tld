@@ -41,7 +41,7 @@
 		</example>
 	</function>
 
-	<function>
+	<function> 
 		<name>getNowUTC</name>
 		<function-class>com.open.cmmn.util.DateUtils</function-class>
 		<function-signature>java.lang.String getNowUTC()</function-signature>
