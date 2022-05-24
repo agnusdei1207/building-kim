@@ -12,7 +12,7 @@
 				<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption> 
 				<colgroup>
 					<col style="width:20%;"> 
-					<col style="width:30%;">
+					<col style="width:30%;"> 
 					<col style="width:20%;">
 					<col style="width:30%;">
 				</colgroup>  
@@ -65,14 +65,14 @@
 								 <col style="width:20%">   
 								 <col style="width:30%">  
 							 </colgroup>                  
-							 <tbody>            
-							 	<tr style="display:none;">  
+							 <tbody>              
+							 	<tr style="display:none;">    
 									 <th scope="row"><strong>정보</strong></th>     
 									 <td colspan="3">    
 										<input type="hidden" name="baSeq" id="baSeq_${status.count }" value="${bannerVO.baSeq} " /> 
-										<input type="hidden" name="schEtc01" id="schEtc01_${status.count }" value="1" />
+										<input type="hidden" name="baPosition" id="baPosition_${status.count }" value="U" />
 									 </td>                    
-								 </tr>
+								 </tr> 
 								 <tr> 
 									 <th scope="row"><strong class="th_tit">제목</strong></th>    
 									 <td colspan="3"> 
@@ -94,8 +94,8 @@
 								 </tr>                                  
 								 <tr>                        
 								 <th scope="row"><strong>전시 순서</strong></th>                  
-								 <td>      
-									 <select name="baOrderNum" id="baOrderNum_${status.count }" onfocus="fncFocusSave(this.value);" onchange="fncSelectChange(${status.count });">             
+								 <td>              
+									 <select name="baOrderNum" id="baOrderNum_${status.count }" onfocus="fncFocusSave(${status.count });" onchange="fncSelectChange(${status.count });">             
 										 <option value="">순서 선택</option>                                
 										 <c:forEach var="num" items="${upBannerList}" varStatus="inner">               
 											 <option value="${inner.count}" ${bannerVO.baOrderNum eq inner.count ? "selected" : ""}>${inner.count}</option>
@@ -146,7 +146,7 @@
 								 <col style="width:20%">      
 								 <col style="width:30%">  
 							 </colgroup>                  
-							 <tbody>            
+							 <tbody>              
 							 	<tr style="display:none;">       
 									 <th scope="row"><strong>정보</strong></th>      
 									 <td colspan="3">      
@@ -154,7 +154,7 @@
 										<input type="hidden" name="baPostion" id="baPostion_${status.count }" value="D" />
 									 </td>                    
 								 </tr>
-								 <tr> 
+								 <tr>  
 									 <th scope="row"><strong class="th_tit">제목</strong></th>    
 									 <td colspan="3"> 
 										<input type="text" name="baTitle" id="baTitleDown_${status.count }" class="text w90p" maxlength="70" value="${bannerVO.baTitle}" />
@@ -173,10 +173,10 @@
 									 <input type="hidden" name="baWindow" id="baWindowDown_${status.count }" value="${bannerVO.baWindow }">     
 									 </td>     
 								 </tr>                                   
-								 <tr>                          
+								 <tr>                           
 								 <th scope="row"><strong>전시 순서</strong></th>                  
 								 <td>      
-									 <select name="baOrderNum" id="baOrderNumDown_${status.count }" onfocus="fncFocusSave(this.value);" onchange="fncSelectChange(${status.count });">             
+									 <select name="baOrderNum" id="baOrderNumDown_${status.count }" onfocus="fncFocusSaveDown(${status.count });" onchange="fncSelectChange(${status.count });">             
 										 <option value="">순서 선택</option>                                
 										 <c:forEach var="num" items="${downBannerList}" varStatus="inner">               
 											 <option value="${inner.count}" ${bannerVO.baOrderNum eq inner.count ? "selected" : ""}>${inner.count}</option>
@@ -190,7 +190,7 @@
 									 	<input type="hidden" name="baExposeYn" id="baExposeYnDown_${status.count }" value="${bannerVO.baExposeYn }">
 									 </td>    
 								 </tr>       
-								 <tr>           
+								 <tr>            
 									 <th scope="row"><strong>내용</strong></th>                       
 									 <td colspan="3">            
 										 <input type="text" name="baCont" id="baContDown_${status.count }" class="text w100p" maxlength="50" value="${bannerVO.baCont }"/>
@@ -205,7 +205,7 @@
 								 </tr>   
 							 </tbody>                        
 						 </table>             
-					 </div> 
+					 </div>  
 			 </c:forEach>          
 		</c:if>         
 		 	  <div class="addPlaceDownBanner">  
@@ -217,51 +217,52 @@
 	</form>             
 </div>	                 
 	                
-<script type="text/javascript">   
+<script type="text/javascript">
 
-
-        
+         
 $(function(){  
 	if($("[id^=divUp_]").length < 1){
 		fncAddUpBanner();
 	} 
 	if($("[id^=divDown_]").length < 1){
 		fncAddDownBanner();  
-	} 
-});    
-
-
+	}      
+});        
+ 
+  
 var previous;     
-
-function fncSelectChange(num){ 
+   
+function fncSelectChange(num){   
 	if($("select[id^=baOrderNum_] option:selected[value='" + $("#baOrderNum_" + num).val() + "']").length > 1){
 		$("#baOrderNum_" + num).val(previous).prop("selected", true);
 	 	alert("순서가 중복되었습니다.");      
-	 	return false;   
-	}     
-}     
- 
-function fncFocusSave(value){   
-	previous = value;      
+	 	return false;    
+	}         
+	
+	previous = $("#baOrderNum_" + num).val();
+}          
+      
+function fncFocusSave(num){             
+	previous = $("#baOrderNum_" + num).val();                                 
 } 
-
- 
- 
+      
+      
+   
 function fncChangeExpose(num, obj){ 
 	var text = $("input[name="+obj.name+"]:checked").val()
 	$("#baExposeYn_"+num).val(text);
 	return true; 
-}          
+}             
            
 function fncChangeWindow(num, obj){
 	var text = $("input[name="+obj.name+"]:checked").val()
 	$("#baWindow_"+num).val(text);
 	return true;  
 }
- 
    
-
-// 주소 API
+   
+  
+<%-- 주소 API --%>
 function execDaumPostcode() { 
     daum.postcode.load(function(){ 
         new daum.Postcode({
@@ -273,59 +274,7 @@ function execDaumPostcode() {
     });   
 }        
          
-function fncSubmit(title){           
-	 
-	if($("#ceName").val() == null || $("#ceName").val() == ""){
-		checkMsg("#ceName", "이름을 입력해주세요.");
-	}  
-	if($("#ceNum").val() == null || $("#ceNum").val() == ""){
-		checkMsg("#ceNum", "사업자 번호를 입력해주세요.");
-	}  
-	if($("#ceAdd3").val() == null || $("#ceAdd3").val() == ""){
-		checkMsg("#ceAdd3", "상세주소를 입력해주세요."); 
-	}                  
-	           
-	for(var i = 1; i <= $("[id^=baTitle_]").length; i++){
-		if($("#baTitle_" + i).val() == null || $("#baTitle_" + i).val() == ""){     
-			checkMsg("#baTitle_" + i, "제목을 입력해주세요.");
-			return false;                  
-		}         
-	}            
-	   
-	for(var i = 1; i <= $("[id^=baTitleDown_]").length; i++){
-		if($("#baTitleDown_" + i).val() == null || $("#baTitleDown_" + i).val() == ""){     
-			checkMsg("#baTitleDown_" + i, "제목을 입력해주세요.");
-			return false;                  
-		}         
-	}           
-	
-	
-	
-	$("[id^=baOrderNum_]").each(function(){     
-		alert("순서 체크 :"+this.id);
-		if($("#"+this.id).attr("selected") == false){         
-			checkMsg("#"+this.id, "순서를 선택해주세요.");
-			return false;
-		}         
-	});       
-	
-	$("[id^=baOrderNumDown_]").each(function(){     
-		alert("순서 체크 :"+this.id);
-		if($("#"+this.id).attr("selected") == false){         
-			checkMsg("#"+this.id, "순서를 선택해주세요.");
-			return false;
-		}         
-	});      
-	         
-	if(title == null || title == ""){    
-		fncPageBoard('write','insertProc.do'); 
-		return false; 
-	}else{
-		fncPageBoard('update','updateProc.do'); 
-		return false;   
-	}            
-}                                                     
-    
+
 function fncSetOptionNumUpBanner(){   
 	var leng = $("[id^=baOrderNum_]").length;        
 	         
@@ -342,8 +291,8 @@ function fncSetOptionNumUpBanner(){
 		$(this).html(html);
 	})           
 }            
-
-           					   
+ 
+              					   
 function fncAddUpBanner(){  
 	var num = $("[id^=baOrderNum_]").length + 1;    
 	alert(num + "번째 상단 배너가 추가되었습니다.");     
@@ -408,9 +357,9 @@ function fncAddUpBanner(){
 		html += 		'</tr>';    
 		html += 	'</tbody>';        
 		html += '</table>';           
-		html += '</div>';        
+		html += '</div>';         
 	 	                
-	$(".addPlaceUpbanner").before(html);      
+	$(".addPlaceUpbanner").before(html);       
 	fncSetOptionNumUpBanner();
 }   
  
@@ -438,17 +387,18 @@ function fncDelBanner(cnt, seq){
 	}         
 }
  
-
+ 
 <%-- 하단 배너 --%>
 
-var previousDown;       
-
-function fncSelectChange(num){ 
+var previousDown;           
+   
+function fncSelectChangeDown(num){ 
 	if($("select[id^=baOrderNumDown_] option:selected[value='" + $("#baOrderNumDown_" + num).val() + "']").length > 1){
 		$("#baOrderNumDown_" + num).val(previousDown).prop("selected", true);
 	 	alert("순서가 중복되었습니다.");            
-	 	return false;   
-	}         
+	 	return false;    
+	}  
+	previousDown = $("#baOrderNumDown_" + num).val();
 }      
     
 function fncFocusSaveDown(value){   
@@ -457,7 +407,7 @@ function fncFocusSaveDown(value){
  
 function fncSetOptionNumDownBanner(){   
 	var leng = $("[id^=baOrderNumDown_]").length;        
-	          
+	           
 	$("[id^=baOrderNumDown_]").each(function(){
 		var val = $("#" + this.id + " option:selected").val();  
 		var html = '<option value="">순서 선택</option>'; 
@@ -470,13 +420,26 @@ function fncSetOptionNumDownBanner(){
 		}
 		$(this).html(html);
 	})           
-} 
+}  
+
+function fncChangeExposeDown(num, obj){ 
+	var text = $("input[name="+obj.name+"]:checked").val()
+	$("#baExposeYnDown_"+num).val(text);
+	return true;       
+}                  
+           
+function fncChangeWindowDown(num, obj){
+	var text = $("input[name="+obj.name+"]:checked").val()
+	$("#baWindowDown_"+num).val(text);
+	return true;  
+}
+ 
          
 function fncAddDownBanner(){                       
 	  
 	var num = $("[id^=baOrderNumDown_]").length + 1;                
-	alert(num + "번째 하단 배너가 추가되었습니다.");    
-	var html = '';                            
+	alert(num + "번째 하단 배너가 추가되었습니다.");     
+	var html = '';                              
 	 	html += '<div id="divDown_'+ num +'">';       
 		html += '<input type="hidden" name="baSeq" id="baSeqDown_'+num+'" value="N">';   
 		html += '<input type="hidden" name="baPosition" id="baPositionDown_'+num+'" value="D"/>';
@@ -490,7 +453,7 @@ function fncAddDownBanner(){
 		html += 		'<col style="width:30%;">';        
 		html += 	'</colgroup>';      
 		html += 	'<tbody>';                
-		html += 		'<tr>';                                 
+		html += 		'<tr>';                                  
 		html += 			'<th scope="row"><strong class="th_tit">제목</strong></th>';     
 		html += 			'<td colspan="3">'; 
 		html += 				'<input type="text" name="baTitle" id="baTitleDown_'+num+'" class="text w80p" maxlength="70"/>';
@@ -504,21 +467,21 @@ function fncAddDownBanner(){
 		html += 			'</td>';    
 		html += 			'<th scope="row"><strong>새창 유무</strong></th>';         
 		html += 			'<td>';     
-		html += 				'사용 <input type="radio" name="newWindow" onchange="fncChangeWindow('+num+', this);" id="radio_windowDown_'+num+'" ${bannerVO.baWindow eq "Y" ? "checked" : "" } value="Y">';
-		html += 				'미사용 <input type="radio" name="newWindow" onchange="fncChangeWindow('+num+', this);" id="radio_windowDown_'+num+'" ${bannerVO.baWindow eq "N" ? "checked" : "" } value="N">';
+		html += 				'사용 <input type="radio" name="newWindow" onchange="fncChangeWindowDown('+num+', this);" id="radio_windowDown_'+num+'" ${bannerVO.baWindow eq "Y" ? "checked" : "" } value="Y">';
+		html += 				'미사용 <input type="radio" name="newWindow" onchange="fncChangeWindowDown('+num+', this);" id="radio_windowDown_'+num+'" ${bannerVO.baWindow eq "N" ? "checked" : "" } value="N">';
 		html += 				'<input type="hidden" name="baWindow" id="baWindowDown_'+num+'">';	   
 		html += 			'</td>';            
-		html += 		'</tr>';                
+		html += 		'</tr>';                   
 		html += 		'<tr>';    
-		html += 			'<th scope="row"><strong>전시 순서</strong></th>';             
+		html += 			'<th scope="row"><strong>전시 순서</strong></th>';                
 		html += 			'<td>';        
 		html += 				'<select name="baOrderNum" id="baOrderNumDown_'+num+'" onfocus="fncFocusSaveDown('+num+');"  onchange="fncSelectChange('+num+');">';  
 		html += 				'</select>';         
 		html += 			'</td>';            
 		html += 			'<th scope="row"><strong>전시 유무</strong></th>';                 
 		html += 			'<td>';  
-		html += 				'전시 <input type="radio" name="showYn" onchange="fncChangeExpose('+num+', this);" id="radio_baExposeYnDown_'+num+'" ${bannerVO.baExposeYn eq "Y" ? "checked" : ""} value="Y">';
-		html += 				'미전시 <input type="radio" name="showYn" onchange="fncChangeExpose('+num+', this);" id="radio_baExposeYnDown_'+num+'" ${bannerVO.baExposeYn eq "N" ? "checked" : ""} value="N">';
+		html += 				'전시 <input type="radio" name="showYn" onchange="fncChangeExposeDown('+num+', this);" id="radio_baExposeYnDown_'+num+'" ${bannerVO.baExposeYn eq "Y" ? "checked" : ""} value="Y">';
+		html += 				'미전시 <input type="radio" name="showYn" onchange="fncChangeExposeDown('+num+', this);" id="radio_baExposeYnDown_'+num+'" ${bannerVO.baExposeYn eq "N" ? "checked" : ""} value="N">';
 		html += 				'<input type="hidden" name="baExposeYn" id="baExposeYnDown_'+num+'">';   
 		html += 			'</td>';           
 		html += 		'</tr>';           
@@ -541,7 +504,7 @@ function fncAddDownBanner(){
 	 	                      
 	$(".addPlaceDownBanner").before(html);      
 	fncSetOptionNumDownBanner();
-}        
+}         
     
 function fncDelDownBanner(cnt, seq){ 
 	   
@@ -566,9 +529,63 @@ function fncDelDownBanner(cnt, seq){
 		}           
 	}         
 }
-
-          
   
+
+function fncSubmit(title){           
+	 
+	if($("#ceName").val() == null || $("#ceName").val() == ""){
+		checkMsg("#ceName", "이름을 입력해주세요.");
+	}  
+	if($("#ceNum").val() == null || $("#ceNum").val() == ""){
+		checkMsg("#ceNum", "사업자 번호를 입력해주세요.");
+	}  
+	if($("#ceAdd3").val() == null || $("#ceAdd3").val() == ""){
+		checkMsg("#ceAdd3", "상세주소를 입력해주세요."); 
+	}                  
+	           
+	for(var i = 1; i <= $("[id^=baTitle_]").length; i++){
+		if($("#baTitle_" + i).val() == null || $("#baTitle_" + i).val() == ""){     
+			checkMsg("#baTitle_" + i, "제목을 입력해주세요.");
+			return false;                  
+		}         
+	}            
+	   
+	for(var i = 1; i <= $("[id^=baTitleDown_]").length; i++){
+		if($("#baTitleDown_" + i).val() == null || $("#baTitleDown_" + i).val() == ""){     
+			checkMsg("#baTitleDown_" + i, "제목을 입력해주세요.");
+			return false;                  
+		}         
+	}              
+	           
+	for(var i = 1; i <= $("[id^=baOrderNum_").length; i++){
+		if($("[id^=baOrderNum_" + i).val() == null || $("[id^=baOrderNum_" + i).val() == ""){
+			checkMsg("#baOrderNum_" + i, "순서를 선택해주세요.");
+			return false;
+		}    
+	}       
+	  
+	for(var i = 1; i <= $("[id^=baOrderNumDown_").length; i++){
+		if($("[id^=baOrderNumDown_" + i).val() == null || $("[id^=baOrderNumDown_" + i).val() == ""){
+			checkMsg("#baOrderNumDown_" + i, "순서를 선택해주세요.");
+			return false; 
+		}    
+	}   
+	 
+	
+	
+	         
+	if(title == null || title == ""){    
+		fncPageBoard('write','insertProc.do'); 
+		return false; 
+	}else{
+		fncPageBoard('update','updateProc.do'); 
+		return false;   
+	}            
+}                                                      
+    
+
+
+
 
 </script>
 

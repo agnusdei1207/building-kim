@@ -41,8 +41,8 @@ public class DeCeoController {
 		ceoVO = (CeoVO) cmmnService.selectContents(searchVO, PROGRAM_ID);
 		if (ceoVO != null) {        
 			model.addAttribute("ceoVO", ceoVO);
-		}     
-		            
+		}       
+		             
 		CmmnDefaultVO cmmnDefaultVo = new CmmnDefaultVO();
 		List<CeoVO> upBannerList = (List<CeoVO>)cmmnService.selectList(cmmnDefaultVo, "Banner.upBannerSelectList");
 		model.addAttribute("upBannerList", upBannerList); 
@@ -63,10 +63,10 @@ public class DeCeoController {
 			model.addAttribute("ceoVO", ceoVO); 
 		}       
 		         
-		BannerVO bannerVO = new BannerVO();   
+		BannerVO bannerVO = new BannerVO();    
 		
 		for(int i = 0; i < searchVO.getBaSeq().length; i++){    
-			
+			    
 				bannerVO.setBaSeq(searchVO.getBaSeq()[i]);  
 				bannerVO.setBaTitle(searchVO.getBaTitle()[i]);    
 				bannerVO.setBaCont(searchVO.getBaCont()[i]);    
@@ -75,49 +75,43 @@ public class DeCeoController {
 				bannerVO.setBaExposeYn(searchVO.getBaExposeYn()[i]); 
 				bannerVO.setBaOrderNum(searchVO.getBaOrderNum()[i]); 
 				bannerVO.setBaAtchFileId(searchVO.getBaAtchFileId()[i]); 
-				bannerVO.setBaPosition(searchVO.getBaPosition()[i]); 
-							 		     
-				if("N".equals(searchVO.getBaSeq()[i])){  
-					cmmnService.insertContents(bannerVO, "Banner");
+				bannerVO.setBaPosition(searchVO.getBaPosition()[i]);   
+				System.out.println("값 체크 : "+ searchVO.getBaPosition()[i]);			 		     
+				if("N".equals(searchVO.getBaSeq()[i])){   
+					cmmnService.insertContents(bannerVO, "Banner.insertUpBannerContents");
 				}else{
 					cmmnService.updateContents(bannerVO, "Banner");
-				}
-		}  
+				} 
+				
+		}        
 		 
 		
-		
-		
-		
-		
-		
-//		if(ceoVO.getBannerList() != null && ceoVO.getBannerList().size() > 0) { 
-//			Iterator<BannerVO> tempList = ceoVO.getBannerList().iterator();
-//			while(tempList.hasNext()) {        
-//				BannerVO tempVO = tempList.next();
-//				if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) {
-//					tempList.remove();     		      
-//				}else{   
-//					cmmnService.deleteContents(tempVO, "Banner"); 
-//				}
-//			}        
-//			
-//			for (BannerVO tempVO : ceoVO.getBannerList()) { 
-//				if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) {  
-//					cmmnService.insertContents(tempVO, "Banner");  
-//				}else {   
-//					cmmnService.updateContents(tempVO, "Banner.updateReverse"); 
-//				}  
-//			} 
-//		}  
-		
+		if(searchVO.getBannerList() != null && searchVO.getBannerList().size() > 0) { 
+			Iterator<BannerVO> tempList = searchVO.getBannerList().iterator();
+			while(tempList.hasNext()) {        
+				BannerVO tempVO = tempList.next();  
+				if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) { 
+					tempList.remove();     		      
+				}else{      
+					cmmnService.deleteContents(tempVO, "Banner");  
+				}  
+			}          
+			  
+			for (BannerVO tempVO : ceoVO.getBannerList()) {  
+				if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) {  
+					cmmnService.insertContents(tempVO, "Banner.insertDownBannerContents");  
+				}else {   
+					cmmnService.updateContents(tempVO, "Banner.updateReverse"); 
+				}  
+			}   
+		}  
 		model.addAttribute("message", "등록되었습니다.");  
 		model.addAttribute("cmmnScript", folderPath + "form.do");
 		return "cmmn/execute";
-		
 	}        
 		 
 		
-            
+             
 		
 		   
 	@ResponseBody
