@@ -76,7 +76,7 @@ function fncInsert(date){
 								</c:forEach>
 							</c:if>
 							<%-- 한주 시작부터 첫째날 전까지 빈칸 삽입 끝 --%>
-							<%-- 시작일부터 마지막 일자까지 달력 생성 --%>
+							<%-- 시작일부터 마지막 일자까지 달력 생성 --%> 
 							<c:forEach var="printDay" begin="1" end="${lastDayOfMonth }" step="1" varStatus="status">
 								<%-- 헤더 공백포함 총 갯수 --%>
 								<c:set var="k" value="${printDay + firstWeekdayOfMonth-1 }" />
@@ -121,19 +121,3 @@ function fncInsert(date){
 		</form:form>
 	</div><%-- //wrap_cal --%>
 </div>
-<%-- popupList --%>
-<%-- <c:if test="${not empty popList }">
-	<div class="index_popup"  id="id_popup1" style="position:absolute;left:300px;top:200px; width:300px;height:300px;z-index:9999;">
-		<div class="id_popup">
-			<div class="id_pop_header">
-				<h1 class="pop_tit">기념일 안내</h1>
-				<a href="javascript:void(0);" onclick="id_view_hide(1); return false;" class="pop_close"></a>
-			</div>
-			<div class="id_pop_content">
-				 <div class="pop_cont_text"><c:forEach items="${popList }" var="result"><p>${result.startTime}~${result.endTime}</p><p>&nbsp;&nbsp;- ${result.calCont }</p><br></c:forEach></div>
-				 <div class="pop_close" style="margin-top:-10px"><input type="checkbox" onClick="closeMap('1');" style="margin-top:-1px;vertical-align: middle;">오늘 하루 동안 열지 않음</div>
-			</div>
-		</div>
-	</div>
-</c:if> --%>
-<%-- popupList --%>

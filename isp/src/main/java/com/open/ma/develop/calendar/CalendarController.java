@@ -52,7 +52,7 @@ public class CalendarController {
 		List<CalendarVO> resultList=(List<CalendarVO>)cmmnService.selectList(searchVO, PROGRAM_ID+".calSelectList");
 		model.addAttribute("resultList", resultList);
 		
-		return ".mLayout:"+folderPath+"list";
+		return ".mLayout:"+folderPath+"list"; 
 	}      
     
     @RequestMapping(value=folderPath+"{procType}proc.do")
@@ -60,7 +60,7 @@ public class CalendarController {
     		@PathVariable String procType, SessionStatus status) throws Exception{
     	
     		 
-    	if(procType.equals("update")){
+    	if(procType.equals("update")){ 
     		cmmnService.updateContents(searchVO, PROGRAM_ID);
     	}else if(procType.equals("insert")){
     		cmmnService.insertContents(searchVO, PROGRAM_ID);
