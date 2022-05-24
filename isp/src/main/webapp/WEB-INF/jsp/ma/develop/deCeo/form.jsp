@@ -129,82 +129,82 @@
 		</c:if>       
 	</div>
 	<div class="addPlaceUpbanner">   
- 	  </div> 
+ 	  </div>  
    
   		        
 		<div class="tbl_wrap">                                                                
 			<h3 class="tit_page">하단 배너  <a href="javascript:void(0)" onclick="fncAddDownBanner();" class="btn btn_mdl btn_rewrite"> 추가</a> </h3> 
 			<c:if test="${fn:length(downBannerList) gt 0 }">    
-			 	<c:forEach var="bannerVO" items="${downBannerList}" varStatus="status">      
+			 	<c:forEach var="downBannerVO" items="${downBannerList}" varStatus="status">      
 					 <div id="divDown_${status.count}"> 
 							 <table class="tbl_row_type01">
 								 <caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>
 								 <caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>  
 							 <colgroup>   
-								 <col style="width:20%"> 
+								 <col style="width:20%">        
 								 <col style="width:30%"> 
 								 <col style="width:20%">      
-								 <col style="width:30%">  
+								 <col style="width:30%">   
 							 </colgroup>                  
 							 <tbody>              
 							 	<tr style="display:none;">       
 									 <th scope="row"><strong>정보</strong></th>      
 									 <td colspan="3">      
-										<input type="hidden" name="baSeq" id="baSeqDown_${status.count }" value="${bannerVO.baSeq} " /> 
+										<input type="hidden" name="baSeq" id="baSeqDown_${status.count }" value="${downBannerVO.baSeq} " /> 
 										<input type="hidden" name="baPostion" id="baPostion_${status.count }" value="D" />
 									 </td>                    
-								 </tr>
-								 <tr>  
+								 </tr>   
+								 <tr>   
 									 <th scope="row"><strong class="th_tit">제목</strong></th>    
 									 <td colspan="3"> 
-										<input type="text" name="baTitle" id="baTitleDown_${status.count }" class="text w90p" maxlength="70" value="${bannerVO.baTitle}" />
-									 	<a href="javascript:void(0)" onclick="fncDelBanner(${status.count }, ${bannerVO.baSeq} )" id="btn_del_${status.count }" class="btn btn_mdl btn_del btn_cnt" style="margin-left:39px" >삭제</a>
-									 </td>                     
+										<input type="text" name="baTitle" id="baTitleDown_${status.count }" class="text w80p" maxlength="70" value="${downBannerVO.baTitle}" />
+									 	<a href="javascript:void(0)" onclick="fncDelDownBanner(${status.count }, ${downBannerVO.baSeq} )" id="btn_del_${status.count }" class="btn btn_mdl btn_del btn_cnt" style="margin-left:39px" >삭제</a>
+									 </td>                      
 								 </tr>            
 								 <tr>       
 									 <th scope="row"><strong>URL</strong></th>           
 									 <td>  
-										 <input type="text" name="baUrl" id="baUrlDown_${status.count }" class="text w100p" maxlength="120" value="${bannerVO.baUrl}" />
+										 <input type="text" name="baUrl" id="baUrlDown_${status.count }" class="text w100p" maxlength="120" value="${downBannerVO.baUrl}" />
 									 </td>
 									 <th scope="row"><strong>새창 유무</strong></th>      
 									 <td>        
-										 사용 <input type="radio" name="newWindow_${bannerVO.baSeq }" onchange="fncChangeWindow('${status.count }', this);" id="radio_windowDown_Y${status.count }" ${bannerVO.baWindow eq "Y" ? "checked" : "" } value="Y">
-										 미사용 <input type="radio" name="newWindow_${bannerVO.baSeq }" onchange="fncChangeWindow('${status.count }', this);" id="radio_windowDown_M${status.count }" ${bannerVO.baWindow eq "N" ? "checked" : "" } value="N">
-									 <input type="hidden" name="baWindow" id="baWindowDown_${status.count }" value="${bannerVO.baWindow }">     
+										 사용 <input type="radio" name="newWindow_${downBannerVO.baSeq }" onchange="fncChangeWindow('${status.count }', this);" id="radio_windowDown_Y${status.count }" ${downBannerVO.baWindow eq "Y" ? "checked" : "" } value="Y">
+										 미사용 <input type="radio" name="newWindow_${downBannerVO.baSeq }" onchange="fncChangeWindow('${status.count }', this);" id="radio_windowDown_M${status.count }" ${downBannerVO.baWindow eq "N" ? "checked" : "" } value="N">
+									 <input type="hidden" name="baWindow" id="baWindowDown_${status.count }" value="${downBannerVO.baWindow }">     
 									 </td>     
 								 </tr>                                   
-								 <tr>                           
-								 <th scope="row"><strong>전시 순서</strong></th>                  
+								 <tr>                              
+								 <th scope="row"><strong>전시 순서</strong></th>                   
 								 <td>      
 									 <select name="baOrderNum" id="baOrderNumDown_${status.count }" onfocus="fncFocusSaveDown(${status.count });" onchange="fncSelectChange(${status.count });">             
 										 <option value="">순서 선택</option>                                
 										 <c:forEach var="num" items="${downBannerList}" varStatus="inner">               
-											 <option value="${inner.count}" ${bannerVO.baOrderNum eq inner.count ? "selected" : ""}>${inner.count}</option>
-										 </c:forEach>       
-									 </select>                      
-								 </td>                                 
+											 <option value="${inner.count}" ${downBannerVO.baOrderNum eq inner.count ? "selected" : ""}>${inner.count}</option>
+										 </c:forEach>        
+									 </select>                        
+								 </td>                                  
 								 <th scope="row"><strong>전시 유무 </strong></th>                              
 									 <td>              
-										 전시 <input type="radio" name="showYn_${status.count }" onchange="fncChangeExpose('${status.count }',this);" id="radio_baExposeYDown_${status.count }" ${bannerVO.baExposeYn eq "Y" ? "checked" : ""} value="Y">
-										 미전시 <input type="radio" name="showYn_${status.count }" onchange="fncChangeExpose('${status.count }', this);" id="radio_baExposeNDown_${status.count }" ${bannerVO.baExposeYn eq "N" ? "checked" : ""} value="N">
-									 	<input type="hidden" name="baExposeYn" id="baExposeYnDown_${status.count }" value="${bannerVO.baExposeYn }">
+										 전시 <input type="radio" name="showYn_${status.count }" onchange="fncChangeExpose('${status.count }',this);" id="radio_baExposeYDown_${status.count }" ${downBannerVO.baExposeYn eq "Y" ? "checked" : ""} value="Y">
+										 미전시 <input type="radio" name="showYn_${status.count }" onchange="fncChangeExpose('${status.count }', this);" id="radio_baExposeNDown_${status.count }" ${downBannerVO.baExposeYn eq "N" ? "checked" : ""} value="N">
+									 	<input type="hidden" name="baExposeYn" id="baExposeYnDown_${status.count }" value="${downBannerVO.baExposeYn }">
 									 </td>    
-								 </tr>       
+								 </tr>        
 								 <tr>            
 									 <th scope="row"><strong>내용</strong></th>                       
 									 <td colspan="3">            
-										 <input type="text" name="baCont" id="baContDown_${status.count }" class="text w100p" maxlength="50" value="${bannerVO.baCont }"/>
+										 <input type="text" name="baCont" id="baContDown_${status.count }" class="text w100p" maxlength="50" value="${downBannerVO.baCont }"/>
 									 </td>      
-								 </tr>            
+								 </tr>              
 								 <tr>                                  
 									 <th scope="row"><strong>첨부파일</strong></th>                   					  
 									 <td colspan="3">    
-									 	 <iframe name="baAtchFileIdDown_${status.count }Frame" id="baAtchFileIdDown_${status.count }Frame" src="/atch/fileUpload.do?atchFileId=${bannerVO.baAtchFileId }&fileCnt=5&atchFileIdNm=baAtchFileIdDown_${status.count }&updateType=upload" style="width:100%" frameborder="0"></iframe>
-									 	 <input type="hidden" name="baAtchFileId" id="baAtchFileIdDown_${status.count }" value="${bannerVO.baAtchFileId }">
+									 	 <iframe name="baAtchFileIdDown_${status.count }Frame" id="baAtchFileIdDown_${status.count }Frame" src="/atch/fileUpload.do?atchFileId=${downBannerVO.baAtchFileId }&fileCnt=5&atchFileIdNm=baAtchFileIdDown_${status.count }&updateType=upload" style="width:100%" frameborder="0"></iframe>
+									 	 <input type="hidden" name="baAtchFileId" id="baAtchFileIdDown_${status.count }" value="${downBannerVO.baAtchFileId }">
 									 </td>            
 								 </tr>   
 							 </tbody>                        
-						 </table>             
+						 </table>              
 					 </div>  
 			 </c:forEach>          
 		</c:if>         
@@ -214,7 +214,7 @@
 	  	<div class="btn_area">  
 			<a href="javascript:void(0)" class="btn btn_mdl btn_save" onclick="fncSubmit('${ceoVO.ceName}')" id="btn_submit">등록</a>
 		</div> 
-	</form>             
+	</form>                
 </div>	                 
 	                
 <script type="text/javascript">
@@ -258,10 +258,10 @@ function fncChangeWindow(num, obj){
 	var text = $("input[name="+obj.name+"]:checked").val()
 	$("#baWindow_"+num).val(text);
 	return true;  
-}
+} 
    
    
-  
+   
 <%-- 주소 API --%>
 function execDaumPostcode() { 
     daum.postcode.load(function(){ 
@@ -272,7 +272,7 @@ function execDaumPostcode() {
             }
         }).open();  
     });   
-}        
+}         
          
 
 function fncSetOptionNumUpBanner(){   
@@ -295,7 +295,7 @@ function fncSetOptionNumUpBanner(){
               					   
 function fncAddUpBanner(){  
 	var num = $("[id^=baOrderNum_]").length + 1;    
-	alert(num + "번째 상단 배너가 추가되었습니다.");     
+	alert("상단 배너가 추가되었습니다.");     
 	var html = '';                            
 	 	html += '<div id="divUp_'+ num +'">';     
 		html += '<input type="hidden" name="baSeq" id="baSeq_'+num+'" value="N">';   
@@ -433,27 +433,27 @@ function fncChangeWindowDown(num, obj){
 	$("#baWindowDown_"+num).val(text);
 	return true;  
 }
- 
-         
+   
+          
 function fncAddDownBanner(){                       
 	  
 	var num = $("[id^=baOrderNumDown_]").length + 1;                
-	alert(num + "번째 하단 배너가 추가되었습니다.");     
+	alert("하단 배너가 추가되었습니다.");      
 	var html = '';                              
 	 	html += '<div id="divDown_'+ num +'">';       
-		html += '<input type="hidden" name="baSeq" id="baSeqDown_'+num+'" value="N">';   
+		html += '<input type="hidden" name="baSeq" id="baSeqDown_'+num+'" value="N">';    
 		html += '<input type="hidden" name="baPosition" id="baPositionDown_'+num+'" value="D"/>';
-		html += '<table class="tbl_row_type01">';    
-		html += 		'<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
-		html += 		'<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';
-		html += 	'<colgroup>';        
+		html += '<table class="tbl_row_type01">';     
+		html += 		'<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>';   
+		html += 		'<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>'; 
+		html += 	'<colgroup>';         
 		html += 		'<col style="width:20%;">';       
 		html += 		'<col style="width:30%;">';            
 		html += 		'<col style="width:20%;">';
 		html += 		'<col style="width:30%;">';        
 		html += 	'</colgroup>';      
 		html += 	'<tbody>';                
-		html += 		'<tr>';                                  
+		html += 		'<tr>';                                   
 		html += 			'<th scope="row"><strong class="th_tit">제목</strong></th>';     
 		html += 			'<td colspan="3">'; 
 		html += 				'<input type="text" name="baTitle" id="baTitleDown_'+num+'" class="text w80p" maxlength="70"/>';
@@ -498,26 +498,26 @@ function fncAddDownBanner(){
 		html += 				'<input type="hidden" name="baAtchFileId" id="baAtchFileIdDown_'+num+'">'; 
 		html += 			'</td>';                 
 		html += 		'</tr>';   
-		html += 	'</tbody>';       
+		html += 	'</tbody>';        
 		html += '</table>';           
 		html += '</div>';    
-	 	                      
-	$(".addPlaceDownBanner").before(html);      
+	 	                        
+	$(".addPlaceDownBanner").after(html);       
 	fncSetOptionNumDownBanner();
 }         
     
 function fncDelDownBanner(cnt, seq){ 
-	   
+	      
 	if(confirm("삭제하시겠습니까?")){   
 		if(typeof seq == "undefined"){
 			$("#divDown_"+cnt).remove();    
 			if($("[id^=divDown_]").length < 1){  
 				fncAddDownBanner();
 			}          
-		}else{                                  
-			$.ajax({           
+		}else{                                   
+			$.ajax({            
 				method : "POST",             
-				url : "delBanner.do",          
+				url : "delBanner.do",                   
 				data : {"baSeq" : seq}, 
 				success : function(data){  
 					$("#divDown_"+cnt).remove();
@@ -571,9 +571,9 @@ function fncSubmit(title){
 		}    
 	}   
 	 
+	 
 	
-	
-	         
+	          
 	if(title == null || title == ""){    
 		fncPageBoard('write','insertProc.do'); 
 		return false; 

@@ -105,7 +105,7 @@
 	<select id="upBannerSelectList" parameterType="cmmnDefaultVO" resultType="bannerVO">
 		/* Banner.upBannerSelectList */
 		<![CDATA[  
-      	     SELECT  
+      	     SELECT   
       	       
 					  BA_SEQ															 baSeq
 					, DATE_FORMAT(BA_RGST_DT,'%Y.%m.%d') 								 baRgstDt
@@ -126,13 +126,13 @@
 		     <include refid="Where"/>	 
 	     <![CDATA[    
 	    		ORDER BY BA_SEQ DESC
-			   ]]>  
+			   ]]>   
 	</select>	
 	
 	<select id="downBannerSelectList" parameterType="cmmnDefaultVO" resultType="bannerVO">
 		/* Banner.upBannerSelectList */ 
 		<![CDATA[  
-      	     SELECT		     
+      	     SELECT		      
 					  BA_SEQ															 baSeq
 					, DATE_FORMAT(BA_RGST_DT,'%Y.%m.%d') 								 baRgstDt
 					, F_USER_NM(BA_RGST_ID) 											 baRgstId
@@ -142,6 +142,7 @@
 					, BA_URL 															 baUrl
 					, BA_WINDOW															 baWindow
 					, BA_EXPOSE_YN														 baExposeYn
+					, BA_ORDER_NUM														 baOrderNum
 					, BA_POSITION														 baPosition
 				
 		      FROM	T_BANNER
@@ -183,73 +184,6 @@
 			) 
 		]]>
 	</insert>
-	
-	
-	<insert id="insertUpBannerContents" parameterType="bannerVO">  
-		/* Banner.insertUpBannerContents */   
-		<if test='baPosition != null and baPosition != "" and baPosition = "U"'>
-			<![CDATA[
-				INSERT	INTO	T_BANNER( 
-								BA_RGST_ID
-								, BA_ATCH_FILE_ID 									
-								, BA_TITLE													
-								, BA_CONT 				 									
-								, BA_URL 														
-								, BA_WINDOW			
-								, BA_EXPOSE_YN		 												 
-								, BA_ORDER_NUM		  
-								, BA_POSITION
-				)      
-				VALUES	(    
-								#{loginSeq     }          
-								,#{baAtchFileId }  
-								,#{baTitle      }
-								,#{baCont       }  
-								,#{baUrl        }  
-								,IF(#{baWindow} = '', 'N', #{baWindow})
-								,IF(#{baExposeYn} = '', 'N', #{baExposeYn})
-								,#{baOrderNum   }
-								,#{baPosition   }
-								  
-				) 
-			]]>
-		</if>
-	</insert> 
-	 
-	 <insert id="insertDownBannerContents" parameterType="bannerVO">  
-		/* Banner.insertDownBannerContents */   
-		<if test='baPosition != null and baPosition != "" and baPosition = "D"'>
-			<![CDATA[
-				INSERT	INTO	T_BANNER( 
-								BA_RGST_ID
-								, BA_ATCH_FILE_ID 									
-								, BA_TITLE													
-								, BA_CONT 				 									
-								, BA_URL 														
-								, BA_WINDOW			
-								, BA_EXPOSE_YN		 												 
-								, BA_ORDER_NUM		  
-								, BA_POSITION
-				)      
-				VALUES	(    
-								#{loginSeq     }          
-								,#{baAtchFileId }  
-								,#{baTitle      }
-								,#{baCont       }  
-								,#{baUrl        }  
-								,IF(#{baWindow} = '', 'N', #{baWindow})
-								,IF(#{baExposeYn} = '', 'N', #{baExposeYn})
-								,#{baOrderNum   }
-								,#{baPosition   }
-								  
-				) 
-			]]>
-		</if>
-	</insert>
-	 
-	 
-	 
-	 
 	 
 	<update id="updateContents" parameterType="bannerVO">
 		/* Banner.updateContents */

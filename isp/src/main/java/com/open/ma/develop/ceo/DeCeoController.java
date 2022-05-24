@@ -61,7 +61,7 @@ public class DeCeoController {
 		ceoVO = (CeoVO) cmmnService.selectContents(searchVO, PROGRAM_ID);
 		if (ceoVO != null) {        
 			model.addAttribute("ceoVO", ceoVO); 
-		}       
+		}        
 		         
 		BannerVO bannerVO = new BannerVO();    
 		
@@ -76,31 +76,40 @@ public class DeCeoController {
 				bannerVO.setBaOrderNum(searchVO.getBaOrderNum()[i]); 
 				bannerVO.setBaAtchFileId(searchVO.getBaAtchFileId()[i]); 
 				bannerVO.setBaPosition(searchVO.getBaPosition()[i]);   
-				System.out.println("값 체크 : "+ searchVO.getBaPosition()[i]);			 		     
 				if("N".equals(searchVO.getBaSeq()[i])){   
-					cmmnService.insertContents(bannerVO, "Banner.insertUpBannerContents");
+					cmmnService.insertContents(bannerVO, "Banner");
 				}else{
 					cmmnService.updateContents(bannerVO, "Banner");
 				} 
 				
-		}        
+		}            
 		 
 		
+		  
+		System.out.println(1);
 		if(searchVO.getBannerList() != null && searchVO.getBannerList().size() > 0) { 
+			System.out.println(2);
 			Iterator<BannerVO> tempList = searchVO.getBannerList().iterator();
+			System.out.println(3);
 			while(tempList.hasNext()) {        
+				System.out.println(4);
 				BannerVO tempVO = tempList.next();  
 				if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) { 
+					System.out.println("rrrrrrrrrrrr");
 					tempList.remove();     		      
 				}else{      
+					System.out.println("5");
 					cmmnService.deleteContents(tempVO, "Banner");  
 				}  
-			}          
+			}           
 			  
 			for (BannerVO tempVO : ceoVO.getBannerList()) {  
+				System.out.println("temp :::: "+ tempVO);
 				if(StringUtil.isNullToString(tempVO.getBaSeq()).equals("")) {  
-					cmmnService.insertContents(tempVO, "Banner.insertDownBannerContents");  
+					System.out.println(6);
+					cmmnService.insertContents(tempVO, "Banner");  
 				}else {   
+					System.out.println(7);
 					cmmnService.updateContents(tempVO, "Banner.updateReverse"); 
 				}  
 			}   
@@ -110,7 +119,7 @@ public class DeCeoController {
 		return "cmmn/execute";
 	}        
 		 
-		
+		 
              
 		
 		   
