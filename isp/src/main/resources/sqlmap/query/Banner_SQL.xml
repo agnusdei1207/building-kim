@@ -63,7 +63,7 @@
 				 AND BA_SEQ = #{baSeq}
 		]]>
 	</select>
-	 
+	  
 	
 	<select id="selectList" parameterType="cmmnDefaultVO" resultType="bannerVO">
 		/* Banner.selectList */
@@ -117,18 +117,20 @@
 					, BA_WINDOW															 baWindow
 					, BA_EXPOSE_YN														 baExposeYn
 					, BA_ORDER_NUM														 baOrderNum
+					, BA_POSITION														 baPosition
 				
 		      FROM	T_BANNER
-			 WHERE	BA_USE_YN='Y'	
+			 WHERE	BA_USE_YN='Y'
+			   AND	BA_POSITION = 'U'	
 	     	 ]]>   
 		     <include refid="Where"/>	 
 	     <![CDATA[    
 	    		ORDER BY BA_SEQ DESC
-			   ]]> 
+			   ]]>  
 	</select>	
 	
 	<select id="downBannerSelectList" parameterType="cmmnDefaultVO" resultType="bannerVO">
-		/* Banner.upBannerSelectList */
+		/* Banner.upBannerSelectList */ 
 		<![CDATA[  
       	     SELECT		     
 					  BA_SEQ															 baSeq
@@ -140,10 +142,12 @@
 					, BA_URL 															 baUrl
 					, BA_WINDOW															 baWindow
 					, BA_EXPOSE_YN														 baExposeYn
-					, BA_ORDER_NUM														 baOrderNum
-				    
-		       FROM	T_BANNER
-			  WHERE	BA_USE_YN='Y'	
+					, BA_POSITION														 baPosition
+				
+		      FROM	T_BANNER
+			 WHERE	BA_USE_YN='Y'
+			   AND	BA_POSITION = 'D'	 
+			   
 	     	  ]]>    
 		     <include refid="Where"/>	 
 	     <![CDATA[     
@@ -163,6 +167,7 @@
 							, BA_WINDOW			
 							, BA_EXPOSE_YN		 												 
 							, BA_ORDER_NUM		  
+							, BA_POSITION
 			)     
 			VALUES	(    
 							#{loginSeq     }          
@@ -173,6 +178,8 @@
 							,IF(#{baWindow} = '', 'N', #{baWindow})
 							,IF(#{baExposeYn} = '', 'N', #{baExposeYn})
 							,#{baOrderNum   }
+							,#{baPosition   }
+							  
 			) 
 		]]>
 	</insert>

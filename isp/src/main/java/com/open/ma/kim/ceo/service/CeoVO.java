@@ -34,6 +34,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	private String[] baWindow;
 	private String[] baExposeYn;
 	private String[] baOrderNum; 
+	private String[] baPosition; 
 	private List<BannerVO> bannerList; 
 	
 	
@@ -298,7 +299,22 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 		} 
 	}
 	
-	
+	public String[] getBaPosition() {
+		String[] newArr = null;
+		if(baPosition != null){ 
+			newArr = new String[baSeq.length];
+			for (int i = 0; i < baPosition.length; i++) {
+				newArr[i] = StringUtil.nullConvert(this.baPosition[i]);
+			} 
+		} 
+		return newArr;    
+	}
+	public void setBaPosition(String[] baPosition) {
+		this.baPosition = new String[baPosition.length];
+		for (int i = 0; i < baPosition.length; i++){
+			this.baPosition[i] = StringUtil.nullConvert(baPosition[i]);
+		} 
+	}
 	
 	
 	

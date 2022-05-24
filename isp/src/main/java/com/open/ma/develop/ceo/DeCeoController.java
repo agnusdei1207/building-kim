@@ -49,7 +49,7 @@ public class DeCeoController {
 		 
 		List<CeoVO> downBannerList = (List<CeoVO>)cmmnService.selectList(cmmnDefaultVo, "Banner.downBannerSelectList");
 		model.addAttribute("downBannerList", downBannerList);
-		
+		 
 		return ".mLayout:"+ folderPath + "form"; 
 	}          
    
@@ -60,13 +60,14 @@ public class DeCeoController {
 		CeoVO ceoVO = new CeoVO();
 		ceoVO = (CeoVO) cmmnService.selectContents(searchVO, PROGRAM_ID);
 		if (ceoVO != null) {        
-			model.addAttribute("ceoVO", ceoVO);
+			model.addAttribute("ceoVO", ceoVO); 
 		}       
 		         
 		BannerVO bannerVO = new BannerVO();   
+		
 		for(int i = 0; i < searchVO.getBaSeq().length; i++){    
-			     
-				bannerVO.setBaSeq(searchVO.getBaSeq()[i]); 
+			
+				bannerVO.setBaSeq(searchVO.getBaSeq()[i]);  
 				bannerVO.setBaTitle(searchVO.getBaTitle()[i]);    
 				bannerVO.setBaCont(searchVO.getBaCont()[i]);    
 				bannerVO.setBaUrl(searchVO.getBaUrl()[i]); 
@@ -74,14 +75,15 @@ public class DeCeoController {
 				bannerVO.setBaExposeYn(searchVO.getBaExposeYn()[i]); 
 				bannerVO.setBaOrderNum(searchVO.getBaOrderNum()[i]); 
 				bannerVO.setBaAtchFileId(searchVO.getBaAtchFileId()[i]); 
+				bannerVO.setBaPosition(searchVO.getBaPosition()[i]); 
 							 		     
-				if("N".equals(searchVO.getBaSeq()[i])){ 
+				if("N".equals(searchVO.getBaSeq()[i])){  
 					cmmnService.insertContents(bannerVO, "Banner");
 				}else{
 					cmmnService.updateContents(bannerVO, "Banner");
 				}
 		}  
-		
+		 
 		
 		
 		
@@ -105,9 +107,7 @@ public class DeCeoController {
 //				}else {   
 //					cmmnService.updateContents(tempVO, "Banner.updateReverse"); 
 //				}  
-//			}
-//			
-//			
+//			} 
 //		}  
 		
 		model.addAttribute("message", "등록되었습니다.");  
@@ -121,7 +121,7 @@ public class DeCeoController {
 		
 		   
 	@ResponseBody
-	@RequestMapping(folderPath + "delUpBanner.do")
+	@RequestMapping(folderPath + "delBanner.do")
 	public void delUpBanner(@ModelAttribute("searchVO") CeoVO searchVO, Model model, SessionStatus status, HttpServletRequest request) throws Exception {
 		
 		searchVO.setCol1(searchVO.getBaSeq()[0]);

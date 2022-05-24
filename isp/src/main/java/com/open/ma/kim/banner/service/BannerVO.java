@@ -28,7 +28,15 @@ public class BannerVO extends CmmnDefaultVO implements Serializable {
 	private String baWindow;
 	private String baExposeYn;
 	private String baOrderNum; 
+	private String baPosition; 
+	 
 	
+	public String getBaPosition() {
+		return baPosition;
+	}
+	public void setBaPosition(String baPosition) {
+		this.baPosition = baPosition;
+	}
 	private String baCnt;
 	private List<BannerVO> bannerList;
 	
