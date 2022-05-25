@@ -13,7 +13,7 @@
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<title>한국전파진흥협회 관리자</title>
+<title>한국전파진흥협회 관리자</title> 
 <link rel="shortcut icon" href="/publish/ft/images/common/favicon.ico" type="image/x-icon" />
 <link rel="apple-touch-icon-precomposed" href="/publish/ft/images/common/apple-touch-icon.png">
 <link rel="stylesheet" type="text/css" href="/publish/ma/css/style.css">

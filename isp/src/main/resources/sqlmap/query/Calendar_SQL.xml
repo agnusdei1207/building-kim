@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.open.Calendar">
-
-	<select id="calSelectList" parameterType="calendarVO" resultType="calendarVO">
-		/* Calendar.calSelectList */
+ 
+	<select id="selectList" parameterType="calendarVO" resultType="calendarVO">
+		/* Calendar.selectList */
 		<![CDATA[
 			SELECT 
 				  	DATE_FORMAT(CA_DATA_DATE, '%Y.%m.%d') 					caDataDate
@@ -11,21 +11,18 @@
 					, CA_HOL_YN 											caHolYn
 					 
 			  FROM	T_CALENDAR
-			 WHERE	DATE_FORMAT(CA_DATA_DATE, '%Y%m') = #{schYearMonth}
-			   AND	RGST_ID = #{loginSeq}
-			   AND	USE_YN = 'Y'
-		  	  ]]>  
-		<include refid="Where"/>
-		<![CDATA[
-			ORDER BY CA_DATA_DATE
-			  ]]>
-	</select> 
-	
+			 WHERE	DATE_FORMAT(CA_DATA_DATE, '%Y%m') = #{caSchYearMonth}
+			   AND	CA_RGST_ID = #{loginSeq}
+			   AND	CA_USE_YN = 'Y'    
+		  ORDER BY	CA_DATA_DATE
+			  ]]> 
+	</select>  
+	 
 	<select id="selectContents" parameterType="calendarVO" resultType="calendarVO">
 		/* Calendar.selectContents  */
 		<![CDATA[
-			SELECT
-				  	CA_SEQ 														caSeq,
+		   (SELECT
+				  	CA_SEQ 														caSeq
 					,DATE_FORMAT(CA_DATA_DATE, '%Y.%m.%d') 						caDataDate
 					,CA_HOL_YN 													caHolYn
 					,CAL_CONT 													calCont
@@ -34,12 +31,12 @@
 			  FROM	T_CALENDAR  
 			 WHERE	CA_DATA_DATE = #{caDataDate}
 			   AND	CA_HOL_YN = 'Y'
-			   AND	CA_USE_YN = 'Y'
-			  	
-			UNION
-			 
-			SELECT
-				  	CA_SEQ 														caSeq,
+			   AND	CA_USE_YN = 'Y')
+			  	  	
+			 UNION
+			      
+		   (SELECT
+				  	CA_SEQ 														caSeq
 					,DATE_FORMAT(CA_DATA_DATE, '%Y.%m.%d') 						caDataDate
 					,CA_HOL_YN 													caHolYn
 					,CAL_CONT 													calCont
@@ -47,46 +44,50 @@
 					 
 			  FROM	T_CALENDAR  
 			 WHERE	CA_DATA_DATE = #{caDataDate}
-			   AND	CA_HOL_YN <> 'Y' 
+			   AND	CA_HOL_YN <> 'Y'   
 			   AND	CA_RGST_ID = #{loginSeq}
-			   AND	CA_USE_YN = 'Y'
+			   AND	CA_USE_YN = 'Y')
 			  
 		]]>
-	</select>
+	</select> 
 	
 	<update id="deleteContents" parameterType="calendarVO">
 		/* Calendar.deleteContents */
-		<![CDATA[
+		<![CDATA[ 
 			UPDATE	T_CALENDAR
 			   SET	CA_USE_YN = 'N'
 			 WHERE	CA_SEQ = #{caSeq}
 		]]> 
 	</update>
 	  
-	 
+	  
 	<insert id="insertContents" parameterType="calendarVO">
 		/* Calendar.insertContents */
 		<![CDATA[
-			INSERT	INTO	T_CALENDAR(
+			INSERT	(
+					INTO	T_CALENDAR
 				    DATA_DATE
 				    , CAL_CONT
 				    , RGST_ID
-				    , HOL_YN 
-		  )VALUES(	 
+				    , HOL_YN
+				    )    
+				      
+		    VALUES	(	 
 				  	STR_TO_DATE(#{caDataDate},'%Y-%m-%d')
 					, #{caCont}
 					, #{loginSeq}
-					, IFNULL(#{caHolYn}, 'N')) 
+					, IFNULL(#{caHolYn}, 'N')
+					) 
 		]]>
-	</insert>  
+	</insert>        
 	
 	
 	<update id="updateContents" parameterType="calendarVO">
 		/* Calendar.updateContents */
 		<![CDATA[
-			UPDATE	T_CALENDAR 
+			UPDATE	T_CALENDAR   
 			   SET	CAL_CONT 								= #{caCont}
-					,CA_DATA_DATE 								= #{dataDate}
+					,CA_DATA_DATE 							= #{dataDate}
 					,CA_HOL_YN 								= NVL(#{caHolYn}, 'N')
 			 WHERE	CA_SEQ = #{caSeq}	
 		]]> 

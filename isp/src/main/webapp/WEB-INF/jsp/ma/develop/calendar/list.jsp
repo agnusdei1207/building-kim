@@ -1,103 +1,91 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
-<script type="text/javascript" src="/publish/ft/js/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="/publish/ma/js/board.js"></script>
+
 <head>
 <title>달력게시판</title>   
-</head>
+</head>    
 <c:set var="nowDate" value="${util:getNowDate('yyyy-MM-dd') }" />
-<c:set var="selectedDate" value="${searchVO.selectedYear}${searchVO.selectedMonth}${util:getNowDate('dd')}" />
-<c:set var="firstWeekdayOfMonth" value='${util:getFirstWeekdayOfMonth(selectedDate, "yyyyMMdd")+1 }' />
-<c:set var="lastDayOfMonth" value='${util:getLastDayOfMonth(selectedDate, "yyyyMMdd") }' />
-<c:set var="prevYear" value='${fn:substring(util:addYearMonthDay(selectedDate, 0, -1, 0),0,4) }' />
-<c:set var="prevMonth" value='${fn:substring(util:addYearMonthDay(selectedDate, 0, -1, 0),4,6) }' />
-<c:set var="nextYear" value='${fn:substring(util:addYearMonthDay(selectedDate,  0, 1, 0),0,4) }' />
-<c:set var="nextMonth" value='${fn:substring(util:addYearMonthDay(selectedDate, 0, 1, 0),4,6) }' />
-
-<script type="text/javascript">
-var fncGoMonth = function(year, month) {
-	$("#selectedYear").val(year);
-	$("#selectedMonth").val(month);
-	$("#schYearMonth").val(year+month);
-	$("#defaultFrm").attr({"action" : "list.do", "method" : "post", "target":"_self"}).submit();
-};
-
-function fncInsert(date){
-	$("#dataDate").val(date);
-	fncPageBoard('write','form.do');
-}
-</script>
-<div class="content_box">
+<c:set var="selectedDate" value="${calendarVO.caSelectedYear}${calendarVO.caSelectedMonth}${util:getNowDate('dd')}" />
+<c:set var="firstWeekdayOfMonth" value='${util:getFirstWeekdayOfMonth(caSelectedDate, "yyyyMMdd")+1 }' />
+<c:set var="lastDayOfMonth" value='${util:getLastDayOfMonth(caSelectedDate, "yyyyMMdd") }' />
+<c:set var="prevYear" value='${fn:substring(util:addYearMonthDay(caSelectedDate, 0, -1, 0),0,4) }' />
+<c:set var="prevMonth" value='${fn:substring(util:addYearMonthDay(caSelectedDate, 0, -1, 0),4,6) }' />
+<c:set var="nextYear" value='${fn:substring(util:addYearMonthDay(caSelectedDate,  0, 1, 0),0,4) }' />
+<c:set var="nextMonth" value='${fn:substring(util:addYearMonthDay(caSelectedDate, 0, 1, 0),4,6) }' />
+  
+ 
+<div class="content_box"> 
 	<div class="wrap_cal marTy01">
-		<form:form commandName="searchVO" name="defaultFrm" id="defaultFrm" method="post">
-			<input type="hidden" name="selectedYear" id="selectedYear" />
-			<input type="hidden" name="selectedMonth" id="selectedMonth" />
-			<input type="hidden" name="schYearMonth" id="schYearMonth"/>
-			<input type="hidden" name="dataDate" id="dataDate">
-			<fieldset>
+		<form name="defaultFrm" id="defaultFrm" method="post">
+			<input type="hidden" name="caSelectedYear" id="caSelectedYear" />
+			<input type="hidden" name="caSelectedMonth" id="caSelectedMonth" />
+			<input type="hidden" name="caSchYearMonth" id="caSchYearMonth"/> 
+			<input type="hidden" name="caDataDate" id="caDataDate">
+			<fieldset> 
 				<legend>달력 게시판</legend>
 				<div class="cal_top">
 					<div class="monthly">
-						<a href="#" class="btn_prev_cal" onclick="fncGoMonth('${prevYear }','${prevMonth }');">&lt;<span class="hide">이전</span></a>
-						<strong class="cal_tit"><span class="inlineBlock"><c:out value="${searchVO.selectedYear }" />년</span> 
-						<span class="inlineBlock"><c:out value="${searchVO.selectedMonth }" />월</span></strong>
-						<a href="#" class="btn_next_cal" onclick="fncGoMonth('${nextYear }','${nextMonth }');">&gt;<span class="hide">다음</span></a>
+						<a href="javascript:void(0)" class="btn_prev_cal" onclick="fncGoMonth('${prevYear }','${prevMonth }');">&lt;<span class="hide">이전</span></a>
+						<strong class="cal_tit"><span class="inlineBlock"><c:out value="${calendarVO.caSelectedYear }" />년</span> 
+						<span class="inlineBlock"><c:out value="${calendarVO.caSelectedMonth }" />월</span></strong>
+						<a href="javascript:void(0)" class="btn_next_cal" onclick="fncGoMonth('${nextYear }','${nextMonth }');">&gt;<span class="hide">다음</span></a>
 					</div>
-				</div>
+				</div> 
 				<table class="table_cal" summary="일정 상세정보 달력입니다.">
 					<caption></caption>
 					<colgroup>
-						<col style="width:12%;"  />
+						<col style="width:12%;" />
 						<col style="width:15%;" />
+						<col style="width:15%;" /> 
 						<col style="width:15%;" />
-						<col style="width:15%;" />
-						<col style="width:15%;" />
+						<col style="width:15%;" /> 
 						<col style="width:15%;" />
 						<col style="width:13%;" />
 					</colgroup>
 					<thead>
-						<tr>
+						<tr>     
 							<th scope="col"><span>일</span></th>
 							<th scope="col"><span>월</span></th>
-							<th scope="col"><span>화</span></th>
+							<th scope="col"><span>화</span></th> 
 							<th scope="col"><span>수</span></th>
 							<th scope="col"><span>목</span></th>
 							<th scope="col"><span>금</span></th>
 							<th scope="col"><span>토</span></th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody> 
 						<tr>
 							<%-- 한주 시작부터 첫째날 전까지 빈칸 삽입 시작 --%>
 							<c:if test="${firstWeekdayOfMonth != 8 }">
 								<%-- 일요일이 아닐 경우 빈칸 삽입 --%>
 								<c:forEach var="headerBlank" begin="1" end="${firstWeekdayOfMonth-1 }" step="1">
 									<td><div class="td_cont blank"><div class="day"></div></div></td>
-								</c:forEach>
+								</c:forEach> 
 							</c:if>
-							<%-- 한주 시작부터 첫째날 전까지 빈칸 삽입 끝 --%>
+							<%-- 한주 시작부터 첫째날 전까지 빈칸 삽입 끝 --%> 
+							   
 							<%-- 시작일부터 마지막 일자까지 달력 생성 --%> 
 							<c:forEach var="printDay" begin="1" end="${lastDayOfMonth }" step="1" varStatus="status">
 								<%-- 헤더 공백포함 총 갯수 --%>
 								<c:set var="k" value="${printDay + firstWeekdayOfMonth-1 }" />
-								<c:set var="printDate" value="${searchVO.selectedYear }-${searchVO.selectedMonth }-${util:lpad(printDay, 2, '0') }" />
-								<c:set var="prtDate" value="${searchVO.selectedYear }.${searchVO.selectedMonth }.${util:lpad(printDay, 2, '0') }" />
-								<c:set var="detailDate" value="${searchVO.selectedYear }.${searchVO.selectedMonth }.${util:lpad(printDay, 2, '0') }"/>
+								<c:set var="printDate" value="${calendarVO.caSelectedYear }-${calendarVO.caSelectedMonth }-${util:lpad(printDay, 2, '0') }" />
+								<c:set var="prtDate" value="${calendarVO.caSelectedYear }.${calendarVO.caSelectedMonth }.${util:lpad(printDay, 2, '0') }" />
+								<c:set var="detailDate" value="${calendarVO.caSelectedYear }.${calendarVO.caSelectedMonth }.${util:lpad(printDay, 2, '0') }"/>
 								<td onclick="fncInsert('${detailDate }');">
 									<div class="td_cont ${printDate eq nowDate ? 'today' : '' }">
 										<div class="day">
 											<c:if test="${printDate eq nowDate}"><span class="txt_today">today</span></c:if>
-											<a><c:out value="${printDay }" /></a>
+											<a><c:out value="${printDay }" /></a>     
 										</div>
-										<c:forEach items="${resultList }" var="result" varStatus="status">
-											<div>
+										<c:forEach items="${resultList }" var="result">
+											<div>   
 												<c:if test="${result.dataDate eq prtDate }"><a href="#" class="cutText">
-													<span class="<c:if test="${result.holYn eq 'Y' }">txt_holiday</c:if>">${result.calCont }</span></a>
+													<span class="<c:if test="${result.caHolYn eq 'Y' }">txt_holiday</c:if>">${result.caCont }</span></a>
 												</c:if>
-											</div>
-										</c:forEach>
+											</div> 
+										</c:forEach> 
 									</div>
-								</td>
+								</td>   
 								<c:if test="${k % 7 == 0}">
 									</tr>
 									<tr>
@@ -111,13 +99,32 @@ function fncInsert(date){
 										<div class="td_cont blank"><div class="day"></div></div>
 									</td>
 								</c:forEach>
-							</c:if>
+							</c:if> 
 							<%-- 마지막날부터 한주 끝까지 빈칸 삽입 끝 --%>
-						</tr>
-					</tbody>
+						</tr>  
+					</tbody>  
 				</table>
 				<br>
-			</fieldset>
-		</form:form>
+			</fieldset> 
+		</form> 
 	</div><%-- //wrap_cal --%>
 </div>
+
+
+<script type="text/javascript"> 
+   
+var fncGoMonth = function(year, month) {
+	$("#caSelectedYear").val(year);
+	$("#caSelectedMonth").val(month);
+	$("#caSchYearMonth").val(year+month);
+	$("#defaultFrm").attr({"action" : "list.do", "method" : "post", "target":"_self"}).submit();
+};
+ 
+function fncInsert(date){
+	$("#caDataDate").val(date);
+	fncPageBoard('write','form.do');
+}
+
+</script>
+
+

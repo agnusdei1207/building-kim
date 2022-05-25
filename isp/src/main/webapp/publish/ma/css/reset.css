@@ -83,9 +83,8 @@ a.btn:focus, input.btn:focus,button.btn:focus {outline: none;}
 /* basic */
 .hidden {position:absolute;visibility:hidden;top:-9000px;left:-9000px;}
 .display_none {display:none;}
-.cursor {cursor:pointer;}
+.cursor {cursor:pointer;} 
 .text_over {text-overflow:ellipsis; overflow:hidden;}
-   
 
 
 /* align */

@@ -15,10 +15,10 @@
 	<script type="text/javascript" src="/publish/ma/js/board.js"></script>
 	<script type="text/javascript" src="/publish/ft/js/jquery.bxslider.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function() {   
-			$('.slider').bxSlider({
+		$(document).ready(function() {
+			$('.slider').bxSlider({ 
 				controls:false,
-				auto: true,
+				auto: true,  
 				autoControls: true, 
 				autoControlsCombine:true,
 				pager:true,

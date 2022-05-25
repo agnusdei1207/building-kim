@@ -190,7 +190,7 @@ function view_hide(num) {
 var fncDate = function(){
 	var setDate = arguments;
 	var getId;
-	var fmt = "yy.mm.dd";
+	var fmt = "yy.mm.dd"; 
 	switch (setDate.length) {
 		case 1: getId ="#"+setDate[0];break;
 		case 2: if(setDate[1] != ''){getId ="#"+setDate[0]+", #"+setDate[1];break;}else{getId ="#"+setDate[0];break;}
@@ -198,18 +198,19 @@ var fncDate = function(){
 	}
 	
 	 var dates = $( getId ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      showOn: "button",
-      buttonImage: "/publish/ma/images/icon_calendar.png",
-      buttonImageOnly: true,
-      dateFormat : fmt,
-      onSelect: function( selectedDate ) {
-          var option = this.id == setDate[0] ? "minDate" : "maxDate",
-          instance = $( this ).data( "datepicker" ),
-          date = (fmt == 'yy.mm' ? new Date(instance.selectedYear, instance.selectedMonth, 1) : $.datepicker.parseDate( $.datepicker._defaults.dateFormat, selectedDate, instance.settings ))
-    	  dates.not( this ).datepicker( "option", option, date );
-      }
+		 
+		  changeMonth: true,
+	      changeYear: true,
+	      showOn: "button",
+	      buttonImage: "/publish/ma/images/icon_calendar.png",
+	      buttonImageOnly: true,
+	      dateFormat : fmt,
+	      onSelect: function( selectedDate ) {
+	          var option = this.id == setDate[0] ? "minDate" : "maxDate",
+	          instance = $( this ).data( "datepicker" ),
+	          date = (fmt == 'yy.mm' ? new Date(instance.selectedYear, instance.selectedMonth, 1) : $.datepicker.parseDate( $.datepicker._defaults.dateFormat, selectedDate, instance.settings ))
+	    	  dates.not( this ).datepicker( "option", option, date );
+	      }
   });
 }
 

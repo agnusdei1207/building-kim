@@ -5,11 +5,11 @@ import java.io.Serializable;
 import org.apache.ibatis.type.Alias;
 
 import com.open.cmmn.model.CmmnDefaultVO;
- 
-@Alias("calendarVO")
+   
+@Alias("calendarVO") 
 @SuppressWarnings("serial")
 public class CalendarVO extends CmmnDefaultVO implements Serializable {
-	   
+	     
 	private String caSeq;				// 일련번호
 	private String caDataDate;			// 등록일
 	private String caHolYn;				// 기념일구분
@@ -18,13 +18,13 @@ public class CalendarVO extends CmmnDefaultVO implements Serializable {
 	private String caRgstDt;			// 작성일
 	private String caRvseId;			// 수정자
 	private String caUseYn;				// 사용여부 
+	   
 	private String caSelectedYear;		// 선택 년도
 	private String caSelectedMonth;		// 선택 월
 	private String caSchYearMonth;		// 선택 년월
-	 
 	private String[] arrSelect;   
-	
-	public String[] getArrSelect() {
+	          
+	public String[] getArrSelect() { 
 		String[] newArrSelect = null;
 		if(this.arrSelect!=null){
 			newArrSelect = new String[arrSelect.length];
@@ -32,7 +32,7 @@ public class CalendarVO extends CmmnDefaultVO implements Serializable {
 				newArrSelect[i] = this.arrSelect[i];
 			}
 		}
-		return newArrSelect;
+		return newArrSelect; 
 	}
 	public void setArrSelect(String[] arrSelect) {
 		this.arrSelect = arrSelect;

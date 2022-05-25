@@ -624,7 +624,7 @@ box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.24);}
 .cutText {display: inline-block; text-align:left; vertical-align: middle; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width:100%;}
 .txt_holiday {color:#ff3300; font-weight:600;}
 
-.dash_list li {float:left; width:32%;}
+.dash_list li {float:left; width:32%;} 
 .dash_list li:nth-child(3n-1) {margin:0 2%;}
 .dash_list a {display:block;width:100%;}
 .dash_list .dash_box {margin-bottom:5px;display:block;background:#f8f8f8;border:1px solid #3333;border-radius:5px;overflow:hidden;}
@@ -640,3 +640,6 @@ box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.24);}
 
 .srvy_video {position: relative; padding-bottom: 26.25%; width:50%; height:350px; padding-top: 30px;height: 0;overflow: hidden;}
 .srvy_video iframe {position: absolute;top: 0;left: 0; width: 100%; height: 100%;}
+
+/* 커스텀 */ 
+.font_red {color:#ff6565; font-weight:bold;}

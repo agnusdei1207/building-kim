@@ -17,7 +17,7 @@
 				test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
 				AND LOG_CLIENT_IP LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
-		</if> 
+		</if>  
 		<if    
 			test="searchStartDate !=null and searchStartDate !='' and schEtc03 != 4">      
  				<![CDATA[ 
@@ -31,9 +31,9 @@
 						AND (DATE_FORMAT(LOG_DT, '%T') > '18:00:00' OR DATE_FORMAT(LOG_DT, '%T') < '09:00:00') 
 					]]>
 				</if>
-			</if>
+			</if>   
 		</if>    
-	</sql>
+	</sql>  
 
 	<select id="selectList" parameterType="cmmnDefaultVO"
 		resultType="logLogVO">
@@ -96,7 +96,7 @@
 							THEN	(SELECT 	ME_FAIL_CNT FROM t_member tm WHERE tm.ME_ID = tll.LOG_ID) 
 							ELSE	''
 						  END	failCnt
-		 					 
+		 					  
 				  FROM	t_log_log	tll
 					       
 				 WHERE	1 = 1    
