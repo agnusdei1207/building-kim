@@ -46,7 +46,7 @@ public class CalendarController {
 			searchVO.setCaSelectedYear(nowDate.substring(0,4));     
 			searchVO.setCaSelectedMonth(nowDate.substring(4)); 
 			searchVO.setCaSchYearMonth(nowDate); 
-		}  
+		}         
 		    
 		List<CalendarVO> resultList=(List<CalendarVO>)cmmnService.selectList(searchVO, PROGRAM_ID );
 		model.addAttribute("resultList", resultList);
@@ -60,43 +60,26 @@ public class CalendarController {
 		List<CalendarVO> resultList=(List<CalendarVO>)cmmnService.selectList(searchVO, PROGRAM_ID + ".selectContentsList");
     	if(!"".equals(StringUtil.isNullToString(resultList))){
     		model.addAttribute("resultList", resultList);
-    	}
-    	    
-    	int cnt = (Integer)cmmnService.selectCount(searchVO, PROGRAM_ID);
-    	if(cnt > 0){
-    		model.addAttribute("cnt", cnt);
-    	}
+    	}  
     	 
     	return ".mLayout:"+folderPath+"form";
     }
     
-    
-    @RequestMapping(folderPath+"{procType}Proc.do")
-    public String proc(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, HttpServletRequest request, @PathVariable String procType) throws Exception{
-    	  
-    		 
-    	if(procType.equals("update")){ 
-    		message = "수정되었습니다.";
-    		cmmnService.updateContents(searchVO, PROGRAM_ID);
-    	}else if(procType.equals("insert")){
-    		message = "등록되었습니다.";
+    @ResponseBody 
+    @RequestMapping(folderPath+"{procType}Contents.do")
+    public String procContents(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, @PathVariable String procType,HttpServletRequest request) throws Exception{
+    	
+    	if("insert".equals(procType)){
     		cmmnService.insertContents(searchVO, PROGRAM_ID);
-    	}
-    	         
-    	model.addAttribute("message", message); 
-    	model.addAttribute("pValue", searchVO.getCaDataDate());
-    	model.addAttribute("pName", "caDataDate"); 
-    	model.addAttribute("cmmnScript", "form.do");
-    	return "cmmn/execute";
-    }  
-                           
-    @ResponseBody
-    @RequestMapping(folderPath+"{procType}ajaxDelContents.do")
-    public void ajaxDelContents(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, HttpServletRequest request, @PathVariable String procType) throws Exception{
-    	
-    	
-    	
+    	}else if("update".equals(procType) && !"".equals(StringUtil.nullString(searchVO.getCaSeq()))){
+    		cmmnService.updateContents(searchVO, PROGRAM_ID);
+    	}else if("delete".equals(procType) && !"".equals(StringUtil.nullString(searchVO.getCaSeq()))){ 
+    		cmmnService.deleteContents(searchVO, PROGRAM_ID);
+    	} 
+     	  
+    	return "등록완ㄹ";
     }
+    
     
     
 }

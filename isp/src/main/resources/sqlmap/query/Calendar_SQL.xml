@@ -17,11 +17,11 @@
 		  ORDER BY	CA_DATA_DATE 
 			  ]]>   
 	</select>          
-	       
+	          
 	<select id="selectContentsList" parameterType="calendarVO" resultType="calendarVO">
 		/* Calendar.selectContentsList  */ 
 		<![CDATA[  
-		   SELECT    
+		   SELECT      
 				  	CA_SEQ 														caSeq
 					,DATE_FORMAT(CA_DATA_DATE, '%Y.%m.%d') 						caDataDate
 					,CA_HOL_YN 													caHolYn
@@ -31,26 +31,13 @@
 			  FROM	T_CALENDAR   
 			 WHERE	CA_DATA_DATE = #{caDataDate}
 			   AND	CA_USE_YN = 'Y'
-		]]>
-	</select>  
-	
-	<select id="selectCount" parameterType="calendarVO" resultType="int">
-		/* Calendar.selectCount  */ 
-		<![CDATA[   
-		   SELECT          
-					COUNT(CA_SEQ)     											caCcnt
-					  
-			  FROM	T_CALENDAR   
-			 WHERE	CA_DATA_DATE = #{caDataDate}
-			   AND	CA_USE_YN = 'Y'
-		]]>
-	</select> 
-	
-	
+		]]>      
+	</select>   
+ 	
 	
 	<update id="deleteContents" parameterType="calendarVO">
 		/* Calendar.deleteContents */
-		<![CDATA[ 
+		<![CDATA[   
 			UPDATE	T_CALENDAR
 			   SET	CA_USE_YN = 'N'
 			 WHERE	CA_SEQ = #{caSeq}
@@ -67,13 +54,13 @@
 				    , CA_CONT
 				    , CA_RGST_ID 
 				    , CA_HOL_YN
-				    )         
-				            
+				    )          
+				             
 		    VALUES	(	   
 				  	DATE_FORMAT(#{caDataDate},'%Y-%m-%d')
 					, #{caCont}
 					, #{loginSeq}
-					, IFNULL(#{caHolYn}, 'N')
+					, IFNULL(#{caHolYn}, 'N', 'Y')
 					)  
 		]]>
 	</insert>           
@@ -87,8 +74,8 @@
 			   		CA_CONT 								= #{caCont}
 					,CA_DATA_DATE 							= #{caDataDate}
 					,CA_HOL_YN 								= NVL(#{caHolYn}, 'N')
-					    
-			 WHERE	CA_DATA_DATE = #{caDataDate}	
+					     
+			 WHERE	CA_SEQ = #{caSeq}	
 		]]> 
 	</update>
 	
