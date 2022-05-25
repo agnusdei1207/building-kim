@@ -1,9 +1,8 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
-<script type="text/javascript" src="/publish/ma/js/board.js"></script>
         
 <%-- search --%> 
-<div class="content_box">  
+<div class="content_box">     
 	<ul class="tab js-tab tab_menu">          
 	    <li id="menu"><a href="javascript:void(0);" onclick="searchLog(0);">전체</a></li>
 	    <li id="menu1"><a href="javascript:void(0);" onclick="searchLog(1);">업무시간 외 접속</a></li>

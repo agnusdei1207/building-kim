@@ -952,7 +952,7 @@ public final class DateUtils {
 	 * </pre>
 	 *
 	 * @auther : User
-	 * @since : 2016. 3. 2.
+	 * @since : 2016. 3. 2. 
 	 * @param dateType
 	 *        날짜 표현 형식 yyyy-MM-dd
 	 * @return String 오늘 날짜를 INPUT 형태로 출력
@@ -961,10 +961,10 @@ public final class DateUtils {
 
 		LocalDate locDate = LocalDate.now();
 		DateTimeFormatter dateFormat = null;
-		try {
+		try { 
 			if (StringUtils.isNotEmpty(dateType)) {
 				dateFormat = DateTimeFormatter.ofPattern(dateType, Locale.getDefault());
-			} else {
+			} else {      
 				dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault());
 			}
 
@@ -973,7 +973,7 @@ public final class DateUtils {
 			throw new IllegalArgumentException("Invalid date type: " + dateType);
 		}
 
-	}
+	} 
 
 	/**
 	 * 2013.02.20 날짜 시간 포멧 컨버팅 추가 (유효성 검사 없이 자리수를 가지고만 체크).

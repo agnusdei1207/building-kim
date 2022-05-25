@@ -7,10 +7,10 @@
 	<c:if test="${searchVO.schEtc03 eq '4' }">
 		<div class="tbl_right"> 
 			<a href="javascript:void(0)" class="btn btn_sml btn_save" onclick="fncPageBoard('view', 'resetFailCnt.do');">실패횟수 초기화</a>
-		</div>   
+		</div>        
 	</c:if>             
 </div>      
-                      
+                                
 <c:if test="${searchVO.schEtc03 ne '4' }">
 	<div class="tbl_wrap">   
 		<table class="tbl_col_type01 no_hover" id="fixTable">
@@ -29,7 +29,7 @@
 	            	<col style="width:8%;">
 	            </c:if>
 			</colgroup>
-			<thead>  
+			<thead>   
 				<tr>   
 					<th scope="col">번호</th> 
 				<c:if test="${searchVO.schEtc03 ne '3' }"> 

@@ -273,7 +273,7 @@ box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.24);}
 .search_box .btn_search .fa {position:absolute; right:10px; top:50%;margin-top:-4px;font-size:11px;}
 .search_box .btn_search .fa-caret-up{margin-top:-5px;}
 
-/*detapick*/
+/*detapick*/ 
 .datepick {width: 80%;}
 .calendar_input {position:relative;}
 .input_wave {display:inline-block; width:20px; text-align:center;}

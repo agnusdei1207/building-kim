@@ -9,47 +9,44 @@
 				  	DATE_FORMAT(CA_DATA_DATE, '%Y.%m.%d') 					caDataDate
 					, CA_CONT 												caCont
 					, CA_HOL_YN 											caHolYn
-					 
+					  
 			  FROM	T_CALENDAR
 			 WHERE	DATE_FORMAT(CA_DATA_DATE, '%Y%m') = #{caSchYearMonth}
 			   AND	CA_RGST_ID = #{loginSeq}
 			   AND	CA_USE_YN = 'Y'    
-		  ORDER BY	CA_DATA_DATE
-			  ]]> 
-	</select>  
-	 
-	<select id="selectContents" parameterType="calendarVO" resultType="calendarVO">
-		/* Calendar.selectContents  */
-		<![CDATA[
-		   (SELECT
+		  ORDER BY	CA_DATA_DATE 
+			  ]]>   
+	</select>          
+	       
+	<select id="selectContentsList" parameterType="calendarVO" resultType="calendarVO">
+		/* Calendar.selectContentsList  */ 
+		<![CDATA[  
+		   SELECT    
 				  	CA_SEQ 														caSeq
 					,DATE_FORMAT(CA_DATA_DATE, '%Y.%m.%d') 						caDataDate
 					,CA_HOL_YN 													caHolYn
-					,CAL_CONT 													calCont
-					,DATE_FORMAT(CA_RGST_DT, '%Y.%m.%d') 						caRgstDt
-					
-			  FROM	T_CALENDAR  
-			 WHERE	CA_DATA_DATE = #{caDataDate}
-			   AND	CA_HOL_YN = 'Y'
-			   AND	CA_USE_YN = 'Y')
-			  	  	
-			 UNION
-			      
-		   (SELECT
-				  	CA_SEQ 														caSeq
-					,DATE_FORMAT(CA_DATA_DATE, '%Y.%m.%d') 						caDataDate
-					,CA_HOL_YN 													caHolYn
-					,CAL_CONT 													calCont
+					,CA_CONT 													caCont
 					,DATE_FORMAT(CA_RGST_DT, '%Y.%m.%d') 						caRgstDt
 					 
-			  FROM	T_CALENDAR  
+			  FROM	T_CALENDAR   
 			 WHERE	CA_DATA_DATE = #{caDataDate}
-			   AND	CA_HOL_YN <> 'Y'   
-			   AND	CA_RGST_ID = #{loginSeq}
-			   AND	CA_USE_YN = 'Y')
-			  
+			   AND	CA_USE_YN = 'Y'
+		]]>
+	</select>  
+	
+	<select id="selectCount" parameterType="calendarVO" resultType="int">
+		/* Calendar.selectCount  */ 
+		<![CDATA[  
+		   SELECT       
+					COUNT(CA_SEQ)
+					  
+			  FROM	T_CALENDAR   
+			 WHERE	CA_DATA_DATE = #{caDataDate}
+			   AND	CA_USE_YN = 'Y'
 		]]>
 	</select> 
+	
+	
 	
 	<update id="deleteContents" parameterType="calendarVO">
 		/* Calendar.deleteContents */
@@ -60,36 +57,38 @@
 		]]> 
 	</update>
 	  
-	  
+	   
 	<insert id="insertContents" parameterType="calendarVO">
 		/* Calendar.insertContents */
 		<![CDATA[
-			INSERT	(
-					INTO	T_CALENDAR
-				    DATA_DATE
-				    , CAL_CONT
-				    , RGST_ID
-				    , HOL_YN
-				    )    
-				      
-		    VALUES	(	 
-				  	STR_TO_DATE(#{caDataDate},'%Y-%m-%d')
+	        INSERT  INTO	T_CALENDAR
+					( 
+				    CA_DATA_DATE  
+				    , CA_CONT
+				    , CA_RGST_ID 
+				    , CA_HOL_YN
+				    )         
+				            
+		    VALUES	(	   
+				  	DATE_FORMAT(#{caDataDate},'%Y-%m-%d')
 					, #{caCont}
 					, #{loginSeq}
 					, IFNULL(#{caHolYn}, 'N')
-					) 
+					)  
 		]]>
-	</insert>        
-	
-	
+	</insert>           
+	  
+	 
 	<update id="updateContents" parameterType="calendarVO">
 		/* Calendar.updateContents */
-		<![CDATA[
-			UPDATE	T_CALENDAR   
-			   SET	CAL_CONT 								= #{caCont}
-					,CA_DATA_DATE 							= #{dataDate}
+		<![CDATA[ 
+			UPDATE	T_CALENDAR    
+			   SET	 
+			   		CA_CONT 								= #{caCont}
+					,CA_DATA_DATE 							= #{caDataDate}
 					,CA_HOL_YN 								= NVL(#{caHolYn}, 'N')
-			 WHERE	CA_SEQ = #{caSeq}	
+					    
+			 WHERE	CA_DATA_DATE = #{caDataDate}	
 		]]> 
 	</update>
 	

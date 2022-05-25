@@ -18,7 +18,7 @@ public class CalendarVO extends CmmnDefaultVO implements Serializable {
 	private String caRgstDt;			// 작성일
 	private String caRvseId;			// 수정자
 	private String caUseYn;				// 사용여부 
-	   
+	    
 	private String caSelectedYear;		// 선택 년도
 	private String caSelectedMonth;		// 선택 월
 	private String caSchYearMonth;		// 선택 년월

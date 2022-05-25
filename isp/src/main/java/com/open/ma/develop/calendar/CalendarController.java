@@ -18,6 +18,8 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.open.cmmn.service.CmmnService;
 import com.open.cmmn.util.DateUtils;
+import com.open.cmmn.util.SessionUtil;
+import com.open.cmmn.util.StringUtil;
 import com.open.ma.develop.calendar.service.CalendarVO;
  
 
@@ -33,14 +35,19 @@ public class CalendarController {
     /** folderPath **/
     private final static String folderPath = "/ma/develop/calendar/";
      
-    private String message = "";
+    private String message = ""; 
 
     @SuppressWarnings("unchecked") 
     @RequestMapping(folderPath + "list.do")
 	public String list(@ModelAttribute("searchVO") CalendarVO searchVO, Model model, HttpServletRequest request) throws IOException, InvocationTargetException, SQLException, Exception {
-		
-//		String nowDate = DateUtils.getNowDate("yyyyMM");
-//		System.out.println("현재 날짜 : "+ nowDate);
+		   
+    	// 현재 날짜 조회 
+		if(StringUtil.nullString(searchVO.getCaSelectedYear()).equals("") || StringUtil.nullString(searchVO.getCaSchYearMonth()).equals("")){
+			String nowDate = DateUtils.getNowDate("yyyyMM");
+			searchVO.setCaSelectedYear(nowDate.substring(0,4));     
+			searchVO.setCaSelectedMonth(nowDate.substring(4)); 
+			searchVO.setCaSchYearMonth(nowDate); 
+		}  
 		    
 		List<CalendarVO> resultList=(List<CalendarVO>)cmmnService.selectList(searchVO, PROGRAM_ID );
 		model.addAttribute("resultList", resultList);
@@ -48,7 +55,24 @@ public class CalendarController {
 		return ".mLayout:"+folderPath+"list"; 
 	}        
     
-    @RequestMapping(folderPath+"{procType}proc.do")
+    @RequestMapping(folderPath+"form.do") 
+    public String form(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, HttpServletRequest request) throws Exception{
+    	 
+		List<CalendarVO> resultList=(List<CalendarVO>)cmmnService.selectList(searchVO, PROGRAM_ID + ".selectContentsList");
+    	if(!"".equals(StringUtil.isNullToString(resultList))){
+    		model.addAttribute("resultList", resultList);
+    	}
+    	    
+    	int cnt = (Integer)cmmnService.selectCount(searchVO, PROGRAM_ID);
+    	if(cnt > 0){
+    		model.addAttribute("cnt", cnt);
+    	}
+    	 
+    	return ".mLayout:"+folderPath+"form";
+    }
+    
+    
+    @RequestMapping(folderPath+"{procType}Proc.do")
     public String proc(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, HttpServletRequest request, @PathVariable String procType, SessionStatus status) throws Exception{
     	 
     		 
@@ -59,8 +83,7 @@ public class CalendarController {
     	}else if(procType.equals("delete")){
 			cmmnService.deleteContents(searchVO, PROGRAM_ID);
     	} 
-    	 
-    	status.setComplete();
+    	status.setComplete();  
     	if(procType.equals("update")){ 
     		message = "수정되었습니다.";
     	}else if(procType.equals("insert")){
@@ -68,26 +91,15 @@ public class CalendarController {
     	}else if(procType.equals("delete")){
     		message = "삭제되었습니다.";
     	}
-    	
-    	model.addAttribute("message", message);
-    	model.addAttribute("pValue", searchVO.getCaSeq());
-    	model.addAttribute("pName", "dataDate");
+    	         
+    	model.addAttribute("message", message); 
+    	model.addAttribute("pValue", searchVO.getCaDataDate());
+    	model.addAttribute("pName", "caDataDate");
     	model.addAttribute("cmmnScript", "form.do");
     	return "cmmn/execute";
-    	
-    } 
-       
-    @RequestMapping(folderPath+"form.do")
-    public String form(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, HttpServletRequest request) throws Exception{
-    	
-    	CalendarVO calendarVO = new CalendarVO();
-    	calendarVO =(CalendarVO) cmmnService.selectContents(searchVO, PROGRAM_ID);
-    	if(calendarVO !=null){
-    		
-    	}    	 
-    	model.addAttribute("calendarVO", calendarVO);
-    	
-    	return ".mLayout:"+folderPath+"form";
-    }
+    	  
+    }  
+                       
+ 
     
 }
