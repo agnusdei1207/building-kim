@@ -10,18 +10,19 @@ import com.open.cmmn.model.CmmnDefaultVO;
 @SuppressWarnings("serial")
 public class CalendarVO extends CmmnDefaultVO implements Serializable {
 	     
-	private String caSeq;				// 일련번호
-	private String caDataDate;			// 등록일
-	private String caHolYn;				// 기념일구분
-	private String caCont;				// 내용
-	private String caRgstId;			// 작성자
-	private String caRgstDt;			// 작성일
-	private String caRvseId;			// 수정자
-	private String caUseYn;				// 사용여부 
+	private String caSeq;				
+	private String caDataDate;			
+	private String caHolYn;				
+	private String caCont;				
+	private String caRgstId;			
+	private String caRgstDt;			
+	private String caRvseId;			
+	private String caUseYn;				
+	private String caCnt;				
 	    
-	private String caSelectedYear;		// 선택 년도
-	private String caSelectedMonth;		// 선택 월
-	private String caSchYearMonth;		// 선택 년월
+	private String caSelectedYear;		
+	private String caSelectedMonth;		
+	private String caSchYearMonth;		
 	private String[] arrSelect;   
 	          
 	public String[] getArrSelect() { 
@@ -42,6 +43,14 @@ public class CalendarVO extends CmmnDefaultVO implements Serializable {
 	}    
 	      
 	
+	
+	
+	public String getCaCnt() {
+		return caCnt;
+	}
+	public void setCaCnt(String caCnt) {
+		this.caCnt = caCnt;
+	}
 	public String getCaSeq() {
 		return caSeq;
 	}

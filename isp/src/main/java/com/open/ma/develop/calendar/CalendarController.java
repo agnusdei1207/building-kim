@@ -14,11 +14,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.open.cmmn.service.CmmnService;
 import com.open.cmmn.util.DateUtils;
-import com.open.cmmn.util.SessionUtil;
 import com.open.cmmn.util.StringUtil;
 import com.open.ma.develop.calendar.service.CalendarVO;
  
@@ -73,33 +72,31 @@ public class CalendarController {
     
     
     @RequestMapping(folderPath+"{procType}Proc.do")
-    public String proc(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, HttpServletRequest request, @PathVariable String procType, SessionStatus status) throws Exception{
-    	 
+    public String proc(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, HttpServletRequest request, @PathVariable String procType) throws Exception{
+    	  
     		 
     	if(procType.equals("update")){ 
+    		message = "수정되었습니다.";
     		cmmnService.updateContents(searchVO, PROGRAM_ID);
     	}else if(procType.equals("insert")){
+    		message = "등록되었습니다.";
     		cmmnService.insertContents(searchVO, PROGRAM_ID);
-    	}else if(procType.equals("delete")){
-			cmmnService.deleteContents(searchVO, PROGRAM_ID);
-    	} 
-    	status.setComplete();  
-    	if(procType.equals("update")){ 
-    		message = "수정되었습니다.";
-    	}else if(procType.equals("insert")){
-    		message = "등록되었습니다."; 
-    	}else if(procType.equals("delete")){
-    		message = "삭제되었습니다.";
     	}
     	         
     	model.addAttribute("message", message); 
     	model.addAttribute("pValue", searchVO.getCaDataDate());
-    	model.addAttribute("pName", "caDataDate");
+    	model.addAttribute("pName", "caDataDate"); 
     	model.addAttribute("cmmnScript", "form.do");
     	return "cmmn/execute";
-    	  
     }  
-                       
- 
+                           
+    @ResponseBody
+    @RequestMapping(folderPath+"{procType}ajaxDelContents.do")
+    public void ajaxDelContents(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, HttpServletRequest request, @PathVariable String procType) throws Exception{
+    	
+    	
+    	
+    }
+    
     
 }

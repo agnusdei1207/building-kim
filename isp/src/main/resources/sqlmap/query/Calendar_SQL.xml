@@ -36,9 +36,9 @@
 	
 	<select id="selectCount" parameterType="calendarVO" resultType="int">
 		/* Calendar.selectCount  */ 
-		<![CDATA[  
-		   SELECT       
-					COUNT(CA_SEQ)
+		<![CDATA[   
+		   SELECT          
+					COUNT(CA_SEQ)     											caCcnt
 					  
 			  FROM	T_CALENDAR   
 			 WHERE	CA_DATA_DATE = #{caDataDate}
