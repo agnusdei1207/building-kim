@@ -57,7 +57,7 @@
 			 	<c:forEach var="bannerVO" items="${upBannerList}" varStatus="status">      
 					 <div id="divUp_${status.count}"> 
 							 <table class="tbl_row_type01">
-								 <caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>
+								 <caption>내용(제목, 작성자, 작성일 등으로 구성)</caption> 
 								 <caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>  
 							 <colgroup>   
 								 <col style="width:20%"> 
