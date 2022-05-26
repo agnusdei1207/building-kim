@@ -54,13 +54,13 @@
 				    , CA_CONT
 				    , CA_RGST_ID 
 				    , CA_HOL_YN
-				    )          
+				    )            
 				             
 		    VALUES	(	   
 				  	DATE_FORMAT(#{caDataDate},'%Y-%m-%d')
 					, #{caCont}
-					, #{loginSeq}
-					, IFNULL(#{caHolYn}, 'N', 'Y')
+					, #{loginSeq} 
+					, IFNULL(#{caHolYn}, 'N')
 					)  
 		]]>
 	</insert>           
@@ -70,9 +70,8 @@
 		/* Calendar.updateContents */
 		<![CDATA[ 
 			UPDATE	T_CALENDAR    
-			   SET	 
+			   SET	   
 			   		CA_CONT 								= #{caCont}
-					,CA_DATA_DATE 							= #{caDataDate}
 					,CA_HOL_YN 								= NVL(#{caHolYn}, 'N')
 					     
 			 WHERE	CA_SEQ = #{caSeq}	

@@ -59,15 +59,15 @@
 							 <table class="tbl_row_type01">
 								 <caption>내용(제목, 작성자, 작성일 등으로 구성)</caption> 
 								 <caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>  
-							 <colgroup>   
+							 <colgroup>    
 								 <col style="width:20%"> 
 								 <col style="width:30%"> 
-								 <col style="width:20%">   
+								 <col style="width:20%">    
 								 <col style="width:30%">  
 							 </colgroup>                  
 							 <tbody>              
 							 	<tr style="display:none;">    
-									 <th scope="row"><strong>정보</strong></th>     
+									 <th scope="row"><strong>정보</strong></th>
 									 <td colspan="3">    
 										<input type="hidden" name="baSeq" id="baSeq_${status.count }" value="${bannerVO.baSeq} " /> 
 										<input type="hidden" name="baPosition" id="baPosition_${status.count }" value="U" />

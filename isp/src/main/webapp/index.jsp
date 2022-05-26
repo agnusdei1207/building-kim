@@ -11,15 +11,15 @@
 	$(document).ready(function(){
 		//var userLang = navigator.language || navigator.userLanguage;
 		//if(userLang == "ko" || userLang == "ko-KR") {
-			if(isMobile()){
-				location.href="/ft/main/main.do";
+			if(isMobile()){ 
+				location.href="/login.do";
 			}else{  
-				location.href="/ft/main/main.do";
+				location.href="/login.do";
 			}
 		/* }else{
 			location.href="/eMain.do";  
 		} */
-	});
+	}); 
 </script>
 </head>
 <body>

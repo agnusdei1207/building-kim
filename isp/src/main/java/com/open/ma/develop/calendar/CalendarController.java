@@ -53,33 +53,44 @@ public class CalendarController {
 		 
 		return ".mLayout:"+folderPath+"list"; 
 	}        
-    
+     
     @RequestMapping(folderPath+"form.do") 
     public String form(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, HttpServletRequest request) throws Exception{
-    	 
-		List<CalendarVO> resultList=(List<CalendarVO>)cmmnService.selectList(searchVO, PROGRAM_ID + ".selectContentsList");
-    	if(!"".equals(StringUtil.isNullToString(resultList))){
-    		model.addAttribute("resultList", resultList);
-    	}  
-    	 
+    	
     	return ".mLayout:"+folderPath+"form";
-    }
-    
+    }   
+      
     @ResponseBody 
     @RequestMapping(folderPath+"{procType}Contents.do")
     public String procContents(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, @PathVariable String procType,HttpServletRequest request) throws Exception{
     	
-    	if("insert".equals(procType)){
-    		cmmnService.insertContents(searchVO, PROGRAM_ID);
-    	}else if("update".equals(procType) && !"".equals(StringUtil.nullString(searchVO.getCaSeq()))){
-    		cmmnService.updateContents(searchVO, PROGRAM_ID);
+    	if("merge".equals(procType)){ 
+    		if("".equals(StringUtil.nullString(searchVO.getCaSeq()))){
+    			cmmnService.insertContents(searchVO, PROGRAM_ID);
+    		}else{   
+    			cmmnService.updateContents(searchVO, PROGRAM_ID);
+    		}
     	}else if("delete".equals(procType) && !"".equals(StringUtil.nullString(searchVO.getCaSeq()))){ 
     		cmmnService.deleteContents(searchVO, PROGRAM_ID);
     	} 
-     	  
-    	return "등록완ㄹ";
+     	     
+    	return "";  
     }
-    
-    
+     
+         
+    @ResponseBody 
+    @RequestMapping(folderPath+"addView.do")
+    public String addView(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, @PathVariable String procType,HttpServletRequest request) throws Exception{
+    	  
+    	System.out.println("찍히나??????????????????????????");
+    	System.out.println("날짜 확인 : " + searchVO.getCaDataDate());
+    	
+		List<CalendarVO> resultList=(List<CalendarVO>)cmmnService.selectList(searchVO, PROGRAM_ID + ".selectContentsList");
+    	if(!"".equals(StringUtil.isNullToString(resultList))){
+    		model.addAttribute("resultList", resultList); 
+    	}    
+     	        
+    	return folderPath + "addView"; 
+    }
     
 }
