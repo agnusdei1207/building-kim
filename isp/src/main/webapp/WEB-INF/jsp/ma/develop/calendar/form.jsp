@@ -2,8 +2,8 @@
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
                
 <form name="defaultFrm" id="defaultFrm" method="post">             
-	<div class="content_box">                  
-		<input type="text" name="caDataDate" id="caDataDate" value="${searchVO.caDataDate }">
+	<div class="content_box">                   
+		<input type="hidden" name="caDataDate" id="caDataDate" value="${searchVO.caDataDate }">
 		<a href="javascript:void(0)" id="add_btn" class="btn btn_mdl btn_rewrite" onclick="fncAddFrm();">추가</a>  
 			      
 		<div class="tbl">      
@@ -15,31 +15,37 @@
 		</div> 
 	</div>     
 </form>        
-             
+              
        
 <script type="text/javascript">   
-     
-var caDataDate = "${searchVO.caDataDate}";
-      
+   
 $(document).ready(function(){  
-	          
+    
 	fncPageBoard("addList", "addView.do");
 	
-	if($("[id^=tbl_wrap_").length > 3){
+	<%--개수 초과 시 버튼 동작--%>
+	if($("[id^=tbl_wrap_]").length > 3){
 		$("#add_btn").hide();
 	}else{
 		$("#add_btn").show();  
 	}   
 	
-});                              
-  
-function fncAddFrm(){      
-	    
-	var num = $("[id^=tbl_wrap_").length + 1;   
+});  
+
+<%--선택된 날짜 전역 선언--%>
+var caDataDate = "${searchVO.caDataDate}";
+        
+<%--입력 폼 생성--%>      
+function fncAddFrm(){           
+	  
+	var num = "${fn:length(resultList)}";
+		num += 1;  
+	
+	alert("num : "+ num);
 	 
-	if(num > 3){    
+	if(num > 3){     
 		alert("3개를 초과할 수 없습니다."); 
-		return false;   
+		return false;      
 	}      
 	                      
 	var html = ''; 
@@ -48,10 +54,10 @@ function fncAddFrm(){
 		html += 		'<table class="tbl_row_type01">';
 		html += 			'<colgroup>'; 
 		html += 				'<col width="20%">';          
-		html += 				'<col>'; 
+		html += 				'<col>';  
 		html += 			'</colgroup>';              
-		html += 			'<tbody>'; 
-		html += 				'<tr>'; 
+		html += 			'<tbody>';   
+		html += 				'<tr>';   
 		html += 					'<th>공휴일 여부 '+num+' </th> '; 
 		html += 					'<td>';
 		html += 						'<input type="checkbox" name="caHolYn" id="caHolYn_'+num+'" value="Y" style="margin-left:20px;" />';
@@ -67,11 +73,11 @@ function fncAddFrm(){
 		html += 					'<td>';           
 		html += 						'<input type="text" name="caSeq" id="caSeq_'+num+'" class="text w80p" maxlength="10" value="" />';
 		html += 					'</td>';
-		html += 				'</tr>';  
+		html += 				'</tr>';    
 		html += 				'<tr>';          
 		html += 					'<th>버튼</th>';           
 		html += 					'<td>';              
-		html += 						'<a href="javascript:void(0)" class="btn btn_mdl btn_del" onclick="fncDelBtn('+num+');">삭제111</a>'; 
+		html += 						'<a href="javascript:void(0)" class="btn btn_mdl btn_del" onclick="fncDelBtn('+num+');">삭제 (생성폼)</a>'; 
 		html += 						'<a href="javascript:void(0)" class="btn btn_mdl btn_rewrite" onclick="fncInsertBtn('+num+');">등록</a>';
 		html += 					'</td>';
 		html += 				'</tr>';  
@@ -81,15 +87,15 @@ function fncAddFrm(){
 		html += '</div>'; 
 		                 
 	$(".tbl").append(html);          
-            
-	if(num > 3){   
+             
+	if(num >= 3){   
 		$("#add_btn").hide();  
 	}  
 	return true;  
 } 
           
            
-           
+<%--입력 및 수정 버튼--%>            
 function fncInsertBtn(num, seq){   
 	
 	var caHolYn = "";   
@@ -104,7 +110,7 @@ function fncInsertBtn(num, seq){
 	}else{ 
 		toUrl = "updateProc.do";
 	}
-	              
+	                     
 	$.ajax({  
 		method : "POST",  
 		url : toUrl,
@@ -126,7 +132,7 @@ function fncInsertBtn(num, seq){
 	})	      
 }        
           
-           
+<%--삭제 버튼--%>          
 function fncDelBtn(num, seq){
 	
 	if(!confirm("삭제하시겠습니까?")){    
@@ -135,15 +141,18 @@ function fncDelBtn(num, seq){
 	
 	if(typeof seq == "undefined" || seq == null || seq == ""){
 		$("#tbl_wrap_" + num).remove();
+		if($("[id^='tbl_wrap_']").length == 0){
+			fncAddFrm();
+		}
 		return false;
 	}
 	           
 	$.ajax({       
 		method : "POST",    
-		url : "deleteProc.do",
+		url : "deleteProc.do", 
 		data : {"caSeq" : seq},           
 		dataType : "HTML", 
-		succsess : function(data){    
+		succsess : function(data){        
 			alert(data + " 삭제가 완료되었습니다."); 
 		}    
 	})   
@@ -152,6 +161,9 @@ function fncDelBtn(num, seq){
 		$("#add_btn").show(); 
 	}
 	$("#tbl_wrap_" + num).remove();
+	if($("[id^='tbl_wrap_']").length == 0){
+		fncAddFrm();
+	}
 }
 
 

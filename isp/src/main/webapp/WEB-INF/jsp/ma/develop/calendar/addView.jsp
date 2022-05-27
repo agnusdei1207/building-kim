@@ -9,31 +9,33 @@
 					<table class="tbl_row_type01">    
 						<colgroup>    
 							<col width="20%">            
-							<col>                       
-						</colgroup>              
+							<col>                        
+						</colgroup>                
 						<tbody>                  
-							<tr>                 
+							<tr>                   
 								<th>공휴일 여부 ${status.count }</th>                     
-								<td>                   
-								 	<input type="checkbox" name="caHolYn" id="caHolYn_${status.count }" value="Y" ${result.caHolYn eq 'Y' ? "checked" : "" } style="margin-left:20px;" /> 
+								<td>                    
+								 	체크 시 공휴일 <input type="checkbox" name="caHolYn" id="caHolYn_${status.count }" value="Y" ${result.caHolYn eq 'Y' ? "checked" : "" } style="margin-left:20px;" /> 
+								 	<label for="caHolYn_${status.count }" class="cursor"></label>
 								</td>     
 							</tr>           
-							<tr>        
+							<tr>         
 								<th>내용</th>                     
-								<td>   
+								<td>    
 									<input type="text" name="caCont" id="caCont_${status.count }" class="text w70p" maxlength="100" value="${result.caCont }"/>
+									<label for="caCont_${status.count }" class="cursor"></label>
 								</td>             
 							</tr>      
 							<tr style="display:none">             
 								<th>SEQ</th>                      
-								<td>     
-									<input type="text" name="caSeq" id="caSeq_${status.count }" class="text w70p" maxlength="11" value="${result.caSeq }"/>
+								<td>      
+									<input type="text" name="caSeq" id="caSeq_${status.count }" class="text w70p" maxlength="11" value="${result.caSeq }" readonly/>
 								</td>  
 							</tr>     
 							<tr>        
-								<th>버튼</th>    
+								<th>버튼</th>      
 								<td>   
-									<a href="javascript:void(0)" class="btn btn_mdl btn_del" onclick="fncDelBtn(${status.count }, ${result.caSeq});">삭제22</a>
+									<a href="javascript:void(0)" class="btn btn_mdl btn_del" onclick="fncDelBtn(${status.count }, ${result.caSeq});">삭제(addView)</a>
 									<a href="javascript:void(0)" class="btn btn_mdl btn_rewrite" onclick="fncInsertBtn(${status.count }, ${result.caSeq});">등록 </a>
 								</td> 
 							</tr>    
@@ -51,9 +53,9 @@
 							<col width="20%">            
 							<col>                            
 						</colgroup>              
-						<tbody>                   
+						<tbody>                     
 							<tr>                  
-								<th>공휴일 여부 1</th>                      
+								<th>공휴일 여부</th>                      
 								<td>                    
 									<input type="checkbox" name="caHolYn" id="caHolYn_1" value="Y" style="margin-left:20px;" />
 								</td>     

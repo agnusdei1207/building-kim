@@ -12,8 +12,8 @@
     <div class="tbl_top"> 
         <div class="tbl_left"><h3 class="md_tit">지도 기본 정보</h3></div>
         <div class="tbl_right"><a href="javascript:void(0);" class="btn btn_sml btn_reset" onclick="fncPopApi();return false;">API 관리</a></div>
-    </div>
-    <!-- board --> 
+    </div> 
+    <!-- board -->  
     <div class="tbl_wrap"> 
         <table class="board_row_type01">  
             <colgroup> 
@@ -25,7 +25,7 @@
                 <col style="width:14%">
             </colgroup>
             <tbody>
-                <tr>
+                <tr> 
                     <th scope="row"><strong class="th_tit">지도 제목</strong></th>
                     <td colspan="">
                     	<input type="text" id="mapTtl" name="mapTtl" value="${maMapVO.mapTtl }" class="w100p" maxlength="30"/>
@@ -38,9 +38,9 @@
                     	<label for="mapBkgrColr" class="cursor mar_r10">배경색상</label>
                     	<input type="color" id="mapBtnColr" name="mapBtnColr" class="cursor w35px" value="${maMapVO.mapBtnColr}" style="border:radius:15px;"/>
                     	<label for="mapBtnColr" class="cursor">버튼색상</label>
-                    </td>
+                    </td> 
                     <th scope="rowgroup" rowspan="2"><strong>로고 이미지</strong></th>
-                    <td rowspan="2">
+                    <td rowspan="2"> 
                     	<div id="mapLogoImgUpload"></div>
                     	<input type="hidden" id="mapLogoImg" name="mapLogoImg" value="${maMapVO.mapLogoImg }"/>
                     </td>
@@ -175,7 +175,7 @@
             </tbody>
         </table>
     </div>
-    <div class="btn_area right">
+    <div class="btn_area right"> 
     	<c:if test="${sessionScope.SECURITY_SESSION_WRITE_KEY eq 'W' || sessionScope.SECURITY_SESSION_WRITE_KEY eq 'M'}">
     		<c:choose>
 	    		<c:when test="${not empty maMapVO.mapMngSn}">
@@ -192,8 +192,8 @@
 </form>
  
 <script type="text/javascript">
-$("document").ready(function(){
-	<%-- 로고이미지 파일 처리 --%>
+$("document").ready(function(){ 
+	<%-- 로고이미지 파일 처리 및 저장--%>
 	$("#mapLogoImgUpload").html(setFileList("${maMapVO.mapLogoImg }", "mapLogoImg", "image", 1));
 	
 	<%-- 마커이미지 파일 처리 --%>
@@ -207,7 +207,6 @@ $("document").ready(function(){
 			$("#mrkrImgUpload_1").html(setFileList("", "mrkrImg_1", "image", 1));
 		</c:otherwise>
 	</c:choose>
-	
 });
 
 <%-- API관리 팝업 --%>

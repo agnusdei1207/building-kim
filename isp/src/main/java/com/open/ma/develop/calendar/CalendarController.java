@@ -36,8 +36,6 @@ public class CalendarController {
     /** folderPath **/
     private final static String folderPath = "/ma/develop/calendar/";
      
-    private String message = ""; 
-
     @SuppressWarnings("unchecked") 
     @RequestMapping(folderPath + "list.do")
 	public String list(@ModelAttribute("searchVO") CalendarVO searchVO, Model model, HttpServletRequest request) throws IOException, InvocationTargetException, SQLException, Exception {
@@ -52,8 +50,8 @@ public class CalendarController {
 		    
 		List<CalendarVO> resultList = (List<CalendarVO>)cmmnService.selectList(searchVO, PROGRAM_ID );
 		model.addAttribute("resultList", resultList);
-		 
-		return ".mLayout:" + folderPath+"list"; 
+		  
+		return ".mLayout:" + folderPath + "list"; 
 	}        
     
     @RequestMapping(folderPath+"form.do") 
