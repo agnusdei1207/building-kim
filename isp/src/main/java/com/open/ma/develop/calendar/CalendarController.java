@@ -3,7 +3,9 @@ package com.open.ma.develop.calendar;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -48,49 +50,51 @@ public class CalendarController {
 			searchVO.setCaSchYearMonth(nowDate); 
 		}         
 		    
-		List<CalendarVO> resultList=(List<CalendarVO>)cmmnService.selectList(searchVO, PROGRAM_ID );
+		List<CalendarVO> resultList = (List<CalendarVO>)cmmnService.selectList(searchVO, PROGRAM_ID );
 		model.addAttribute("resultList", resultList);
 		 
-		return ".mLayout:"+folderPath+"list"; 
+		return ".mLayout:" + folderPath+"list"; 
 	}        
-     
+    
     @RequestMapping(folderPath+"form.do") 
     public String form(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, HttpServletRequest request) throws Exception{
     	
-    	return ".mLayout:"+folderPath+"form";
-    }   
-      
-    @ResponseBody 
-    @RequestMapping(folderPath+"{procType}Contents.do")
-    public String procContents(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, @PathVariable String procType,HttpServletRequest request) throws Exception{
+    	return ".mLayout:" + folderPath + "form";
+    }     
+          
+    @SuppressWarnings("unchecked")  
+    @RequestMapping(folderPath+"addView.do") 
+    public String addView(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, HttpServletRequest request) throws Exception{
     	
-    	if("merge".equals(procType)){ 
-    		if("".equals(StringUtil.nullString(searchVO.getCaSeq()))){
-    			cmmnService.insertContents(searchVO, PROGRAM_ID);
-    		}else{   
-    			cmmnService.updateContents(searchVO, PROGRAM_ID);
-    		}
-    	}else if("delete".equals(procType) && !"".equals(StringUtil.nullString(searchVO.getCaSeq()))){ 
-    		cmmnService.deleteContents(searchVO, PROGRAM_ID);
-    	} 
-     	     
-    	return "";  
-    }
-     
-         
-    @ResponseBody 
-    @RequestMapping(folderPath+"addView.do")
-    public String addView(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, @PathVariable String procType,HttpServletRequest request) throws Exception{
-    	  
-    	System.out.println("찍히나??????????????????????????");
-    	System.out.println("날짜 확인 : " + searchVO.getCaDataDate());
-    	
-		List<CalendarVO> resultList=(List<CalendarVO>)cmmnService.selectList(searchVO, PROGRAM_ID + ".selectContentsList");
-    	if(!"".equals(StringUtil.isNullToString(resultList))){
+    	List<CalendarVO> resultList = (List<CalendarVO>)cmmnService.selectList(searchVO, PROGRAM_ID + ".selectContentsList");
+    	if(resultList.size() > 0){ 
     		model.addAttribute("resultList", resultList); 
-    	}    
-     	        
-    	return folderPath + "addView"; 
-    }
+    	}   
+    	 
+    	return folderPath + "addView";
+    }      
+    
+    
+    @ResponseBody
+    @RequestMapping(folderPath+"{procType}Proc.do")
+    public HashMap<String,Object> procContents(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, @PathVariable String procType) throws Exception{
+    	
+    	HashMap<String,Object> returnMap = new HashMap<>();
+    	
+    	System.out.println("procType = " + procType); 
+    	System.out.println("searchVO = " + searchVO.getCaSeq());
+    	       
+    	if("insert".equals(procType)){      
+			cmmnService.insertContents(searchVO, PROGRAM_ID);
+		}else if("update".equals(procType)){
+			cmmnService.updateContents(searchVO, PROGRAM_ID); 
+    	}else if("delete".equals(procType)){ 
+    		cmmnService.deleteContents(searchVO, PROGRAM_ID);
+    	}
+    	
+    	returnMap.put("result","success");
+    	
+		return returnMap;
+    }         
     
 }

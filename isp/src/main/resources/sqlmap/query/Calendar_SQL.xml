@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.open.Calendar">
- 
+ 	
 	<select id="selectList" parameterType="calendarVO" resultType="calendarVO">
 		/* Calendar.selectList */
 		<![CDATA[
@@ -17,11 +17,11 @@
 		  ORDER BY	CA_DATA_DATE 
 			  ]]>   
 	</select>          
-	          
+	            
 	<select id="selectContentsList" parameterType="calendarVO" resultType="calendarVO">
 		/* Calendar.selectContentsList  */ 
 		<![CDATA[  
-		   SELECT      
+		   SELECT        
 				  	CA_SEQ 														caSeq
 					,DATE_FORMAT(CA_DATA_DATE, '%Y.%m.%d') 						caDataDate
 					,CA_HOL_YN 													caHolYn
@@ -29,28 +29,19 @@
 					,DATE_FORMAT(CA_RGST_DT, '%Y.%m.%d') 						caRgstDt
 					 
 			  FROM	T_CALENDAR   
-			 WHERE	CA_DATA_DATE = #{caDataDate}
+			 WHERE	CA_DATA_DATE = #{caDataDate} 
 			   AND	CA_USE_YN = 'Y'
 		]]>      
 	</select>   
  	
-	
-	<update id="deleteContents" parameterType="calendarVO">
-		/* Calendar.deleteContents */
-		<![CDATA[   
-			UPDATE	T_CALENDAR
-			   SET	CA_USE_YN = 'N'
-			 WHERE	CA_SEQ = #{caSeq}
-		]]> 
-	</update>
 	  
-	   
+	     
 	<insert id="insertContents" parameterType="calendarVO">
 		/* Calendar.insertContents */
 		<![CDATA[
-	        INSERT  INTO	T_CALENDAR
+	        INSERT  INTO	T_CALENDAR 
 					( 
-				    CA_DATA_DATE  
+				    CA_DATA_DATE   
 				    , CA_CONT
 				    , CA_RGST_ID 
 				    , CA_HOL_YN
@@ -65,7 +56,6 @@
 		]]>
 	</insert>           
 	  
-	 
 	<update id="updateContents" parameterType="calendarVO">
 		/* Calendar.updateContents */
 		<![CDATA[ 
@@ -78,6 +68,13 @@
 		]]> 
 	</update>
 	
-
+	<update id="deleteContents" parameterType="calendarVO">
+		/* Calendar.deleteContents */
+		<![CDATA[   
+			UPDATE	T_CALENDAR
+			   SET	CA_USE_YN = 'N'
+			 WHERE	CA_SEQ = #{caSeq}
+		]]> 
+	</update>
 	
 </mapper>
