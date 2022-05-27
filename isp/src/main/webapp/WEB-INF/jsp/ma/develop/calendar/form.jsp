@@ -18,7 +18,9 @@
               
        
 <script type="text/javascript">   
-   
+          
+var num = $("[id^=tbl_wrap_]").length + 1;   
+    
 $(document).ready(function(){  
     
 	fncPageBoard("addList", "addView.do");
@@ -27,23 +29,20 @@ $(document).ready(function(){
 	if($("[id^=tbl_wrap_]").length > 3){
 		$("#add_btn").hide();
 	}else{
-		$("#add_btn").show();  
+		$("#add_btn").show();   
 	}   
 	
 });  
 
 <%--선택된 날짜 전역 선언--%>
 var caDataDate = "${searchVO.caDataDate}";
-        
+            
 <%--입력 폼 생성--%>      
 function fncAddFrm(){           
 	  
-	var num = "${fn:length(resultList)}";
-		num += 1;  
-	
 	alert("num : "+ num);
-	 
-	if(num > 3){     
+	  
+	if($("[id^=tbl_wrap_]").length > 3){     
 		alert("3개를 초과할 수 없습니다."); 
 		return false;      
 	}      
@@ -86,11 +85,14 @@ function fncAddFrm(){
 		html += 	'</div>';  
 		html += '</div>'; 
 		                 
-	$(".tbl").append(html);          
-             
-	if(num >= 3){   
+	$(".tbl").append(html);   
+                     
+	if($("[id^=tbl_wrap_]").length >= 3){   
 		$("#add_btn").hide();  
 	}  
+	        
+	num += 1;
+	 
 	return true;  
 } 
           
@@ -129,7 +131,7 @@ function fncInsertBtn(num, seq){
 				})	
 			}
 		},
-	})	      
+	})	       
 }        
           
 <%--삭제 버튼--%>          
@@ -144,8 +146,11 @@ function fncDelBtn(num, seq){
 		if($("[id^='tbl_wrap_']").length == 0){
 			fncAddFrm();
 		}
-		return false;
-	}
+		if($("[id^=tbl_wrap_]").length < 3){
+			$("#add_btn").show();    
+		}
+			return false;
+	} 
 	           
 	$.ajax({       
 		method : "POST",    
@@ -154,12 +159,12 @@ function fncDelBtn(num, seq){
 		dataType : "HTML", 
 		succsess : function(data){        
 			alert(data + " 삭제가 완료되었습니다."); 
+			if($("[id^=tbl_wrap_]").length < 3){
+				$("#add_btn").show(); 
+			}
 		}    
 	})   
 	   
-	if($("[id^=tbl_wrap_]").length < 3){
-		$("#add_btn").show(); 
-	}
 	$("#tbl_wrap_" + num).remove();
 	if($("[id^='tbl_wrap_']").length == 0){
 		fncAddFrm();

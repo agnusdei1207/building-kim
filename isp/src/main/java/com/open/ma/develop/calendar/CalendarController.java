@@ -57,6 +57,9 @@ public class CalendarController {
     @RequestMapping(folderPath+"form.do") 
     public String form(@ModelAttribute("searchVO") CalendarVO searchVO, ModelMap model, HttpServletRequest request) throws Exception{
     	
+    	int caCnt = (Integer)cmmnService.selectCount(searchVO, PROGRAM_ID);
+    	model.addAttribute("caCnt", caCnt);
+    	 
     	return ".mLayout:" + folderPath + "form";
     }     
           

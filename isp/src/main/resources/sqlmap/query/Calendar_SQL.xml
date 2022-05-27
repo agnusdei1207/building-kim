@@ -34,6 +34,16 @@
 		]]>      
 	</select>   
  	
+		<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* Calendar.selectCount */
+	 	 <![CDATA[  
+			SELECT 
+				  	COUNT(CA_SEQ) caCnt 
+			  FROM	T_CALENDAR
+			 WHERE	CA_USE_YN='Y'  
+		 ]]>
+	</select>  
+	  
 	  
 	     
 	<insert id="insertContents" parameterType="calendarVO">
