@@ -15,9 +15,8 @@
 		</div> 
 	</div>     
 </form>        
-           
+             
        
-        
 <script type="text/javascript">   
      
 var caDataDate = "${searchVO.caDataDate}";
@@ -43,7 +42,7 @@ function fncAddFrm(){
 		return false;   
 	}      
 	                      
-	var html = '';  
+	var html = ''; 
 		html = 	'<div id="tbl_wrap_'+num+'">';  
 		html += 	'<div class="tbl_wrap mar_t20">'; 
 		html += 		'<table class="tbl_row_type01">';
@@ -58,7 +57,7 @@ function fncAddFrm(){
 		html += 						'<input type="checkbox" name="caHolYn" id="caHolYn_'+num+'" value="Y" style="margin-left:20px;" />';
 		html += 					'</td>';  
 		html += 				'</tr>';   
-		html += 				'<tr>'; 
+		html += 				'<tr>';      
 		html += 					'<th>내용</th>';          
 		html += 					'<td>'; 
 		html += 						'<input type="text" name="caCont" id="caCont_'+num+'" class="text w80p" maxlength="100" />';
@@ -82,7 +81,7 @@ function fncAddFrm(){
 		html += '</div>'; 
 		                 
 	$(".tbl").append(html);          
-           
+            
 	if(num > 3){   
 		$("#add_btn").hide();  
 	}  
@@ -92,9 +91,6 @@ function fncAddFrm(){
            
            
 function fncInsertBtn(num, seq){   
-	   
-	alert("num : "+ num); 
-	alert("seq : "+ seq);  
 	
 	var caHolYn = "";   
 	var toUrl = ""; 
@@ -108,7 +104,7 @@ function fncInsertBtn(num, seq){
 	}else{ 
 		toUrl = "updateProc.do";
 	}
-	            
+	              
 	$.ajax({  
 		method : "POST",  
 		url : toUrl,
@@ -127,14 +123,11 @@ function fncInsertBtn(num, seq){
 				})	
 			}
 		},
-	})	   
+	})	      
 }        
           
            
 function fncDelBtn(num, seq){
-	       
-	alert("num : "+ num); 
-	alert("seq : "+ seq);  
 	
 	if(!confirm("삭제하시겠습니까?")){    
 		return false; 
@@ -144,26 +137,22 @@ function fncDelBtn(num, seq){
 		$("#tbl_wrap_" + num).remove();
 		return false;
 	}
-	       
+	           
 	$.ajax({       
 		method : "POST",    
 		url : "deleteProc.do",
-		data : {"caSeq" : seq},       
+		data : {"caSeq" : seq},           
 		dataType : "HTML", 
 		succsess : function(data){    
-			$("#tbl_wrap_" + num).remove();  
-		}
+			alert(data + " 삭제가 완료되었습니다."); 
+		}    
 	})   
-	
+	   
 	if($("[id^=tbl_wrap_]").length < 3){
 		$("#add_btn").show(); 
 	}
 	$("#tbl_wrap_" + num).remove();
 }
-
-
-
-
 
 
 

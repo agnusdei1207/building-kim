@@ -24,8 +24,6 @@ public class LogLogVO extends CmmnDefaultVO implements Serializable {
     
 	
 	
-	
-	
 	public String getFailCnt() {
 		return failCnt;
 	}

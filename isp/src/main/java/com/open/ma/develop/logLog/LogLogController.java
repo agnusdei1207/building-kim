@@ -1,5 +1,6 @@
 package com.open.ma.develop.logLog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -59,42 +60,29 @@ public class LogLogController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		 
-		if("".equals(gooboon) || "1".equals(gooboon)){
+		List<LogLogVO> resultList = new ArrayList<>();
+		int totCnt = 0;
 		
-			int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID );
-			paginationInfo.setTotalRecordCount(totCnt);
-			model.addAttribute("paginationInfo", paginationInfo);
-	
-			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, PROGRAM_ID );
-			model.addAttribute("resultList", resultList);
-			
+		if("".equals(gooboon) || "1".equals(gooboon)){
+		    totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID );
+			resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, PROGRAM_ID );
+			  
 		}else if("2".equals(gooboon)){ 
-			
-			int totCnt = cmmnService.selectCount(searchVO, "LoginLog");
-			paginationInfo.setTotalRecordCount(totCnt);
-			model.addAttribute("paginationInfo", paginationInfo);
-			
-			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, "LoginLog" );
-			model.addAttribute("resultList", resultList);
+			totCnt = cmmnService.selectCount(searchVO, "LoginLog");
+			resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, "LoginLog" );
 			 
 		}else if("3".equals(gooboon)){  
-			
-			int totCnt = cmmnService.selectCount(searchVO, "LogLog");
-			paginationInfo.setTotalRecordCount(totCnt); 
-			model.addAttribute("paginationInfo", paginationInfo);
-			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, "LogLog" );
-			model.addAttribute("resultList", resultList);
+			totCnt = cmmnService.selectCount(searchVO, "LogLog");
+			resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, "LogLog" );
 			    
 		}else if("4".equals(gooboon)){
-			
-			int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".selectStrangeCount" );
-			paginationInfo.setTotalRecordCount(totCnt);
-			model.addAttribute("paginationInfo", paginationInfo);
-	
-			List<LogLogVO> resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, PROGRAM_ID +".selectStrangeList" );
-			model.addAttribute("resultList", resultList);
+			totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".selectStrangeCount" );
+			resultList = (List<LogLogVO>) cmmnService.selectList(searchVO, PROGRAM_ID +".selectStrangeList" );
 		}
-		 
+		
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paginationInfo", paginationInfo); 
+		model.addAttribute("resultList", resultList);
 		return folderPath + "addList";
 	}
 	   
