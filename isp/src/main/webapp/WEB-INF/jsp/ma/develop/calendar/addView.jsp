@@ -13,7 +13,7 @@
 						</colgroup>                 
 						<tbody>                  
 							<tr>                   
-								<th>공휴일 여부 ${status.count }</th>                     
+								<th>공휴일 여부</th>                     
 								<td>                    
 								 	체크 시 공휴일 <input type="checkbox" name="caHolYn" id="caHolYn_${status.count }" value="Y" ${result.caHolYn eq 'Y' ? "checked" : "" } style="margin-left:20px;" /> 
 								 	<label for="caHolYn_${status.count }" class="cursor"></label>
