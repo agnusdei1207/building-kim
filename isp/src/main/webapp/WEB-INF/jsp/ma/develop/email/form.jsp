@@ -34,7 +34,7 @@
 					<tr>
 						<th scope="row"><strong>내용</strong></th>
 						<td colspan="3">  
-							<textarea name="emCont" id="emCont" class="txt_area w_100p" style="resize: none;" >${util:unEscape(emailVO.emCont)}</textarea>
+							<textarea name="emCont" id="emCont" class="txt_area w_100p"  style="resize: none;" >${util:unEscape(emailVO.emCont)}</textarea>
 						</td> 
 					</tr>
 					<tr>  
@@ -47,20 +47,22 @@
 						</td>           
 					</tr>
 				</tbody>    
-			</table>
+			</table> 
 		</div>      
 		<div class="btn_area">          
-			<a href="javascript:void(0)" class="btn btn_mdl btn_save" onclick="submit();">${searchVO.procType eq  'update' ? '수정' : '등록'}</a>
+			<a href="javascript:void(0)" class="btn btn_mdl btn_save" onclick="submit();">보내기</a>
 			<c:if test="${searchVO.procType eq  'update'}"> 
-				<a href="javascript:void(0);" class="btn btn_mdl btn_cancel" onclick="fncPageBoard('view','view.do');">취소</a>
+   				<a href="javascript:void(0);" class="btn btn_mdl btn_cancel" onclick="fncPageBoard('view','view.do');">취소</a>
 			</c:if> 
 			<c:if test="${searchVO.procType ne  'update'}">  
 				<a href="javascript:void(0);" class="btn btn_mdl btn_cancel" id="btn_list">취소</a>
 			</c:if>
-		</div>
+		</div>  
 	</form>
-</div>  
- 
+</div>    
+  
+
+
 
 <script type="text/javascript"> 
       
@@ -69,28 +71,26 @@ function submit(){
 	if($("#emTitle").val() == "" || $("#emTitle").val() == null) {
 		checkMsg("#emTitle", "제목을 입력해주세요.");
 		return false;
-	}  
-  	
+	}      
 	<%-- 디자인 유형 선택--%>
 	if(!$("input[name=emDsgn]").is(":checked")){
 		$("#emDsgn_A").prop("checked", true);
-	} 
-  	   
+	}   
 	fncPageBoard('submit','${searchVO.procType}Proc.do');
-	return false;
-};   
-   
-function fncAddressBook(){  
-	var selectMember = '';
+	return false;   
+};     
+       
+function fncAddressBook(){           
+	var selectMember = '';  
 	$("input[name='arrUserSeq']").each(function(i){
 		selectMember += '//' + $(this).attr("data-nameEmail");	
 		alert("i : " + i);
-		alert("selectMember : " + selectMember);
-	}); 
-	$("#selectMember").val(selectMember);
-	fncPageBoard("pop", "pop.do", "", "", "1000", "500");
-	
-}
+		alert("selectMember : " + selectMember);    
+	});  
+	$("#selectMember").val(selectMember);    
+	fncPageBoard("pop", "pop.do", "1,2", "", "1200", "400");
+	   
+}   
 
 
 </script>

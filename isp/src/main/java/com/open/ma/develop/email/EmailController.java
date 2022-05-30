@@ -55,6 +55,36 @@ public class EmailController {
 		return folderPath + "pop";
 	}
 	
+	
+	@RequestMapping(folderPath + "popList.do")
+	public String popList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
+		   
+		searchVO.setPageUnit(6);
+		searchVO.setPageSize(7);
+ 
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
+		paginationInfo.setPageSize(searchVO.getPageSize());
+		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		
+		int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".selectPopCount" );
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paginationInfo", paginationInfo); 
+		        
+		@SuppressWarnings("unchecked")
+		List<EmailVO> resultList = (List<EmailVO>) cmmnService.selectList(searchVO, PROGRAM_ID + ".selectPopList");
+		model.addAttribute("resultList", resultList);
+		  
+		return folderPath + "popList";
+	}
+	
+	
+	
+	
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
 		 
