@@ -100,7 +100,11 @@ var fncPageBoard = function(){
 					  $("#defaultFrm").attr({"action" : url, "method" : "post", "target" : "_self", "onsubmit" : ""}).submit();
 					  break;
 	  case 'pop'   :  window.open('', url.replace(".do",""), 'top=120,left=50,titlebar=no,status=no,toolbar=no,resizable=no,scrollbars=yes,width='+wth+'px, height='+het+'px');
-	  				  if(seqNm.length > 0 && seqVal.length > 0){ for (var i = 0; i < seqNm.length; i++) { $("#"+seqNm[i]).val('');$("#"+seqNm[i]).val(seqVal[i]); } }
+					  if(seqNm.length > 0 && seqVal.length > 0) { 
+						for (var i = 0; i < seqNm.length; i++) {
+							$("#"+seqNm[i]).val('');
+							$("#"+seqNm[i]).val(seqVal[i]); }  
+					  }
 					  $("#defaultFrm").attr({"action" : url, "method" : "post", "target" : url.replace(".do",""), "onsubmit" : ""}).submit();
 					  break;
 	  case 'blank' : if(seqNm.length > 0 && seqVal.length > 0){ for (var i = 0; i < seqNm.length; i++) { $("#"+seqNm[i]).val('');$("#"+seqNm[i]).val(seqVal[i]); } }

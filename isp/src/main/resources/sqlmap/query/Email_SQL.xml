@@ -23,9 +23,9 @@
 			 
 					  EM_SEQ															 emSeq
 					, DATE_FORMAT(EM_RGST_DT,'%Y.%m.%d') 								 emRgstDt
-					, EM_RGST_ID) 											 emRgstId
+					, EM_RGST_ID 											 			 emRgstId
 					, DATE_FORMAT(EM_RVSE_DT,'%Y.%m.%d') 								 emRvseDt
-					, EM_RVSE_ID) 											 emRvseId
+					, EM_RVSE_ID 											 			 emRvseId
 					, EM_TITLE														     emTitle
 					, EM_CONT 															 emCont
 					, EM_VIEW_CNT 														 emViewCnt
@@ -43,12 +43,12 @@
 		/* Email.selectList */
 		<![CDATA[  
       	     SELECT  
-			 
+			  
 					  EM_SEQ															 emSeq
 					, DATE_FORMAT(EM_RGST_DT,'%Y.%m.%d') 								 emRgstDt
-					, EM_RGST_ID) 											 emRgstId
+					, EM_RGST_ID 											 		 	 emRgstId
 					, DATE_FORMAT(EM_RVSE_DT,'%Y.%m.%d') 								 emRvseDt
-					, EM_RVSE_ID) 											 emRvseId
+					, EM_RVSE_ID 														 emRvseId
 					, EM_TITLE														     emTitle
 					, EM_CONT 															 emCont
 					, EM_VIEW_CNT 														 emViewCnt
@@ -64,7 +64,7 @@
 				LIMIT  #{firstIndex} , #{recordCountPerPage}
 		]]>
 	</select>	    
-
+  
 
 	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
 		/* Email.selectCount */
@@ -104,14 +104,14 @@
 			        
 			   SET   
 			      
-					EM_RGST_DT								 							 = NOW()
-					, EM_RVSE_ID														 =#{loginSeq	}	
-					, EM_ATCH_FILE_ID 													 =#{emAtchFileId}
-					, EM_TITLE														     =#{emTitle     }
-					, EM_CONT 															 =#{emCont      }
-					, EM_ID 															 =#{emId        }
-					, EM_DT																 = NOW()
-				   
+					  EM_RGST_DT 														 = NOW()
+					, EM_RVSE_DT 								 						 = NOW()
+					, EM_RVSE_ID 														 =#{loginSeq}
+					, EM_TITLE														     =#{emTitle}
+					, EM_CONT 															 =#{emCont}
+					, EM_DSGN 															 =#{emDsgn}
+					, EM_NEW_YN 														 =#{emNewYn}
+   				     
 			 WHERE	EM_SEQ = #{emSeq}    
 		]]>
 	</update> 

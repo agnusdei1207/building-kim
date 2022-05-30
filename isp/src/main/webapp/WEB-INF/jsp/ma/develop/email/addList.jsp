@@ -31,8 +31,8 @@
 							</td>
 							<td class="subject text_over">${result.emTitle }</td>
 							<td>${result.emRgstId }</td>
-							<td>${result.rmRgstDt }</td>
-						</tr>
+							<td>${result.emRgstDt }</td>
+						</tr>  
 					</c:forEach> 
 				</c:when>
 				<c:otherwise>
@@ -49,7 +49,7 @@
 		<ui:pagination paginationInfo="${paginationInfo}" type="manage" jsFunction="fncPageBoard" />
 	</div>
 	<div class="btn_right">
-		<a href="javascript:void(0)" class="btn btn_mdl btn_save" onclick="fncPageBoard('write','insertForm.do');">등록</a>
+		<a href="javascript:void(0);" class="btn btn_mdl btn_save" onclick="fncPageBoard('write','insertForm.do');">등록</a>
 	</div>
 </div>
 <%-- //paging end--%>

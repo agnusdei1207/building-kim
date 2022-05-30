@@ -36,16 +36,23 @@ public class EmailController {
     
     private String message = "";
 
-    private String cmmnScript = "";
-    
-    private String pName = "";
+    private String cmmnScript = ""; 
+       
+    private String pName = ""; 
     
     private String pValue = "";
     
-	@RequestMapping(folderPath + "list.do")
+	@RequestMapping(folderPath + "list.do") 
 	public String list(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
 
 		return ".mLayout:"+ folderPath + "list";
+	}
+	
+	
+	@RequestMapping(folderPath + "pop.do")
+	public String pop(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
+  
+		return folderPath + "pop";
 	}
 	
 	@RequestMapping(folderPath + "addList.do")
