@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.Email">
+
+	<sql id="Where"> 
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (EM_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR EM_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND EM_TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND EM_CONT LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+	 	</if>      
+	</sql>         
+	    
+	<select id="selectContents" parameterType="emailVO" resultType="emailVO">
+		/* Email.selectContents */
+		<![CDATA[
+			 SELECT  
+			 
+					  EM_SEQ															 emSeq
+					, DATE_FORMAT(EM_RGST_DT,'%Y.%m.%d') 								 emRgstDt
+					, EM_RGST_ID) 											 emRgstId
+					, DATE_FORMAT(EM_RVSE_DT,'%Y.%m.%d') 								 emRvseDt
+					, EM_RVSE_ID) 											 emRvseId
+					, EM_TITLE														     emTitle
+					, EM_CONT 															 emCont
+					, EM_VIEW_CNT 														 emViewCnt
+					, EM_DSGN 															 emDsgn
+					, EM_NEW_YN 														 emNewYn
+				   
+		      FROM	T_EMAIL
+			 WHERE  EM_USE_YN='Y'	
+			   AND	EM_SEQ = #{emSeq}
+		]]>     
+	</select>
+	
+	
+	<select id="selectList" parameterType="cmmnDefaultVO" resultType="emailVO">
+		/* Email.selectList */
+		<![CDATA[  
+      	     SELECT  
+			 
+					  EM_SEQ															 emSeq
+					, DATE_FORMAT(EM_RGST_DT,'%Y.%m.%d') 								 emRgstDt
+					, EM_RGST_ID) 											 emRgstId
+					, DATE_FORMAT(EM_RVSE_DT,'%Y.%m.%d') 								 emRvseDt
+					, EM_RVSE_ID) 											 emRvseId
+					, EM_TITLE														     emTitle
+					, EM_CONT 															 emCont
+					, EM_VIEW_CNT 														 emViewCnt
+					, EM_DSGN 															 emDsgn
+					, EM_NEW_YN 														 emNewYn
+				   
+		      FROM	T_EMAIL
+			 WHERE  EM_USE_YN='Y'	
+	      ]]>   
+		     <include refid="Where"/>	 
+	     <![CDATA[    
+	    		ORDER BY EM_SEQ DESC
+				LIMIT  #{firstIndex} , #{recordCountPerPage}
+		]]>
+	</select>	    
+
+
+	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* Email.selectCount */
+		<![CDATA[ 
+			SELECT 
+				  	COUNT(EM_SEQ) emCnt 
+			  FROM  T_EMAIL 
+			 WHERE	EM_USE_YN='Y'  
+		]]>
+			 <include refid="Where"/>
+	</select> 
+	
+	<insert id="insertContents" parameterType="emailVO">
+		/* Email.insertContents */
+		<![CDATA[
+			INSERT	INTO	T_EMAIL	(
+					  EM_RGST_ID 														 
+					, EM_TITLE														     
+					, EM_CONT 															 
+					, EM_DSGN 								 							 
+					, EM_NEW_YN 	   													 			  						
+			)             
+			VALUES	(
+					 #{loginSeq     }          
+					,#{emTitle      }
+					,#{emCont       }
+					,#{emDsgn       }
+					,#{emNewYn      }
+			)
+		]]>
+	</insert>
+	
+	<update id="updateContents" parameterType="emailVO">
+		/* Email.updateContents */
+		<![CDATA[
+			UPDATE	T_EMAIL
+			        
+			   SET   
+			      
+					EM_RGST_DT								 							 = NOW()
+					, EM_RVSE_ID														 =#{loginSeq	}	
+					, EM_ATCH_FILE_ID 													 =#{emAtchFileId}
+					, EM_TITLE														     =#{emTitle     }
+					, EM_CONT 															 =#{emCont      }
+					, EM_ID 															 =#{emId        }
+					, EM_DT																 = NOW()
+				   
+			 WHERE	EM_SEQ = #{emSeq}    
+		]]>
+	</update> 
+	 
+	<update id="deleteContents" parameterType="emailVO">
+		/* Email.deleteContents */
+		<![CDATA[   
+			UPDATE	T_EMAIL
+		       SET 
+	          	  	EM_USE_YN='N'
+			WHERE	EM_SEQ=#{emSeq}
+		]]>
+	</update>
+
+
+	
+	
+	
+	
+</mapper>

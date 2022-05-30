@@ -9,13 +9,13 @@
 					<table class="tbl_row_type01">    
 						<colgroup>    
 							<col width="20%">            
-							<col>                        
+							<col>                         
 						</colgroup>                 
-						<tbody>                  
-							<tr>                   
-								<th>공휴일 여부</th>                     
+						<tbody>            
+							<tr>                 
+								<th>공휴일 여부</th>                      
 								<td>                    
-								 	체크 시 공휴일 <input type="checkbox" name="caHolYn" id="caHolYn_${status.count }" value="Y" ${result.caHolYn eq 'Y' ? "checked" : "" } style="margin-left:20px;" /> 
+								 	체크 시 공휴일 <input type="checkbox" name="caHolYn" id="caHolYn_${status.count }" value="Y" ${result.caHolYn eq 'Y' ? "checked" : "" } style="margin-left:5px;" /> 
 								 	<label for="caHolYn_${status.count }" class="cursor"></label>
 								</td>     
 							</tr>           
@@ -51,13 +51,13 @@
 					<table class="tbl_row_type01">    
 						<colgroup>     
 							<col width="20%">             
-							<col>                            
-						</colgroup>               
-						<tbody>                     
+							<col>                              
+						</colgroup>                  
+						<tbody>                       
 							<tr>                  
 								<th>공휴일 여부</th>  
 								<td>                    
-									<input type="checkbox" name="caHolYn" id="caHolYn_" value="Y" style="margin-left:20px;" />
+									체크 시 공휴일 <input type="checkbox" name="caHolYn" id="caHolYn_" value="Y" style="margin-left:5px;" />
 								</td>     
 							</tr>             
 							<tr>        
@@ -79,4 +79,3 @@
 			</div>
 	</c:otherwise> 
 </c:choose>
-         

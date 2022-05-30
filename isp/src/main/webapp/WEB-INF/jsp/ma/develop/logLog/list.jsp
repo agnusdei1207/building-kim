@@ -19,7 +19,7 @@
 			<fieldset>             
 				<legend>검색</legend>   
 				<div class="search_basic"> 
-					<table class="type03">
+					<table class="type03"> 
 						<colgroup>
 							<col style="width:550px">
 							<col>  

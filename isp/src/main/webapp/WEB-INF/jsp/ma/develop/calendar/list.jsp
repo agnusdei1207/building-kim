@@ -13,27 +13,14 @@
 <c:set var="prevMonth" value='${fn:substring(util:addYearMonthDay(selectedDate, 0, -1, 0),4,6) }' />
 <c:set var="nextYear" value='${fn:substring(util:addYearMonthDay(selectedDate,  0, 1, 0),0,4) }' /> 
 <c:set var="nextMonth" value='${fn:substring(util:addYearMonthDay(selectedDate, 0, 1, 0),4,6) }' />                
-                                          
-<div class="content_box">          
-	<div class="wrap_cal marTy01">   
+                                             
+<div class="content_box">           
+	<div class="wrap_cal marTy01">       
 		<form name="defaultFrm" id="defaultFrm" method="post">
-			<input type="text" name="caSelectedYear" id="caSelectedYear" value="${searchVO.caSelectedYear }" />
-			<input type="text" name="caSelectedMonth" id="caSelectedMonth" value="${searchVO.caSelectedMonth }"/>
-			<input type="text" name="caSchYearMonth" id="caSchYearMonth" value="${searchVO.caSchYearMonth }"/> 
-			<br>
-			<c:out value="firstWeekdayOfMonth : ${firstWeekdayOfMonth }" />
-			<br>
-			<c:out value="lastDayOfMonth : ${lastDayOfMonth }" />  
-			<br>
-			<c:out value="prevYear : ${prevYear }" />
-			<br>
-			<c:out value="nextYear : ${nextYear }" />
-			<br>
-			<c:out value="prevMonth : ${prevMonth }" />
-			<br>
-			<c:out value="nextMonth : ${nextMonth }" />
-			<br>
-			<input type="text" name="caDataDate" id="caDataDate">   
+			<input type="hidden" name="caSelectedYear" id="caSelectedYear" value="${searchVO.caSelectedYear }" />
+			<input type="hidden" name="caSelectedMonth" id="caSelectedMonth" value="${searchVO.caSelectedMonth }"/>
+			<input type="hidden" name="caSchYearMonth" id="caSchYearMonth" value="${searchVO.caSchYearMonth }"/> 
+			<input type="hidden" name="caDataDate" id="caDataDate">   
 			<fieldset> 
 				<legend>달력 게시판</legend>
 				<div class="cal_top">
