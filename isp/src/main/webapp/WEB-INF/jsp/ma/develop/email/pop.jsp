@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
    
-<%-- content --%> 
+<%-- content --%>    
 <div class="top_title clear">
 	<h3 class="tit_page">주소록</h3>
 </div>     
@@ -14,13 +14,13 @@
 	</ul>
 	<div class="search_box">        
 		<form name="defaultFrm" id="defaultFrm" method="post"  onsubmit="return false;">
-			<input type="text" name="pageIndex" id="pageIndex" value="${searchVO.pageIndex }" />
-			<input type="text" name="emSeq" id="emSeq" value="${emailVO.emSeq }" />       
+			<input type="text" name="pageIndex" id="pageIndex" value="${searchVO.pageIndex }" /> 
 			<input type="text" name="schEtc01" id="schEtc01" value="${searchVO.schEtc01 }" >
 			<%-- 체크가 안 된 메일을 구분하기 위한 값 --%>
 			<input type="text" name="mailVal" id="mailVal" />
 			<%-- 체크가 된 메일을 구분하기 위한 값 --%>
 			<input type="text" name="mailDataName" id="mailDataName" />
+			
 			<fieldset>  
 				<legend>검색</legend>            
 				<div class="search_basic"> 
@@ -29,36 +29,36 @@
 						<option value="0" >전체</option>
 						<option value="1" >이름</option>  
 						<option value="2" >이메일</option>
-					</select>   
-					<input type="text" name="searchKeyword" id="searchKeyword2" class="text w40p" />
+					</select>       
+					<input type="text" name="searchKeyword" id="searchKeyword" class="text w40p" />
 					<span class="search_btns">
-						<button type="button" class="btn btn_search" id="btn_search3">검색</button>
-					</span>
+						<button type="button" class="btn btn_search" onclick="fncPageBoard('addList','popList.do','1');">검색</button>
+					</span>    
 				</div>
-			</fieldset>
-		</form>
+			</fieldset> 
+		</form>    
 	</div>
 	<%--// search  --%>
 	<div class="tbl">
 	</div>
-</div> 
+</div>  
      
 <script type="text/javaScript">  
 
 $(function(){
+	    
 	if($("#schEtc01").val() == null || $("#schEtc01").val() == ""){
-		$("#schEtc01").val("ft");
+		$("#schEtc01").val("ft"); 
 		$(".btnP").addClass("current");
-		$("#searchKeyword2").val("");
+		$("#searchKeyword").val("");
 	}
-	  
+	     
 	fncPageBoard("addList", "popList.do", $("#pageIndex").val());
+	   
+	$("#searchCondition").on("change", function(){
+		fncPageBoard("addList", "popList.do", '1');
+	})
 	
-	$("btn_search3").click(function(key){
-		if(key.keyCode == 13){   
-			fncPageBoard("addList", "popList.do", '1');
-		}
-	});   
 });
   
 <%-- ft/ma 구분 --%>   
@@ -74,20 +74,6 @@ function selectDivn(num){
 	}    
 	fncPageBoard("addList", "popList.do", '1');
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </script>

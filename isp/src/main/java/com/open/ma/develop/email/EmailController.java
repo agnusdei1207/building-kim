@@ -62,7 +62,9 @@ public class EmailController {
 		    
 		searchVO.setPageUnit(3);
 		searchVO.setPageSize(4);
- 
+		 
+		System.out.println("검색어 체크 : " + searchVO.getSearchKeyword());
+		
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
 		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
@@ -70,6 +72,10 @@ public class EmailController {
 		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		 
+		
+		System.out.println("첫번째 인덱스 : " + searchVO.getFirstIndex());
+		System.out.println("마지막 인덱스 : " + searchVO.getLastIndex());
 		
 		int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".selectPopCount" );  
 		paginationInfo.setTotalRecordCount(totCnt);

@@ -13,8 +13,38 @@
 			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
 				AND EM_CONT LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
+	 	</if>               
+	</sql>        
+	
+	<sql id="Where_ma"> 
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (UPPER(NAME) LIKE CONCAT('%',UPPER(#{searchKeyword}),'%') OR UPPER(EMAIL) LIKE CONCAT('%',UPPER(#{searchKeyword}),'%'))
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND UPPER(NAME) LIKE CONCAT('%',UPPER(#{searchKeyword}),'%')
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND UPPER(EMAIL) LIKE CONCAT('%',UPPER(#{searchKeyword}),'%')
+			</if>
 	 	</if>      
-	</sql>         
+	</sql> 
+	
+	<sql id="Where_ft">  
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (UPPER(ME_NAME) LIKE CONCAT('%',UPPER(#{searchKeyword}),'%') OR UPPER(ME_MAIL) LIKE CONCAT('%',UPPER(#{searchKeyword}),'%'))
+			</if>  
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND UPPER(ME_NAME) LIKE CONCAT('%',UPPER(#{searchKeyword}),'%')
+			</if> 
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND UPPER(ME_MAIL) LIKE CONCAT('%',UPPER(#{searchKeyword}),'%')
+			</if>     
+	 	</if>      
+	</sql>
+	
+	 
 	     
 	<select id="selectContents" parameterType="emailVO" resultType="emailVO">
 		/* Email.selectContents */
@@ -91,7 +121,8 @@
 			 FROM 
 				 	T_AD_USER
 			 WHERE	USE_YN	=	'Y'
-	     ]]>    
+	     ]]>     
+	     	<include refid="Where_ma"/>
 		</if>      
 		<if test='schEtc01 != null and schEtc01 != "" and schEtc01 == "ft"'>
 		<![CDATA[   
@@ -101,16 +132,17 @@
 					, ME_ID																	 	emId
 					, ME_NAME																    emName
 					, ME_MAIL 																 	emMail
-						  
+						   
 			  FROM  T_MEMBER
 		     WHERE  ME_USE_YN	=	'Y'	
-		]]>   
+		]]>    
+			<include refid="Where_ft"/>
 		</if>  
 	     <![CDATA[      
 			 LIMIT	#{firstIndex} , #{recordCountPerPage}
 		 ]]>
 	</select>	
-	
+	 
 	     
 	<select id="selectPopCount" parameterType="cmmnDefaultVO" resultType="int">
 		/* Email.selectPopCount */
@@ -128,8 +160,12 @@
 			 FROM 
 				 	T_AD_USER
 			 WHERE	USE_YN	=	'Y'
+		]]>  
+			<include refid="Where_ma"/>
+		<![CDATA[
 			 ) A
-	     ]]>     
+			 WHERE 1 = 1
+	    ]]>     
 		</if>     
 		<if test='schEtc01 != null and schEtc01 != "" and schEtc01 == "ft"'>
 		<![CDATA[  
@@ -146,9 +182,13 @@
 						  
 			  FROM  T_MEMBER
 		     WHERE  ME_USE_YN	=	'Y'	
+		]]>  
+			<include refid="Where_ft"/>
+		<![CDATA[
 		     ) A
+		     WHERE 1 = 1   
 		]]>      
-		</if>
+		</if>  
 	</select> 
 	 
 	<insert id="insertContents" parameterType="emailVO">

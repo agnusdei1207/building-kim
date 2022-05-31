@@ -14,8 +14,8 @@
 					<col style="width:30%;">
 					<col style="width:20%;">
 					<col style="width:30%;"> 
-				</colgroup>      
-				<tbody>    
+				</colgroup>       
+				<tbody>     
 					<tr>  
 						<th scope="row"><strong class="th_tit">받는사람</strong></th>
 						<td colspan="3">

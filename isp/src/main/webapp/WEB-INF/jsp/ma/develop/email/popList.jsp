@@ -10,44 +10,44 @@
 		<caption>목록</caption>
 		<colgroup> 
 			<col style="width:5%">
+			<col style="width:10%">
+			<col style="width:10%"> 
 			<col>
-			<col style="width:10%">
-			<col style="width:10%">
 		</colgroup> 
-		<thead>    
-			<tr>
-				<th scope="col">번호</th>
-				<th scope="col" class="subject">이름</th>
+		<thead>     
+			<tr>          
+				<th scope="col"><input type="checkbox" id="all_check"></th>
+				<th scope="col">이름</th>
 				<th scope="col">아이디</th>
-				<th scope="col">이메일</th> 
-			</tr>
+				<th scope="col">이메일</th>    
+			</tr> 
 		</thead>
-		<tbody>    
-			<c:choose> 
+		<tbody>     
+			<c:choose>   
 				<c:when test="${fn:length(resultList) gt 0}">     
 					<c:forEach var="result" items="${resultList}" varStatus="status">
-						<tr class="cursor">
-							<td> 
-								${paginationInfo.totalRecordCount+1 - ((searchVO.pageIndex-1) * searchVO.pageUnit + status.count)}
-							</td>  
-							<td class="subject text_over">${result.emName }</td>
+						<tr class="cursor"> 
+							<td>    
+								<input type="checkbox" name="arr" id="check_${status.index }" value="${result.emSeq }">
+							</td> 
+							<td>${result.emName }</td>  
 							<td>${result.emId }</td>
-							<td>${result.emMail }</td>
+							<td>${empty result.emMail ? '-' : result.emMail }</td>
 						</tr>  
-					</c:forEach> 
+					</c:forEach>  
 				</c:when>
-				<c:otherwise>
+				<c:otherwise> 
 					<tr><td colspan="4" class="no_data">데이터가 없습니다.</td></tr>
 				</c:otherwise>
 			</c:choose>
 		</tbody>
-	</table>
-</div>
-<%-- //tbl end --%>   
+	</table>   
+</div>   
+<%-- //tbl end --%>     
 <%-- paging start --%>
 <div class="paging_wrap">   
-	<div class="paging">
-		<ui:pagination paginationInfo="${paginationInfo}" type="manage" jsFunction="fncPageBoard" />
+	<div class="paging">   
+		<ui:pagination paginationInfo="${paginationInfo}" type="pop" jsFunction="fncPageBoard" />
 	</div>
 	<div class="btn_right">
 		<a href="javascript:void(0);" class="btn btn_mdl btn_save">선택</a>
