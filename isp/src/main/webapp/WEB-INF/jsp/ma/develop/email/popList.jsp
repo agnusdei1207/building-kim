@@ -15,10 +15,10 @@
 			<col>
 		</colgroup> 
 		<thead>     
-			<tr>          
-				<th scope="col"><input type="checkbox" id="all_check"></th>
-				<th scope="col">이름</th>
-				<th scope="col">아이디</th>
+			<tr>            
+				<th scope="col"><input type="checkbox" onclick="allCheck(this);" id="all_check"></th>
+				<th scope="col">이름</th>  
+				<th scope="col">아이디</th> 
 				<th scope="col">이메일</th>    
 			</tr> 
 		</thead>
@@ -26,17 +26,17 @@
 			<c:choose>   
 				<c:when test="${fn:length(resultList) gt 0}">     
 					<c:forEach var="result" items="${resultList}" varStatus="status">
-						<tr class="cursor"> 
-							<td>    
-								<input type="checkbox" name="arr" id="check_${status.index }" value="${result.emSeq }">
-							</td> 
-							<td>${result.emName }</td>  
+						<tr class="cursor">  
+							<td>                    
+								<input type="checkbox" onclick="oneCheck('${result.userDivn }', '${result.emId}');" name="arr" id="${result.userDivn }_${result.emId}" class="checkbox" value="${result.userDivn }_${result.emId}">
+							</td>      
+							<td>${result.emName }</td>   
 							<td>${result.emId }</td>
-							<td>${empty result.emMail ? '-' : result.emMail }</td>
+							<td>${result.emMail }</td>    
 						</tr>  
 					</c:forEach>  
 				</c:when>
-				<c:otherwise> 
+				<c:otherwise>  
 					<tr><td colspan="4" class="no_data">데이터가 없습니다.</td></tr>
 				</c:otherwise>
 			</c:choose>
@@ -44,7 +44,7 @@
 	</table>   
 </div>   
 <%-- //tbl end --%>     
-<%-- paging start --%>
+<%-- paging start --%> 
 <div class="paging_wrap">   
 	<div class="paging">   
 		<ui:pagination paginationInfo="${paginationInfo}" type="pop" jsFunction="fncPageBoard" />
@@ -52,5 +52,71 @@
 	<div class="btn_right">
 		<a href="javascript:void(0);" class="btn btn_mdl btn_save">선택</a>
 	</div>
-</div>
-<%-- //paging end--%>
+</div> 
+<%-- //paging end--%> 
+    
+<script type="text/javascript">
+           
+$(function(){
+	  
+	var text = $("#col1").val();     
+	var arr = $("#col1").val().split("//");
+
+	$(".checkbox").each(function(){
+		if(arr.indexOf() > -1){
+			 
+		}
+	});
+	
+});             
+           
+<%-- 전체 선택 --%> 
+function allCheck(obj){  
+	      
+	var text = $("#col1").val();
+	           
+	if($("#"+obj.id).prop("checked")){
+		$(".checkbox").prop("checked", true);
+		$(".checkbox").each(function(){
+			text += "//" + this.value; 
+		});   
+		
+	}else if(!$("#"+obj.id).prop("checked")){   
+		$(".checkbox").prop("checked", false);   
+		$(".checkbox").each(function(){   
+			text = text.replace("//" + this.value, "");
+		}); 
+	}         
+	$("#col1").val(text); 
+}    
+ 
+
+<%-- 한 개 선택 --%> 
+function oneCheck(divn, id){ 
+	          
+	var total = $(".checkbox").length; 
+	var checked = $(".checkbox:checked").length;
+	 
+	var text = $("#col1").val(); 
+	var val = $("#" + divn + "_" + id).val();   
+	            
+	if($("#" + divn + "_" + id).prop("checked")){  
+		text += "//" + val;     
+	}else{          
+		text = text.replace("//" + val, "");
+	}      
+	
+	if(total == checked){ 
+		$("#all_check").prop("checked", true);
+	}else{
+		$("#all_check").prop("checked", false);
+	}
+	
+	$("#col1").val(text);
+	
+} 
+
+
+
+
+</script>

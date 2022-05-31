@@ -89,17 +89,20 @@ public class LoginController {
 			
 	    	if(userLoginVO == null || userLoginVO.getId() == null || "".equals(userLoginVO.getId())){
 	    		if(checkFailCnt != null && checkFailCnt.getId() != null && checkFailCnt.getId() != ""){ 
+	    			loginLogVO.setLogId(checkFailCnt.getId()); 
 	    			cmmnService.updateContents(checkFailCnt, PROGRAM_ID+".updateFailCnt");
 	    			if(Integer.parseInt(checkFailCnt.getFailCnt()) > 5){ 
 	    				model.addAttribute("message", "비밀번호 입력횟수가 초과되었습니다. 관리자에게 문의하세요."); 
 	    				return  "/ma/login/login";
 	    			}
+	    		}  
+	    		model.addAttribute("message", "아이디 또는 패스워드를 확인하시기 바랍니다.");
+	    		 
+	    		if("".equals(loginLogVO.getLogId())){
+	    			loginLogVO.setLogId("");
 	    		}
 	    		
-	    		model.addAttribute("message", "아이디 또는 패스워드를 확인하시기 바랍니다.");
-	    		
-	    		loginLogVO.setLogId(userLoginVO.getId());
-				loginLogVO.setLogClientIp(clientIp);
+	    		loginLogVO.setLogClientIp(clientIp);
 				loginLogVO.setLogDivn("ma"); 
 				loginLogVO.setLogLoginYn("N");
 				cmmnService.insertContents(loginLogVO, "LoginLog");

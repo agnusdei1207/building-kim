@@ -117,21 +117,23 @@
 				  	SEQ 																		emUserSeq
 					,ID 																		emId
 					,NAME 																		emName 
-					,EMAIL																		emMail					  
+					,EMAIL																		emMail	
+					,IFNULL(NULL, 'ma')															userDivn				  
 			 FROM 
 				 	T_AD_USER
 			 WHERE	USE_YN	=	'Y'
 	     ]]>     
 	     	<include refid="Where_ma"/>
 		</if>      
-		<if test='schEtc01 != null and schEtc01 != "" and schEtc01 == "ft"'>
-		<![CDATA[   
-			SELECT      
-				           
+		<if test='schEtc01 != null and schEtc01 != "" and schEtc01 == "ft"'>      
+		<![CDATA[     
+			SELECT       
+				            
 					  ME_SEQ																	emUserSeq
 					, ME_ID																	 	emId
 					, ME_NAME																    emName
 					, ME_MAIL 																 	emMail
+					,IFNULL(NULL, 'ft')															userDivn	
 						   
 			  FROM  T_MEMBER
 		     WHERE  ME_USE_YN	=	'Y'	
@@ -141,14 +143,13 @@
 	     <![CDATA[      
 			 LIMIT	#{firstIndex} , #{recordCountPerPage}
 		 ]]>
-	</select>	
-	 
+	</select>	  
 	     
 	<select id="selectPopCount" parameterType="cmmnDefaultVO" resultType="int">
 		/* Email.selectPopCount */
 		<if test='schEtc01 != null and schEtc01 != "" and schEtc01 == "ma"'>
 		<![CDATA[    
-			SELECT  
+			SELECT   
 				  	COUNT(emUserSeq)
 			  FROM 
 			     (  

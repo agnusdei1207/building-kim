@@ -51,7 +51,7 @@
 				<include refid="Where"/>	
 			<![CDATA[	
 				GROUP BY logDt, logId, logClientIp
-				HAVING logCnt >= 10 
+				HAVING logCnt >= 0 
 				
 	    		ORDER BY LOG_SEQ DESC
 				LIMIT  #{firstIndex} , #{recordCountPerPage}
@@ -74,7 +74,7 @@
 			<include refid="Where"/>
 		<![CDATA[	
 			GROUP BY DATE_FORMAT(LOG_DT,'%y.%m.%d'), LOG_ID, LOG_CLIENT_IP
-			HAVING cnt >= 10) A
+			HAVING cnt >= 0) A
 		]]>
 	</select>      
 	

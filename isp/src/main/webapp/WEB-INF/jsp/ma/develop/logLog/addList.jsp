@@ -149,6 +149,7 @@ $(function(){
 	if($(".checkbox").prop("checked")){
 		$("#all_checkbox").prop("checked", true);
 	}    
+	
 	for(var i = 1; i < chk_arr.length; i++){
 		$("#"+chk_arr[i]).prop("checked", true);
 	}         
@@ -167,15 +168,14 @@ function allCheck(){
 		$(".checkbox").prop("checked",true);  
 		$(".checkbox").each(function(){ 
 			text += "//" + this.value;              
-			$("#col1").val(text); 
 	   });                                      
  	}else{                                                
 		$(".checkbox").prop("checked",false);            
 		$(".checkbox").each(function(){           
 			text = text.replace("//" + this.value, "");
-			$("#col1").val(text); 
 		});                                             
 	}                                          
+	$("#col1").val(text); 
 }                    
                               
 function oneCheck(obj, gooboon){  
