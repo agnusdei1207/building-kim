@@ -77,11 +77,11 @@
 			 <include refid="Where"/>
 	</select> 
 	
-	 
+	  
 	
 	<select id="selectPopList" parameterType="cmmnDefaultVO" resultType="emailVO">
 		/* Email.selectPopList */
-		<if test='schEtc01 != null and schEtc01 == "" and schEtc01 == "ma"'>
+		<if test='schEtc01 != null and schEtc01 != "" and schEtc01 == "ma"'>
 		<![CDATA[    
 			SELECT 
 				  	SEQ 																		emUserSeq
@@ -93,7 +93,7 @@
 			 WHERE	USE_YN	=	'Y'
 	     ]]>    
 		</if>      
-		<if test='schEtc01 != null and schEtc01 == "" and schEtc01 == "ft"'>
+		<if test='schEtc01 != null and schEtc01 != "" and schEtc01 == "ft"'>
 		<![CDATA[   
 			SELECT      
 				           
@@ -106,7 +106,7 @@
 		     WHERE  ME_USE_YN	=	'Y'	
 		]]>   
 		</if>  
-	     <![CDATA[     
+	     <![CDATA[      
 			 LIMIT	#{firstIndex} , #{recordCountPerPage}
 		 ]]>
 	</select>	
@@ -114,7 +114,7 @@
 	     
 	<select id="selectPopCount" parameterType="cmmnDefaultVO" resultType="int">
 		/* Email.selectPopCount */
-		<if test='schEtc01 != null and schEtc01 == "" and schEtc01 == "ma"'>
+		<if test='schEtc01 != null and schEtc01 != "" and schEtc01 == "ma"'>
 		<![CDATA[    
 			SELECT  
 				  	COUNT(emUserSeq)
@@ -129,9 +129,9 @@
 				 	T_AD_USER
 			 WHERE	USE_YN	=	'Y'
 			 ) A
-	     ]]>    
+	     ]]>     
 		</if>     
-		<if test='schEtc01 != null and schEtc01 == "" and schEtc01 == "ft"'>
+		<if test='schEtc01 != null and schEtc01 != "" and schEtc01 == "ft"'>
 		<![CDATA[  
 			SELECT  
 				  	COUNT(emUserSeq)
@@ -150,7 +150,7 @@
 		]]>      
 		</if>
 	</select> 
-	
+	 
 	<insert id="insertContents" parameterType="emailVO">
 		/* Email.insertContents */
 		<![CDATA[

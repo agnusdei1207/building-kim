@@ -5,19 +5,21 @@
 <div class="top_title clear">
 	<h3 class="tit_page">주소록</h3>
 </div>     
-             
-<div class="content_box">        
-	<%-- search  --%>  
+                         
+<div class="content_box">                     
+	<%-- search  --%>      
 	<ul class="tab js-tab tab_menu">   
 	    <li class="btnP"><a href="javascript:void(0)" onclick="selectDivn('ft')">사용자</a></li>
 	    <li class="btnA"><a href="javascript:void(0)" onclick="selectDivn('ma')">관리자</a></li>
 	</ul>
-	<div class="search_box">   
+	<div class="search_box">        
 		<form name="defaultFrm" id="defaultFrm" method="post"  onsubmit="return false;">
-			<input type="text" name="pageIndex" id="pageIndex" />
-			<input type="text" name="mailSeq" id="mailSeq" >
-			<input type="text" name="schEtc01" id="schEtc01" >
+			<input type="text" name="pageIndex" id="pageIndex" value="${searchVO.pageIndex }" />
+			<input type="text" name="emSeq" id="emSeq" value="${emailVO.emSeq }" />       
+			<input type="text" name="schEtc01" id="schEtc01" value="${searchVO.schEtc01 }" >
+			<%-- 체크가 안 된 메일을 구분하기 위한 값 --%>
 			<input type="text" name="mailVal" id="mailVal" />
+			<%-- 체크가 된 메일을 구분하기 위한 값 --%>
 			<input type="text" name="mailDataName" id="mailDataName" />
 			<fieldset>  
 				<legend>검색</legend>            
@@ -49,6 +51,7 @@ $(function(){
 		$(".btnP").addClass("current");
 		$("#searchKeyword2").val("");
 	}
+	  
 	fncPageBoard("addList", "popList.do", $("#pageIndex").val());
 	
 	$("btn_search3").click(function(key){
