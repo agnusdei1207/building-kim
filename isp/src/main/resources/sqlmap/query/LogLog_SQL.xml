@@ -113,11 +113,12 @@
 
 	<select id="selectStrangeCount" parameterType="cmmnDefaultVO" resultType="int">
 		/* LogLog.selectCount */
-		<![CDATA[ 
+		<![CDATA[  
 			SELECT  
 			 	  	COUNT(logSeq)	cnt  
 			  FROM      
 			    	(      
+			    	
 					SELECT
 							LOG_SEQ																									 logSeq
 							,LOG_ID																									 logId
@@ -139,7 +140,7 @@
 			  HAVING	failCnt > 5
 				   ) 	A 
 			  ]]>
-	</select>
+	</select> 
 
 
 	<insert id="insertContents" parameterType="logLogVO">
@@ -169,7 +170,8 @@
 	<update id="updateContents" parameterType="logLogVO">
 		/* LogLog.updateContents */
 		<![CDATA[  
-			UPDATE	T_LOG_LOG       
+			UPDATE	T_LOG_LOG   
+			    
 			   SET      
 					LOG_CLIENT_IP 								 						 = #{logClientIp}
 					, LOG_URL														     = #{logUrl     }

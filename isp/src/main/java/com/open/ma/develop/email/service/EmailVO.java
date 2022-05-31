@@ -21,8 +21,9 @@ public class EmailVO extends CmmnDefaultVO implements Serializable {
 	private String emViewCnt;
 	private String emDsgn;
 	private String emNewYn;
-	  
-	/* VO만 존재 */
+	
+	
+	private String emUserSeq;
 	private String emId;
 	private String emName;
 	private String emMail;
@@ -30,6 +31,16 @@ public class EmailVO extends CmmnDefaultVO implements Serializable {
 	private String[] arrUserSeq;
 	private String[] arrUserDivn;
 	 
+	
+	
+	public String getEmUserSeq() {
+		return emUserSeq;
+	}
+
+	public void setEmUserSeq(String emUserSeq) {
+		this.emUserSeq = emUserSeq;
+	}
+
 	public String getEmSeq() {
 		return emSeq;
 	}

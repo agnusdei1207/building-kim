@@ -38,7 +38,7 @@
 		]]>     
 	</select>
 	
-	
+	 
 	<select id="selectList" parameterType="cmmnDefaultVO" resultType="emailVO">
 		/* Email.selectList */
 		<![CDATA[  
@@ -77,44 +77,78 @@
 			 <include refid="Where"/>
 	</select> 
 	
-	
+	 
 	
 	<select id="selectPopList" parameterType="cmmnDefaultVO" resultType="emailVO">
 		/* Email.selectPopList */
-		<![CDATA[  
-      	     SELECT    
-			  
-					  EM_SEQ															 emSeq
-					, DATE_FORMAT(EM_RGST_DT,'%Y.%m.%d') 								 emRgstDt
-					, EM_RGST_ID 											 		 	 emRgstId
-					, DATE_FORMAT(EM_RVSE_DT,'%Y.%m.%d') 								 emRvseDt
-					, EM_RVSE_ID 														 emRvseId
-					, EM_TITLE														     emTitle
-					, EM_CONT 															 emCont
-					, EM_VIEW_CNT 														 emViewCnt
-					, EM_DSGN 															 emDsgn
-					, EM_NEW_YN 														 emNewYn
-				   
-		      FROM	T_EMAIL
-			 WHERE  EM_USE_YN='Y'	
-	      ]]>   
-		     <include refid="Where"/>	 
-	     <![CDATA[    
-	    		ORDER BY EM_SEQ DESC
-				LIMIT  #{firstIndex} , #{recordCountPerPage}
-		]]>
+		<if test='schEtc01 != null and schEtc01 == "" and schEtc01 == "ma"'>
+		<![CDATA[    
+			SELECT 
+				  	SEQ 																		emUserSeq
+					,ID 																		emId
+					,NAME 																		emName 
+					,EMAIL																		emMail					  
+			 FROM 
+				 	T_AD_USER
+			 WHERE	USE_YN	=	'Y'
+	     ]]>    
+		</if>      
+		<if test='schEtc01 != null and schEtc01 == "" and schEtc01 == "ft"'>
+		<![CDATA[   
+			SELECT      
+				           
+					  ME_SEQ																	emUserSeq
+					, ME_ID																	 	emId
+					, ME_NAME																    emName
+					, ME_MAIL 																 	emMail
+						  
+			  FROM  T_MEMBER
+		     WHERE  ME_USE_YN	=	'Y'	
+		]]>   
+		</if>  
+	     <![CDATA[     
+			 LIMIT	#{firstIndex} , #{recordCountPerPage}
+		 ]]>
 	</select>	
 	
-	
+	     
 	<select id="selectPopCount" parameterType="cmmnDefaultVO" resultType="int">
 		/* Email.selectPopCount */
-		<![CDATA[ 
-			SELECT 
-				  	COUNT(EM_SEQ) emCnt 
-			  FROM  T_EMAIL 
-			 WHERE	EM_USE_YN='Y'  
-		]]>
-			 <include refid="Where"/>
+		<if test='schEtc01 != null and schEtc01 == "" and schEtc01 == "ma"'>
+		<![CDATA[    
+			SELECT  
+				  	COUNT(emUserSeq)
+			  FROM 
+			     (  
+			SELECT   
+				  	SEQ 																		emUserSeq
+					,ID 																		emId
+					,NAME 																		emName 
+					,EMAIL																		emMail					  
+			 FROM 
+				 	T_AD_USER
+			 WHERE	USE_YN	=	'Y'
+			 ) A
+	     ]]>    
+		</if>     
+		<if test='schEtc01 != null and schEtc01 == "" and schEtc01 == "ft"'>
+		<![CDATA[  
+			SELECT  
+				  	COUNT(emUserSeq)
+			  FROM 
+			 	 (  
+			SELECT
+		      
+					  ME_SEQ																	emUserSeq
+					, ME_ID																	 	emId
+					, ME_NAME																    emName
+					, ME_MAIL 																 	emMail
+						  
+			  FROM  T_MEMBER
+		     WHERE  ME_USE_YN	=	'Y'	
+		     ) A
+		]]>      
+		</if>
 	</select> 
 	
 	<insert id="insertContents" parameterType="emailVO">

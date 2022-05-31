@@ -16,11 +16,12 @@ pageContext.setAttribute("br", "<br>");
 		<meta http-equiv="Content-Script-Type" content="text/javascript" />
 		<meta http-equiv="Content-Style-Type" content="text/css" />
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-		<title>관리자</title>
+		<title>관리자</title>   
 		<link rel="stylesheet" type="text/css" href="/publish/ma/css/style.css">
 		<link rel="stylesheet" type="text/css" href="/publish/ma/css/jquery-ui-1.12.1.custom.css"/>
 		<script type="text/javascript" src="/publish/ma/js/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript" src="/publish/ma/js/jquery-ui-1.12.1.custom.js"></script>
+		<script type="text/javascript" src="/publish/ma/js/board.js"></script>
 		<script type="text/javascript" src="/publish/ma/js/common.js"></script>
 		<script type="text/javascript" src="/resource/js/cm.validate.js" charset="utf-8"></script>
 		<script type="text/javascript" src="/publish/ma/js/highcharts.js"></script>

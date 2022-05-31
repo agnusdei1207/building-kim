@@ -52,13 +52,15 @@ public class EmailController {
 	@RequestMapping(folderPath + "pop.do")
 	public String pop(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
   
-		return folderPath + "pop";
+		return ".mPopLayout:/" + folderPath + "pop";
 	}
 	
-	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(folderPath + "popList.do")
 	public String popList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
 		   
+		System.out.println("구분 값 체크 : " + searchVO.getSchEtc01());
+		
 		searchVO.setPageUnit(6);
 		searchVO.setPageSize(7);
  
@@ -70,14 +72,18 @@ public class EmailController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
-		
-		int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".selectPopCount" );
+		System.out.println(1);       
+		int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".selectPopCount" );  
+		System.out.println("카운트 결과 : " + totCnt);
 		paginationInfo.setTotalRecordCount(totCnt);
+		System.out.println(2);
 		model.addAttribute("paginationInfo", paginationInfo); 
+		System.out.println(3);
 		        
-		@SuppressWarnings("unchecked")
 		List<EmailVO> resultList = (List<EmailVO>) cmmnService.selectList(searchVO, PROGRAM_ID + ".selectPopList");
+		System.out.println(4);
 		model.addAttribute("resultList", resultList);
+		System.out.println(5);
 		  
 		return folderPath + "popList";
 	}

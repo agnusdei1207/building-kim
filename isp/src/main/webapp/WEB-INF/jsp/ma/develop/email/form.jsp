@@ -1,19 +1,19 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
  
-<div class="content_box"> 
+<div class="content_box">   
 	<form name="defaultFrm" id="defaultFrm" method="post">  
 		<input type="hidden" name="emSeq" id="emSeq" value="${emailVO.emSeq }"/>
 		<input type="text" id="selectMember">
 		<jsp:directive.include file="/WEB-INF/jsp/cmmn/inc/incSearchForm.jsp"/>
 		<div class="tbl_wrap">          
-			<table class="tbl_row_type01"> 
+			<table class="tbl_row_type01">
 				<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>
 				<colgroup>
 					<col style="width:20%;">
 					<col style="width:30%;">
 					<col style="width:20%;">
-					<col style="width:30%;">
+					<col style="width:30%;"> 
 				</colgroup>      
 				<tbody>    
 					<tr>  
@@ -66,7 +66,7 @@
 
 <script type="text/javascript"> 
       
-function submit(){ 
+function submit(){    
 	<%-- 제목 유효성 --%>
 	if($("#emTitle").val() == "" || $("#emTitle").val() == null) {
 		checkMsg("#emTitle", "제목을 입력해주세요.");
@@ -79,18 +79,9 @@ function submit(){
 	fncPageBoard('submit','${searchVO.procType}Proc.do');
 	return false;   
 };     
-       
+          
 function fncAddressBook(){           
-	var selectMember = '';  
-	$("input[name='arrUserSeq']").each(function(i){
-		selectMember += '//' + $(this).attr("data-nameEmail");	
-		alert("i : " + i);
-		alert("selectMember : " + selectMember);    
-	});  
-	$("#selectMember").val(selectMember);    
-	fncPageBoard("pop", "pop.do", "1,2", "", "1200", "400");
-	   
+	fncPageBoard("pop", "pop.do", "", "", "1200", "800");
 }   
-
 
 </script>
