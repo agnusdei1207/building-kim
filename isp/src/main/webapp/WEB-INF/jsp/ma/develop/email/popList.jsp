@@ -89,12 +89,13 @@ function allCheck(obj){
 	
 	if($("#"+obj.id).prop("checked")){
 		$(".checkbox").each(function(){
+			$("#" + this.id).prop("checked", true);  
 			if(text.indexOf("//"+this.id) > -1){
 				text = text.replace("//"+this.id, "");
 			}else{
 				text += "//" + this.value; 
-			}
-		});   
+			}    
+		});    
    		
 	}else if(!$("#"+obj.id).prop("checked")){   
 		$(".checkbox").prop("checked", false);   
