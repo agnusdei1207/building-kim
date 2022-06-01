@@ -51,7 +51,7 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 	 * Log4j Logger.
 	 */
 	private static final Logger LOGGER = LogManager.getLogger(ManageInterceptor.class.getName());
-
+	
 	/**
 	 * Session Loding Time.
 	 */
@@ -94,10 +94,10 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 
 		String currentUrl = request.getRequestURI();
 		LOGGER.info("=================================== frontInterceptor currentUrl ::: " + currentUrl);
-		 
+		
 		// 로그 기록 
 		logLogVO.setLogClientIp(clientIp);
-		logLogVO.setLogUrl(currentUrl);
+		logLogVO.setLogUrl(currentUrl); 
 		logLogVO.setLogDivn("ma");
 		 
 		@SuppressWarnings("rawtypes")
@@ -138,8 +138,8 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 		request.setAttribute("requestFullUrl", requestFullUrl);
 		request.setAttribute("refererUrl", request.getHeader("referer"));
 		LOGGER.info("=================================== manageInterceptor requestUrl ::: " + requestFullUrl);
-		
-			/** 로그인 검사 */
+			  
+			/** 로그인 검사 */ 
 			if (SessionUtil.isLogined(request)) {
 				LoginVO loginVO = SessionUtil.getUserDetails();
 				LOGGER.info("=================================== requestFullUrl  ::: " + requestFullUrl);
@@ -148,9 +148,10 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 				LOGGER.info("=================================== refererUrl ::: " + request.getHeader("referer"));
 				
 				if(StringUtil.nullString(menuCd).equals("")){
-					/* 메뉴 권한 확인*/
-					List<String> manuList = (List<String>) SessionUtil.getAuthList();
-					if(manuList == null){
+					/* 메뉴 권한 확인*/  
+					List<String> manuList = (List<String>) SessionUtil.getAuthList(); 
+					System.out.println( "메뉴 권한 확인 스코프 3 : " + manuList);
+					if(manuList == null){	
 						response.sendRedirect("/cmmn/fail.do");
 					} 
 					 

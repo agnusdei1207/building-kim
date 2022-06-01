@@ -80,12 +80,12 @@ public class SessionUtil {
 		String menuCd = (String) requestAttributes.getAttribute(SESSION_MENU_CD, 1);
 		return menuCd;
 	}
-	
+	   
 	@SuppressWarnings("unchecked")
 	public static List<String> getAuthList() {
-		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();  
 		List<String> manuList = (List<String>) requestAttributes.getAttribute(SESSION_MANAGE_MENU_AUTH_KEY, 1);
-		return manuList;
+		return manuList;     
 	}
 	
 	@SuppressWarnings("unchecked")

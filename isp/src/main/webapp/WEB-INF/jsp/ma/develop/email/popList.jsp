@@ -53,7 +53,7 @@
 		<a href="javascript:void(0);" class="btn btn_mdl btn_save">선택</a>
 	</div>
 </div> 
-<%-- //paging end--%> 
+<%-- //paging end--%>    
     
 <script type="text/javascript">
            
@@ -61,12 +61,24 @@ $(function(){
 	  
 	var text = $("#col1").val();     
 	var arr = $("#col1").val().split("//");
-
+	 
+	<%-- 문자열 확인 후 체크하기 --%>
 	$(".checkbox").each(function(){
-		if(arr.indexOf() > -1){
-			 
-		}
+		if(arr.indexOf(this.value) > -1){    
+			 $("#"+this.id).prop("checked", true);
+		}     
 	});
+	 
+	<%-- 체크된 길이 확인 후 전체 체크박스 체크 --%> 
+	var total = $(".checkbox").length; 
+	var checked = $(".checkbox:checked").length;
+	       
+	if(total == checked){ 
+		$("#all_check").prop("checked", true);
+	}else{
+		$("#all_check").prop("checked", false);
+	}       
+	  
 	
 });             
            
@@ -74,13 +86,16 @@ $(function(){
 function allCheck(obj){  
 	      
 	var text = $("#col1").val();
-	           
+	
 	if($("#"+obj.id).prop("checked")){
-		$(".checkbox").prop("checked", true);
 		$(".checkbox").each(function(){
-			text += "//" + this.value; 
+			if(text.indexOf("//"+this.id) > -1){
+				text = text.replace("//"+this.id, "");
+			}else{
+				text += "//" + this.value; 
+			}
 		});   
-		
+   		
 	}else if(!$("#"+obj.id).prop("checked")){   
 		$(".checkbox").prop("checked", false);   
 		$(".checkbox").each(function(){   
