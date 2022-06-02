@@ -150,7 +150,7 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 				if(StringUtil.nullString(menuCd).equals("")){
 					/* 메뉴 권한 확인*/  
 					List<String> manuList = (List<String>) SessionUtil.getAuthList(); 
-					System.out.println( "메뉴 권한 확인 스코프 3 : " + manuList);
+					System.out.println( "메뉴 권한 확인 매니저 인터셉터 : " + manuList);
 					if(manuList == null){	
 						response.sendRedirect("/cmmn/fail.do");
 					} 

@@ -78,23 +78,20 @@ $(function(){
 	}else{
 		$("#all_check").prop("checked", false);
 	}       
-	  
 	
-});             
+});                
            
 <%-- 전체 선택 --%> 
 function allCheck(obj){  
-	      
-	var text = $("#col1").val();
+	       
+	var text = $("#col1").val();     
 	
 	if($("#"+obj.id).prop("checked")){
-		$(".checkbox").each(function(){
-			$("#" + this.id).prop("checked", true);  
-			if(text.indexOf("//"+this.id) > -1){
-				text = text.replace("//"+this.id, "");
-			}else{
+		$(".checkbox").each(function(){         
+			$("#" + this.id).prop("checked", true);   
+			if(text.indexOf("//"+this.id) == -1){  
 				text += "//" + this.value; 
-			}    
+			}
 		});    
    		
 	}else if(!$("#"+obj.id).prop("checked")){   
@@ -102,7 +99,7 @@ function allCheck(obj){
 		$(".checkbox").each(function(){   
 			text = text.replace("//" + this.value, "");
 		}); 
-	}         
+	}           
 	$("#col1").val(text); 
 }    
  

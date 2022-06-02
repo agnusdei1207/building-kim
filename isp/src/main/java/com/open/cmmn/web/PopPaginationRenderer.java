@@ -37,7 +37,7 @@ public class PopPaginationRenderer extends AbstractPaginationRenderer implements
 		// no-op
 	}
 
-	/**
+	/** 
 	 * <pre>
 	 * Description : initVariables.
 	 * </pre>

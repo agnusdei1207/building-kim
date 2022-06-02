@@ -14,15 +14,10 @@
 	</ul>
 	<div class="search_box">             
 		<form name="defaultFrm" id="defaultFrm" method="post"  onsubmit="return false;">
-			<input type="text" name="pageIndex" id="pageIndex" value="${searchVO.pageIndex }" /> 
+			<input type="text" name="pageIndex" id="pageIndex" value="${searchVO.pageIndex }" />      
 			<input type="text" name="schEtc01" id="schEtc01" value="${searchVO.schEtc01 }" >
-			<%-- 체크가 안 된 메일을 구분하기 위한 값 --%>
-			<input type="text" name="mailVal" id="mailVal" />
-			<%-- 체크가 된 메일을 구분하기 위한 값 --%>
-			<input type="text" name="mailDataName" id="mailDataName" />   
 			<%-- 체크 상태 감지를 위한 값 --%>    
-			체크 상태 : <input type="text" name="col1" id="col1" class="text w100p" />
-			  
+			<input type="text" name="col1" id="col1" class="text w100p" />
 			<fieldset>  
 				<legend>검색</legend>            
 				<div class="search_basic"> 
@@ -60,7 +55,7 @@ $(function(){
 	$("#searchCondition").on("change", function(){
 		fncPageBoard("addList", "popList.do", '1');
 	})
-	
+	 
 });
   
 <%-- ft/ma 구분 --%>   
