@@ -77,7 +77,7 @@
 		</if>
 		<include refid="Where" />   
 	</select>  
-
+ 
 	<select id="selectStrangeList" parameterType="cmmnDefaultVO" resultType="logLogVO">
 		
 		/* LogLog.selectStrangeList */
