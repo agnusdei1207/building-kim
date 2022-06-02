@@ -9,8 +9,8 @@
 	<table class="tbl_col_type01">
 		<caption>목록</caption>
 		<colgroup> 
-			<col style="width:5%">
-			<col style="width:10%">
+			<col style="width:5%"> 
+			<col style="width:10%">     
 			<col style="width:10%"> 
 			<col>
 		</colgroup> 
@@ -27,19 +27,19 @@
 				<c:when test="${fn:length(resultList) gt 0}">     
 					<c:forEach var="result" items="${resultList}" varStatus="status">
 						<tr class="cursor">  
-							<td>                    
-								<input type="checkbox" onclick="oneCheck('${result.userDivn }', '${result.emId}');" name="arr" id="${result.userDivn }_${result.emId}" class="checkbox" value="${result.userDivn }_${result.emId}">
+							<td>                       
+								<input type="checkbox" onclick="oneCheck('${result.userDivn }', '${result.emUserSeq}');" name="arr" id="${result.userDivn }_${result.emUserSeq}" class="checkbox" value="${result.userDivn }_${result.emUserSeq}_${result.emId}_${result.emMail}">
 							</td>      
 							<td>${result.emName }</td>   
 							<td>${result.emId }</td>
 							<td>${result.emMail }</td>    
 						</tr>  
-					</c:forEach>  
-				</c:when>
-				<c:otherwise>  
+					</c:forEach>      
+				</c:when>   
+				<c:otherwise>      
 					<tr><td colspan="4" class="no_data">데이터가 없습니다.</td></tr>
 				</c:otherwise>
-			</c:choose>
+			</c:choose> 
 		</tbody>
 	</table>   
 </div>   
@@ -49,9 +49,9 @@
 	<div class="paging">   
 		<ui:pagination paginationInfo="${paginationInfo}" type="pop" jsFunction="fncPageBoard" />
 	</div>
-	<div class="btn_right">
-		<a href="javascript:void(0);" class="btn btn_mdl btn_save">선택</a>
-	</div>
+	<div class="btn_right">   
+		<a class="btn btn_mdl btn_save" onclick="fncChoose();">선택</a>
+	</div>    
 </div> 
 <%-- //paging end--%>    
     
@@ -78,57 +78,84 @@ $(function(){
 	}else{
 		$("#all_check").prop("checked", false);
 	}       
+	  
 	
-});                
+});             
            
 <%-- 전체 선택 --%> 
 function allCheck(obj){  
-	       
-	var text = $("#col1").val();     
+	      
+	var text = $("#col1").val();
 	
 	if($("#"+obj.id).prop("checked")){
-		$(".checkbox").each(function(){         
-			$("#" + this.id).prop("checked", true);   
-			if(text.indexOf("//"+this.id) == -1){  
+		$(".checkbox").each(function(){
+			$(".checkbox").prop("checked", true); 
+			if(text.indexOf("//"+this.id) > -1){
+				text = text.replace("//"+this.id, "");
+			}else{   
 				text += "//" + this.value; 
 			}
-		});    
+		});   
    		
 	}else if(!$("#"+obj.id).prop("checked")){   
 		$(".checkbox").prop("checked", false);   
 		$(".checkbox").each(function(){   
 			text = text.replace("//" + this.value, "");
 		}); 
-	}           
+	}         
 	$("#col1").val(text); 
 }    
  
 
 <%-- 한 개 선택 --%> 
-function oneCheck(divn, id){ 
+function oneCheck(divn, userSeq){ 
 	          
 	var total = $(".checkbox").length; 
 	var checked = $(".checkbox:checked").length;
 	 
 	var text = $("#col1").val(); 
-	var val = $("#" + divn + "_" + id).val();   
-	            
-	if($("#" + divn + "_" + id).prop("checked")){  
+	var val = $("#" + divn + "_" + userSeq).val();   
+	             
+	if($("#" + divn + "_" + userSeq).prop("checked")){       
 		text += "//" + val;     
-	}else{          
-		text = text.replace("//" + val, "");
+	}else{                 
+		text = text.replace("//" + val, ""); 
 	}      
 	
 	if(total == checked){ 
-		$("#all_check").prop("checked", true);
+		$("#all_check").prop("checked", true);     
 	}else{
 		$("#all_check").prop("checked", false);
-	}
-	
+	} 
+	 
 	$("#col1").val(text);
-	
-} 
+}           
 
+function fncChoose(){   
+	
+	var arr = $("#col1").val().split("//"); 
+	var divn = "";
+	var seq = "";
+	var id = "";
+	var mail = "";
+	    
+	var html = "";
+   
+	for(var i = 1; i < arr.length; i++){ 
+		divn = arr[i].split("_")[0]; 
+		seq = arr[i].split("_")[1]; 
+		id = arr[i].split("_")[2];	     
+		mail = arr[i].split("_")[3];               
+		                                             
+		html += '<li class="mail_select_obj" data-info="' + divn + '_' + seq + '_' + id + '_' + mail + '" id="' + divn + '_' + seq + '">';
+		html += mail;                            
+		html += '<a class="mail_del btn_del cursor" onclick="fncUserDel(\''+ divn +'_'+ seq +'\');">x</a>';
+		html += '</li>';
+	}
+	       
+	opener.$("#receiver").append(html);
+	self.close();
+}
 
 
 

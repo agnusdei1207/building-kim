@@ -82,6 +82,12 @@ function submit(){
           
 function fncAddressBook(){           
 	fncPageBoard("pop", "pop.do", "", "", "1200", "800");
+	return true;
 }   
+
+function fncUserDel(id){
+	$("#" + id).remove();
+	return true;  
+} 
 
 </script>

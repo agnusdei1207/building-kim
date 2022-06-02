@@ -9,9 +9,9 @@
 <div class="content_box">                               
 	<%-- search  --%>       
 	<ul class="tab js-tab tab_menu">   
-	    <li class="btnP"><a href="javascript:void(0)" onclick="selectDivn('ft')">사용자</a></li>
-	    <li class="btnA"><a href="javascript:void(0)" onclick="selectDivn('ma')">관리자</a></li>
-	</ul>
+	    <li class="btnP"><a onclick="selectDivn('ft')">사용자</a></li>
+	    <li class="btnA"><a onclick="selectDivn('ma')">관리자</a></li>
+	</ul>  
 	<div class="search_box">             
 		<form name="defaultFrm" id="defaultFrm" method="post"  onsubmit="return false;">
 			<input type="text" name="pageIndex" id="pageIndex" value="${searchVO.pageIndex }" />      
@@ -55,7 +55,7 @@ $(function(){
 	$("#searchCondition").on("change", function(){
 		fncPageBoard("addList", "popList.do", '1');
 	})
-	 
+	
 });
   
 <%-- ft/ma 구분 --%>   
