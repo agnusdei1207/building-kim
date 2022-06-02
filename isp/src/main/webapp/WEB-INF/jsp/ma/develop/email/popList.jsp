@@ -59,16 +59,17 @@
            
 $(function(){
 	  
-	var text = $("#col1").val();     
-	var arr = $("#col1").val().split("//");
-	 
+	var text = $("#col1").val();              
+	var arr = $("#col1").val().split("//");  
+	arr = arr.concat(opener.$("#checkedArray").val().split(","));
+	   
 	<%-- 문자열 확인 후 체크하기 --%>
-	$(".checkbox").each(function(){
+	$(".checkbox").each(function(){   
 		if(arr.indexOf(this.value) > -1){    
 			 $("#"+this.id).prop("checked", true);
 		}     
-	});
-	 
+	}); 
+	    
 	<%-- 체크된 길이 확인 후 전체 체크박스 체크 --%> 
 	var total = $(".checkbox").length; 
 	var checked = $(".checkbox:checked").length;
@@ -138,40 +139,43 @@ function fncChoose(){
 	opener.$(".mail_select_obj").each(function(){
 		parentArray.push($(this).attr("data-info"));
 	})                   
-	alert("parentArray : " + parentArray ); 
-	
+    	
   	var arr = $("#col1").val().split("//"); 
 	var divn = "";
 	var seq = "";
 	var id = "";        
-	var mail = "";   
-	alert("arr : " + arr );       
+	var mail = "";     
+          
+	alert("arr : " + arr );        
 	           
 	arr = arr.concat(parentArray);
 	arr = Array.from(new Set(arr));      
-	alert(arr);      
-	            
-	var html = "";     
-	    
+	var html = '<input type="text" id="checkedArray" value="'+arr+'">';     
+		    
 		for(var i = 1; i < arr.length; i++){ 
 			divn = arr[i].split("_")[0]; 
 			seq = arr[i].split("_")[1]; 
 			id = arr[i].split("_")[2];	     
 			mail = arr[i].split("_")[3];           
-	  		                             
+	  		
 			html += fncDrawList(divn, seq, id, mail);
 		}        
-	opener.$("#receiver").html(html); <%-- html 덮어쓰기--%>
-	self.close();        
-}         
-                   
-<%-- 선택된 목록 그리기 --%>
+	opener.$("#receiver").html(html); 
+	self.close();         
+}            
+                    
+<%-- 선택된 목록 그리기 --%> 
 function fncDrawList(divn, seq, id, mail){
-	var html = "";
-		html += '<li class="mail_select_obj" data-info="' + divn + '_' + seq + '_' + id + '_' + mail + '" id="' + divn + '_' + seq + '">';
-		html += mail;                                
-		html += '<a class="mail_del btn_del cursor" onclick="fncUserDel(\''+ divn +'_'+ seq +'\');">x</a>';
+	
+	var info = divn + '_' + seq + '_' + id + '_' + mail;
+	var id = divn + '_' + seq;
+	  
+	var html = "";     
+		html += '<li class="mail_select_obj" data-info="'+ info +'" id="'+ id +'">';
+		html += mail;                                  
+		html += '<a class="mail_del btn_del cursor" onclick="fncUserDel(\''+ id +'\', \''+ info +'\');">x</a>';
 		html += '</li>';
+		  
 	return html;
 }
 

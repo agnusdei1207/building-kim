@@ -1,12 +1,15 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
  
+       
+ 
+ 
 <div class="content_box">   
 	<form name="defaultFrm" id="defaultFrm" method="post">  
 		<input type="hidden" name="emSeq" id="emSeq" value="${emailVO.emSeq }"/>
-		<input type="text" id="selectMember">
+		<input type="text" id="selectMember" class="text w100p">
 		<jsp:directive.include file="/WEB-INF/jsp/cmmn/inc/incSearchForm.jsp"/>
-		<div class="tbl_wrap">          
+		<div class="tbl_wrap">           
 			<table class="tbl_row_type01">
 				<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>
 				<colgroup>
@@ -14,16 +17,17 @@
 					<col style="width:30%;">
 					<col style="width:20%;">
 					<col style="width:30%;"> 
-				</colgroup>       
+				</colgroup>        
 				<tbody>     
 					<tr>  
 						<th scope="row"><strong class="th_tit">받는사람</strong></th>
 						<td colspan="3">
 							<ul id="receiver" class="mail_select_list">
-								
-							</ul>
-							<a href="javascript:void(0);" class="btn btn_sml btn_ok" onclick="fncAddressBook();">주소록</a>
-						</td>
+								           
+							</ul>       
+							<a href="javascript:void(0);" class="btn btn_sml btn_ok" onclick='fncPageBoard("pop", "pop.do", "", "", "1200", "800");'>PopUp</a>
+							<a href="javascript:void(0);" class="btn btn_sml btn_ok" onclick='openModal();'>Modal</a>
+						</td>   
 					</tr>
 					<tr>       
 						<th scope="row"><strong class="th_tit">제목</strong></th>
@@ -58,36 +62,48 @@
 				<a href="javascript:void(0);" class="btn btn_mdl btn_cancel" id="btn_list">취소</a>
 			</c:if>
 		</div>  
+		
+		        
+		
+		<div class="modal">
+		  <div class="modal_content" 
+		       title="클릭하면 창이 닫힙니다.">
+		    여기에 모달창 내용을 적어줍니다.<br>
+		    이미지여도 좋고 글이어도 좋습니다.
+		  </div>
+		</div>
+		   
+		
 	</form>
 </div>    
-  
-
-
+       
 
 <script type="text/javascript"> 
-      
+   
+<%-- 보내기 버튼 --%>
 function submit(){    
-	<%-- 제목 유효성 --%>
 	if($("#emTitle").val() == "" || $("#emTitle").val() == null) {
 		checkMsg("#emTitle", "제목을 입력해주세요.");
 		return false;
-	}      
-	<%-- 디자인 유형 선택--%>
+	}        
 	if(!$("input[name=emDsgn]").is(":checked")){
 		$("#emDsgn_A").prop("checked", true);
-	}   
+	}    
 	fncPageBoard('submit','${searchVO.procType}Proc.do');
 	return false;   
-};     
-          
-function fncAddressBook(){           
-	fncPageBoard("pop", "pop.do", "", "", "1200", "800");
-	return true;
-}   
-
-function fncUserDel(id){
-	$("#" + id).remove();
+};      
+            
+<%-- 받는 사람 목록 삭제 --%> 
+function fncUserDel(id, info){
+	$("#" + id).remove();             
+	$("#checkedArray").val($("#checkedArray").val().replace("," + info, ""));   
 	return true;  
 } 
+      
+<%-- 모달 열기 --%>
+function openModal(){
+	$(".modal").fadeIn();
+}
+
 
 </script>
