@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
+ 
    
 <%-- content --%>    
 <div class="top_title clear">
@@ -9,18 +10,18 @@
 <div class="content_box">                               
 	<%-- search  --%>       
 	<ul class="tab js-tab tab_menu">   
-	    <li class="btnP"><a onclick="selectDivn('ft')">사용자</a></li>
-	    <li class="btnA"><a onclick="selectDivn('ma')">관리자</a></li>
-	</ul>  
+	    <li class="btnP cursor"><a onclick="selectDivn('ft')">사용자</a></li>
+	    <li class="btnA cursor"><a onclick="selectDivn('ma')">관리자</a></li>
+	</ul>         
 	<div class="search_box">             
 		<form name="defaultFrm" id="defaultFrm" method="post"  onsubmit="return false;">
-			<input type="text" name="pageIndex" id="pageIndex" value="${searchVO.pageIndex }" />      
-			<input type="text" name="schEtc01" id="schEtc01" value="${searchVO.schEtc01 }" >
+			<input type="hidden" name="pageIndex" id="pageIndex" value="${searchVO.pageIndex }" />      
+			<input type="hidden" name="schEtc01" id="schEtc01" value="${searchVO.schEtc01 }" >
 			<%-- 체크 상태 감지를 위한 값 --%>    
 			<input type="text" name="col1" id="col1" class="text w100p" />
-			<fieldset>  
+			<fieldset>    
 				<legend>검색</legend>            
-				<div class="search_basic"> 
+				<div class="search_basic">  
 					<strong class="tit">검색구분</strong>   
 					<select name="searchCondition" id="searchCondition" title="구분 선택" class="w100"  >  
 						<option value="0" >전체</option>
@@ -48,16 +49,16 @@ $(function(){
 		$("#schEtc01").val("ft"); 
 		$(".btnP").addClass("current");
 		$("#searchKeyword").val("");
-	}
+	} 
 	     
 	fncPageBoard("addList", "popList.do", $("#pageIndex").val());
 	   
 	$("#searchCondition").on("change", function(){
 		fncPageBoard("addList", "popList.do", '1');
-	})
+	})   
 	
 });
-  
+       
 <%-- ft/ma 구분 --%>   
 function selectDivn(num){  
      

@@ -1,33 +1,32 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
- 
-       
- 
- 
+<script type="text/javascript" src="/publish/ma/js/highcharts.js"></script>
+<script type="text/javascript" src="/publish/ma/js/jquery-1.11.3.min.js"></script>    
+                
 <div class="content_box">   
 	<form name="defaultFrm" id="defaultFrm" method="post">  
 		<input type="hidden" name="emSeq" id="emSeq" value="${emailVO.emSeq }"/>
-		<input type="text" id="selectMember" class="text w100p">
+		<input type="hidden" id="selectMember">       
+		<input type="hidden" id="modal_pop">  
 		<jsp:directive.include file="/WEB-INF/jsp/cmmn/inc/incSearchForm.jsp"/>
-		<div class="tbl_wrap">           
-			<table class="tbl_row_type01">
+		<div class="tbl_wrap">               
+			<table class="tbl_row_type01">   
 				<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>
-				<colgroup>
+				<colgroup> 
 					<col style="width:20%;">
 					<col style="width:30%;">
 					<col style="width:20%;">
 					<col style="width:30%;"> 
-				</colgroup>        
-				<tbody>     
+				</colgroup>            
+				<tbody>      
 					<tr>  
 						<th scope="row"><strong class="th_tit">받는사람</strong></th>
 						<td colspan="3">
 							<ul id="receiver" class="mail_select_list">
-								           
-							</ul>       
-							<a href="javascript:void(0);" class="btn btn_sml btn_ok" onclick='fncPageBoard("pop", "pop.do", "", "", "1200", "800");'>PopUp</a>
+							</ul>              
+							<a href="javascript:void(0);" class="btn btn_sml btn_ok" onclick='openPop();'>PopUp</a>
 							<a href="javascript:void(0);" class="btn btn_sml btn_ok" onclick='openModal();'>Modal</a>
-						</td>   
+						</td>     
 					</tr>
 					<tr>       
 						<th scope="row"><strong class="th_tit">제목</strong></th>
@@ -62,24 +61,18 @@
 				<a href="javascript:void(0);" class="btn btn_mdl btn_cancel" id="btn_list">취소</a>
 			</c:if>
 		</div>  
-		
-		        
-		
-		<div class="modal">
-		  <div class="modal_content" 
-		       title="클릭하면 창이 닫힙니다.">
-		    여기에 모달창 내용을 적어줍니다.<br>
-		    이미지여도 좋고 글이어도 좋습니다.
-		  </div>
-		</div>
-		   
-		
+		            
+		 <%-- Modal --%>           
+		<div id="display_modal">
+		</div>            
+		      
 	</form>
 </div>    
        
 
 <script type="text/javascript"> 
    
+    
 <%-- 보내기 버튼 --%>
 function submit(){    
 	if($("#emTitle").val() == "" || $("#emTitle").val() == null) {
@@ -90,20 +83,55 @@ function submit(){
 		$("#emDsgn_A").prop("checked", true);
 	}    
 	fncPageBoard('submit','${searchVO.procType}Proc.do');
-	return false;   
-};      
+	return false;    
+};          
             
-<%-- 받는 사람 목록 삭제 --%> 
+<%-- 받는 사람 목록 삭제 --%>  
 function fncUserDel(id, info){
 	$("#" + id).remove();             
 	$("#checkedArray").val($("#checkedArray").val().replace("," + info, ""));   
 	return true;  
 } 
-      
-<%-- 모달 열기 --%>
-function openModal(){
-	$(".modal").fadeIn();
-}
+       
+<%-- 팝업 열기 --%>
+function openPop(){ 
+	$("#schEtc01").val("ma");
+	$("#modal_pop").val("pop");
+	fncPageBoard("pop", "pop.do", "", "", "1200", "800");
+	return true;
+}        
 
+                    
+<%-- 모달 열기 --%>          
+function openModal(){ 
+	fncLodingStart(); 
+	$.ajax({      
+	    method: "POST",
+	    url: "pop.do",	                                        
+	    data : {'hi' : 'hi'},    
+	    dataType: "HTML",          
+	    success: function(data) {  
+	    	$("#display_modal").html(data);
+	    },complete : function(){
+	    	fncLodingEnd();     
+		}
+	});	
+}         
+ 
+        
+<%-- ft/ma 구분 --%>   
+function selectDivn(num){  
+     
+	$("#schEtc01").val(num);
+	if(num == "ft"){
+		$(".btnP").addClass("current");
+		$(".btnA").removeClass("current");
+	}else{
+		$(".btnP").addClass("current");    
+		$(".btnA").removeClass("current");
+	}    
+	fncPageBoard("addList", "popList.do", '1');
+}
+           
 
 </script>

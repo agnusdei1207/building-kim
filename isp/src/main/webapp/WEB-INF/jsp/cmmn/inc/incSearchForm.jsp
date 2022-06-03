@@ -18,3 +18,4 @@
 <input type="hidden" name="schEtc13" id="schEtc13" value="<c:out value='${searchVO.schEtc13}'/>"/>
 <input type="hidden" name="schEtc14" id="schEtc14" value="<c:out value='${searchVO.schEtc14}'/>"/>
 <input type="hidden" name="schEtc15" id="schEtc15" value="<c:out value='${searchVO.schEtc15}'/>"/>
+     

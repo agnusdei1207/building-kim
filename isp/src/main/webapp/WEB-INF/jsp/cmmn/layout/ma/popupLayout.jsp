@@ -9,11 +9,11 @@ pageContext.setAttribute("br", "<br>");
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="Cache-Control" content="no-cache"/>
-		<meta http-equiv="Expires" content="0"/>
+		<meta http-equiv="Expires" content="0"/>     
 		<meta http-equiv="Pragma" content="no-cache"/>
 		<meta http-equiv="Pragma" content="no-store"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta http-equiv="Content-Script-Type" content="text/javascript" />
+		<meta http-equiv="Content-Script-Type" content="text/javascript" /> 
 		<meta http-equiv="Content-Style-Type" content="text/css" />
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 		<title>관리자</title>   
@@ -28,7 +28,6 @@ pageContext.setAttribute("br", "<br>");
 		<script type="text/javascript" src="/publish/ma/js/exporting.js"></script>
 	</head>
 	<body>
-		
 		<!-- container -->
 		<div class="win_popup">			
 			<tiles:insertAttribute name="body"/>			    

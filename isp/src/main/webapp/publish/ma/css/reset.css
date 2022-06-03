@@ -177,12 +177,12 @@ a.btn:focus, input.btn:focus,button.btn:focus {outline: none;}
 .fs16{font-size:16px;}
 .fs18{font-size:18px;}
          
-  
-/***** modal *****/
+   
+/***** modal *****/     
 .modal{ 
   position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.8); top:0; left:0; display:none;
 }
-.modal_content{
+/* .modal_content{
   width:400px; height:200px;
   background:#fff; border-radius:10px;
   position:relative; top:50%; left:50%;
@@ -190,4 +190,4 @@ a.btn:focus, input.btn:focus,button.btn:focus {outline: none;}
   text-align:center;
   box-sizing:border-box; padding:74px 0;
   line-height:23px; cursor:pointer;
-}   
+}  */  

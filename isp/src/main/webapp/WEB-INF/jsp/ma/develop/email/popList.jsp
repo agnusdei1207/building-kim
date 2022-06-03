@@ -1,10 +1,10 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
-
+ 
 <div class="tbl_top">
 	<div class="tbl_left"><i class="i_all"></i><span>전체 : <strong>${paginationInfo.totalRecordCount}</strong> 건(${searchVO.pageIndex}/${paginationInfo.totalPageCount} Page) </span></div>
 	<div class="tbl_right"></div>
-</div>  
+</div>   
 <div class="tbl_wrap">
 	<table class="tbl_col_type01">
 		<caption>목록</caption>
@@ -62,14 +62,14 @@ $(function(){
 	var text = $("#col1").val();              
 	var arr = $("#col1").val().split("//");  
 	arr = arr.concat(opener.$("#checkedArray").val().split(","));
-	   
-	<%-- 문자열 확인 후 체크하기 --%>
+	         
+	<%-- 문자열 확인 후 체크하기 --%>  
 	$(".checkbox").each(function(){   
 		if(arr.indexOf(this.value) > -1){    
 			 $("#"+this.id).prop("checked", true);
 		}     
 	}); 
-	    
+	       
 	<%-- 체크된 길이 확인 후 전체 체크박스 체크 --%> 
 	var total = $(".checkbox").length; 
 	var checked = $(".checkbox:checked").length;
@@ -80,19 +80,19 @@ $(function(){
 		$("#all_check").prop("checked", false);
 	}       
 	  
-	
+	return true;
 });             
-           
+             
 <%-- 전체 선택 --%> 
 function allCheck(obj){  
 	      
 	var text = $("#col1").val();
-	
+	     
 	if($("#"+obj.id).prop("checked")){
 		$(".checkbox").each(function(){
 			$(".checkbox").prop("checked", true); 
-			if(text.indexOf("//"+this.id) > -1){
-				text = text.replace("//"+this.id, "");
+			if(text.indexOf("//"+this.id) > -1){    
+				text = text.replace("//"+this.value, "");
 			}else{   
 				text += "//" + this.value; 
 			}
@@ -105,6 +105,7 @@ function allCheck(obj){
 		}); 
 	}         
 	$("#col1").val(text); 
+	return true;
 }    
  
 
@@ -130,6 +131,7 @@ function oneCheck(divn, userSeq){
 	} 
 	 
 	$("#col1").val(text);
+	return true;
 }                 
     
 <%-- 선택 버튼 & 목록 전송 --%>
@@ -144,24 +146,24 @@ function fncChoose(){
 	var divn = "";
 	var seq = "";
 	var id = "";        
-	var mail = "";     
-          
-	alert("arr : " + arr );        
-	           
+	var mail = "";      
+	             
 	arr = arr.concat(parentArray);
 	arr = Array.from(new Set(arr));      
+	
 	var html = '<input type="text" id="checkedArray" value="'+arr+'">';     
 		    
 		for(var i = 1; i < arr.length; i++){ 
 			divn = arr[i].split("_")[0]; 
 			seq = arr[i].split("_")[1]; 
 			id = arr[i].split("_")[2];	     
-			mail = arr[i].split("_")[3];           
-	  		
+			mail = arr[i].split("_")[3];         
+			
 			html += fncDrawList(divn, seq, id, mail);
 		}        
 	opener.$("#receiver").html(html); 
 	self.close();         
+	return true;
 }            
                     
 <%-- 선택된 목록 그리기 --%> 
@@ -175,7 +177,7 @@ function fncDrawList(divn, seq, id, mail){
 		html += mail;                                  
 		html += '<a class="mail_del btn_del cursor" onclick="fncUserDel(\''+ id +'\', \''+ info +'\');">x</a>';
 		html += '</li>';
-		  
+		     
 	return html;
 }
 
