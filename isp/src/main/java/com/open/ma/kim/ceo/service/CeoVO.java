@@ -22,6 +22,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	private String ceHp;
 	private String ceAdd;
 	private String baCnt;
+	
 	private String[] baSeq;  
 	private String[] baRgstDt;
 	private String[] baRgstId; 
@@ -35,6 +36,7 @@ public class CeoVO extends CmmnDefaultVO implements Serializable {
 	private String[] baExposeYn;
 	private String[] baOrderNum; 
 	private String[] baPosition; 
+	
 	private List<BannerVO> bannerList; 
 	
 	

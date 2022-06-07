@@ -75,7 +75,8 @@ public class DeCeoController {
 				bannerVO.setBaExposeYn(searchVO.getBaExposeYn()[i]); 
 				bannerVO.setBaOrderNum(searchVO.getBaOrderNum()[i]); 
 				bannerVO.setBaAtchFileId(searchVO.getBaAtchFileId()[i]); 
-				bannerVO.setBaPosition(searchVO.getBaPosition()[i]);   
+				bannerVO.setBaPosition(searchVO.getBaPosition()[i]);  
+				
 				if("N".equals(searchVO.getBaSeq()[i])){   
 					cmmnService.insertContents(bannerVO, "Banner");
 				}else{
