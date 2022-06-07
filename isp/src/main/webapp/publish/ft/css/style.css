@@ -445,7 +445,6 @@
 .faq_txt .faq_a {position:absolute; left:0; top:0;color:#1c98de; font-weight:bold;}
 
 /*popup*/
-/*
 .popup {width:500px;background:#fff;z-index:1200;display:none;}
 .pop_header {position:relative;padding:10px;background:#3078d7;border-top-left-radius:5px;border-top-right-radius:5px;}
 .pop_header .pop_tit {font-size:13px; color:#fff; height:25px; line-height:25px;}
@@ -454,8 +453,24 @@
 .pop_content {position:relative;padding:20px;border-left:2px solid #3078d7;border-right:2px solid #3078d7;}
 .pop_footer {position:relative;padding:10px 20px 20px 20px; text-align:center;border:2px solid #3078d7;border-top:0;}
 .popup_bg {display:none;width:100%; height:100%; _height:800px;position:fixed;_position:absolute; top:0px; left:0px; z-index:1000;}
- */ 
 
+/*popup*/
+.layer_popup {display:none; z-index:1200;border:1px solid #626262;}
+.pop_size316 {width:316px;}
+.pop_size700 {width:700px;}
+.pop_size920 {width:920px;}
+.pop_size955 {width:955px;}
+.pop_size1000 {width:1000px;}
+.pop_size1200 {width:1200px;}
+.pop_header {position:relative;padding:0 20px;line-height:40px;background:#1c5cb0;}
+.pop_header h1,
+.pop_header h2 {color:#fff; font-size:18px;font-weight:500;}
+.pop_header .pop_close {position:absolute; right:20px; top:50%; margin-top:-10px; line-height:1; width:20px; height:20px;overflow:hidden; text-indent:-9999px;background:url(../images/pop_close.png) no-repeat 50% 50%;}
+.pop_content {position:relative;padding:20px;background:#fff;}
+.pop_footer {position:relative;padding:10px 20px 20px 20px; text-align:center;}
+.popup_bg {display:none;width:100%; height:100%; _height:800px;position:fixed;_position:absolute; top:0px; left:0px; z-index:1000;}
+
+     
 
 /*search*/
 .search_box {position:relative;border: 1px solid #e1e2e3;padding: 12px 25px;margin-bottom: 37px;background: #f9f9f9;border-radius: 5px;}
@@ -628,7 +643,7 @@ input [type="text"], input.text {height: 40px;padding-left: 10px;}
 .login2 {background:url(http://opennote.co.kr/guide/images/sample/bg_licensee_1.png) no-repeat 66px 50%;padding:40px 25px 40px 365px;}
 .login2_input {position:relative;padding-right:81px;}
 .login2_input li {position:relative; margin-bottom:-1px;}
-.login2_input .text {width:100%;box-sizing:border-box;}
+.login2_input .text {width:100%;box-sizing:border-box;}  
 .btn_login2 {display:block;position:absolute;right:1px;top:0;width:81px;height:79px;border:0;background:#308cde;color:#fff;font-size:14px;}
 .id_save {font-size:14px;margin-top:10px;text-align:right;}
 .sns_login2 {margin-top:10px;}
@@ -638,3 +653,18 @@ input [type="text"], input.text {height: 40px;padding-left: 10px;}
 .login2_link {border-top:1px dashed #ccc;margin-top:15px; padding-top:15px;}
 .login2_link li {position:relative;margin-bottom:8px;font-size:14px;}
 .login2_link .btn_link {position:absolute; right:0; bottom:0;color:#000;font-size:14px;text-decoration: underline;}
+
+   
+/*로딩중*/  
+.loading_wrap {position:relative;z-index:4500;}
+.loading_img {position:fixed;z-index:4100;  left: 50%; top: 50%; -ms-transform: translate(-50%,-50%); -moz-transform:translate(-50%,-50%); -webkit-transform: translate(-50%,-50%); transform: translate(-50%,-50%);}
+.load_dimmed {position:fixed;z-index:4000;top:0px; left:0px; display:block;width:100%; height:100%; opacity:0.7;background:#000;}
+
+
+
+
+
+    
+
+
+

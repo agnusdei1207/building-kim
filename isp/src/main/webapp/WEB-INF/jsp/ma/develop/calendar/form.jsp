@@ -40,8 +40,6 @@ var caDataDate = "${searchVO.caDataDate}";
 <%--입력 폼 생성--%>      
 function fncAddFrm(){           
 	  
-	alert("num : "+ num);
-	  
 	if($("[id^=tbl_wrap_]").length > 3){     
 		alert("3개를 초과할 수 없습니다."); 
 		return false;      

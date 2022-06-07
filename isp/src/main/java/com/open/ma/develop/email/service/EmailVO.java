@@ -31,11 +31,6 @@ public class EmailVO extends CmmnDefaultVO implements Serializable {
 	private String[] arrUserSeq;
 	private String[] arrUserDivn;
 	
-	private String searchConditionEtc;
-	private String searchKeywordEtc;
-	 
-	
-	
 	public String getEmUserSeq() {
 		return emUserSeq;
 	}
@@ -162,22 +157,6 @@ public class EmailVO extends CmmnDefaultVO implements Serializable {
 
 	public void setArrUserDivn(String[] arrUserDivn) {
 		this.arrUserDivn = arrUserDivn;
-	}
-	 
-	public String getSearchConditionEtc() {
-		return searchConditionEtc;
-	}
-
-	public void setSearchConditionEtc(String searchConditionEtc) {
-		this.searchConditionEtc = searchConditionEtc;
-	}
-
-	public String getSearchKeywordEtc() {
-		return searchKeywordEtc;
-	}
-
-	public void setSearchKeywordEtc(String searchKeywordEtc) {
-		this.searchKeywordEtc = searchKeywordEtc;
 	}
 
 	public String[] getArrUserSeq(){

@@ -96,6 +96,7 @@ public class CmmnDefaultVO implements Serializable {
 	private String schEtc14 = "";
 	/** 기타 검색 조건. */
 	private String schEtc15 = "";
+	
 
 	/* 공지 검색구분 */
 	private String notiCondition;
@@ -260,10 +261,45 @@ public class CmmnDefaultVO implements Serializable {
 	/** 검색 채널구분 . */
 	private String searchChDivn = "";
 
+	
+	/** 팝업 페이지 인덱스 */
+	private String popPageIndex = "";
+	
+	/** 팝업 구분 값  */
+	private String popDivn = "";
+	
+	/** 팝업 검색어 */
+	private String searchKeywordEtc = "";
+	
 	/** 업무구분 . */
 	private String procType = "";
 
 	private String frontLoginSeq;
+
+	   
+	public String getSearchKeywordEtc() {
+		return searchKeywordEtc;
+	}
+
+	public void setSearchKeywordEtc(String searchKeywordEtc) {
+		this.searchKeywordEtc = searchKeywordEtc;
+	}
+
+	public String getPopDivn() {
+		return popDivn;
+	}
+
+	public void setPopDivn(String popDivn) {
+		this.popDivn = popDivn;
+	}
+
+	public String getPopPageIndex() {
+		return popPageIndex;
+	}
+
+	public void setPopPageIndex(String popPageIndex) {
+		this.popPageIndex = popPageIndex;
+	}
 
 	/**
 	 * <pre>

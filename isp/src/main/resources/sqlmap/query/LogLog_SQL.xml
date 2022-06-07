@@ -139,7 +139,7 @@
 			GROUP BY	logId  
 			  HAVING	failCnt > 5
 				   ) 	A 
-			  ]]>
+			  ]]>  
 	</select> 
 
 
@@ -147,8 +147,7 @@
 		/* LogLog.insertContents */
 		<![CDATA[
 			INSERT	INTO T_LOG_LOG(
-	           	  	LOG_SEQ												
-					,LOG_CLIENT_IP 								 				
+					 LOG_CLIENT_IP 								 				
 					,LOG_ID														
 					,LOG_URL		
 					,LOG_MENU_CD		
@@ -156,14 +155,13 @@
 					,LOG_IP_ERR_YN 				 														  						
 			)         
 			VALUES	( 
-				 	(SELECT IFNULL(MAX(TL.LOG_SEQ)+1,1) FROM T_LOG_LOG TL)
-					,#{logClientIp      }          
+					 #{logClientIp      }          
 					,#{logId	 		}  
 					,#{logUrl   	    }
 					,#{logMenuCd   	    }
 					,#{logDivn          }
 					,#{logIpErrYn 		}
-			) 
+			)  
 			 ]]>
 	</insert> 
  	 

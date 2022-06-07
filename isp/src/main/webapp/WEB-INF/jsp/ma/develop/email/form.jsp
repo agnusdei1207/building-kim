@@ -1,16 +1,13 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
-<script type="text/javascript" src="/publish/ma/js/highcharts.js"></script>
-<script type="text/javascript" src="/publish/ma/js/jquery-1.11.3.min.js"></script>    
-                
-<div class="content_box">   
+                    
+<div class="content_box">    
 	<form name="defaultFrm" id="defaultFrm" method="post">  
 		<input type="hidden" name="emSeq" id="emSeq" value="${emailVO.emSeq }"/>
 		<input type="hidden" id="selectMember">       
-		<input type="hidden" id="modal_pop">  
 		<jsp:directive.include file="/WEB-INF/jsp/cmmn/inc/incSearchForm.jsp"/>
 		<div class="tbl_wrap">               
-			<table class="tbl_row_type01">   
+			<table class="tbl_row_type01">       
 				<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>
 				<colgroup> 
 					<col style="width:20%;">
@@ -18,7 +15,7 @@
 					<col style="width:20%;">
 					<col style="width:30%;"> 
 				</colgroup>            
-				<tbody>      
+				<tbody>       
 					<tr>  
 						<th scope="row"><strong class="th_tit">받는사람</strong></th>
 						<td colspan="3">
@@ -49,7 +46,7 @@
 							D type <input type="radio" name="emDsgn" id="emDsgn_D" value="D" ${emailVO.emDsgn eq 'D' ? 'checked="checked"' : '' } style="margin-left:5px; margin-right:5px;"> 
 						</td>           
 					</tr>
-				</tbody>    
+				</tbody>     
 			</table> 
 		</div>      
 		<div class="btn_area">          
@@ -61,17 +58,18 @@
 				<a href="javascript:void(0);" class="btn btn_mdl btn_cancel" id="btn_list">취소</a>
 			</c:if>
 		</div>  
-		            
-		 <%-- Modal --%>           
-		<div id="display_modal">
-		</div>            
-		      
 	</form>
-</div>    
+</div>       
+     		            
+		 <%-- Modal --%>             
+		<div id="display_view1" class="layer_popup pop_size800 js-popup">
+		</div>            
+		<div class="popup_bg" id="js-popup-bg"></div>
+		      
        
 
-<script type="text/javascript"> 
-   
+<script type="text/javascript">
+
     
 <%-- 보내기 버튼 --%>
 function submit(){    
@@ -91,47 +89,32 @@ function fncUserDel(id, info){
 	$("#" + id).remove();             
 	$("#checkedArray").val($("#checkedArray").val().replace("," + info, ""));   
 	return true;  
-} 
+}
        
-<%-- 팝업 열기 --%>
+<%-- 팝업 열기 --%> 
 function openPop(){ 
-	$("#schEtc01").val("ma");
-	$("#modal_pop").val("pop");
+	$("#schEtc01").val("ft");    
+	$("#schEtc03").val("pop");
 	fncPageBoard("pop", "pop.do", "", "", "1200", "800");
 	return true;
-}        
-
-                    
+}         
+        
 <%-- 모달 열기 --%>          
-function openModal(){ 
-	fncLodingStart(); 
-	$.ajax({      
+function openModal(){      
+	
+	$("#schEtc01").val("ft");
+	$("#schEtc03").val("modal"); 
+	$("#display_view1").fadeIn();
+	$.ajax({       
 	    method: "POST",
-	    url: "pop.do",	                                        
-	    data : {'hi' : 'hi'},    
+	    url: "pop.do",	                                              
+	    data : $("#defaultFrm").serialize(),    
 	    dataType: "HTML",          
-	    success: function(data) {  
-	    	$("#display_modal").html(data);
+	    success: function(data) {     
+	    	$("#display_view1").html(data);
 	    },complete : function(){
-	    	fncLodingEnd();     
 		}
 	});	
 }         
- 
-        
-<%-- ft/ma 구분 --%>   
-function selectDivn(num){  
-     
-	$("#schEtc01").val(num);
-	if(num == "ft"){
-		$(".btnP").addClass("current");
-		$(".btnA").removeClass("current");
-	}else{
-		$(".btnP").addClass("current");    
-		$(".btnA").removeClass("current");
-	}    
-	fncPageBoard("addList", "popList.do", '1');
-}
-           
 
 </script>

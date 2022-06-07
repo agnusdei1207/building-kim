@@ -3,8 +3,8 @@
  
 <div class="tbl_top">
 	<div class="tbl_left"><i class="i_all"></i><span>전체 : <strong>${paginationInfo.totalRecordCount}</strong> 건(${searchVO.pageIndex}/${paginationInfo.totalPageCount} Page) </span></div>
-	<div class="tbl_right"></div>
-</div>   
+	<div class="tbl_right"></div>    
+</div>     
 <div class="tbl_wrap">
 	<table class="tbl_col_type01">
 		<caption>목록</caption>
@@ -42,13 +42,13 @@
 			</c:choose> 
 		</tbody>
 	</table>   
-</div>   
+</div>    
 <%-- //tbl end --%>     
 <%-- paging start --%> 
 <div class="paging_wrap">   
-	<div class="paging">   
+	<div class="paging">        
 		<ui:pagination paginationInfo="${paginationInfo}" type="pop" jsFunction="fncPageBoard" />
-	</div>
+	</div> 
 	<div class="btn_right">   
 		<a class="btn btn_mdl btn_save" onclick="fncChoose();">선택</a>
 	</div>    
@@ -56,16 +56,15 @@
 <%-- //paging end--%>    
     
 <script type="text/javascript">
-           
-$(function(){
-	  
+             
+$(function(){ 
 	var text = $("#col1").val();              
 	var arr = $("#col1").val().split("//");  
 	arr = arr.concat(opener.$("#checkedArray").val().split(","));
 	         
 	<%-- 문자열 확인 후 체크하기 --%>  
 	$(".checkbox").each(function(){   
-		if(arr.indexOf(this.value) > -1){    
+		if(arr.indexOf(this.value) > -1){     
 			 $("#"+this.id).prop("checked", true);
 		}     
 	}); 
@@ -165,7 +164,7 @@ function fncChoose(){
 	self.close();         
 	return true;
 }            
-                    
+                     
 <%-- 선택된 목록 그리기 --%> 
 function fncDrawList(divn, seq, id, mail){
 	
@@ -179,7 +178,8 @@ function fncDrawList(divn, seq, id, mail){
 		html += '</li>';
 		     
 	return html;
-}
+}    
+
 
 
 </script>

@@ -107,7 +107,7 @@ public class LoginController {
 				loginLogVO.setLogLoginYn("N");
 				cmmnService.insertContents(loginLogVO, "LoginLog");
 	    		
-	    		return  "/ma/login/login";   
+	    		return  "/ma/login/login";    
 	    	}else{ 
 	    		 	/** 세션 정보 입력 */
 	    		if(Integer.parseInt(userLoginVO.getFailCnt()) > 5){ 

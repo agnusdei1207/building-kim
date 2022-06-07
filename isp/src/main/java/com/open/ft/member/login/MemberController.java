@@ -82,7 +82,7 @@ public class MemberController {
 	    			message = "비밀번호 입력회수 초과! 관리자에게 문의바랍니다.";
 		    		cmmnScript = folderPath + "loginFrm.do";
 	    		}else{
-	    			HttpSession session = request.getSession();		
+	    			HttpSession session = request.getSession();		 
 	    			session.setAttribute(SessionUtil.SESSION_FRONT_KEY, userLoginVO);
 	    			session.setAttribute("memberVO", userLoginVO);
 	    			cmmnService.updateContents(userLoginVO, PROGRAM_ID + ".resetFailCnt");

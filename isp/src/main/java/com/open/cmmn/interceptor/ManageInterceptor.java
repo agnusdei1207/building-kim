@@ -74,7 +74,7 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 		 
 		// IP 차단
 		int chkIp = (Integer)cmmnService.selectContents(clientIp, "IpLog.selectIp");
-		if(chkIp > 0){
+		if(chkIp > 0){    
 			logLogVO.setLogClientIp(clientIp);
 			logLogVO.setLogIpErrYn("Y");       
 			cmmnService.insertContents(logLogVO, "LogLog");
@@ -150,7 +150,7 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 				if(StringUtil.nullString(menuCd).equals("")){
 					/* 메뉴 권한 확인*/  
 					List<String> manuList = (List<String>) SessionUtil.getAuthList(); 
-					System.out.println( "메뉴 권한 확인 매니저 인터셉터 : " + manuList);
+					System.out.println( "매니저 인터셉터 > 메뉴 권한 확인  : " + manuList);
 					if(manuList == null){	
 						response.sendRedirect("/cmmn/fail.do");
 					} 
@@ -167,7 +167,7 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 					// 로그 기록  
 					logLogVO.setLogId(loginVO.getId());
 					logLogVO.setLogIpErrYn("N");
-					
+					 
     			}else{ 
     				/* 메뉴 권한 확인*/
 					List<String> manuList = (List<String>) SessionUtil.getAuthList2();
@@ -189,13 +189,13 @@ public class ManageInterceptor extends HandlerInterceptorAdapter implements Hand
 					response.sendRedirect("/login.do?returnUrl=" + URLEncoder.encode(requestFullUrl, "UTF-8"));
 					return false;
 				}
-			}
+			}  
 			
 		long endTime = System.currentTimeMillis();
 		LOGGER.debug("=================================== Loading Report preHandle ::: " + (endTime - loadingTime));
 		
-		// 로그 찍기
-		if(request.getRequestURI().indexOf("addList") < 0){
+		// 로그 찍기          
+		if(currentUrl.indexOf("addList") < 0 || currentUrl.indexOf("popList") < 0 || currentUrl.indexOf("pop") < 0){
 			cmmnService.insertContents(logLogVO, "LogLog");
 		}
 		

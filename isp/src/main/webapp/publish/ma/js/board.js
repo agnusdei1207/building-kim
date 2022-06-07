@@ -110,8 +110,8 @@ var fncPageBoard = function(){
 	  case 'blank' : if(seqNm.length > 0 && seqVal.length > 0){ for (var i = 0; i < seqNm.length; i++) { $("#"+seqNm[i]).val('');$("#"+seqNm[i]).val(seqVal[i]); } }
 				  $("#defaultFrm").removeAttr("enctype");
 				  $("#defaultFrm").attr({"action" : url, "method" : "post", "target" : "_blank", "onsubmit" : ""}).submit();
-				  break;
-	  default       : alert("유효하지 않은 값입니다.");return false; break;
+				  break; 
+	  default       : alert("유효하지 않은 값입니다 js.");return false; break;
 	}
 }
 
@@ -408,7 +408,7 @@ var setDateMon = function(){
 	}
 }
 
-
+ 
 var fncLodingStart = function(){
 	$(".loding_bg").addClass("on");
 }

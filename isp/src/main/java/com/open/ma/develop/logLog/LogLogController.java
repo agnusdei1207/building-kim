@@ -34,11 +34,10 @@ public class LogLogController {
 
 	@RequestMapping(folderPath + "list.do") 
 	public String list(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
-         
+             
 		String time = DateUtils.getCurrentDate("yyyy.MM.dd");
 		searchVO.setSearchStartDate(time);
 		searchVO.setSearchEndDate(time);
-		
 		
 		return ".mLayout:"+ folderPath + "list";
 	}    
