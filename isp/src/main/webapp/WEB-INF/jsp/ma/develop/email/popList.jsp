@@ -12,7 +12,7 @@
 			<col style="width:5%"> 
 			<col style="width:10%">     
 			<col style="width:10%">  
-			<col>
+			<col>  
 		</colgroup> 
 		<thead>     
 			<tr>            
@@ -27,8 +27,8 @@
 				<c:when test="${fn:length(resultList) gt 0}">     
 					<c:forEach var="result" items="${resultList}" varStatus="status">
 						<tr class="cursor">  
-							<td>                       
-								<input type="checkbox" onclick="oneCheck('${result.userDivn }', '${result.emUserSeq}');" name="arr" id="${result.userDivn }_${result.emUserSeq}" class="checkbox" value="${result.userDivn }_${result.emUserSeq}_${result.emId}_${result.emMail}">
+							<td>                          
+								<input type="checkbox" onclick="oneCheck('${result.userDivn }', '${result.emUserSeq}', this);" name="arr" id="${result.userDivn }_${result.emUserSeq}" class="checkbox" value="${result.userDivn }_${result.emUserSeq}_${result.emId}_${result.emMail}">
 							</td>      
 							<td>${result.emName }</td>   
 							<td>${result.emId }</td>
@@ -43,7 +43,7 @@
 		</tbody>
 	</table>   
 </div>    
-<%-- //tbl end --%>       
+<%-- ,tbl end --%>       
 <%-- paging start --%>    
 <div class="paging_wrap">      
 	<div class="paging">        
@@ -53,22 +53,21 @@
 		<a class="btn btn_mdl btn_save" onclick="fncChoose();">선택</a>
 	</div>    
 </div> 
-<%-- //paging end--%>    
+<%-- ,paging end--%>    
     
 <script type="text/javascript"> 
              
 $(function(){ 
-	var text = $("#col1").val();              
-	var arr = $("#col1").val().split("//");  
-	arr = arr.concat(opener.$("#checkedArray").val().split(","));
-	         
-	<%-- 문자열 확인 후 체크하기 --%>  
+	    
+	var arr = $("#col1").val().split(",");   
+	               
+	<%-- 문자열 확인 후 체크하기 --%>      
 	$(".checkbox").each(function(){   
 		if(arr.indexOf(this.value) > -1){     
 			 $("#"+this.id).prop("checked", true);
 		}     
 	}); 
-	       
+	        
 	<%-- 체크된 길이 확인 후 전체 체크박스 체크 --%> 
 	var total = $(".checkbox").length; 
 	var checked = $(".checkbox:checked").length;
@@ -83,25 +82,25 @@ $(function(){
 });             
              
 <%-- 전체 선택 --%>  
-function allCheck(obj){  
-	      
+function allCheck(obj){   
+	         
 	var text = $("#col1").val();
 	     
 	if($("#"+obj.id).prop("checked")){
-		$(".checkbox").each(function(){
+		$(".checkbox").each(function(){   
 			$(".checkbox").prop("checked", true); 
-			if(text.indexOf("//"+this.id) > -1){    
-				text = text.replace("//"+this.value, "");
-			}else{   
-				text += "//" + this.value; 
-			}
-		});   
-   		
+			text = text.replace(","+this.value, "");
+		});     
+		<%-- 개별 체크 상태에서 전체 체크를 눌렀을 경우를 대비 --%>
+		$(".checkbox").each(function(){    
+			text += "," + this.value; 
+		});          
+                  		   
 	}else if(!$("#"+obj.id).prop("checked")){   
 		$(".checkbox").prop("checked", false);   
 		$(".checkbox").each(function(){   
-			text = text.replace("//" + this.value, "");
-		}); 
+			text = text.replace("," + this.value, "");
+		});  
 	}         
 	$("#col1").val(text); 
 	return true;
@@ -109,62 +108,52 @@ function allCheck(obj){
  
 
 <%-- 한 개 선택 --%> 
-function oneCheck(divn, userSeq){ 
+function oneCheck(divn, userSeq, obj){ 
 	          
 	var total = $(".checkbox").length; 
 	var checked = $(".checkbox:checked").length;
 	 
 	var text = $("#col1").val(); 
-	var val = $("#" + divn + "_" + userSeq).val();   
-	             
+	var val = $("#" + divn + "_" + userSeq).val();                   
+	                                            
+	            
 	if($("#" + divn + "_" + userSeq).prop("checked")){       
-		text += "//" + val;     
+		text += "," + val;     
 	}else{                 
-		text = text.replace("//" + val, ""); 
-	}      
-	
+		text = text.replace("," + val, ""); 
+	}                
+     	 
 	if(total == checked){ 
 		$("#all_check").prop("checked", true);     
 	}else{
 		$("#all_check").prop("checked", false);
 	} 
 	 
-	$("#col1").val(text);
+	$("#col1").val(text); 
 	return true;
 }                 
     
 <%-- 선택 버튼 & 목록 전송 --%>
-function fncChoose(){   
-	    
-	var parentArray = [];            
-	opener.$(".mail_select_obj").each(function(){
-		parentArray.push($(this).attr("data-info"));
-	})                   
-    	
-  	var arr = $("#col1").val().split("//"); 
-	var divn = "";
-	var seq = "";
-	var id = "";        
-	var mail = "";      
-	             
-	arr = arr.concat(parentArray);
-	arr = Array.from(new Set(arr));      
-	
-	var html = '<input type="text" id="checkedArray" value="'+arr+'">';     
-		    
-		for(var i = 1; i < arr.length; i++){ 
-			divn = arr[i].split("_")[0]; 
-			seq = arr[i].split("_")[1]; 
-			id = arr[i].split("_")[2];	     
-			mail = arr[i].split("_")[3];         
-			
+function fncChoose(){    
+	              
+  	var arr = $("#col1").val().split(","); 
+	var html = '';          
+		             
+		for(var i = 1; i < arr.length; i++){      
+			var divn = arr[i].split("_")[0]; 
+			var seq = arr[i].split("_")[1]; 
+			var id = arr[i].split("_")[2];	     
+			var mail = arr[i].split("_")[3];           
+			     
 			html += fncDrawList(divn, seq, id, mail);
-		}        
+		}                      
+	         
 	opener.$("#receiver").html(html); 
-	self.close();         
-	return true;
+	opener.$("#checkedArray").val(arr);     
+	self.close();                  
+	return true;  
 }            
-                     
+                      
 <%-- 선택된 목록 그리기 --%> 
 function fncDrawList(divn, seq, id, mail){
 	

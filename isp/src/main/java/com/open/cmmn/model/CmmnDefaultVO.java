@@ -97,7 +97,6 @@ public class CmmnDefaultVO implements Serializable {
 	/** 기타 검색 조건. */
 	private String schEtc15 = "";
 	
-
 	/* 공지 검색구분 */
 	private String notiCondition;
 	/* 등록일 공지 시작일 종료일 검색구분 */

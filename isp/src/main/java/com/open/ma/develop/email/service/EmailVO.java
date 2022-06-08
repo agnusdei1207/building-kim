@@ -27,9 +27,21 @@ public class EmailVO extends CmmnDefaultVO implements Serializable {
 	private String emName;
 	private String emMail;
 	private String userDivn;
+	private String checkedArray;
 	private String[] arrUserSeq;
 	private String[] arrUserDivn;
 	
+	
+	
+	
+	public String getCheckedArray() {
+		return checkedArray;
+	}
+
+	public void setCheckedArray(String checkedArray) {
+		this.checkedArray = checkedArray;
+	}
+
 	public String getEmUserSeq() {
 		return emUserSeq;
 	}

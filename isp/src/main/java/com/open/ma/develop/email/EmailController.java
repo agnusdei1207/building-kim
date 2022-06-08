@@ -49,11 +49,10 @@ public class EmailController {
 	}
 	          
 	@RequestMapping(folderPath + "pop.do")
-	public String pop(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
-  
-		    
+	public String pop(@ModelAttribute("searchVO") EmailVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
+   
 		System.out.println("구분값 : " + searchVO.getSchEtc03());
-		 
+		    
 		String result = folderPath + "pop"; 
 		             
 		if("pop".equals(searchVO.getSchEtc03())){ 

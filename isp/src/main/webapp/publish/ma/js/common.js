@@ -182,6 +182,7 @@ function view_show(num) {
 function view_hide(num) {
 	document.getElementById("display_view" + num).style.display = "none";
 	document.getElementById("js-popup-bg").style.display = "none";
+	$("#display_view"+num).html("");
 	return false;
 }
 

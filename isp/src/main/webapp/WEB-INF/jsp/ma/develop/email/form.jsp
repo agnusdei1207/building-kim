@@ -1,13 +1,13 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
                     
-<div class="content_box">      
+<div class="content_box">         
 	<form name="defaultFrm" id="defaultFrm" method="post">  
-		<input type="hidden" name="emSeq" id="emSeq" value="${emailVO.emSeq }"/>
-		<input type="hidden" id="selectMember">       
+		<input type="hidden" name="emSeq" id="emSeq" value="${emailVO.emSeq }"/>  
+		<input type="text" name="checkedArray" id="checkedArray" class="text w100p" value="${searchVO.checkedArray }" placeholder="checkedArray"/>  
 		<jsp:directive.include file="/WEB-INF/jsp/cmmn/inc/incSearchForm.jsp"/>
-		<div class="tbl_wrap">                    
-			<table class="tbl_row_type01">       
+		<div class="tbl_wrap">                        
+			<table class="tbl_row_type01">          
 				<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>
 				<colgroup>      
 					<col style="width:20%;">
@@ -15,7 +15,7 @@
 					<col style="width:20%;">
 					<col style="width:30%;"> 
 				</colgroup>            
-				<tbody>         
+				<tbody>          
 					<tr>  
 						<th scope="row"><strong class="th_tit">받는사람</strong></th>
 						<td colspan="3">
@@ -48,7 +48,7 @@
 					</tr>
 				</tbody>     
 			</table> 
-		</div>      
+		</div>       
 		<div class="btn_area">          
 			<a href="javascript:void(0)" class="btn btn_mdl btn_save" onclick="submit();">보내기</a>
 			<c:if test="${searchVO.procType eq  'update'}"> 
@@ -79,15 +79,15 @@ function submit(){
 	fncPageBoard('submit','${searchVO.procType}Proc.do');
 	return false;    
 };          
-            
-<%-- 받는 사람 목록 삭제 --%>  
-function fncUserDel(id, info){
-	$("#" + id).remove();             
+               
+<%-- 받는 사람 목록 삭제 --%>          
+function fncUserDel(id, info){ 
+	$("#" + id).remove();                      
 	$("#checkedArray").val($("#checkedArray").val().replace("," + info, ""));   
-	return true;  
-}
+	return true;    
+}   
        
-<%-- 팝업 열기 --%> 
+<%-- 팝업 열기 --%>  
 function openPop(){ 
 	$("#schEtc03").val("pop");
 	fncPageBoard("pop", "pop.do", "", "", "1200", "800");
