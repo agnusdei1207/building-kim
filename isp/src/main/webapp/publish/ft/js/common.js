@@ -74,23 +74,32 @@ $(document).ready(function(){
 		var tab = $(this).attr("href");
 		$(".tab_content").not(tab).hide();
 		$(tab).fadeIn();
-	});
+	});   
 
-});
+}); 
+   
 
-//팝업
-function view_show(num) {   
-	var left = ( $(window).scrollLeft() + ( $(window).width() - $('.popup').width()) / 2 );
-	var top = ( $(window).scrollTop() + ( $(window).height() - $('.popup').height()) / 2 );
-	$('.popup').css({'left':left,'top':top, 'position':'absolute'});
-	document.getElementById("dispay_view"+num).style.display = "block";
-	document.getElementById("layer_bg").style.display = "block";
+          
+//popup  
+ function view_show(num) { 
+ var left = (($(window).width() - $("#display_view" + num).width()) / 2);
+ var top = (($(window).height() - $("#display_view" + num).height()) / 2);
+ $("#display_view" + num).css({
+   'left': left,
+   'top': top,
+   'position': 'fixed'
+ });
+ document.getElementById("js-popup-bg").style.display = "block";
+ document.getElementById("display_view" + num).style.display = "block";
+ return false;
  }
+ 
+
  function view_hide(num) {
-    document.getElementById("dispay_view"+num).style.display = "none";
-    document.getElementById("layer_bg").style.display = "none";
+ document.getElementById("display_view" + num).style.display = "none";
+ document.getElementById("js-popup-bg").style.display = "none";
+ return false;
  }
-
   
  function checkMsg(id ,msg){
 		var html = '<strong><font color="red">'+msg+'</font></strong>';

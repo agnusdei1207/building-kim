@@ -43,13 +43,13 @@ public class PopPaginationRenderer extends AbstractPaginationRenderer implements
 	 * </pre>
 	 */
 	public void initVariables() {
-		firstPageLabel = "<a href=\"#\" class=\"btn_page first\" onclick=\"{0}(''addList'',''popList.do'',{1}); return false;\"><span class=\"hide\">처음페이지로 가기</span></a>\n";
-		previousPageLabel = "<a href=\"#\" class=\"btn_page prev\" onclick=\"{0}(''addList'',''popList.do'',{1}); return false;\"><span class=\"hide\">이전페이지로 가기</span></a>\n";
+		firstPageLabel = "<a href=\"#\" class=\"btn_page first\" onclick=\"{0}(''popList'',''popList.do'',{1}); return false;\"><span class=\"hide\">처음페이지로 가기</span></a>\n";
+		previousPageLabel = "<a href=\"#\" class=\"btn_page prev\" onclick=\"{0}(''popList'',''popList.do'',{1}); return false;\"><span class=\"hide\">이전페이지로 가기</span></a>\n";
 		currentPageLabel = "<strong>{0}</strong>\n";
-		otherPageLabel = "<a href=\"#\" onclick=\"{0}(''addList'',''popList.do'',{1}); return false;\">{2}</a>\n";
-		nextPageLabel = "<a href=\"#\" class=\"btn_page next\" onclick=\"{0}(''addList'',''popList.do'',{1}); return false;\"><span class=\"hide\">다음페이지로 가기</span></a>\n";
-		lastPageLabel = "<a href=\"#\" class=\"btn_page last\" onclick=\"{0}(''addList'',''popList.do'',{1}); return false;\"><span class=\"hide\">마지막페이지로 가기</span></a>\n";
-	}
+		otherPageLabel = "<a href=\"#\" onclick=\"{0}(''popList'',''popList.do'',{1}); return false;\">{2}</a>\n";
+		nextPageLabel = "<a href=\"#\" class=\"btn_page next\" onclick=\"{0}(''popList'',''popList.do'',{1}); return false;\"><span class=\"hide\">다음페이지로 가기</span></a>\n";
+		lastPageLabel = "<a href=\"#\" class=\"btn_page last\" onclick=\"{0}(''popList'',''popList.do'',{1}); return false;\"><span class=\"hide\">마지막페이지로 가기</span></a>\n";
+	}  
 
 	@Override
 	public void setServletContext(final ServletContext pServletContext) {

@@ -22,7 +22,6 @@ public class EmailVO extends CmmnDefaultVO implements Serializable {
 	private String emDsgn;
 	private String emNewYn;
 	
-	
 	private String emUserSeq;
 	private String emId;
 	private String emName;

@@ -2,8 +2,8 @@
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
  
 <div class="tbl_top">
-	<div class="tbl_left"><i class="i_all"></i><span>전체 : <strong>${paginationInfo.totalRecordCount}</strong> 건(${searchVO.pageIndex}/${paginationInfo.totalPageCount} Page) </span></div>
-	<div class="tbl_right"></div>    
+	<div class="tbl_left"><i class="i_all"></i><span>전체 : <strong>${paginationInfo.totalRecordCount}</strong> 건(${searchVO.popPageIndex}/${paginationInfo.totalPageCount} Page) </span></div>
+	<div class="tbl_right"></div>      
 </div>     
 <div class="tbl_wrap">
 	<table class="tbl_col_type01">
@@ -11,7 +11,7 @@
 		<colgroup> 
 			<col style="width:5%"> 
 			<col style="width:10%">     
-			<col style="width:10%"> 
+			<col style="width:10%">  
 			<col>
 		</colgroup> 
 		<thead>     
@@ -43,11 +43,11 @@
 		</tbody>
 	</table>   
 </div>    
-<%-- //tbl end --%>     
-<%-- paging start --%> 
-<div class="paging_wrap">   
+<%-- //tbl end --%>       
+<%-- paging start --%>    
+<div class="paging_wrap">      
 	<div class="paging">        
-		<ui:pagination paginationInfo="${paginationInfo}" type="pop" jsFunction="fncPageBoard" />
+		<ui:pagination paginationInfo="${paginationInfo}" type="pop" jsFunction="fncPageEtc" />
 	</div> 
 	<div class="btn_right">   
 		<a class="btn btn_mdl btn_save" onclick="fncChoose();">선택</a>
@@ -55,7 +55,7 @@
 </div> 
 <%-- //paging end--%>    
     
-<script type="text/javascript">
+<script type="text/javascript"> 
              
 $(function(){ 
 	var text = $("#col1").val();              
@@ -82,7 +82,7 @@ $(function(){
 	return true;
 });             
              
-<%-- 전체 선택 --%> 
+<%-- 전체 선택 --%>  
 function allCheck(obj){  
 	      
 	var text = $("#col1").val();

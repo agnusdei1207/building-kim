@@ -169,23 +169,22 @@ $(document).ready(function(){
         $(".tab_content2").not(tab).css("display", "none");
         $(tab).fadeIn();
     });
-	
-	
 });
 
-//팝업    
-function view_show(num) {
-  var left = ( $(window).scrollLeft() + ( $(window).width() - $('.popup').width()) / 2 );
-  var top = ( $(window).scrollTop() + ( $(window).height() - $('.popup').height()) / 2 );
-  $('.popup').css({'left':left,'top':top, 'position':'absolute'});
-  document.getElementById("display_view"+num).style.display = "block";
-  document.getElementById("layer_bg").style.display = "block";
+function view_show(num) {   
+	var left = (( $(window).width() - $('#display_view'+ num).width()) / 2 );
+	var top = (( $(window).height() - $('#display_view' + num).height()) / 2 );
+	$('#display_view' + num).css({'left':left,'top':top, 'position':'fixed'});
+	document.getElementById("js-popup-bg").style.display = "block";
+	document.getElementById("display_view"+num).style.display = "block";
+}        
+ 
+function view_hide(num) {
+	document.getElementById("display_view" + num).style.display = "none";
+	document.getElementById("js-popup-bg").style.display = "none";
+	return false;
 }
 
-function view_hide(num) {
-  document.getElementById("dispay_view"+num).style.display = "none";
-  document.getElementById("layer_bg").style.display = "none";
-}
 
 var fncDate = function(){
 	var setDate = arguments;

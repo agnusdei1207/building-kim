@@ -36,7 +36,7 @@ public class EmailController {
     
     private String message = "";
  
-    private String cmmnScript = ""; 
+    private String cmmnScript = "";       
        
     private String pName = ""; 
     
@@ -51,8 +51,11 @@ public class EmailController {
 	@RequestMapping(folderPath + "pop.do")
 	public String pop(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
   
+		    
+		System.out.println(" 구분값 : " + searchVO.getSchEtc03());
+		
 		String result = folderPath + "pop"; 
-		          
+		             
 		if("pop".equals(searchVO.getSchEtc03())){ 
 			result = ".mPopLayout:/" + folderPath + "pop";
 		} 
@@ -64,18 +67,21 @@ public class EmailController {
 	@RequestMapping(folderPath + "popList.do")
 	public String popList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
 		 
-		System.out.println("getSchEtc01 : " + searchVO.getSchEtc01());
-		System.out.println("getSchEtc03 : " + searchVO.getSchEtc03());
-		    
-		searchVO.setPageUnit(3);  
-		searchVO.setPageSize(4);
+		System.out.println("ft, ma schEtc01 구분값 : " + searchVO.getSchEtc01());
+		System.out.println("pop, modal schEtc03 구분값 : " + searchVO.getSchEtc03());
+		System.out.println("popDivn : " + searchVO.getPopDivn()); 
+		System.out.println("getPopPageIndex : " + searchVO.getPopPageIndex());
+		System.out.println("getRecordCountPerPage : " + searchVO.getRecordCountPerPage());
+		       
+		searchVO.setPageUnit(3);    
+		searchVO.setPageSize(4);   
+		      
+		PaginationInfo paginationInfo = new PaginationInfo();  
 		 
-		PaginationInfo paginationInfo = new PaginationInfo();
-		 
-		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
+		paginationInfo.setCurrentPageNo(Integer.parseInt(searchVO.getPopPageIndex()));
 		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
 		paginationInfo.setPageSize(searchVO.getPageSize());
-		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex()); 
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		

@@ -509,6 +509,24 @@ box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.24);}
 .pop_content {position:relative;padding:20px;background:#fff;}
 .pop_footer {position:relative;padding:10px 20px 20px 20px; text-align:center;}
 .popup_bg {display:none;width:100%; height:100%; _height:800px;position:fixed;_position:absolute; top:0px; left:0px; z-index:1000;}
+/*popup*/    
+.pop_size316 {width:316px;}
+.pop_size700 {width:700px;}
+.pop_size920 {width:920px;}
+.pop_size955 {width:955px;}
+.pop_size1000 {width:1000px;}
+.pop_size1200 {width:1200px;}
+.layer_popup {z-index:4500;display: none;}
+.pop_header {position: relative;height: 50px;padding:0 20px;color: #fff;background:#346ad9;font-size: 18px;font-weight: 600;line-height: 50px;}
+.pop_close {position:absolute; top:30%;right:0.5rem; display: block;width:30px; height:30px;margin-top: -6px; text-indent: -9999em;background:url(../images/common/pop_close.png) no-repeat center center;}
+.pop_content {position:relative;padding:20px;background: #fff;}
+.pop_scl {max-height:450px; overflow-y:auto;}
+.pop_content .imgs img {width:100%;}
+.pop_tit {position: relative;margin-bottom: 10px;color: #fff;font-size: 16px;font-weight: 600;line-height: 1.2;}
+.pop_tit::before {display:inline-block;margin-right: 5px;content:url("../images/sub/i_sm_tit.png");vertical-align: bottom;}
+.pop_footer {padding: 10px 0 20px;text-align: center;background: #fff;}
+.popup_bg {display:none;position:fixed;z-index:4000;top:0px; left:0px; width:100%; height:100%; opacity:0.7; background:#000;}
+.dimmed {display:none;position:fixed;z-index:4000;top:0px; left:0px; width:100%; height:100%; opacity:0.7;background:#000;}
 
 
 /*thum*/
@@ -643,3 +661,10 @@ box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.24);}
 
 /* 커스텀 */ 
 .font_red {color:#ff6565; font-weight:bold;}
+
+
+/*로딩중*/   
+.loading_wrap {position:relative;z-index:4500;}
+.loading_img {position:fixed;z-index:4100;  left: 50%; top: 50%; -ms-transform: translate(-50%,-50%); -moz-transform:translate(-50%,-50%); -webkit-transform: translate(-50%,-50%); transform: translate(-50%,-50%);}
+.load_dimmed {position:fixed;z-index:4000;top:0px; left:0px; display:block;width:100%; height:100%; opacity:0.7;background:#000;}
+

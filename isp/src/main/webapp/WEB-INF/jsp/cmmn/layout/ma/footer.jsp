@@ -2,3 +2,10 @@
 <footer id="footer">
 	Copyright © 2020 by Korea Radio Promotion Association.  All Rights Reserved.
 </footer>
+<div class="loading_wrap" style="display: none;">
+	<span class="loading_img"><img src="/publish/ft/images/common/loading.gif" alt="로딩중" /></span>
+	<div class="load_dimmed"></div>
+</div>
+     
+<div class="popup_bg" id="js-popup-bg" onclick="view_hide(1);"></div>
+                                            

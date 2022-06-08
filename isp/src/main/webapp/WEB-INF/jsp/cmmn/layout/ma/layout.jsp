@@ -11,7 +11,7 @@
 <meta http-equiv="Pragma" content="no-store"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
-<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Style-Type" content="text/css" />  
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <title>한국전파진흥협회 관리자</title> 
 <link rel="shortcut icon" href="/publish/ft/images/common/favicon.ico" type="image/x-icon" />
@@ -20,11 +20,12 @@
 <link rel="stylesheet" type="text/css" href="/publish/ma/css/jquery-ui-1.12.1.custom.css"/>
 <script type="text/javascript" src="/publish/ma/js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="/publish/ma/js/jquery-ui-1.12.1.custom.js"></script>
-<script type="text/javascript" src="/publish/ma/js/board.js"></script>   
+<script type="text/javascript" src="/publish/ma/js/board.js"></script>  
+<script type="text/javascript" src="/publish/ma/js/boardEtc.js"></script> 
 <script type="text/javascript" src="/publish/ma/js/common.js"></script>
 <script type="text/javascript" src="/resource/js/cm.validate.js" charset="utf-8"></script>
 <script type="text/javascript" src="/publish/ma/js/highcharts.js"></script>
-<script type="text/javascript" src="/publish/ma/js/exporting.js"></script>
+<script type="text/javascript" src="/publish/ma/js/exporting.js"></script>  
 </head>
 
 

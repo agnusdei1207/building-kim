@@ -1,21 +1,21 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
                     
-<div class="content_box">    
+<div class="content_box">      
 	<form name="defaultFrm" id="defaultFrm" method="post">  
 		<input type="hidden" name="emSeq" id="emSeq" value="${emailVO.emSeq }"/>
 		<input type="hidden" id="selectMember">       
 		<jsp:directive.include file="/WEB-INF/jsp/cmmn/inc/incSearchForm.jsp"/>
-		<div class="tbl_wrap">               
+		<div class="tbl_wrap">                    
 			<table class="tbl_row_type01">       
 				<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>
-				<colgroup> 
+				<colgroup>      
 					<col style="width:20%;">
 					<col style="width:30%;">
 					<col style="width:20%;">
 					<col style="width:30%;"> 
 				</colgroup>            
-				<tbody>       
+				<tbody>         
 					<tr>  
 						<th scope="row"><strong class="th_tit">받는사람</strong></th>
 						<td colspan="3">
@@ -58,16 +58,12 @@
 				<a href="javascript:void(0);" class="btn btn_mdl btn_cancel" id="btn_list">취소</a>
 			</c:if>
 		</div>  
-	</form>
-</div>       
-     		            
-		 <%-- Modal --%>             
-		<div id="display_view1" class="layer_popup pop_size800 js-popup">
-		</div>            
-		<div class="popup_bg" id="js-popup-bg"></div>
-		      
-       
-
+	</form>   
+</div>             
+   
+<div id="display_view1" class="layer_popup pop_size800 js-popup">
+</div> 
+  
 <script type="text/javascript">
 
     
@@ -93,27 +89,28 @@ function fncUserDel(id, info){
        
 <%-- 팝업 열기 --%> 
 function openPop(){ 
-	$("#schEtc01").val("ft");    
 	$("#schEtc03").val("pop");
 	fncPageBoard("pop", "pop.do", "", "", "1200", "800");
-	return true;
-}         
-        
-<%-- 모달 열기 --%>          
-function openModal(){      
-	
-	$("#schEtc01").val("ft");
-	$("#schEtc03").val("modal"); 
-	$("#display_view1").fadeIn();
+	return true;    
+}                      
+          
+<%-- 모달 열기 --%>                      
+function openModal(){       
+	                   
+	$("#schEtc03").val("modal");          
+	 
+	fncLoadingStart();    
 	$.ajax({       
-	    method: "POST",
-	    url: "pop.do",	                                              
+	    method: "POST",   
+	    url: "pop.do",	                                                  
 	    data : $("#defaultFrm").serialize(),    
 	    dataType: "HTML",          
-	    success: function(data) {     
-	    	$("#display_view1").html(data);
+	    success: function(data) {          
+	    	$("#display_view1").html(data);     
+	    	view_show(1);           
 	    },complete : function(){
-		}
+	    	fncLoadingEnd();
+		}     
 	});	
 }         
 

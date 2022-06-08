@@ -14,7 +14,7 @@
 				AND EM_CONT LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
 	 	</if>               
-	</sql>        
+	</sql>            
 	
 	<sql id="Where_ma"> 
 		<if test="searchKeyword !=null and searchKeyword !=''">
@@ -111,9 +111,9 @@
 	
 	<select id="selectPopList" parameterType="cmmnDefaultVO" resultType="emailVO">
 		/* Email.selectPopList */
-		<if test='schEtc01 != null and schEtc01 != "" and schEtc01 == "ma"'>
+		<if test='popDivn != null and popDivn != "" and popDivn == "ma"'>
 		<![CDATA[    
-			SELECT 
+			SELECT   
 				  	SEQ 																		emUserSeq
 					,ID 																		emId
 					,NAME 																		emName 
@@ -125,10 +125,10 @@
 	     ]]>     
 	     	<include refid="Where_ma"/>
 		</if>      
-		<if test='schEtc01 != null and schEtc01 != "" and schEtc01 == "ft"'>      
+		<if test='popDivn != null and popDivn != "" and popDivn == "ft"'>      
 		<![CDATA[     
 			SELECT       
-				            
+				             
 					  ME_SEQ																	emUserSeq
 					, ME_ID																	 	emId
 					, ME_NAME																    emName
@@ -147,7 +147,7 @@
 	     
 	<select id="selectPopCount" parameterType="cmmnDefaultVO" resultType="int">
 		/* Email.selectPopCount */
-		<if test='schEtc01 != null and schEtc01 != "" and schEtc01 == "ma"'>
+		<if test='popDivn != null and popDivn != "" and popDivn == "ma"'>
 		<![CDATA[    
 			SELECT   
 				  	COUNT(emUserSeq)
@@ -168,7 +168,7 @@
 			 WHERE 1 = 1
 	    ]]>     
 		</if>     
-		<if test='schEtc01 != null and schEtc01 != "" and schEtc01 == "ft"'>
+		<if test='popDivn != null and popDivn != "" and popDivn == "ft"'>
 		<![CDATA[  
 			SELECT  
 				  	COUNT(emUserSeq)
@@ -181,7 +181,7 @@
 					, ME_NAME																    emName
 					, ME_MAIL 																 	emMail
 						  
-			  FROM  T_MEMBER
+			  FROM  T_MEMBER 
 		     WHERE  ME_USE_YN	=	'Y'	
 		]]>  
 			<include refid="Where_ft"/>

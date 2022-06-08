@@ -264,8 +264,8 @@ public class CmmnDefaultVO implements Serializable {
 	
 	/** 팝업 페이지 인덱스 */
 	private String popPageIndex = "";
-	
-	/** 팝업 구분 값  */
+	           
+	/** 팝업 구분 값  */  
 	private String popDivn = "";
 	
 	/** 팝업 검색어 */
