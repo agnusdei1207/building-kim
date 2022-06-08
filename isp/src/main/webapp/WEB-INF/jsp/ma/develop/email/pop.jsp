@@ -1,11 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>  
-<script type="text/javascript" src="/publish/ma/js/boardEtc.js"></script>
-       
-<div class="pop_header">     
-</div>  
-                           
-<div class="pop_content"> 
+            
+<div class="pop_content">      
 		<%-- search  --%>        
 		<ul class="tab js-tab tab_menu">     
 		    <li class="cursor current"><a onclick="selectDivn(this,'ft')">사용자</a></li> 
@@ -13,8 +9,8 @@
 		</ul>                         
 		<div class="search_box">                                  
 			<form name="popFrm" id="popFrm" method="post"  onsubmit="return false;">   
-				<input type="text" name="popPageIndex" id="popPageIndex" value="${searchVO.popPageIndex }" />      
-				<input type="text" name="popDivn" id="popDivn" value="${searchVO.popDivn }" placeholder="popDivn" />      
+				<input type="hidden" name="popPageIndex" id="popPageIndex" value="${searchVO.popPageIndex }" />      
+				<input type="hidden" name="popDivn" id="popDivn" value="${searchVO.popDivn }" placeholder="popDivn" />      
 				<%-- 체크 상태 저장 --%>              
 				<input type="text" name="col1" id="col1" class="text w100p" placeholder="선택 값 저장" value="${searchVO.checkedArray }"/>
 				<fieldset>       
@@ -55,6 +51,5 @@ function selectDivn(obj,popDivn){
 	fncPageEtc("popList", "popList.do", 1);  
 	return false;
 }   
- 
 
 </script>

@@ -6,18 +6,16 @@
 	<a href="javascript:void(0);" onclick="view_hide(1);" class="pop_close"></a>
 </div>  
                            
-<div class="pop_content"> 
+<div class="pop_content">  
 		<%-- search  --%>        
 		<ul class="tab js-tab tab_menu">        
 		    <li class="cursor current"><a onclick="selectDivn(this,'ft')">사용자</a></li> 
 		    <li class="cursor"><a onclick="selectDivn(this,'ma')">관리자</a></li>  
 		</ul>                         
-		<div class="search_box">                                  
+		<div class="search_box">                                     
 			<form name="popFrm" id="popFrm" method="post"  onsubmit="return false;">     
-				<input type="text" name="popPageIndex" id="popPageIndex" value="${searchVO.popPageIndex }" />      
-				<input type="text" name="popDivn" id="popDivn" value="${searchVO.popDivn }" placeholder="popDivn" />      
-				<%-- 체크 상태 저장 --%>              
-				<input type="text" name="col1" id="col1" class="text w100p" placeholder="선택 값 저장" value="${searchVO.checkedArray }"/>
+				<input type="hidden" name="popPageIndex" id="popPageIndex" value="${searchVO.popPageIndex }" />      
+				<input type="hidden" name="popDivn" id="popDivn" value="${searchVO.popDivn }" placeholder="popDivn" />      
 				<fieldset>       
 					<legend>검색</legend>                  
 					<div class="search_basic">     
@@ -34,18 +32,18 @@
 					</div>
 				</fieldset>       
 			</form>       
-		</div>     
+		</div>       
 		<%--// search  --%>      
 		<div class="popTbl">      
 		</div>
 </div>    
-      
+          
 <script type="text/javaScript">    
-   
-$(function(){               
+
+$(function(){                  
 	fncPageEtc("popList", "modalList.do", 1); 
 	return false;                
-});   
+});    
             
 <%-- ft/ma 구분 --%>     
 function selectDivn(obj,popDivn){   

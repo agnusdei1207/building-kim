@@ -28,7 +28,7 @@
 					<c:forEach var="result" items="${resultList}" varStatus="status">
 						<tr class="cursor">  
 							<td>                          
-								<input type="checkbox" onclick="oneCheck('${result.userDivn }', '${result.emUserSeq}', this);" name="arr" id="${result.userDivn }_${result.emUserSeq}" class="checkbox" value="${result.userDivn }_${result.emUserSeq}_${result.emId}_${result.emMail}">
+								<input type="checkbox" onclick="oneCheck('${result.userDivn }', '${result.emUserSeq}',);" name="arr" id="${result.userDivn }_${result.emUserSeq}" class="checkbox" value="${result.userDivn }_${result.emUserSeq}_${result.emId}_${result.emMail}">
 							</td>      
 							<td>${result.emName }</td>   
 							<td>${result.emId }</td>
@@ -108,7 +108,7 @@ function allCheck(obj){
  
 
 <%-- 한 개 선택 --%> 
-function oneCheck(divn, userSeq, obj){ 
+function oneCheck(divn, userSeq){ 
 	          
 	var total = $(".checkbox").length; 
 	var checked = $(".checkbox:checked").length;

@@ -66,7 +66,9 @@
   
 <script type="text/javascript">
 
-    
+<%-- 체크 상태 저장 --%>     
+var checked = new Set();  
+         
 <%-- 보내기 버튼 --%>
 function submit(){    
 	if($("#emTitle").val() == "" || $("#emTitle").val() == null) {

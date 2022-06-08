@@ -48,7 +48,7 @@ public class EmailController {
 			result = folderPath + proc; 
 		} 
 		     
-		return result;
+		return result; 
 	}      
 	
 	@SuppressWarnings("unchecked")    
