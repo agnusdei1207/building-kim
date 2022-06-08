@@ -27,56 +27,38 @@ public class EmailController {
 
 	@Resource(name = "cmmnService")     
     protected CmmnService cmmnService;
-	
+	   
     /** Program ID **/
     private final static String PROGRAM_ID = "Email";
 
     /** folderPath **/
     private final static String folderPath = "/ma/develop/email/";
     
-    private String message = "";
- 
-    private String cmmnScript = "";       
-       
-    private String pName = ""; 
-    
-    private String pValue = "";
-    
-	@RequestMapping(folderPath + "list.do") 
-	public String list(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
-
-		return ".mLayout:"+ folderPath + "list";
-	}
-	          
-	@RequestMapping(folderPath + "pop.do")
-	public String pop(@ModelAttribute("searchVO") EmailVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
-   
-		System.out.println("구분값 : " + searchVO.getSchEtc03());
-		    
-		String result = folderPath + "pop"; 
-		             
-		if("pop".equals(searchVO.getSchEtc03())){ 
-			result = ".mPopLayout:/" + folderPath + "pop";
-		} 
-		   
-		return result; 
-	}
 	
-	@SuppressWarnings("unchecked") 
-	@RequestMapping(folderPath + "popList.do")
-	public String popList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
-		 
-		System.out.println("ft, ma schEtc01 구분값 : " + searchVO.getSchEtc01());
-		System.out.println("pop, modal schEtc03 구분값 : " + searchVO.getSchEtc03());
-		System.out.println("popDivn : " + searchVO.getPopDivn()); 
-		System.out.println("getPopPageIndex : " + searchVO.getPopPageIndex());
-		System.out.println("getRecordCountPerPage : " + searchVO.getRecordCountPerPage());
-		       
-		searchVO.setPageUnit(3);    
+	          
+	@RequestMapping(folderPath + "{proc:pop|modal}.do") 
+	public String pop(@ModelAttribute("searchVO") EmailVO searchVO, ModelMap model, HttpServletRequest request, @PathVariable String proc) throws Exception {
+		
+		System.out.println("proc : " + proc);
+		String result = "";
+		  
+		if("pop".equals(proc)){
+			result = ".mPopLayout:/" + folderPath + proc;
+		}else{    
+			result = folderPath + proc; 
+		} 
+		     
+		return result;
+	}      
+	
+	@SuppressWarnings("unchecked")    
+	@RequestMapping(folderPath + "{proc:pop|modal}List.do")
+	public String popList(@ModelAttribute("searchVO") EmailVO searchVO, ModelMap model, HttpServletRequest request, @PathVariable String proc) throws Exception {
+		System.out.println("proc : " + proc); 
+		searchVO.setPageUnit(3);       
 		searchVO.setPageSize(4);   
-		      
-		PaginationInfo paginationInfo = new PaginationInfo();  
-		 
+		                 
+		PaginationInfo paginationInfo = new PaginationInfo();       
 		paginationInfo.setCurrentPageNo(Integer.parseInt(searchVO.getPopPageIndex()));
 		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
 		paginationInfo.setPageSize(searchVO.getPageSize());
@@ -84,16 +66,21 @@ public class EmailController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
-		int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".selectPopCount" );  
+		int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID );           
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo); 
 		          
-		List<EmailVO> resultList = (List<EmailVO>) cmmnService.selectList(searchVO, PROGRAM_ID + ".selectPopList");
+		List<EmailVO> resultList = (List<EmailVO>) cmmnService.selectList(searchVO, PROGRAM_ID );
 		model.addAttribute("resultList", resultList);
-		    
-		return folderPath + "popList";
+		     
+		return folderPath + proc + "List";   
 	}
-	
+	 
+	@RequestMapping(folderPath + "list.do") 
+	public String list(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
+
+		return ".mLayout:"+ folderPath + "list";  
+	}   
 	
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
@@ -110,12 +97,12 @@ public class EmailController {
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
 		
-		int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID );
+		int totCnt = cmmnService.selectCount(searchVO, PROGRAM_ID + ".emailSelectCount");
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		  
 		@SuppressWarnings("unchecked")
-		List<EmailVO> resultList = (List<EmailVO>) cmmnService.selectList(searchVO, PROGRAM_ID );
+		List<EmailVO> resultList = (List<EmailVO>) cmmnService.selectList(searchVO, PROGRAM_ID + ".emailSelectList");
 		model.addAttribute("resultList", resultList);
 		
 		return folderPath + "addList";
@@ -147,6 +134,11 @@ public class EmailController {
 	@RequestMapping(value = folderPath + "{procType}Proc.do", method = RequestMethod.POST)
 	public String proc(@ModelAttribute("searchVO") EmailVO searchVO, Model model, SessionStatus status,@PathVariable String procType, HttpServletRequest request) throws Exception {
 		
+		String message = "";
+	    String cmmnScript = "";       
+	    String pName = ""; 
+	    String pValue = "";
+		   
 		if(procType != null){
 			if (procType.equals("update") ) {				
 				cmmnService.updateContents(searchVO, PROGRAM_ID);

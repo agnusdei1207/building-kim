@@ -133,7 +133,7 @@ function oneCheck(divn, userSeq, obj){
 	return true;
 }                 
     
-<%-- 선택 버튼 & 목록 전송 --%>   
+<%-- 선택 버튼 & 목록 전송 --%>    
 function fncChoose(){    
 	              
   	var arr = $("#col1").val().split(","); 
@@ -148,9 +148,9 @@ function fncChoose(){
 			html += fncDrawList(divn, seq, id, mail);
 		}       
 		         
-	opener.$("#receiver").html(html); 
-	opener.$("#checkedArray").val(arr);     
-	self.close();                  
+	$("#receiver").html(html); 
+	$("#checkedArray").val(arr);       
+    $("#display_view1").html("");     
 	return true;  
 }            
                       

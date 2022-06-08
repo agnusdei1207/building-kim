@@ -69,8 +69,8 @@
 	</select>
 	
 	 
-	<select id="selectList" parameterType="cmmnDefaultVO" resultType="emailVO">
-		/* Email.selectList */
+	<select id="emailSelectList" parameterType="cmmnDefaultVO" resultType="emailVO">
+		/* Email.emailSelectList */
 		<![CDATA[  
       	     SELECT  
 			  
@@ -95,9 +95,9 @@
 		]]>
 	</select>	    
   
-
-	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
-		/* Email.selectCount */
+   
+	<select id="emailSelectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* Email.emailSelectCount */
 		<![CDATA[ 
 			SELECT 
 				  	COUNT(EM_SEQ) emCnt 
@@ -107,8 +107,8 @@
 			 <include refid="Where"/>
 	</select> 
 	
-	<select id="selectPopList" parameterType="cmmnDefaultVO" resultType="emailVO">
-		/* Email.selectPopList */
+	<select id="selectList" parameterType="cmmnDefaultVO" resultType="emailVO">
+		/* Email.selectList */
 		<if test='popDivn != null and popDivn != "" and popDivn == "ma"'>
 		<![CDATA[    
 			SELECT     
@@ -143,10 +143,10 @@
 		 ]]>
 	</select>	  
 	     
-	<select id="selectPopCount" parameterType="cmmnDefaultVO" resultType="int">
-		/* Email.selectPopCount */
+	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* Email.selectCount */
 		<if test='popDivn != null and popDivn != "" and popDivn == "ma"'>
-		<![CDATA[    
+		<![CDATA[      
 			SELECT   
 				  	COUNT(emUserSeq)
 			  FROM 

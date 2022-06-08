@@ -44,7 +44,7 @@
 							B type <input type="radio" name="emDsgn" id="emDsgn_B" value="B" ${emailVO.emDsgn eq 'B' ? 'checked="checked"' : '' } style="margin-left:5px; margin-right:5px;"> 
 							C type <input type="radio" name="emDsgn" id="emDsgn_C" value="C" ${emailVO.emDsgn eq 'C' ? 'checked="checked"' : '' } style="margin-left:5px; margin-right:5px;"> 
 							D type <input type="radio" name="emDsgn" id="emDsgn_D" value="D" ${emailVO.emDsgn eq 'D' ? 'checked="checked"' : '' } style="margin-left:5px; margin-right:5px;"> 
-						</td>           
+						</td>                
 					</tr>
 				</tbody>     
 			</table> 
@@ -89,19 +89,16 @@ function fncUserDel(id, info){
        
 <%-- 팝업 열기 --%>  
 function openPop(){ 
-	$("#schEtc03").val("pop");
 	fncPageBoard("pop", "pop.do", "", "", "1200", "800");
 	return true;    
 }                           
-              
-<%-- 모달 열기 --%>                      
-function openModal(){       
-	                   
-	$("#schEtc03").val("modal");                  
+                       
+<%-- 모달 열기 --%>                         
+function openModal(){          
 	fncLoadingStart();    
-	$.ajax({       
+	$.ajax({            
 	    method: "POST",   
-	    url: "pop.do",	                                                  
+	    url: "modal.do",	                                                  
 	    data : $("#defaultFrm").serialize(),    
 	    dataType: "HTML",          
 	    success: function(data) {          
