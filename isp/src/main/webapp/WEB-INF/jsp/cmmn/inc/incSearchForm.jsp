@@ -4,10 +4,10 @@
 <input type="hidden" name="placeCondition" id="placeCondition" value="<c:out value='${searchVO.placeCondition}'/>"/>
 <input type="hidden" name="searchKeyword" id="searchKeyword" value="<c:out value='${searchVO.searchKeyword}'/>"/>
 <input type="hidden" name="pageIndex" id="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>"/>
-     
-<input type="text" name="schEtc01" id="schEtc01" value="<c:out value='${searchVO.schEtc01}'/>"/>
-<input type="text" name="schEtc02" id="schEtc02" value="<c:out value='${searchVO.schEtc02}'/>"/>
-<input type="text" name="schEtc03" id="schEtc03" value="<c:out value='${searchVO.schEtc03}'/>"/>
+       
+<input type="hidden" name="schEtc01" id="schEtc01" value="<c:out value='${searchVO.schEtc01}'/>"/>
+<input type="hidden" name="schEtc02" id="schEtc02" value="<c:out value='${searchVO.schEtc02}'/>"/>     
+<input type="text" name="schEtc03" id="schEtc03" value="<c:out value='${searchVO.schEtc03}'/>" placeholder="schEtc03"/>
 <input type="hidden" name="schEtc04" id="schEtc04" value="<c:out value='${searchVO.schEtc04}'/>"/>
 <input type="hidden" name="schEtc05" id="schEtc05" value="<c:out value='${searchVO.schEtc05}'/>"/>
 <input type="hidden" name="schEtc06" id="schEtc06" value="<c:out value='${searchVO.schEtc06}'/>"/>

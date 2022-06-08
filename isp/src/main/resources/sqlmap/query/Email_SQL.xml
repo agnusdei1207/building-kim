@@ -107,13 +107,11 @@
 			 <include refid="Where"/>
 	</select> 
 	
-	  
-	
 	<select id="selectPopList" parameterType="cmmnDefaultVO" resultType="emailVO">
 		/* Email.selectPopList */
 		<if test='popDivn != null and popDivn != "" and popDivn == "ma"'>
 		<![CDATA[    
-			SELECT   
+			SELECT     
 				  	SEQ 																		emUserSeq
 					,ID 																		emId
 					,NAME 																		emName 
@@ -124,11 +122,11 @@
 			 WHERE	USE_YN	=	'Y'
 	     ]]>     
 	     	<include refid="Where_ma"/>
-		</if>      
-		<if test='popDivn != null and popDivn != "" and popDivn == "ft"'>      
+		</if>           
+		<if test='popDivn == null || popDivn == "" || popDivn == "ft"'>      
 		<![CDATA[     
-			SELECT       
-				             
+			SELECT             
+				               
 					  ME_SEQ																	emUserSeq
 					, ME_ID																	 	emId
 					, ME_NAME																    emName
@@ -164,11 +162,10 @@
 		]]>  
 			<include refid="Where_ma"/>
 		<![CDATA[
-			 ) A
-			 WHERE 1 = 1
-	    ]]>     
+			 ) A 
+	    ]]>       
 		</if>     
-		<if test='popDivn != null and popDivn != "" and popDivn == "ft"'>
+		<if test='popDivn == null || popDivn == "" || popDivn == "ft"'>  
 		<![CDATA[  
 			SELECT  
 				  	COUNT(emUserSeq)
@@ -187,9 +184,8 @@
 			<include refid="Where_ft"/>
 		<![CDATA[
 		     ) A
-		     WHERE 1 = 1   
-		]]>      
-		</if>  
+ 		]]>      
+		</if>   
 	</select> 
 	 
 	<insert id="insertContents" parameterType="emailVO">

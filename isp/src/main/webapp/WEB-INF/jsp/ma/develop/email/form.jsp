@@ -92,13 +92,12 @@ function openPop(){
 	$("#schEtc03").val("pop");
 	fncPageBoard("pop", "pop.do", "", "", "1200", "800");
 	return true;    
-}                      
-          
+}                           
+              
 <%-- 모달 열기 --%>                      
 function openModal(){       
 	                   
-	$("#schEtc03").val("modal");          
-	 
+	$("#schEtc03").val("modal");                  
 	fncLoadingStart();    
 	$.ajax({       
 	    method: "POST",   
