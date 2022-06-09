@@ -11,29 +11,29 @@
 		<colgroup> 
 			<col style="width:5%"> 
 			<col style="width:10%">     
-			<col style="width:10%">  
+			<col style="width:10%">    
 			<col>  
 		</colgroup> 
 		<thead>     
 			<tr>            
-				<th scope="col"><input type="checkbox" onclick="allCheck(this);" id="all_check"></th>
+				<th scope="col"><input type="checkbox" onclick="fncAllCheck(this);" id="all_check"></th>
 				<th scope="col">이름</th>  
 				<th scope="col">아이디</th> 
 				<th scope="col">이메일</th>    
 			</tr> 
-		</thead>
+		</thead> 
 		<tbody>         
 			<c:choose>   
 				<c:when test="${fn:length(resultList) gt 0}">     
 					<c:forEach var="result" items="${resultList}" varStatus="status">
 						<tr class="cursor">  
 							<td>                          
-								<input type="checkbox" onclick="oneCheck('${result.userDivn }', '${result.emUserSeq}',);" name="arr" id="${result.userDivn }_${result.emUserSeq}" class="checkbox" value="${result.userDivn }_${result.emUserSeq}_${result.emId}_${result.emMail}">
+								<input type="checkbox" onclick="fncOneCheck(this);" name="arr" id="${result.userDivn }_${result.emUserSeq}" class="checkbox" value="${result.userDivn }_${result.emUserSeq}&${result.emId}_${result.emMail}">
 							</td>      
 							<td>${result.emName }</td>   
 							<td>${result.emId }</td>
-							<td>${result.emMail }</td>    
-						</tr>  
+							<td>${result.emMail }</td>     
+						</tr>       
 					</c:forEach>      
 				</c:when>   
 				<c:otherwise>      
@@ -43,132 +43,106 @@
 		</tbody>
 	</table>   
 </div>    
-<%-- ,tbl end --%>       
+<%-- ,tbl end --%>          
 <%-- paging start --%>    
 <div class="paging_wrap">      
 	<div class="paging">        
 		<ui:pagination paginationInfo="${paginationInfo}" type="pop" jsFunction="fncPageEtc" />  
 	</div> 
 	<div class="btn_right">          
-		<a class="btn btn_mdl btn_save" onclick="fncChoose();">선택</a>
+		<a class="btn btn_mdl btn_save" onclick="fncPopChoose();">선택</a>
 	</div>    
-</div> 
+</div>   
 <%-- ,paging end--%>    
     
-<script type="text/javascript"> 
-             
-$(function(){ 
-	    
-	var arr = $("#col1").val().split(",");   
-	               
-	<%-- 문자열 확인 후 체크하기 --%>      
-	$(".checkbox").each(function(){   
-		if(arr.indexOf(this.value) > -1){     
-			 $("#"+this.id).prop("checked", true);
-		}     
-	}); 
-	        
-	<%-- 체크된 길이 확인 후 전체 체크박스 체크 --%> 
-	var total = $(".checkbox").length; 
-	var checked = $(".checkbox:checked").length;
-	       
-	if(total == checked){ 
-		$("#all_check").prop("checked", true);
-	}else{
-		$("#all_check").prop("checked", false);
-	}       
-	  
-	return true;
-});             
-             
-<%-- 전체 선택 --%>  
-function allCheck(obj){   
-	         
-	var text = $("#col1").val();
-	     
-	if($("#"+obj.id).prop("checked")){
-		$(".checkbox").each(function(){   
-			$(".checkbox").prop("checked", true); 
-			text = text.replace(","+this.value, "");
-		});     
-		<%-- 개별 체크 상태에서 전체 체크를 눌렀을 경우를 대비 --%>
-		$(".checkbox").each(function(){    
-			text += "," + this.value; 
-		});          
-                  		   
-	}else if(!$("#"+obj.id).prop("checked")){   
-		$(".checkbox").prop("checked", false);   
-		$(".checkbox").each(function(){   
-			text = text.replace("," + this.value, "");
-		});  
+<script type="text/javascript">  
+
+   
+var checked = window.opener.checked;
+              
+$(function(){
+	for(var i = 0; i < checked.length; i++){
+		var id = checked[i].split("&")[0];     
+		$("#" + id).prop("checked", true);
 	}         
-	$("#col1").val(text); 
-	return true;
-}    
- 
-
-<%-- 한 개 선택 --%> 
-function oneCheck(divn, userSeq){ 
-	          
-	var total = $(".checkbox").length; 
-	var checked = $(".checkbox:checked").length;
-	 
-	var text = $("#col1").val(); 
-	var val = $("#" + divn + "_" + userSeq).val();                   
-	                                            
-	            
-	if($("#" + divn + "_" + userSeq).prop("checked")){       
-		text += "," + val;     
-	}else{                 
-		text = text.replace("," + val, ""); 
-	}                
-     	 
-	if(total == checked){ 
-		$("#all_check").prop("checked", true);     
-	}else{
-		$("#all_check").prop("checked", false);
-	} 
-	 
-	$("#col1").val(text); 
-	return true;
-}                 
+	fncCheckLength(); 
+	return true;      
+})           
     
-<%-- 선택 버튼 & 목록 전송 --%>   
-function fncChoose(){    
-	              
-  	var arr = $("#col1").val().split(","); 
-	var html = '';          
-		             
-		for(var i = 1; i < arr.length; i++){      
-			var divn = arr[i].split("_")[0]; 
-			var seq = arr[i].split("_")[1]; 
-			var id = arr[i].split("_")[2];	     
-			var mail = arr[i].split("_")[3];           
-			     
-			html += fncDrawList(divn, seq, id, mail);
-		}       
-		         
-	opener.$("#receiver").html(html); 
-	opener.$("#checkedArray").val(arr);     
-	self.close();                  
-	return true;  
-}            
-                      
-<%-- 선택된 목록 그리기 --%> 
-function fncDrawList(divn, seq, id, mail){
-	
-	var info = divn + '_' + seq + '_' + id + '_' + mail;
-	var id = divn + '_' + seq;
-	  
-	var html = "";     
-		html += '<li class="mail_select_obj" data-info="'+ info +'" id="'+ id +'">';
-		html += mail;                                  
-		html += '<a class="mail_del btn_del cursor" onclick="fncUserDel(\''+ id +'\', \''+ info +'\');">x</a>';
-		html += '</li>';
-		     
-	return html;
-}    
+<%-- 전체 체크 --%>  
+function fncAllCheck(obj){      
+	if(obj["checked"]){
+		$(".checkbox").each(function(){ 
+			<%-- 중복 방지 : 배열에 있는 값 지우기 --%>
+			if($("#" + this.id).prop("checked")){
+				checked.splice(checked.indexOf(this.value), 1);   
+			}   
+			<%-- 체크 --%>
+			$("#" + this.id).prop("checked", true);
+			<%-- 배열에 추가 --%>
+			checked.push(this.value); 
+		});        
+	}else if(!obj["checked"]){
+		$(".checkbox").each(function(){       
+			$("#" + this.id).prop("checked",false);
+			checked.splice(checked.indexOf(this.value), 1);
+		});
+	}  
+	fncCheckLength();
+	return true;
+} 
+ 
+<%-- 개별 체크 --%> 
+function fncOneCheck(obj){
+	if(obj["checked"]){
+		checked.push(obj.value);
+	}else{    
+		$("#" + obj.id).prop("checked", false);
+		checked.splice(checked.indexOf(obj.value), 1);
+	}
+	fncCheckLength();
+	return true;    
+}  
 
+
+
+$('[name="data"]:not(:checked)');
+
+<%-- 체크 상태 체크 --%>    
+function fncCheckLength(){
+	var total = $(".checkbox").length;
+	var check = $(".checkbox:checked").length;
+	
+	if(total==check){
+		$("#all_check").prop("checked", true);
+	}else{   
+		$("#all_check").prop("checked", false);
+	}
+	return true;
+}
+
+<%-- 선택 버튼 --%>
+function fncPopChoose(){
+	   
+	var html = "";      
+	 
+	for(var i = 0; i < checked.length; i++){  
+		            
+		var id = checked[i].split("&")[0];           
+		var mail = checked[i].split("&")[1];
+		        
+		<%-- id 중복 방지를 위해 hyphen '-' 사용--%>
+		html += '<li class="mail_select_obj" id="'+ id +'-">';     
+		html += mail;                                              
+		html += '<a class="mail_del btn_del cursor" onclick="fncUserDel(\''+ id +'\', \''+ checked[i] +'\');">x</a>';
+		html += '</li>';
+	}         
+	<%-- 목록 생성 --%>
+	opener.$("#receiver").html(html);
+	<%-- 리스트 닫기 --%>
+	self.close();
+	return true;
+}
 
 
 </script>

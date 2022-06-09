@@ -5,7 +5,7 @@
 	<alias name="dataSource" alias="egov.dataSource" />
 
 	<!-- oracle -->
-	
+	 
 	<!-- mysql(로컬) -->
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -14,4 +14,4 @@
 		<property name="password" value="123456" />
 	</bean> 
 </beans>
-   
+    

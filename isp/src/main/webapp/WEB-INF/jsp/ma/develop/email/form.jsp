@@ -4,7 +4,6 @@
 <div class="content_box">         
 	<form name="defaultFrm" id="defaultFrm" method="post">  
 		<input type="hidden" name="emSeq" id="emSeq" value="${emailVO.emSeq }"/>  
-		<input type="text" name="checkedArray" id="checkedArray" class="text w100p" value="${searchVO.checkedArray }" placeholder="checkedArray"/>  
 		<jsp:directive.include file="/WEB-INF/jsp/cmmn/inc/incSearchForm.jsp"/>
 		<div class="tbl_wrap">                        
 			<table class="tbl_row_type01">          
@@ -14,7 +13,7 @@
 					<col style="width:30%;">
 					<col style="width:20%;">
 					<col style="width:30%;"> 
-				</colgroup>            
+				</colgroup>             
 				<tbody>          
 					<tr>  
 						<th scope="row"><strong class="th_tit">받는사람</strong></th>
@@ -40,25 +39,19 @@
 					<tr>  
 						<th scope="row"><strong>양식</strong></th>    
 						<td colspan="3">    
-							A type <input type="radio" name="emDsgn" id="emDsgn_A" value="A" ${emailVO.emDsgn eq 'A' ? 'checked="checked"' : '' } style="margin-left:5px; margin-right:5px;"> 
-							B type <input type="radio" name="emDsgn" id="emDsgn_B" value="B" ${emailVO.emDsgn eq 'B' ? 'checked="checked"' : '' } style="margin-left:5px; margin-right:5px;"> 
-							C type <input type="radio" name="emDsgn" id="emDsgn_C" value="C" ${emailVO.emDsgn eq 'C' ? 'checked="checked"' : '' } style="margin-left:5px; margin-right:5px;"> 
-							D type <input type="radio" name="emDsgn" id="emDsgn_D" value="D" ${emailVO.emDsgn eq 'D' ? 'checked="checked"' : '' } style="margin-left:5px; margin-right:5px;"> 
+							<label class="cursor"><input type="radio" name="emDsgn" id="emDsgn_A" class="cursor" value="A" ${emailVO.emDsgn eq 'A' ? 'checked="checked"' : '' } style="margin-left:5px; margin-right:5px;">A type</label> 
+							<label class="cursor"><input type="radio" name="emDsgn" id="emDsgn_B" class="cursor" value="B" ${emailVO.emDsgn eq 'B' ? 'checked="checked"' : '' } style="margin-left:5px; margin-right:5px;">B type</label> 
+							<label class="cursor"><input type="radio" name="emDsgn" id="emDsgn_C" class="cursor" value="C" ${emailVO.emDsgn eq 'C' ? 'checked="checked"' : '' } style="margin-left:5px; margin-right:5px;">C type</label> 
 						</td>                
-					</tr>
-				</tbody>     
+					</tr> 
+				</tbody>        
 			</table> 
-		</div>       
+		</div>         
 		<div class="btn_area">          
 			<a href="javascript:void(0)" class="btn btn_mdl btn_save" onclick="submit();">보내기</a>
-			<c:if test="${searchVO.procType eq  'update'}"> 
-   				<a href="javascript:void(0);" class="btn btn_mdl btn_cancel" onclick="fncPageBoard('view','view.do');">취소</a>
-			</c:if> 
-			<c:if test="${searchVO.procType ne  'update'}">  
-				<a href="javascript:void(0);" class="btn btn_mdl btn_cancel" id="btn_list">취소</a>
-			</c:if>
+ 			<a href="javascript:void(0);" class="btn btn_mdl btn_cancel" onclick="fncPageBoard('view','view.do');">취소</a>
 		</div>  
-	</form>   
+	</form>     
 </div>             
    
 <div id="display_view1" class="layer_popup pop_size800 js-popup">
@@ -66,10 +59,10 @@
   
 <script type="text/javascript">
 
-<%-- 체크 상태 저장 --%>     
-var checked = new Set();  
-         
-<%-- 보내기 버튼 --%>
+<%-- 체크 상태 저장 --%>       
+var checked = new Array();  
+                    
+<%-- 보내기 버튼 --%>       
 function submit(){    
 	if($("#emTitle").val() == "" || $("#emTitle").val() == null) {
 		checkMsg("#emTitle", "제목을 입력해주세요.");
@@ -82,23 +75,23 @@ function submit(){
 	return false;    
 };          
                
-<%-- 받는 사람 목록 삭제 --%>          
-function fncUserDel(id, info){ 
-	$("#" + id).remove();                      
-	$("#checkedArray").val($("#checkedArray").val().replace("," + info, ""));   
-	return true;    
-}   
+<%-- 받는 사람 목록 삭제 --%>        
+function fncUserDel(id, info){   
+	$("#" + id + "-").remove();             
+	checked.splice(checked.indexOf(info), 1);
+	return true;       
+}        
        
-<%-- 팝업 열기 --%>  
+<%-- 팝업 열기 --%>     
 function openPop(){ 
 	fncPageBoard("pop", "pop.do", "", "", "1200", "800");
 	return true;    
 }                           
-                       
+                          
 <%-- 모달 열기 --%>                         
-function openModal(){          
-	fncLoadingStart();    
-	$.ajax({            
+function openModal(){   
+	fncLoadingStart();        
+	$.ajax({             
 	    method: "POST",   
 	    url: "modal.do",	                                                  
 	    data : $("#defaultFrm").serialize(),    

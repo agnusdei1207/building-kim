@@ -29,7 +29,7 @@ public class EmailController {
     protected CmmnService cmmnService;
 	   
     /** Program ID **/
-    private final static String PROGRAM_ID = "Email";
+    private final static String PROGRAM_ID = "Email"; 
 
     /** folderPath **/
     private final static String folderPath = "/ma/develop/email/";
@@ -39,9 +39,8 @@ public class EmailController {
 	@RequestMapping(folderPath + "{proc:pop|modal}.do") 
 	public String pop(@ModelAttribute("searchVO") EmailVO searchVO, ModelMap model, HttpServletRequest request, @PathVariable String proc) throws Exception {
 		
-		System.out.println("proc : " + proc);
 		String result = "";
-		  
+		   
 		if("pop".equals(proc)){
 			result = ".mPopLayout:/" + folderPath + proc;
 		}else{    
@@ -51,10 +50,10 @@ public class EmailController {
 		return result; 
 	}      
 	
-	@SuppressWarnings("unchecked")    
+	@SuppressWarnings("unchecked")     
 	@RequestMapping(folderPath + "{proc:pop|modal}List.do")
 	public String popList(@ModelAttribute("searchVO") EmailVO searchVO, ModelMap model, HttpServletRequest request, @PathVariable String proc) throws Exception {
-		System.out.println("proc : " + proc); 
+
 		searchVO.setPageUnit(3);       
 		searchVO.setPageSize(4);   
 		                 

@@ -69,10 +69,11 @@
 	<bean id="antPathMater" class="org.springframework.util.AntPathMatcher" />
 	<!-- Exception 발생시 후처리용 별도작업을 위해 실행환경의 DefaultTraceHandler 를 활용하도록 설정 egovframework.rte.fdl.cmmn.trace.handler.DefaultTraceHandler -->
 	<bean id="defaultTraceHandler" class="com.open.cmmn.EgovComTraceHandler" />
-
-	<!-- For Pagination Tag 설정 -->
+ 
+	<!-- For Pagination Tag 설정 --> 
 	<bean id="manageRenderer" class="com.open.cmmn.web.ManagePaginationRenderer" />
 	<bean id="popRenderer" class="com.open.cmmn.web.PopPaginationRenderer" />
+	<bean id="modalRenderer" class="com.open.cmmn.web.modalPaginationRenderer" />
 	<bean id="popRenderer2" class="com.open.cmmn.web.Pop2PaginationRenderer" />
 	<bean id="formRenderer" class="com.open.cmmn.web.FormPaginationRenderer" />
 	<bean id="cmnctRenderer" class="com.open.cmmn.web.CmnctPaginationRenderer" />
@@ -81,6 +82,7 @@
 			<map>
 				<entry key="manage" value-ref="manageRenderer" />
 				<entry key="pop" value-ref="popRenderer" />
+				<entry key="modal" value-ref="modalRenderer" />
 				<entry key="pop2" value-ref="popRenderer2" />
 				<entry key="form" value-ref="formRenderer" />
 				<entry key="cmnct" value-ref="cmnctRenderer" />
