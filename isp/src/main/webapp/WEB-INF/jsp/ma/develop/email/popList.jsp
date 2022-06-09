@@ -105,9 +105,6 @@ function fncOneCheck(obj){
 }  
 
 
-
-$('[name="data"]:not(:checked)');
-
 <%-- 체크 상태 체크 --%>    
 function fncCheckLength(){
 	var total = $(".checkbox").length;
