@@ -51,8 +51,8 @@ public class LoginController {
 	/** fileUploadProperties */
 	@Resource(name = "fileUploadProperties")
 	Properties fileUploadProperties;
-	
-	/**
+	   
+	/** 
 	 * MappingJackson2JsonView.
 	 */  
 	@Resource
@@ -135,7 +135,7 @@ public class LoginController {
 					 
 					MnVO auth = new MnVO();
     				auth.setLvl("2");
-    				auth.setMenuCl("ma");
+    				auth.setMenuCl("ma");  
     				auth.setSchEtc03("LAYOUT");
     				auth.setAuthCode(userLoginVO.getAuthCode());
     				List<String> authList = (List<String>) cmmnService.selectList(auth, "Mn.menuAuthSelectList");;
@@ -148,7 +148,7 @@ public class LoginController {
 					menuVO.setLvl("1");
 					menuVO.setMenuCl("ma");
 					menuVO.setSchEtc03("LAYOUT");
-					
+					 
 					menuVO.setAuthCode(userLoginVO.getAuthCode());
 					List<MnVO> menuList = (List<MnVO>) cmmnService.selectList(menuVO, "Mn.menuSelectList");
 					menuVO.setMenuList(menuList);

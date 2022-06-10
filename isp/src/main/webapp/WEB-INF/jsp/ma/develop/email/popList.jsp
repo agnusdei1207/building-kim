@@ -33,7 +33,7 @@
 							<td>${result.emName }</td>   
 							<td>${result.emId }</td>
 							<td>${result.emMail }</td>     
-						</tr>       
+						</tr>        
 					</c:forEach>      
 				</c:when>   
 				<c:otherwise>      
@@ -45,7 +45,7 @@
 </div>    
 <%-- ,tbl end --%>          
 <%-- paging start --%>    
-<div class="paging_wrap">      
+<div class="paging_wrap">           
 	<div class="paging">        
 		<ui:pagination paginationInfo="${paginationInfo}" type="pop" jsFunction="fncPageEtc" />  
 	</div> 
@@ -59,7 +59,7 @@
 
    
 var checked = window.opener.checked;
-              
+                
 $(function(){
 	for(var i = 0; i < checked.length; i++){
 		var id = checked[i].split("&")[0];     
@@ -120,21 +120,17 @@ function fncCheckLength(){
 
 <%-- 선택 버튼 --%>
 function fncPopChoose(){
-	   
-	var html = "";      
-	 
+	var html = "";        
 	for(var i = 0; i < checked.length; i++){  
-		            
 		var id = checked[i].split("&")[0];           
 		var mail = checked[i].split("&")[1];
-		        
 		<%-- id 중복 방지를 위해 hyphen '-' 사용--%>
 		html += '<li class="mail_select_obj" id="'+ id +'-">';     
 		html += mail;                                              
 		html += '<a class="mail_del btn_del cursor" onclick="fncUserDel(\''+ id +'\', \''+ checked[i] +'\');">x</a>';
 		html += '</li>';
 	}         
-	<%-- 목록 생성 --%>
+	<%-- 목록 생성 --%>  
 	opener.$("#receiver").html(html);
 	<%-- 리스트 닫기 --%>
 	self.close();

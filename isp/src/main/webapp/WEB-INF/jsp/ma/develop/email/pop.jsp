@@ -9,12 +9,12 @@
 		<ul class="tab js-tab tab_menu">     
 		    <li class="cursor current"><a onclick="selectDivn(this,'ft')">사용자</a></li> 
 		    <li class="cursor"><a onclick="selectDivn(this,'ma')">관리자</a></li>  
-		</ul>                         
+		</ul>                              
 		<div class="search_box">                                   
 			<form name="popFrm" id="popFrm" method="post"  onsubmit="return false;">   
 				<input type="hidden" name="popPageIndex" id="popPageIndex" value="${searchVO.popPageIndex }" />      
 				<input type="hidden" name="popDivn" id="popDivn" value="${searchVO.popDivn }" placeholder="popDivn" />      
-				<fieldset>       
+				<fieldset>            
 					<legend>검색</legend>                  
 					<div class="search_basic">     
 						<strong class="tit">검색구분</strong>        
@@ -31,20 +31,20 @@
 				</fieldset>    
 			</form>       
 		</div>     
-		<%--// search  --%>      
-		<div class="popTbl">         
+		<%--// search  --%>       
+		<div class="popTbl">           
 		</div>
-</div>    
+</div>
       
-<script type="text/javaScript">    
+<script type="text/javaScript">     
         
 $(function(){               
 	fncPageEtc("popList", "popList.do", 1); 
-	return false;                
-});     
-            
-<%-- ft/ma 구분 --%>     
-function selectDivn(obj,popDivn){   
+	return false;                  
+});            
+                           
+<%-- ft/ma 구분 --%>                                            
+function selectDivn(obj,popDivn){           
 	$("#popDivn").val(popDivn);
 	$(obj).parent('li').siblings().removeClass("current");
 	$(obj).parent('li').addClass("current");

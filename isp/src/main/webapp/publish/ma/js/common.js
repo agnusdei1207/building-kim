@@ -193,7 +193,13 @@ var fncDate = function(){
 	var fmt = "yy.mm.dd"; 
 	switch (setDate.length) {
 		case 1: getId ="#"+setDate[0];break;
-		case 2: if(setDate[1] != ''){getId ="#"+setDate[0]+", #"+setDate[1];break;}else{getId ="#"+setDate[0];break;}
+		case 2: 
+			if(setDate[1] != ''){
+				getId ="#"+setDate[0]+", #"+setDate[1];break;
+			}else{
+				getId ="#"+setDate[0];
+				break;
+			}
 		case 3: if(setDate[1] != ''){getId ="#"+setDate[0]+", #"+setDate[1];fmt=setDate[2];break;}else{getId ="#"+setDate[0];fmt=setDate[2];break;}
 	}
 	
