@@ -16,7 +16,6 @@
 	</div>     
 </form>        
               
-       
 <script type="text/javascript">   
           
 var num = $("[id^=tbl_wrap_]").length + 1;   

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.Stc">
+	<sql id="Where">
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND VC.ADDRESS LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+	 	</if>
+		<if test='schEtc03 !=null and schEtc03 !=""'>
+				AND VC.AREA = #{schEtc03}
+		</if>
+		<if test='schEtc04 !=null and schEtc04 !=""'>
+				AND VC.COM = #{schEtc04}			
+		</if>
+	</sql>
+	
+	<select id="selectList" parameterType="stcVO" resultType="stcVO">
+		/* Mgr0149.selectList */
+		<![CDATA[
+			SELECT
+				  COM									com
+				, AREA									area
+				, ADDRESS								address
+				, DATE_FORMAT(VISIT_DATE, '%Y.%m.%d')	visitDate
+			FROM t_stc VC
+			WHERE 1=1       
+		]]>
+			<if test='schEtc02 != null and schEtc02 !=""'>
+				AND DATE_FORMAT(VC.VISIT_DATE, '%Y') = #{schEtc02}
+			</if>
+			<include refid="Where"/>
+			<if test='schEtc05 != null and schEtc05 != ""'>
+				<choose>
+					<when test='schEtc01.equals("Y")'>
+						AND DATE_FORMAT(VC.VISIT_DATE, '%Y') = #{schEtc05}
+					</when>
+					<when test='schEtc01.equals("M")'>
+						AND DATE_FORMAT(VC.VISIT_DATE, '%m') = #{schEtc05}
+					</when>
+				</choose>
+			</if>
+			<if test='schEtc06 !=null and schEtc06 !=""'>
+				AND VC.AREA = #{schEtc06}
+			</if>
+			<choose>
+				<when test='schEtc15 != null and schEtc15 !="" and schEtc15.equals("E") '>
+					ORDER BY VC.VISIT_DATE DESC
+				</when>
+				<otherwise>
+					ORDER BY VC.VISIT_DATE DESC
+					LIMIT  #{firstIndex} , #{recordCountPerPage}
+				</otherwise>
+			</choose>
+	</select>
+	
+	<select id="selectCount" parameterType="stcVO" resultType="int">
+		/* Mgr0149.selectCount */
+		<![CDATA[
+			SELECT
+				COUNT(VC.COM)		cnt
+			FROM t_stc VC
+			WHERE 1=1
+		]]>
+			<if test='schEtc02 != null and schEtc02 !=""'>
+				AND DATE_FORMAT(VC.VISIT_DATE, '%Y') = #{schEtc02}
+			</if>
+			<include refid="Where"/>
+			<if test='schEtc05 != null and schEtc05 != ""'>
+				<choose>
+					<when test='schEtc01.equals("Y")'>
+						AND DATE_FORMAT(VC.VISIT_DATE, '%Y') = #{schEtc05}
+					</when>
+					<when test='schEtc01.equals("M")'>
+						AND DATE_FORMAT(VC.VISIT_DATE, '%m') = #{schEtc05}
+					</when>
+				</choose>
+			</if>
+			<if test='schEtc06 !=null and schEtc06 !=""'>
+				AND VC.AREA = #{schEtc06}
+			</if>
+	</select>
+	
+	<select id="yearList" parameterType="stcVO" resultType="stcVO">
+		/* Mgr0149.yearList */
+		<![CDATA[
+			SELECT
+				DATE_FORMAT(VISIT_DATE, '%Y')	year
+			FROM t_stc
+			GROUP BY DATE_FORMAT(VISIT_DATE, '%Y')
+			ORDER BY DATE_FORMAT(VISIT_DATE, '%Y') DESC
+		]]>
+	</select>
+
+	<update id="deleteContents" parameterType="stcVO">
+		/* Mgr0149.deleteContents */
+		<![CDATA[
+			DELETE
+			FROM t_ciap_total
+		]]>
+	</update>
+	
+	<insert id="excelInsertContents" parameterType="stcVO">
+		<selectKey resultType="String" keyProperty="ciapTotalSeq" order="BEFORE">
+	        SELECT IFNULL(MAX(CT.CIAP_TOTAL_SEQ)+1,1) FROM t_ciap_total CT
+	    </selectKey>		
+			INSERT INTO t_ciap_total(
+				  CIAP_TOTAL_SEQ
+				, COM
+				, AREA
+				, ADDRESS
+				, VISIT_DATE
+			)
+			VALUES 
+			<foreach item="item" index="index" collection="excelList" separator=" , ">
+				(
+				  #{ciapTotalSeq} + #{index}	
+				, #{item.com}
+				, #{item.area}
+				, #{item.address}
+				, STR_TO_DATE(REGEXP_REPLACE(#{item.visitDate},'[^0-9]',''),'%Y%m%d')
+				)
+			</foreach>
+	</insert>
+	
+	<select id="yearSelectList" parameterType="stcVO" resultType="stcVO">
+		/* Mgr0149.yearSelectList */
+		<![CDATA[
+			SELECT
+			  	  CONCAT(VVC.VISIT_DATE,' ','년')	visitDate
+			  	, VVC.VISIT_DATE	visitDateReal
+				, SUM(VVC.AREA1)	area1
+				, SUM(VVC.AREA2)	area2
+				, SUM(VVC.AREA3)	area3
+				, SUM(VVC.AREA4)	area4
+				, SUM(VVC.AREA5)	area5
+				, SUM(VVC.AREA6)	area6
+				, SUM(VVC.AREA7)	area7
+			FROM (SELECT
+					  IF(VC.AREA='수도권',1,0)	AREA1
+					, IF(VC.AREA='경상권',1,0)	AREA2
+					, IF(VC.AREA='충청권',1,0)	AREA3
+					, IF(VC.AREA='전라권',1,0)	AREA4
+					, IF(VC.AREA='강원권',1,0)	AREA5
+					, IF(VC.AREA='제주권',1,0)	AREA6
+					, IF(VC.AREA NOT REGEXP '수도권|경상권|충청권|전라권|강원권|제주권', 1,0) AREA7
+					, DATE_FORMAT(VC.VISIT_DATE,'%Y')	VISIT_DATE
+				FROM t_stc VC
+				WHERE 1=1
+		]]>
+			<if test='schEtc02 != null and schEtc02 !=""'>
+				AND DATE_FORMAT(VC.VISIT_DATE, '%Y') = #{schEtc02}
+			</if>
+			<include refid="Where"/>		
+		<![CDATA[
+					) VVC
+			GROUP BY VVC.VISIT_DATE
+			ORDER BY VVC.VISIT_DATE DESC
+		]]>
+	</select>
+	
+	<select id="monthSelectList" parameterType="stcVO" resultType="stcVO">
+		/* Mgr0149.monthSelectList */
+		<![CDATA[
+			SELECT
+			  	  CONCAT(VVC.VISIT_DATE,' ','월')	visitDate
+			  	, VVC.VISIT_DATE	visitDateReal
+				, SUM(VVC.AREA1)	area1
+				, SUM(VVC.AREA2)	area2
+				, SUM(VVC.AREA3)	area3
+				, SUM(VVC.AREA4)	area4
+				, SUM(VVC.AREA5)	area5
+				, SUM(VVC.AREA6)	area6
+				, SUM(VVC.AREA7)	area7
+			FROM (SELECT
+					  IF(VC.AREA='수도권',1,0)	AREA1    
+					, IF(VC.AREA='경상권',1,0)	AREA2
+					, IF(VC.AREA='충청권',1,0)	AREA3
+					, IF(VC.AREA='전라권',1,0)	AREA4
+					, IF(VC.AREA='강원권',1,0)	AREA5
+					, IF(VC.AREA='제주권',1,0)	AREA6
+					, IF(VC.AREA NOT REGEXP '수도권|경상권|충청권|전라권|강원권|제주권', 1,0) AREA7
+					, DATE_FORMAT(VC.VISIT_DATE,'%m')	VISIT_DATE
+				FROM t_stc VC
+				WHERE DATE_FORMAT(VC.VISIT_DATE,'%Y') = #{schEtc02}
+		]]>
+			<include refid="Where"/>		
+		<![CDATA[
+				) VVC
+			GROUP BY VVC.VISIT_DATE
+			ORDER BY VVC.VISIT_DATE ASC
+		]]>
+	</select>	
+</mapper>

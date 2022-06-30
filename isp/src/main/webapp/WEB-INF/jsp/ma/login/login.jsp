@@ -20,43 +20,7 @@
 <script type="text/javascript" src="/publish/ma/js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="/publish/ma/js/common.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		if("${message}"!=""){
-			alert("${message}");
-		}
-		if("${useYn}"!=""){
-			alert("${useYn}");
-		}
-		$("#btn_login").click(function(){
-			fncLogin();
-			return false;
-		});
-		$("#pwd").keyup(function(){
-			if(event.keyCode == 13){
-				fncLogin();
-				return false;
-			}
-		});
-	});
-	var fncLogin = function(){
-		if($("#id").val() == ""){
-			alert("아이디를 입력해 주세요.");
-			$("#id").focus();
-			return false;
-		}
-		if($("#pwd").val() == ""){
-			alert("패스워드를 입력해 주세요.");
-			$("#pwd").focus();
-			return false;
-		}
-		<%-- if($("#id_save").prop("checked") == true){
-			$.cookie("id_save", $("#id").val(), 30);
-		} --%>
-		$("#defaultFrm").attr({"action":"/loginProcess.do"}); 
-		$("#defaultFrm").submit();
-	};
-</script>
+
 </head>
 <body>
     <div id="skipnavi">
@@ -76,12 +40,12 @@
                         <fieldset>
                             <legend>로그인폼</legend>
                             <div class="login_input">
-                                <ul>
+                                <ul> 
                                     <li>
-                                        <form:input path="id" class="text" tabindex="1" id="id" placeholder="아이디" maxlength="10" />
+                                        <form:input path="id" class="text" tabindex="1" id="id" value="admin" placeholder="아이디" maxlength="10" />
                                     </li>
                                     <li>
-                                        <form:password path="pwd" class="text" tabindex="2" id="pwd" placeholder="패스워드" maxlength="50" />
+                                        <form:password path="pwd" class="text" tabindex="2" id="pwd" value="1111" placeholder="패스워드" maxlength="50" />
                                     </li>
                                 </ul>
                                 <button type="button" class="btn_login" onclick="javascript:fncLogin(); return false;">로그인</button>
@@ -97,5 +61,48 @@
             </form:form>
         </div>
     </div>
+    
+<script type="text/javascript">
+
+$(document).ready(function(){  
+	if("${message}"!=""){
+	alert("${message}");
+	}
+	if("${useYn}"!=""){
+		alert("${useYn}");
+	}
+	$("#btn_login").click(function(){
+		fncLogin();
+		return false;
+	});
+	  
+	$("#pwd").focus();
+	$("#pwd").keyup(function(){
+		if(event.keyCode == 13){
+			fncLogin();
+			return false;
+		}
+	});
+	
+});
+var fncLogin = function(){
+	if($("#id").val() == ""){
+		alert("아이디를 입력해 주세요.");
+		$("#id").focus();
+		return false;
+	}
+	if($("#pwd").val() == ""){
+		alert("패스워드를 입력해 주세요.");
+		$("#pwd").focus();
+		return false;
+	}
+	<%-- if($("#id_save").prop("checked") == true){
+		$.cookie("id_save", $("#id").val(), 30);
+	} --%>
+	$("#defaultFrm").attr({"action":"/loginProcess.do"}); 
+	$("#defaultFrm").submit();
+};
+</script>
+
 </body>
 </html>

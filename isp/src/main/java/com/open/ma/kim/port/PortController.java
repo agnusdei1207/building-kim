@@ -99,8 +99,6 @@ public class PortController {
 		return ".mLayout:"+ folderPath + "view";
 	}
   
-
-	 
 	@RequestMapping(folderPath + "{procType}Form.do")
 	public String form(@ModelAttribute("searchVO") PortVO searchVO, Model model,@PathVariable String procType, HttpServletRequest request) throws Exception {
 			
@@ -113,7 +111,6 @@ public class PortController {
 		return ".mLayout:"+ folderPath + "form";
 	}
  
-	
 	@RequestMapping(value = folderPath + "{procType}Proc.do", method = RequestMethod.POST)
 	public String proc(@ModelAttribute("searchVO") PortVO searchVO, Model model, SessionStatus status,@PathVariable String procType, HttpServletRequest request) throws Exception {
 		

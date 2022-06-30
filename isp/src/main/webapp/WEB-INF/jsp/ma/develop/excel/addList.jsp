@@ -66,7 +66,7 @@
 	<div class="btn_right">     
 		<a href="javascript:void(0)" class="btn btn_mdl btn_save" onclick="fncPageBoard('write','insertForm.do');">등록</a>
        </div>       
-	<div class="btn_left">       
+	<div class="btn_left">         
 		<a href="javascript:void(0)" class="btn btn_excel btn_sml03" onclick="fncExcelUp();"><span>엑셀 파일 업로드</span></a>
         <input type="hidden" name="excelFileId" id="excelFileId"/>
         <iframe name="excelFileIdFrame" id="excelFileIdFrame" src="/atch/fileUpload.do?atchFileId=&fileCnt=1&atchFileIdNm=excelFileId&updateType=upload" style="width: 100%;" height="50" frameborder="0" title="파일 업로드 폼"></iframe>

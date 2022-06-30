@@ -15,7 +15,7 @@
 					<col style="width:30%;"> 
 				</colgroup>             
 				<tbody>          
-					<tr>  
+					<tr>     
 						<th scope="row"><strong class="th_tit">받는사람</strong></th>
 						<td colspan="3">
 							<ul id="receiver" class="mail_select_list">
@@ -52,14 +52,14 @@
  			<a href="javascript:void(0);" class="btn btn_mdl btn_cancel" onclick="fncPageBoard('view','view.do');">취소</a>
 		</div>  
 	</form>     
-</div>             
+</div>              
    
 <div id="display_view1" class="layer_popup pop_size800 js-popup">
 </div> 
   
-<script type="text/javascript">
+<script type="text/javascript"> 
 
-<%-- 체크 상태 저장 --%>       
+<%-- 체크 상태 배열 --%>       
 var checked = new Array();  
                     
 <%-- 보내기 버튼 --%>       
