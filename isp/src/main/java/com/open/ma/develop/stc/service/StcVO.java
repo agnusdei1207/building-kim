@@ -9,79 +9,77 @@ import com.open.cmmn.model.CmmnDefaultVO;
 
 @Alias("stcVO")
 public class StcVO extends CmmnDefaultVO implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 2172623835339565860L;
 	
 	private String ciapTotalSeq;
 	private String com;
 	private String area;
 	private String address;
-	private String visitDate;
+	private String visitDate; 
 	private String atchFileId;
+	private String excelRequest;
+	private String totalSeq;
 	
-	private String visitDateReal;
+	private String visitTime;
 	List<StcVO> excelList;
 	
 	private String year;
-	
 	private String year1;
-	
 	private String year2;
-	
 	private String year3;
-	
 	private String year4;
-	
 	private String year5;
 	
 	private String mon1;
-	
 	private String mon2;
-	
 	private String mon3;
-	
 	private String mon4;
-	
 	private String mon5;
-	
 	private String mon6;
-	
 	private String mon7;
-	
 	private String mon8;
-	
 	private String mon9;
-	
 	private String mon10;
-	
 	private String mon11;
-	
 	private String mon12;
 	
 	private String area1;
-	
 	private String area2;
-	
 	private String area3;
-	
 	private String area4;
-	
-	private String area5;
-	
+	private String area5;  
 	private String area6;
-	
-	private String area7;
-	
+	private String total;
 	
 	
-	public String getVisitDateReal() {
-		return visitDateReal;
+	
+	public String getTotalSeq() {
+		return totalSeq;
 	}
 
-	public void setVisitDateReal(String visitDateReal) {
-		this.visitDateReal = visitDateReal;
+	public void setTotalSeq(String totalSeq) {
+		this.totalSeq = totalSeq;
+	}
+
+	public String getExcelRequest() {
+		return excelRequest;
+	}
+
+	public void setExcelRequest(String excelRequest) {
+		this.excelRequest = excelRequest;
+	}
+
+	public String getVisitTime() {
+		return visitTime;
+	}
+
+	public void setVisitTime(String visitTime) {
+		this.visitTime = visitTime;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public String getYear() {
@@ -332,11 +330,12 @@ public class StcVO extends CmmnDefaultVO implements Serializable {
 		this.area6 = area6;
 	}
 
-	public String getArea7() {
-		return area7;
+	public String getTotal() {
+		return total;
 	}
 
-	public void setArea7(String area7) {
-		this.area7 = area7;
+	public void setTotal(String total) {
+		this.total = total;
 	}
+	
 }

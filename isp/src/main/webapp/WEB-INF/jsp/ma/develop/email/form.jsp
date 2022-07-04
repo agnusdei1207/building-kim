@@ -93,7 +93,7 @@ function openModal(){
 	fncLoadingStart();        
 	$.ajax({             
 	    method: "POST",   
-	    url: "modal.do",	                                                  
+	    url: "modal.do",	                                                   
 	    data : $("#defaultFrm").serialize(),    
 	    dataType: "HTML",          
 	    success: function(data) {          

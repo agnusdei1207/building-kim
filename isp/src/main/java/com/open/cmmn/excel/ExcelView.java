@@ -58,7 +58,7 @@ public class ExcelView extends AbstractView {
 		cf.setUTF16(true);	// 
 		xls.setConfiguration(cf);
 
-		InputStream is = null;
+		InputStream is = null; 
 
 		try {
 			is = readTemplate((String)model.get("source") );
@@ -97,11 +97,11 @@ public class ExcelView extends AbstractView {
 			}
 		}
 	}
-
+    
     private InputStream readTemplate(String finalTemplate) throws FileNotFoundException {
     	String CONTEXT_PATH = getServletContext().getRealPath("");
-        String templateFilePath = CONTEXT_PATH+ File.separator + excelPath + File.separator + finalTemplate;
-	    //////System.out.println("templateFilePath ================>"+templateFilePath);
+        String templateFilePath = CONTEXT_PATH+ "WEB-INF" +File.separator + excelPath + File.separator + finalTemplate; 
+	    //System.out.println("templateFilePath ================>"+templateFilePath); 
         return new FileInputStream(templateFilePath);
     }
 
@@ -123,3 +123,4 @@ public class ExcelView extends AbstractView {
         }
     }
 }
+
