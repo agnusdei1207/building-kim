@@ -14,7 +14,7 @@
 			<form name="popFrm" id="popFrm" method="post" onsubmit="return false;">
 				<table class="tbl_row_type02"> 
 					<colgroup>
-						<col width="25%">
+						<col width="25%">  
 						<col width="*"> 
 					</colgroup>    
 					<tbody>

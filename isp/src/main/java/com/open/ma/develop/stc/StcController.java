@@ -94,16 +94,19 @@ public class StcController {
 		return ".mLayout:"+ folderPath + "list";
 	}    
 	
-	 
+	  
 	@SuppressWarnings("unchecked") 
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model) throws Exception {
 		   
 		System.out.println("클릭했다~~ :  " + searchVO.getPageCnt());
-		  
-		int pageUnit = searchVO.getPageCnt();
-		searchVO.setPageSize(pageUnit);   
-		searchVO.setPageUnit(9);
+		            
+		if(searchVO.getPageCnt() == 0){
+			searchVO.setPageCnt(9);
+		}
+		 
+		searchVO.setPageSize(9);   
+		searchVO.setPageUnit(searchVO.getPageCnt());
                
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());

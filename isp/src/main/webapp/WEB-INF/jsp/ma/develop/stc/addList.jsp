@@ -6,8 +6,8 @@
 		<i class="i_all"></i>       
 		<span>
 			전체 : <strong><c:out value="${paginationInfo.totalRecordCount}"/></strong> 건(<c:out value="${searchVO.pageIndex}/${paginationInfo.totalPageCount}"/> Page)
-		</span> 
-	</div>  
+		</span>        
+	</div>   
 	<div class="tbl_right">  
 		<select name="pageCnt" id="pageCnt" class="w100"> 
 			<option value="10" <c:out value="${searchVO.pageUnit eq '10' ? 'selected=\"selected\"':''}"/>>10개</option>
@@ -16,8 +16,8 @@
 			<option value="100" <c:out value="${searchVO.pageUnit eq '100' ? 'selected=\"selected\"':''}"/>>100개</option>
 		</select>
 	</div>
-</div>
-
+</div>  
+  
 <div class="tbl_wrap">
 	<table class="tbl_col_type01">
 		<caption>목록</caption>
@@ -71,7 +71,7 @@
 
 <script type="text/javascript">     
 <%-- 페이지 행 개수 --%>
-$("#pageCnt").change(function(){
+$("#pageCnt").change(function(){ 
 	fncPageBoard('addList','addList.do',1);
 });
 </script>

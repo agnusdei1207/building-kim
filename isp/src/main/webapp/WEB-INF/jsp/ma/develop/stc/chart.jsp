@@ -11,7 +11,7 @@
 </div>
     
 <%-- 엑셀 업로드 & 다운 --%>      
-<div class="tbl_top mar_t15">    
+<div class="tbl_top mar_t15">      
 	<div class="tbl_left"></div>      
 	<div class="tbl_right">           
         <a href="javascript:void(0);" class="btn btn_excel btn_sml03" onclick="fncPageBoard('list','excelDown.do')"><span>엑셀 다운로드</span></a>  
@@ -44,7 +44,7 @@
 				<th scope="col">제주권</th>
 				<th scope="col">합계</th>    
 			</tr>         
-		</thead>            
+		</thead>              
 		<tbody>       
 			<c:choose>      
 				<c:when test="${fn:length(resultList) gt 0}">            

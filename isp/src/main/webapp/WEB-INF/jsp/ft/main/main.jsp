@@ -93,7 +93,7 @@
 			<h2 class="hidden">주메뉴</h2>
 			<div id="gnb_area">
 				<nav id="gnb">
-					<ul class="depth2 clear">
+					<ul class="depth2 clear">   
 						<c:if test="${fn:length(allMenu) gt 0 }">    
 							<c:forEach var="main" items="${allMenu }">
 								<li class="depth1_1">
@@ -114,7 +114,7 @@
 		<!-- // header   -->   
 		<!-- container -->        
 		<div id="container">           
-			<div class="main_slider">     
+			<div class="main_slider">      
 				<ul class="slider">          
 					<c:choose> 
 						<c:when test="${fn:length(ceoFileSnList) gt 0 }">

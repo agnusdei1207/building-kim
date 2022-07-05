@@ -7,16 +7,16 @@
 	    <li class="btn_tap current"><a href="javascript:void(0)" onclick="fncClickTab('Y')">년도별</a></li>
 	    <li class="btn_tap"><a href="javascript:void(0)" onclick="fncClickTab('M')">월별</a></li>
 	</ul>      
-	<%-- search  --%>             
+	<%-- search  --%>              
 	<div class="search_box">     
 		<form name="defaultFrm" id="defaultFrm" method="post">  
-			<input type="hidden" id="seq" name="seq"/>            
+			<input type="hidden" id="seq" name="seq"/>             
 			<input type="hidden" id="pageIndex" name="pageIndex"/>  
 			<%-- 연도 & 월별 구분 --%>
 			<input type="hidden" name="schEtc01" id="schEtc01" value="<c:out value='${searchVO.schEtc01}'/>"/>
-			<%-- 목록 방문일  --%>
+			<%-- 목록 방문일  --%>  
 			<input type="hidden" name="schEtc05" id="schEtc05">
-			<%-- 목록 권역 값  --%>
+			<%-- 목록 권역 값  --%> 
 			<input type="hidden" name="schEtc06" id="schEtc06">
 			<fieldset>       
 				<legend>검색</legend>              
@@ -52,31 +52,31 @@
 					</span> 
 				</div>   
 			</fieldset>  
-		</form>  
-	</div>        
-	<%--// search  --%>     
-	<div class="chartTbl">   
-	</div>   
-	<div class="tbl">
-	</div>
+		<%--// search  --%>     
+		<div class="chartTbl">   
+		</div>   
+		<div class="tbl">      
+		</div>
+	</form>
+	</div>          
 </div>         
  
 <script type="text/javaScript">  
     
 $(function(){         
 	<%-- defult 목록 선택 --%>    
-	fncClickTab("Y");  
-	  
-	fncPageBoard('addList','addList.do',1);     
-	chart();  
-	return false;        
+	if("${searchVO.schEtc01}" == null || "${searchVO.schEtc01}" == ""){
+		fncClickTab("Y");  
+	}  
+	
+	return false;              
 });
    
 <%-- 차트 --%>            
 function chart(){       
 	var url = "chart.do"; 
 	fncLodingStart();   
-	$.ajax({         
+	$.ajax({           
 		method: "POST",      
 		url: url,
 		data : $("#defaultFrm").serialize(),
@@ -86,7 +86,7 @@ function chart(){
 		 	fncLodingEnd();  
 		}     
 	});   
-};    
+};     
         
 <%-- 연도 / 월별 선택 --%>        
 function fncClickTab(divn){        
@@ -99,12 +99,12 @@ function fncClickTab(divn){
 	}  
 	if(divn == "M"){    
 		$(".sel_year_option").remove();
-	}
+	}   
 	    
 	$("#schEtc01").val(divn); 
-	$("#schEtc05").val("");
+	$("#schEtc05").val("");  
 	$("#schEtc06").val("")
-	fncPageBoard('addList','addList.do',1);  
+	fncPageBoard('addList','addList.do',1);    
 	chart();
 	return false;
 };  
