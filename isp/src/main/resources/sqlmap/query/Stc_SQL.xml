@@ -30,7 +30,13 @@
 		<include refid="Where"/>
 		<if test='schEtc02 != null and schEtc02 != "" '> 
 			   AND	DATE_FORMAT(TS.VISIT_DATE, '%Y') = #{schEtc02}   
-		</if>        
+		</if>
+		<if test='schEtc05 != null and schEtc05 != "" '> 
+			   AND	DATE_FORMAT(TS.VISIT_DATE, '%Y') = #{schEtc05}   
+		</if>          
+		<if test='schEtc06 != null and schEtc06 != "" '> 
+			   AND	AREA = #{schEtc06}   
+		</if>
 		<![CDATA[          
 	    	 ORDER	BY visitDate DESC
 			 LIMIT	#{firstIndex} , #{recordCountPerPage}
@@ -38,17 +44,23 @@
 	</select>     
 	 
 	<!-- 목록 조회 카운트 -->	 
-	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
+	<select id="selectCount" parameterType="stcVO" resultType="int">
 		/* Stc.selectCount */
 		<![CDATA[    
 			SELECT	COUNT(TS.COM)
 			  FROM	t_stc TS
 			 WHERE	1=1          
-		]]>    
+		]]>     
 		<include refid="Where"/> 
 		<if test='schEtc02 != null and schEtc02 != "" '>
 			   AND	DATE_FORMAT(TS.VISIT_DATE, '%Y') = #{schEtc02}   
 		</if> 
+		<if test='schEtc05 != null and schEtc05 != "" '> 
+			   AND	DATE_FORMAT(TS.VISIT_DATE, '%Y') = #{schEtc05}    
+		</if>
+		<if test='schEtc06 != null and schEtc06 != "" '> 
+			   AND	AREA = #{schEtc06}   
+		</if>
 	</select>
 	  
 	

@@ -112,6 +112,9 @@ public class CmmnDefaultVO implements Serializable {
 
 	/** 페이지 사이즈 . */
 	private int pageSize; // properties에서 설정
+	
+	/** 페이즈 사이즈  **/
+	private int pageCnt; // 
 
 	/** 검색 페이지 사이즈 . */
 	private int schPageUnit; // properties에서 설정
@@ -578,6 +581,17 @@ public class CmmnDefaultVO implements Serializable {
 	 */
 	public int getPageSize() {
 		return pageSize;
+	}
+
+	  
+	
+	
+	public int getPageCnt() {
+		return pageCnt;
+	}
+
+	public void setPageCnt(int pageCnt) {
+		this.pageCnt = pageCnt;
 	}
 
 	/**

@@ -50,14 +50,14 @@
 				<c:when test="${fn:length(resultList) gt 0}">            
 					<c:forEach var="result" items="${resultList}" varStatus="status">
 						<tr>      
-							<td>${result.visitTime }</td>     
-							<td class="r"><fmt:formatNumber  value="${result.area1}" pattern="#,###" /> 건</td>     
-							<td class="r"><fmt:formatNumber  value="${result.area2}" pattern="#,###" /> 건</td> 
-							<td class="r"><fmt:formatNumber  value="${result.area3}" pattern="#,###" /> 건</td> 
-							<td class="r"><fmt:formatNumber  value="${result.area4}" pattern="#,###" /> 건</td> 
-							<td class="r"><fmt:formatNumber  value="${result.area5}" pattern="#,###" /> 건</td> 
-							<td class="r"><fmt:formatNumber  value="${result.area6}" pattern="#,###" /> 건</td> 
-							<td class="r"><fmt:formatNumber  value="${result.total}" pattern="#,###" /> 건</td> 
+							<td>${result.visitTime }</td>       
+							<td class="r"><fmt:formatNumber  value="${result.area1}" pattern="#,###" /><a href="javascript:void(0);" onclick="fncAddList('${result.visitDate}','수도권');"> 건</a></td>     
+							<td class="r"><fmt:formatNumber  value="${result.area2}" pattern="#,###" /><a href="javascript:void(0);" onclick="fncAddList('${result.visitDate}','경상권');"> 건</a></td> 
+							<td class="r"><fmt:formatNumber  value="${result.area3}" pattern="#,###" /><a href="javascript:void(0);" onclick="fncAddList('${result.visitDate}','충청권');"> 건</a></td> 
+							<td class="r"><fmt:formatNumber  value="${result.area4}" pattern="#,###" /><a href="javascript:void(0);" onclick="fncAddList('${result.visitDate}','전라권');"> 건</a></td> 
+							<td class="r"><fmt:formatNumber  value="${result.area5}" pattern="#,###" /><a href="javascript:void(0);" onclick="fncAddList('${result.visitDate}','강원권');"> 건</a></td> 
+							<td class="r"><fmt:formatNumber  value="${result.area6}" pattern="#,###" /><a href="javascript:void(0);" onclick="fncAddList('${result.visitDate}','제주권');"> 건</a></td> 
+							<td class="r"><fmt:formatNumber  value="${result.total}" pattern="#,###" /><a href="javascript:void(0);" onclick="fncAddList('${result.visitDate}','기타');"> 건</a></td> 
 						</tr>       
 					</c:forEach>   
 				</c:when>       
@@ -142,7 +142,7 @@ Highcharts.chart('chart01', {
 });
 Highcharts.setOptions({
     lang : {
-       thousandsSep:','
+       thousandsSep:',' 
     }
 }); 
 
@@ -157,7 +157,12 @@ function fncAddFileForm(){
 	    	view_show(1);
 	    }
 	});	
-}
+}  
 
-  
+<%-- 목록 클릭 시 조회 --%>  
+function fncAddList(schEtc05, schEtc06){
+	$("#schEtc05").val(schEtc05); // 방문일
+	$("#schEtc06").val(schEtc06); // 권역
+	fncPageBoard('addList','addList.do','1');
+}
 </script>

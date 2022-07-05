@@ -34,6 +34,7 @@ import com.open.cmmn.model.CmmnDefaultVO;
 import com.open.cmmn.model.FileVO;
 import com.open.cmmn.service.CmmnService;
 import com.open.cmmn.service.FileMngService;
+import com.open.cmmn.util.DateUtils;
 import com.open.cmmn.util.StringUtil;
 import com.open.ma.develop.excel.service.ExcelVO;
 import com.open.ma.develop.stc.service.StcVO;
@@ -78,25 +79,32 @@ public class StcController {
 	@RequestMapping(folderPath + "list.do")
 	public String list(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model) throws Exception {
 		
-    	List<ExcelVO> yearsList = (List<ExcelVO>) cmmnService.selectList(searchVO, PROGRAM_ID + ".yearsSelectList" );
+    	
+    	List<StcVO> yearsList = (List<StcVO>) cmmnService.selectList(searchVO, PROGRAM_ID + ".yearsSelectList" );
 		List<ExcelVO> comList = (List<ExcelVO>) cmmnService.selectList(searchVO, PROGRAM_ID + ".comSelectList" );
 		List<ExcelVO> areaList = (List<ExcelVO>) cmmnService.selectList(searchVO, PROGRAM_ID + ".areaSelectList" );
+		String thisYear = String.valueOf(DateUtils.getThisYear());
+		 
+		model.addAttribute("thisYear", thisYear);     
 		model.addAttribute("yearsList", yearsList);     
 		model.addAttribute("comList", comList);   
 		model.addAttribute("areaList", areaList);   
-
+  
 		
 		return ".mLayout:"+ folderPath + "list";
 	}    
 	
-	
+	 
 	@SuppressWarnings("unchecked") 
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model) throws Exception {
-		 
-		searchVO.setPageUnit(10);
-		searchVO.setPageSize(9); 
-             
+		   
+		System.out.println("클릭했다~~ :  " + searchVO.getPageCnt());
+		  
+		int pageUnit = searchVO.getPageCnt();
+		searchVO.setPageSize(pageUnit);   
+		searchVO.setPageUnit(9);
+               
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
 		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
@@ -121,8 +129,6 @@ public class StcController {
 	@RequestMapping(folderPath + "chart.do") 
 	public String chart(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
 		
-		System.out.println("schEtc02 : " + searchVO.getSchEtc02());
-		 
 		String divn = "";
 		if("".equals(StringUtil.nullString(searchVO.getSchEtc01())) || "Y".equals(searchVO.getSchEtc01())){
 			divn = "year";

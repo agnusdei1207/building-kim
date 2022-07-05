@@ -2,8 +2,20 @@
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
 
 <div class="tbl_top">
-	<div class="tbl_left"><i class="i_all"></i><span>전체 : <strong>${paginationInfo.totalRecordCount}</strong> 건(${searchVO.pageIndex}/${paginationInfo.totalPageCount} Page) </span></div>
-	<div class="tbl_right"></div>
+	<div class="tbl_left">
+		<i class="i_all"></i>       
+		<span>
+			전체 : <strong><c:out value="${paginationInfo.totalRecordCount}"/></strong> 건(<c:out value="${searchVO.pageIndex}/${paginationInfo.totalPageCount}"/> Page)
+		</span> 
+	</div>  
+	<div class="tbl_right">  
+		<select name="pageCnt" id="pageCnt" class="w100"> 
+			<option value="10" <c:out value="${searchVO.pageUnit eq '10' ? 'selected=\"selected\"':''}"/>>10개</option>
+			<option value="30" <c:out value="${searchVO.pageUnit eq '30' ? 'selected=\"selected\"':''}"/>>30개</option>
+			<option value="50" <c:out value="${searchVO.pageUnit eq '50' ? 'selected=\"selected\"':''}"/>>50개</option>
+			<option value="100" <c:out value="${searchVO.pageUnit eq '100' ? 'selected=\"selected\"':''}"/>>100개</option>
+		</select>
+	</div>
 </div>
 
 <div class="tbl_wrap">
@@ -55,3 +67,11 @@
 	</div>
 </div>
 <%-- //paging end--%>
+   
+
+<script type="text/javascript">     
+<%-- 페이지 행 개수 --%>
+$("#pageCnt").change(function(){
+	fncPageBoard('addList','addList.do',1);
+});
+</script>
