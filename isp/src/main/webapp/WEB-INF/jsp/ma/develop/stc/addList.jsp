@@ -1,9 +1,9 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
-
-<div class="tbl_top">
+   
+<div class="tbl_top" style="margin-top:40px;">
 	<div class="tbl_left">
-		<i class="i_all"></i>       
+		<i class="i_all"></i>        
 		<span>
 			전체 : <strong><c:out value="${paginationInfo.totalRecordCount}"/></strong> 건(<c:out value="${searchVO.pageIndex}/${paginationInfo.totalPageCount}"/> Page)
 		</span>        

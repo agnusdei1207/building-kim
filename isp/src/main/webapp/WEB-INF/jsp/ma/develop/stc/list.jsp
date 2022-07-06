@@ -6,12 +6,12 @@
 	<ul class="tab js-tab tab_menu">
 	    <li class="btn_tap current"><a href="javascript:void(0)" onclick="fncClickTab('Y')">년도별</a></li>
 	    <li class="btn_tap"><a href="javascript:void(0)" onclick="fncClickTab('M')">월별</a></li>
-	</ul>      
+	</ul>         
+	<form name="defaultFrm" id="defaultFrm" method="post"> 
 	<%-- search  --%>              
-	<div class="search_box">     
-		<form name="defaultFrm" id="defaultFrm" method="post">  
+	<div class="search_box">        
 			<input type="hidden" id="seq" name="seq"/>             
-			<input type="hidden" id="pageIndex" name="pageIndex"/>  
+			<input type="hidden" id="pageIndex" name="pageIndex"/>   
 			<%-- 연도 & 월별 구분 --%>
 			<input type="hidden" name="schEtc01" id="schEtc01" value="<c:out value='${searchVO.schEtc01}'/>"/>
 			<%-- 목록 방문일  --%>  
@@ -51,14 +51,14 @@
 						<button type="button" class="btn btn_search" id="btn_search">검색</button>
 					</span> 
 				</div>   
-			</fieldset>  
+			</fieldset>    
+		</div> 
 		<%--// search  --%>     
 		<div class="chartTbl">   
 		</div>   
 		<div class="tbl">      
 		</div>
 	</form>
-	</div>          
 </div>         
  
 <script type="text/javaScript">  

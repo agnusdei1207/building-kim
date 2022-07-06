@@ -99,8 +99,6 @@ public class StcController {
 	@RequestMapping(folderPath + "addList.do")
 	public String addList(@ModelAttribute("searchVO") CmmnDefaultVO searchVO, ModelMap model) throws Exception {
 		   
-		System.out.println("클릭했다~~ :  " + searchVO.getPageCnt());
-		            
 		if(searchVO.getPageCnt() == 0){
 			searchVO.setPageCnt(9);
 		}
@@ -189,7 +187,7 @@ public class StcController {
 		    // 확장자 : 엑셀 2007 이상
 		    }else if("xlsx".equals(fileExtnnNm)){
 		    	list = this.xlsxReadList(filePath);
-		    }else{  
+		    }else{
 		    	model.addAttribute("error", "확장자가 엑셀파일이 아닙니다.");
 		    }  
 		    // 엑셀에서 추출한 데이터 DB 저장
@@ -197,7 +195,6 @@ public class StcController {
 		    	   
 	    		StcVO inData = new StcVO();
 	    		inData.setExcelList(list);     
-	    		System.out.println("값 나와라 뚝딱~! : " + inData.getAddress());
 	    		       
 	    		cmmnService.deleteContents(inData, PROGRAM_ID); // 기존 데이터 삭제
 	    		cmmnService.insertContents(inData, PROGRAM_ID +".excelInsertContents");
@@ -252,7 +249,7 @@ public class StcController {
 					
 					curCell = curRow.getCell(cellIndex);
 					
-					// cell 스타일이 다르더라도 String으로 변환 받음
+					// cell 스타일이 다르더라도 String으로 변환 받음 
 					if(curCell != null){
 						switch (curCell.getCellType()){
 						case HSSFCell.CELL_TYPE_FORMULA :

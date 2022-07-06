@@ -1,17 +1,17 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
 
-<%-- 차트 --%>
-<div class="main_chart">
-	<h2 class="m_title">전자파 민원 통계 현황</h2> 
-	<br/>
+<%-- 차트 --%>   
+<div class="main_chart">        
+	<h4 class="tit_page" style="font-size: 20px;">전자파 민원 통계 현황</h4>
+	<br/>   
 	<div class="chart_box">
 		<div id="chart01" class="w100p" style="height:100%"></div>
 	</div>
 </div>
     
-<%-- 엑셀 업로드 & 다운 --%>      
-<div class="tbl_top mar_t15">      
+<%-- 엑셀 업로드 & 다운 --%>           
+<div class="tbl_top mar_t15">         
 	<div class="tbl_left"></div>      
 	<div class="tbl_right">           
         <a href="javascript:void(0);" class="btn btn_excel btn_sml03" onclick="fncPageBoard('list','excelDown.do')"><span>엑셀 다운로드</span></a>  
@@ -138,7 +138,7 @@ Highcharts.chart('chart01', {
 		      fontFamily: 'Verdana, sans-serif'
 		    }
 		  }
-    }]
+    }] 
 });
 Highcharts.setOptions({
     lang : {
