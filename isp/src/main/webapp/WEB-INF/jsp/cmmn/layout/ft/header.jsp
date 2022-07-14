@@ -2,7 +2,7 @@
 <jsp:directive.include file="/WEB-INF/jsp/cmmn/incTagLib.jsp"/>
 <c:set var="url" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
-  
+   
 	<!-- header  -->
 		<div class="gnb_bg"></div>
 		<header id="header">
@@ -25,24 +25,26 @@
 						</c:choose>
 					</ul>
 				</div>         
-			</div>     
-			<!-- GNB -->
-			<h2 class="hidden">주메뉴</h2>
-			<div id="gnb_area">
-				<nav id="gnb">
-					<ul class="depth2 clear">
-						<c:if test="${fn:length(allMenu) gt 0 }">    
-							<c:forEach var="main" items="${allMenu }">
-									<li class="depth1_1">
-										<a href="${main.url }">${main.menuNm }</a>
-										<ul class="depthBox">
-											<c:forEach var="sub" items="${main.menuList }">
-												<li><a href="${sub.url }">${sub.menuNm }</a></li>
-											</c:forEach>
-										</ul>
-									</li>
+			</div>      
+			<!-- GNB -->      
+			<h2 class="hidden">주메뉴</h2>     
+			<div id="gnb_area">   
+				<nav id="gnb">           
+					<ul class="depth2 clear">            
+						<c:if test="${fn:length(allMenu) gt 0 }">            
+							<c:forEach var="main" items="${allMenu }">        
+									<c:if test="${(empty memberVO.meSeq and main.menuCd ne 'member') or (not empty memberVO.meSeq)}">
+										<li class="depth1_1">
+											<a href="${main.url }">${main.menuNm }</a>
+											<ul class="depthBox">
+												<c:forEach var="sub" items="${main.menuList }">
+													<li><a href="${sub.url }">${sub.menuNm }</a></li>
+												</c:forEach>
+											</ul>
+										</li>  
+									</c:if> 
 							</c:forEach>
-						</c:if>
+						</c:if> 
 					</ul>
 				</nav>  
 			</div>

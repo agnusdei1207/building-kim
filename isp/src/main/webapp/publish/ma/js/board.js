@@ -78,8 +78,8 @@ var fncPageBoard = function(){
 		  			   break;
 	  case 'update' :  if(seqNm.length > 0 && seqVal.length > 0){ for (var i = 0; i < seqNm.length; i++) { $("#"+seqNm[i]).val('');$("#"+seqNm[i]).val(seqVal[i]); } }
 	  					$("#defaultFrm").attr({"action" : url, "method" : "post", "target" : "_self", "onsubmit" : ""}).submit();//수정폼
-	                   break;
-	  case 'del'    :  if(confirm("삭z제하시겠습니까?")){
+	                   break;  
+	  case 'del'    :  if(confirm("삭제하시겠습니까?")){
 		  					if(seqNm.length > 0 && seqVal.length > 0){ for (var i = 0; i < seqNm.length; i++) { $("#"+seqNm[i]).val('');$("#"+seqNm[i]).val(seqVal[i]); } }
 							$("#defaultFrm").attr({"action" : url, "method" : "post", "target" : "_self", "onsubmit" : ""}).submit();//삭제
 					   }

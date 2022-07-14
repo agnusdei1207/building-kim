@@ -81,7 +81,7 @@ function fncAllCheck(obj){
 			$("#" + this.id).prop("checked", true);
 			<%-- 배열에 추가 --%>
 			checked.push(this.value); 
-		});        
+		});         
 	}else if(!obj["checked"]){
 		$(".checkbox").each(function(){       
 			$("#" + this.id).prop("checked",false);

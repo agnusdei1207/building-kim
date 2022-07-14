@@ -99,7 +99,7 @@ public class FtEstQstController {
 		model.addAttribute("estQstVO", estQstVO);
 		
 		return ".fLayout:"+ subFolderPath + "view";
-	} 
+	}    
          
 	@RequestMapping(folderPath + "form.do")
 	public String basicForm(@ModelAttribute("searchVO") EstQstVO searchVO, Model model, HttpServletRequest request) throws Exception {
@@ -162,16 +162,14 @@ public class FtEstQstController {
 			return "cmmn/execute";
 	}
 	
-	  
+	   
 	@ResponseBody
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(subFolderPath + "checkPw.do")
 	public Map checkPw(@ModelAttribute("searchVO") EstQstVO searchVO, Model model, String pass, HttpServletRequest request) throws Exception {
 		      
 		Map<String, Boolean> map = new HashMap<>();  
-		System.out.println("입력 받은 번호 : "+ searchVO.getEqPw());
 		EstQstVO result = (EstQstVO)cmmnService.selectContents(searchVO, PROGRAM_ID);  
-		System.out.println("원래 번호 : "+ result.getEqPw());
 		if(result.getEqPw().equals(searchVO.getEqPw())){
 			map.put("result", true);
 		}else{

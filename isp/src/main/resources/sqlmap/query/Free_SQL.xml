@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.open.Free">
 
-	<sql id="Where"> 
+	<sql id="Where">      
 		<if test="searchKeyword !=null and searchKeyword !=''">
 			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
 				AND (FR_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR FR_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
@@ -17,7 +17,21 @@
 	 		<if test='schEtc01 !=null and schEtc01 !="" and schEtc01 != "0" '>
 				AND IF(FR_ATCH_FILE_ID = '' , 'N' , 'Y') = #{schEtc01}  
 			</if>      
-	</sql>       
+	</sql>  
+	    
+	<sql id="myhomeWhere">      
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (FR_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR FR_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND FR_TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND FR_CONT LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+	 	</if>
+	</sql>   
 	    
 	 
 	 <select id="preSelectContents" parameterType="freeVO" resultType="freeVO">
@@ -130,6 +144,44 @@
 			 <include refid="Where"/>
 	</select>
 	
+	
+	
+	<select id="myhomeSelectList" parameterType="cmmnDefaultVO" resultType="writeListVO">
+		/* Free.myhomeSelectList */
+		<![CDATA[  
+      	     SELECT       
+      	       
+				  FR_SEQ															 seq
+				, DATE_FORMAT(FR_RGST_DT,'%Y.%m.%d') 								 rgstDt
+				, FR_ATCH_FILE_ID 													 atchFileId
+				, FR_TITLE														     title
+				, FR_CONT 															 cont
+				, 'free'															 divn
+				
+		     FROM  T_FREE
+			WHERE  FR_USE_YN='Y'	
+			  AND  FR_ID = #{frontLoginId}
+	      ]]>     
+		     <include refid="myhomeWhere"/>	 
+	     <![CDATA[    
+	    		ORDER BY FR_SEQ DESC
+				LIMIT  #{firstIndex} , #{recordCountPerPage} 
+		]]> 
+	</select>	
+      
+    
+	<select id="myhomeSelectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* Free.myhomeSelectCount */
+		<![CDATA[ 
+			SELECT    
+				COUNT(FR_SEQ)
+			FROM T_FREE
+			WHERE FR_USE_YN='Y'  
+			  AND  FR_ID = #{frontLoginId}
+		]]>
+			 <include refid="myhomeWhere"/>	 
+	</select>
+	
 	<insert id="insertContents" parameterType="freeVO">
 		/* Free.insertContents */
 		<![CDATA[
@@ -177,12 +229,76 @@
 		       SET
 	          	 FR_USE_YN='N'
 			WHERE FR_SEQ=#{frSeq}
-		]]>
+		]]> 
 	</update>
+	  
+	<!-- Myhome -->  
+	<select id="selectContentsMyhome" parameterType="WriteListVO" resultType="WriteListVO">
+		/* Free.selectContentsMyhome */
+		<![CDATA[
+			 SELECT     
+			 
+				  FR_SEQ															 seq
+				, DATE_FORMAT(FR_RGST_DT,'%Y.%m.%d') 								 rgstDt
+				, F_USER_NM(FR_RGST_ID) 											 rgstId
+				, FR_ATCH_FILE_ID 													 atchFileId
+				, FR_TITLE														     title
+				, FR_CONT 															 cont
+				, FR_ID 															 id
+				
+		     FROM  T_FREE
+			 WHERE  FR_USE_YN='Y'	
+				 AND FR_SEQ = #{seq}
+		]]>
+	</select>
 
-
+	<insert id="insertContentsMyhome" parameterType="WriteListVO">
+		/* Free.insertContentsMyhome */
+		<![CDATA[ 
+			INSERT INTO T_FREE(
+				 FR_RGST_ID
+				, FR_ATCH_FILE_ID 		  							
+				, FR_TITLE													
+				, FR_CONT 												  	
+				, FR_ID 					  						
+			)     
+			VALUES (   
+				#{frontLoginSeq}            
+				,#{atchFileId }  
+				,#{title      }
+				,#{cont       }
+				,#{id         }
+			)   
+		]]>
+	</insert>
+	
+	<update id="updateContentsMyhome" parameterType="WriteListVO">
+		/* Free.updateContentsMyHome */
+		<![CDATA[
+			UPDATE T_FREE        
+			 SET      
+			      
+				FR_RGST_DT								 							 = NOW()
+				, FR_RVSE_ID														 =#{frontLoginSeq}	
+				, FR_ATCH_FILE_ID 													 =#{atchFileId}
+				, FR_TITLE														     =#{title     }
+				, FR_CONT 															 =#{cont      }
+				, FR_ID 															 =#{id        }
+				   
+			WHERE  FR_SEQ = #{seq}    
+		]]>
+	</update>  
 	
 	
+	<update id="deleteContentsMyhome" parameterType="WriteListVO">
+		/* Free.deleteContentsMyhome */
+		<![CDATA[   
+			UPDATE T_FREE  
+		       SET
+	          	 FR_USE_YN='N'
+			WHERE FR_SEQ=#{seq}
+		]]> 
+	</update>
 	
 	
 </mapper>

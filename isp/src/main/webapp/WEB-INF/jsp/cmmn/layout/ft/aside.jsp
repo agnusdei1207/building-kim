@@ -8,7 +8,7 @@
 	<c:set var="menuList" value="${menu.menuList }"/>
 	</c:if>
 </c:forEach>
-   
+     
 <script type="text/javaScript">
 </script>   
 <div id="left_cont">  
@@ -17,7 +17,7 @@
 				<c:forEach var="menuSub" items="${menuList }">
 					<c:if test="${util:getMenuCd(url).depth2 eq menuSub.menuCd }">
 					<c:set var="depth2" value="${menuSub.menuNm }"/>
-					<c:set var="depth2Cd" value="${menuSub.menuCd }"/>
+					<c:set var="depth2Cd" value="${menuSub.menuCd }"/>  
 					<c:set var="depth2Url" value="${menuSub.url }"/>
 					</c:if>
 					<li class="${not empty menuSub.menuList ? 'has_sub' : '' } ${util:getMenuCd(url).depth2 eq menuSub.menuCd ? 'active' : ''}">
@@ -59,6 +59,6 @@
 					<h4 class="page_title">${depth2 }</h4>
 					<div class="location">
 						<a href="/ft/main/main.do"><i class="fa fa-home"></i></a> <span> &gt; ${depth1 } &gt; </span> <strong>${depth2 }</strong>
-					</div>
+					</div>           
 
 		   

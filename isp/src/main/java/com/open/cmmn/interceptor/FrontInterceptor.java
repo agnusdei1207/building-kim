@@ -26,8 +26,8 @@ public class FrontInterceptor extends HandlerInterceptorAdapter implements Handl
 	private static final Logger LOGGER = LogManager.getLogger(FrontInterceptor.class.getName());
 
 	private static long loadingTime = 0;
-
-	@Autowired
+    
+	@Autowired  
 	private CmmnService cmmnService; 
   
 	@Override
@@ -50,11 +50,11 @@ public class FrontInterceptor extends HandlerInterceptorAdapter implements Handl
 		} 
 		    
 		   
-		
+		 
 		List<MnVO> allMenu = (List<MnVO>)cmmnService.selectList(cmmnDefaultVO, "Mn.selectMainList");
 		for (MnVO mnVO : allMenu) {
 			List<MnVO> subList = (List<MnVO>)cmmnService.selectList(mnVO, "Mn.selectSubList");
-			mnVO.setMenuList(subList);
+			mnVO.setMenuList(subList);  
 		}
 		  
 		HttpSession session = request.getSession();   
@@ -75,9 +75,8 @@ public class FrontInterceptor extends HandlerInterceptorAdapter implements Handl
 		if (SessionUtil.isFrtLogined(request)){
 			MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
 			logLogVO.setLogId(memberVO.getMeId());
-			System.out.println("아이디 확인 : "+ memberVO.getMeId());
 		}  
-		       
+		        
 		String menuCd = ""; 
 		menuCd = currentUrl.split("/")[3];
 		logLogVO.setLogMenuCd(menuCd);

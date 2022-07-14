@@ -5,8 +5,8 @@
 var overChk=false;
 $(document).ready(function(){		
 	$("#btn_submit_id").bind("click", function(){		
-		if($("#menuNm").val() == '' || $("#url").val() == '' || $("#no").val() == ''){
-			alert("요청내용을 입력해주세요");
+		if($("#menuNm").val() == '' || $("#url").val() == '' || $("#no").val() == ''){  
+			alert("메뉴명을 입력해주세요");
 			return false;
 		}		
 		<c:if test="${searchVO.procType ne 'update' && searchVO.procType ne 'subUpdate'}">

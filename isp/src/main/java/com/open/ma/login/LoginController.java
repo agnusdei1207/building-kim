@@ -119,7 +119,7 @@ public class LoginController {
 					HttpSession session = request.getSession();					
 					session.setAttribute(SessionUtil.SESSION_MANAGE_KEY, userLoginVO);
 					
-					session.setAttribute("loginMgrId", userLoginVO.getId());		 //사용자 아이디
+					session.setAttribute("loginMgrId", userLoginVO.getId());	//사용자 아이디
 					session.setAttribute("loginMgrNm", userLoginVO.getName());	//사용자 이름
 					session.setAttribute("loginMgrSeq", userLoginVO.getSeq());	//사용자 일련번호
 					session.setAttribute("loginMgrAuthCode", userLoginVO.getAuthCode()); //권한

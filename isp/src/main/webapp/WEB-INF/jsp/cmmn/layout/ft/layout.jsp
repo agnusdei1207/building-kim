@@ -39,19 +39,19 @@
         <!-- header --> 
 		<tiles:insertAttribute name="header"/>
         <!--// header -->     
-        
-            <!-- container -->
-      <div id="container"> 
-      	<div id="content">
-	        <!-- header -->     
+           
+      <!-- container -->       
+      <div id="container">   
+      	<div id="content" ${url.split('/')[2] eq 'member' ? 'style="padding-left:0px;"' : '' }>
+	        <!-- header -->       
 	        <c:choose>
-	        	<c:when test="${url.split('/')[2] ne 'member' }">
-					<tiles:insertAttribute name="aside"/>   
-	        	</c:when>
-	        	<c:otherwise>
-	        	</c:otherwise>
+	        	<c:when test="${url.split('/')[2] ne 'member' || url.split('/')[4] eq 'writeList.do'}">
+					<tiles:insertAttribute name="aside"/> 
+	        	</c:when>  
+	        	<c:otherwise>       
+	        	</c:otherwise>  
 	        </c:choose>
-	        <!--// header -->     
+	        <!--// header -->        
 			<!-- contents -->			
 			<tiles:insertAttribute name="body"/>
 		</div>

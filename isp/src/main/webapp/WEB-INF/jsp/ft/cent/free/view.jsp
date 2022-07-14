@@ -7,7 +7,7 @@
 		<input type="hidden" name="frAtchFileId" id="frAtchFileId">
 		<jsp:directive.include file="/WEB-INF/jsp/cmmn/inc/incSearchForm.jsp"/>
 		<!-- tbl -->
-		<div class="tbl_wrap">
+		<div class="tbl_wrap">  
 			<table class="tbl_row_type01">  
 				<caption>내용(제목, 작성자, 작성일 등으로 구성)</caption>
 				<colgroup>

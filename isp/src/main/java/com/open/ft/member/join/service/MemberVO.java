@@ -31,8 +31,15 @@ public class MemberVO extends CmmnDefaultVO implements Serializable {
 	private String meHp   ;
 	private String meMail ;
 	private String meFailCnt;
+	private String divn;
 	
 	
+	public String getDivn() {
+		return divn;
+	}
+	public void setDivn(String divn) {
+		this.divn = divn;
+	}
 	public String getMeFailCnt() {
 		return meFailCnt;
 	}

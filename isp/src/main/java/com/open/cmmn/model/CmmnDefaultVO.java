@@ -278,7 +278,10 @@ public class CmmnDefaultVO implements Serializable {
 
 	private String frontLoginSeq;
 
+	private String frontLoginId;
 	   
+	
+	
 	public String getSearchKeywordEtc() {
 		return searchKeywordEtc;
 	}
@@ -301,6 +304,14 @@ public class CmmnDefaultVO implements Serializable {
 
 	public void setPopPageIndex(String popPageIndex) {
 		this.popPageIndex = popPageIndex;
+	}
+	
+	public String getFrontLoginId() {
+		return frontLoginId;
+	}
+
+	public void setFrontLoginId(String frontLoginId) {
+		this.frontLoginId = frontLoginId;
 	}
 
 	/**

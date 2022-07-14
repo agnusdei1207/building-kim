@@ -17,7 +17,22 @@
 	 		<if test='schEtc03 !=null and schEtc03 !="" and schEtc03 != "0"'>
 				AND EQ_STATE = #{schEtc03}
 			</if>   
-	</sql>         
+	</sql>           
+	    
+	      
+    <sql id="myhomeWhere">
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (EQ_TITLE LIKE CONCAT('%',#{searchKeyword},'%') OR EQ_CONT LIKE CONCAT('%',#{searchKeyword},'%'))
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND EQ_TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND EQ_CONT LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>   
+	 	</if>   
+	</sql> 
 	  
 	<select id="selectContents" parameterType="estQstVO" resultType="estQstVO">
 		/* EstQst.selectContents */
@@ -81,6 +96,46 @@
 		]]>
 			 <include refid="Where"/>
 	</select>
+	  
+	 
+	
+	<select id="myhomeSelectList" parameterType="cmmnDefaultVO" resultType="writeListVO">
+		/* EstQst.myhomeSelectList */
+		<![CDATA[    
+      	     SELECT                  
+      	        
+				 EQ_SEQ																 seq
+				, DATE_FORMAT(EQ_RGST_DT,'%Y.%m.%d') 								 rgstDt
+				, EQ_ATCH_FILE_ID 													 atchFileId
+				, EQ_TITLE														     title  
+				, EQ_CONT 															 cont
+				, 'estimate'														 divn   
+				    
+		     FROM T_ESTQST     
+			 WHERE EQ_USE_YN='Y'	
+			   AND  EQ_ID = #{frontLoginId}
+	      ]]>   
+		     <include refid="myhomeWhere"/>	 	 
+	     <![CDATA[    
+	    		ORDER BY EQ_SEQ DESC 
+				LIMIT  #{firstIndex} , #{recordCountPerPage}
+		]]>
+	</select>	
+
+  
+	<select id="myhomeSelectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* EstQst.myhomeSelectCount */
+		<![CDATA[ 
+			SELECT 
+				COUNT(EQ_SEQ) eqCnt 
+			FROM T_ESTQST
+			WHERE EQ_USE_YN='Y'  
+			  AND  EQ_ID = #{frontLoginId}
+		]]>
+			 <include refid="myhomeWhere"/>	 
+	</select>
+	
+	
 	
 	<insert id="insertContents" parameterType="estQstVO">
 		/* EstQst.insertContents */
@@ -156,7 +211,73 @@
 		]]>
 	</update>
 
-
+     
+	<!-- 마이홈 -->
+	<select id="selectContentsMyhome" parameterType="writeListVO" resultType="writeListVO">
+		/* EstQst.selectContentsMyhome */
+		<![CDATA[ 
+			 SELECT  EQ_SEQ															 seq
+				  ,	 DATE_FORMAT(EQ_RGST_DT,'%Y.%m.%d') 							 rgstDt
+				  ,  F_USER_NM(EQ_RGST_ID) 											 rgstId
+				  ,  EQ_ATCH_FILE_ID 												 atchFileId
+				  ,  EQ_TITLE														 title
+				  ,  EQ_CONT 													     cont
+				  ,  EQ_ID 															 id
+				   
+		       FROM  T_ESTQST
+			  WHERE  EQ_USE_YN='Y'	
+				AND  EQ_SEQ = #{seq}
+		]]>   
+	</select>
+	
+	<insert id="insertContentsMyhome" parameterType="writeListVO">
+		/* EstQst.insertContentsMyhome */
+		<![CDATA[ 
+			INSERT INTO T_ESTQST
+				 ( EQ_RGST_ID
+				 , EQ_ATCH_FILE_ID 									
+				 , EQ_TITLE													
+				 , EQ_CONT 													
+				 , EQ_ID 	
+			     )        
+			VALUES    
+				 ( #{frontLoginSeq}          
+				 , #{atchFileId }  
+				 , #{title      }
+				 , #{cont       }
+				 , #{id         }
+			     )  
+		]]>
+	</insert>
+	
+	
+	<update id="updateContentsMyhome" parameterType="writeListVO">
+		/* EstQst.updateContentsMyhome */
+		<![CDATA[ 
+			UPDATE T_ESTQST        
+			 SET    
+			          
+				EQ_RGST_DT								 							 = NOW()
+				, EQ_RVSE_ID														 =#{frontLoginSeq	}	
+				, EQ_ATCH_FILE_ID 													 =#{atchFileId}
+				, EQ_TITLE														     =#{title     }
+				, EQ_CONT 															 =#{cont      }
+				, EQ_ID 															 =#{id        }
+				, EQ_DT																 = NOW()           
+				                                                                                         
+			WHERE  EQ_SEQ = #{seq}    
+		]]>    
+	</update>     
+	
+	<update id="deleteContentsMyhome" parameterType="writeListVO">
+		/* EstQst.deleteContentsMyhome */
+		<![CDATA[   
+			UPDATE T_ESTQST 
+		       SET
+	          	 EQ_USE_YN='N'
+			WHERE EQ_SEQ=#{seq}
+		]]>   
+	</update>
 	
 	
 	

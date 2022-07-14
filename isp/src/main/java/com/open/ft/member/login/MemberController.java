@@ -81,10 +81,10 @@ public class MemberController {
 	    		if(Integer.parseInt(userLoginVO.getMeFailCnt()) > 5){
 	    			message = "비밀번호 입력회수 초과! 관리자에게 문의바랍니다.";
 		    		cmmnScript = folderPath + "loginFrm.do";
-	    		}else{
+	    		}else{    
 	    			HttpSession session = request.getSession();		 
 	    			session.setAttribute(SessionUtil.SESSION_FRONT_KEY, userLoginVO);
-	    			session.setAttribute("memberVO", userLoginVO);
+	    			session.setAttribute("memberVO", userLoginVO);  
 	    			cmmnService.updateContents(userLoginVO, PROGRAM_ID + ".resetFailCnt");
 	    			
 	    			/* 로그인 로그 */  
@@ -112,11 +112,11 @@ public class MemberController {
 	public String adminLogout(@ModelAttribute("searchVO") MemberVO searchVO, HttpServletRequest request, ModelMap model) throws Exception {
 		HttpSession session = request.getSession(); 
 		MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
-		 
-		message = memberVO.getMeId() +" 님 안녕히가세요.";
-		cmmnScript = "/ft/main/main.do";
-		  
-		session.removeAttribute(SessionUtil.SESSION_FRONT_KEY);
+		     
+		message = "[" + memberVO.getMeId() +"] 님 안녕히가세요.";
+		cmmnScript = "/ft/main/main.do";  
+		      
+		session.removeAttribute(SessionUtil.SESSION_FRONT_KEY); 
 		session.removeAttribute("memberVO");
 		
 		model.addAttribute("message", message);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.open.Au">
-
+ 
 	<sql id="Where">
 		<if test="searchKeyword !=null and searchKeyword !=''">
 			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
@@ -19,7 +19,7 @@
 	<select id="selectContents" parameterType="auVO" resultType="auVO">
 		/* Auth.selectContents */
 		<![CDATA[
-			  SELECT  
+			  SELECT   
 				SEQ seq
 				, AUTH_CODE authCode
 				, AUTH_CODE_NM authCodeNm

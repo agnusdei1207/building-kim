@@ -105,14 +105,8 @@ public class FtPortController {
 		FileVO fileVO = new FileVO();   
 		fileVO.setAtchFileId(portVO.getPoAtchFileId());
 		
-		System.out.println("첨부 파일 아이디 : "+portVO.getPoAtchFileId());
 		
 		List<FileVO> fileSnList = fileMngService.selectFileInfs(fileVO);
-		for (FileVO fileVO2 : fileSnList) {
-			System.out.println("왜 안 나옴? "+ fileVO2.getFileSn());
-			System.out.println("왜 안 나옴? "+ fileVO2);
-		}
-		
 		model.addAttribute("fileSnList", fileSnList);    
 		
 		return ".fLayout:"+ folderPath + "view";

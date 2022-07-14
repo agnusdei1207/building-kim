@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.open.WriteList">
+
+	<sql id="Where">    
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==0">
+				AND (title LIKE CONCAT('%',#{searchKeyword},'%') OR cont LIKE CONCAT('%',#{searchKeyword},'%'))
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==1">
+				AND title LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchCondition !=null and searchCondition !='' and searchCondition ==2">
+				AND cont LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+	 	</if>  
+	</sql>             
+	 
+	<!-- 내가 작성한 글 목록 --> 
+	<select id="selectList" parameterType="cmmnDefaultVO" resultType="WriteListVO">
+		/* WriteList.selectList */
+		<![CDATA[  
+      	    SELECT	seq
+      	    	 ,	title
+      	    	 ,	cont
+      	    	 ,	rgstDt
+      	    	 ,	divn
+      	      FROM  (SELECT FR_SEQ 					seq
+						  ,	FR_TITLE 				title
+						  ,	FR_CONT 				cont
+					      , FR_RGST_DT 				rgstDt
+						  , 'fr' 					divn
+					   FROM t_free TF
+					  WHERE FR_ID = #{frontLoginId}
+					    AND FR_USE_YN = 'Y'
+							      
+					  UNION  
+						
+					 SELECT	EQ_SEQ 					seq
+						  , EQ_TITLE 				title
+						  , EQ_CONT 				cont
+						  , EQ_RGST_DT 				rgstDt
+						  , 'eq' 	 				divn
+					   FROM t_estqst TE
+					  WHERE EQ_ID = #{frontLoginId}
+						AND EQ_USE_YN = 'Y') A
+			 WHERE	1 = 1
+	      ]]>   
+		     <include refid="Where"/>	 
+	     <![CDATA[    
+	    		ORDER BY rgstDt DESC
+				LIMIT  #{firstIndex} , #{recordCountPerPage}
+		]]>
+	</select>	
+
+ 
+	<select id="selectCount" parameterType="cmmnDefaultVO" resultType="int">
+		/* WriteList.selectCount */
+		<![CDATA[  
+			SELECT COUNT(A.seq)  
+			  FROM (SELECT FR_SEQ 					seq
+						  ,	FR_TITLE 				title
+						  ,	FR_CONT 				cont
+					      , FR_RGST_DT 				rgstDt
+						  , 'fr' 					divn
+					   FROM t_free TF
+					  WHERE FR_ID = #{frontLoginId}
+					    AND FR_USE_YN = 'Y'
+							      
+					  UNION  
+						
+					 SELECT	EQ_SEQ 					seq
+						  , EQ_TITLE 				title
+						  , EQ_CONT 				cont
+						  , EQ_RGST_DT 				rgstDt
+						  , 'eq' 	 				divn
+					   FROM t_estqst TE 
+					  WHERE EQ_ID = #{frontLoginId}
+					  AND EQ_USE_YN = 'Y') A   
+			  WHERE 1=1
+		]]>
+			 <include refid="Where"/>
+	</select>
+	
+	
+	
+	
+	
+</mapper>

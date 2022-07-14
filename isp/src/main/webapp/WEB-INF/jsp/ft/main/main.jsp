@@ -23,7 +23,7 @@
 	 
 	<script type="text/javascript">
 		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
+		function gtag(){dataLayer.push(arguments);}     
 		gtag('js', new Date());
 		
 		gtag('config', 'G-JQDGRELBD4');
@@ -88,22 +88,24 @@
 						</c:choose>
 					</ul>
 				</div>          
-			</div>      
-			<!-- GNB --> 
-			<h2 class="hidden">주메뉴</h2>
-			<div id="gnb_area">
-				<nav id="gnb">
-					<ul class="depth2 clear">   
-						<c:if test="${fn:length(allMenu) gt 0 }">    
-							<c:forEach var="main" items="${allMenu }">
-								<li class="depth1_1">
-									<a href="${main.url }">${main.menuNm }</a>
-									<ul class="depthBox">
-										<c:forEach var="sub" items="${main.menuList }">
-											<li><a href="${sub.url }">${sub.menuNm }</a></li>
-										</c:forEach>
-									</ul>
-								</li>
+			</div>        
+			<!-- GNB -->            
+			<h2 class="hidden">주메뉴</h2>     
+			<div id="gnb_area">   
+				<nav id="gnb">           
+					<ul class="depth2 clear">            
+						<c:if test="${fn:length(allMenu) gt 0 }">            
+							<c:forEach var="main" items="${allMenu }">        
+									<c:if test="${(empty memberVO.meSeq and main.menuCd ne 'member') or (not empty memberVO.meSeq)}">
+										<li class="depth1_1">
+											<a href="${main.url }">${main.menuNm }</a>
+											<ul class="depthBox">
+												<c:forEach var="sub" items="${main.menuList }">
+													<li><a href="${sub.url }">${sub.menuNm }</a></li>
+												</c:forEach>
+											</ul>
+										</li>  
+									</c:if> 
 							</c:forEach>
 						</c:if> 
 					</ul>
@@ -186,7 +188,7 @@
 					<!-- 포트폴리오 -->
 					<div id="main_tab01" class="tab_content main_tabcont">
 					</div>   
-					<!-- 포트폴리오 --> 
+					<!-- 포트폴리오 -->     
 				</div>    
 			</div>   
 			<div class="quick_menu">  
@@ -349,7 +351,7 @@ function fncM_PopUp(){
 				view_hide('m');  
 			});
 		}
-	}
+	} 
 }
 
 <%-- 팝업 닫기 --%>  
@@ -365,15 +367,15 @@ function view_hide(divn,seq) {
 		$("#js-popup-bg").hide();
 	}
  } 
- 
+  
 <%-- 하루 닫기 --%>
 function closePopup(obj,divn,seq) {
 	if ($(obj).prop("checked")) {
-		if(divn == "p"){
+		if(divn == "p"){ // PC 버전
 			$.cookie(divn+"_popUpYn_"+seq, "N", 1);
 			view_hide(divn,seq);
 		}
-		if(divn  == "m"){  
+		if(divn  == "m"){ // Mobile 버전
 			$.cookie(divn+"_popUpYn", "N", 1);
 			view_hide(divn);
 		}
