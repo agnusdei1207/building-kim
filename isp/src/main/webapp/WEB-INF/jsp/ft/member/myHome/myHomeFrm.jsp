@@ -46,7 +46,7 @@ user-select: none;}
 </style>        
                   
 <form name="defaultFrm" id="defaultFrm" method="post">         
-<a href="#search_list" id="scrollDown">아래로</a>   
+<a href="#search_list" id="scrollDown">아래로</a>    
 	<%-- 게시판 구분 --%>                   
 	<input type="hidden" name="schEtc02" id="schEtc02" value="${searchVO.schEtc02 }"> 
 	<%-- 페이지 인덱스  --%>               
@@ -120,16 +120,14 @@ user-select: none;}
 	     </div>      
 	</div>
 </form>    
-	   
+	     
     
 <script>
   
 var regExp = /^[a-z0-9_]{4,20}$/; 
      
-<%-- 페이지 로드 --%>        
-$(function(){            
-	
-	$("#scrollDown").click();
+<%-- 페이지 로드 --%>             
+$(function(){                
 	if($("#check_Box").prop("checked")){  
 		$(".li_pw").show(); 
 		$("#mePw_1").prop("disabled", false);   
@@ -236,8 +234,9 @@ function fncMenuTap(divn){
 		success : function(data){    
 			$("#search_list").html(data);
 		}, 
-	});  
-}    
+	});     
+}       
+   
 
 </script>
 

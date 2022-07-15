@@ -69,7 +69,7 @@ public class MyHomeController {
 
 		HttpSession session = request.getSession();  
 		MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
-		if("".equals(StringUtil.isNullToString(memberVO))){ 
+		if("".equals(StringUtil.isNullToString(memberVO))){  
 			message = "비정상적인 접근입니다.";
 			cmmnScript = "/ft/member/login/loginFrm.do";
 			model.addAttribute("message", message); 

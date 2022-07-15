@@ -32,10 +32,11 @@
 </div>    
   
   
-<script type="text/javaScript">            
+<script type="text/javaScript">               
                                  
-$(function(){            
-	<%-- 목록 버튼 누를 시 검색햤던 조회 기록 유지 --%>      
+$(function(){     
+	     
+	<%-- 목록 버튼 누를 시 검색햤던 조회 기록 유지 --%>        
 	$("#searchWord").val($("#searchKeyword").val());
 	if($("#searchCondition").val()){
 		$("#searchSelect").val($("#searchCondition").val()).prop("selected", true);

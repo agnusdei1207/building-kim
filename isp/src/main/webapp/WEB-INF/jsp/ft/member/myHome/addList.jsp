@@ -53,9 +53,12 @@
        
 <!-- //paging -->
 <script type="text/javaScript">
-
+  
+       
+     
 <%-- view --%>  
 function fncView(divn, seq){ 
+	
 	<%-- SEQ 셋팅 --%>    
 	$("#seq").val(seq);       
 	$.ajax({    
