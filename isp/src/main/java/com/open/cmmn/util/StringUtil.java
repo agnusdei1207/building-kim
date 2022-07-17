@@ -26,6 +26,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -623,8 +624,8 @@ public class StringUtil {
 	
 	/**
 	 * 문치환된 문자열에서 다시 원본 메시지를 복구
-	 * 
-	 */
+	 *   
+	 */ 
 	public static String unEscape(final String strString) throws Exception{
 		
 		String strNew = XssPreventer.unescape(strString);
@@ -655,8 +656,8 @@ public class StringUtil {
 		int index = source.indexOf(separator);
 		int index0 = 0;
 		while (index >= 0) {
-			cnt++;
-			index = source.indexOf(separator, index + 1);
+			cnt++; 
+			index = source.indexOf(separator, index + 1); // 찾을 문자, 시작할 위치
 		}
 		returnVal = new String[cnt];
 		cnt = 0;
@@ -664,9 +665,9 @@ public class StringUtil {
 		while (index >= 0) {
 			returnVal[cnt] = source.substring(index0, index);
 			index0 = index + 1;
-			index = source.indexOf(separator, index + 1);
+			index = source.indexOf(separator, index + 1); 
 			cnt++;
-		}
+		}   
 		returnVal[cnt] = source.substring(index0);
 		return returnVal;
 	}

@@ -90,7 +90,6 @@ public class StcController {
 		model.addAttribute("comList", comList);   
 		model.addAttribute("areaList", areaList);   
   
-		
 		return ".mLayout:"+ folderPath + "list";
 	}    
 	
@@ -205,7 +204,7 @@ public class StcController {
 	    }
 		return new ModelAndView(ajaxView,model);
 	}	
-	  
+	   
 	/* 확장자 xls 읽기 */
 	@SuppressWarnings({ "resource", "deprecation" })
 	public List<StcVO> xlsReadList(String filePath){

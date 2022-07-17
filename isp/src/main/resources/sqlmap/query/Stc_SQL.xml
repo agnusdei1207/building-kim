@@ -62,7 +62,7 @@
 			   AND	AREA = #{schEtc06}   
 		</if>
 	</select>
-	  
+	   
 	
 	<!-- 연도별 조회 -->
 	<select id="yearSelectList" parameterType="cmmnDefaultVO" resultType="stcVO">
